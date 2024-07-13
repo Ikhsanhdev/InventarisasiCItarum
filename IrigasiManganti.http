@@ -1,0 +1,6 @@
+@IrigasiManganti_HostAddress = http://localhost:5135
+
+GET {{IrigasiManganti_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

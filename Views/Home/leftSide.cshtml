@@ -1,0 +1,317 @@
+div class="col-left full-height">
+                <div class="card h-100">
+                    @* <div class="card h-100"> *@
+                    <div class="table-das">
+                        <div class="card-header p-0">
+                            <ul class="nav nav-tabs navtab-bg" id="tab-center-left" role="tablist">
+                                <li class="nav-item">
+                                    <a href="#tab-cihaur" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                        CIHAUR
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#tab-sidareja" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                        SIDAREJA 
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#tab-lakbok" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                        LAKBOK
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body overflow-scroll p-0 side-bar-home">
+                            <div class="tab-content p-0">
+                                <div class="tab-pane active" id="tab-cihaur" role="tabpanel">
+                                    <div class="card-cihaur" id="card-cihaur">
+                                        <div class="card card-station animate__animated animate__fadeInLeft">
+                                            <div class="card-header">
+                                                <div class="d-flex align-items-center">
+                                                    <h4 class="card-title text-station-name m-0"> Prediksi : </h4>
+                                                    <div class="input-group w-50" style="margin-left: 5px;">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                                        </div>
+                                                        <input type="date" class="form-control datepicker" id="datepicker">
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm table-bordered table-centered m-0 w-100" id="cihaur-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">Nama Pos</th>
+                                                                <th class="text-center">Tanggal / Jam</th>
+                                                                <th class="text-center">Tinggi Muka Air <small class="text-muted">(m)</small></th>
+                                                                <th class="text-center">Debit <small class="text-muted">(m<sup>3</sup>/s)</small></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><a href="/Home/DetailTabulasi?irg=cihaur" class="btn-detail-tab" target="_blank">Pos Selajambe</a></td>
+                                                                <td class="text-center">30 Mei 2024 09:30</td>
+                                                                <td class="text-center">3.0</td>
+                                                                <td class="text-center">390</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab-sidareja" role="tabpanel">
+                                    <div class="card-sidareja" id="card-sidareja">
+                                        <div class="card card-station animate__animated animate__fadeInLeft">
+                                            <div class="card-header">
+                                                <div class="d-flex align-items-center">
+                                                    <h4 class="card-title text-station-name m-0"> Prediksi : </h4>
+                                                    <div class="input-group w-50" style="margin-left: 5px;">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                                        </div>
+                                                        <input type="date" class="form-control datepicker" id="datepicker">
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm table-bordered table-centered m-0 w-100" id="sidareja-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">Nama Pos</th>
+                                                                <th class="text-center">Tanggal / Jam</th>
+                                                                <th class="text-center">Tinggi Muka Air <small class="text-muted">(m)</small></th>
+                                                                <th class="text-center">Debit <small class="text-muted">(m<sup>3</sup>/s)</small></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><a href="/Home/DetailTabulasi?irg=sidareja" class="btn-detail-tab" target="_blank">Pos Sidareja</a></td>
+                                                                <td class="text-center">30 Mei 2024 09:30</td>
+                                                                <td class="text-center">2.1</td>
+                                                                <td class="text-center">310</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/Home/DetailTabulasi?irg=sidareja" class="btn-detail-tab" target="_blank">Pos Sidareja (Jemb. S</a></td>
+                                                                <td class="text-center">30 Mei 2024 09:30</td>
+                                                                <td class="text-center">2.8</td>
+                                                                <td class="text-center">400</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab-lakbok" role="tabpanel">
+                                    <div class="card-lakbok" id="card-lakbok">
+                                        <div class="card card-station animate__animated animate__fadeInLeft">
+                                            <div class="card-header">
+                                                <div class="d-flex align-items-center">
+                                                    <h4 class="card-title text-station-name m-0"> Prediksi : </h4>
+                                                    <div class="input-group w-50" style="margin-left: 5px;">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                                        </div>
+                                                        <input type="date" class="form-control datepicker" id="datepicker">
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm table-bordered table-centered m-0 w-100" id="lakbok-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">Nama Pos</th>
+                                                                <th class="text-center">Tanggal / Jam</th>
+                                                                <th class="text-center">Tinggi Muka Air <small class="text-muted">(m)</small></th>
+                                                                <th class="text-center">Debit <small class="text-muted">(m<sup>3</sup>/s)</small></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><a href="/Home/DetailTabulasi?irg=lakbok" class="btn-detail-tab" target="_blank">Pos Cikawung</a></td>
+                                                                <td class="text-center">30 Mei 2024 09:30</td>
+                                                                <td class="text-center">4.3</td>
+                                                                <td class="text-center">402</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><br><br>
+                    <div class="pos">
+                        <div class="card-header p-0">
+                            <ul class="nav nav-tabs navtab-bg" id="tab-center-left" role="tablist">
+                                <li class="nav-item">
+                                    <a href="#tab-awlr" data-bs-toggle="tab" aria-expanded="true" class="nav-link">
+                                        POS DUGA AIR <span class="badge bg-blue rounded ms-1" data-plugin="counterup" id="total-awlr">0</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#tab-arr" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                        POS CURAH HUJAN <span class="badge bg-success rounded ms-1" data-plugin="counterup" id="total-arr">0</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#tab-aws" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                        KLIMATOLOGI <span class="badge bg-danger rounded ms-1" data-plugin="counterup" id="total-aws">0</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body overflow-scroll p-0 side-bar-home">
+                            <div class="tab-content p-0">
+                                <div class="tab-pane active" id="tab-awlr" role="tabpanel">
+                                    <div class="card-station-awlr" data-ts-id="bff8eee4-0fe5-497f-a29e-7e6af18dbeb9" id="card-station-awlr-bff8eee4-0fe5-497f-a29e-7e6af18dbeb9" data-last-update="2024-05-13 13:00:11">
+                                        <div class="card card-station animate__animated animate__fadeInLeft">
+                                            
+                                        <div class="card-header">
+                                            <div class="d-flex align-items-center">
+                                                <span class="reading-at"><small class="mdi mdi-circle text-success"></small> Online </span>
+                                                <span class="reading-at ms-auto">Hari Ini, <span class="text-muted">13:00</span> WIB</span>
+                                            </div>
+                                        </div>
+                                    
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <div class="w-100">
+                                                        <a href="/Station/Detail/PDA-OXBOW-BOJONGSOANG-(KOLAM)" target="_blank">
+                                                        <h4 class="card-title text-station-name m-0 align-self-center">POS IRIGASI 1</h4>
+                                                        </a>
+                                                    </div>
+                                                    <span class="badge badge-awlr-normal rounded-1 ms-1 align-self-center">NORMAL</span>
+                                                </div>
+
+                                                <div class="reading-device d-flex align-items-center mb-1">
+                                                        <span><i class="fe-hard-drive"></i> Higertech</span>
+                                                        <span class="badge badge-outline-secondary rounded-1 ms-1" style="color: #A9ABB8;border-color: #A9ABB8;">HGT426</span>
+                                                        <span><i class="mdi mdi-battery-charging-high ms-1" style="color: #F69696;"></i> 13.11 Volt</span>
+                                                </div>
+
+                                                <div class="d-flex justify-content-around align-items-center reading-text">
+                                                    <div class="col-4 text-center">
+                                                        <h4>-</h4>
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        <h4>658.37 <sup>mdpl</sup></h4>
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        <h4>-</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-around reading-text">
+                                                    <div class="col-4 text-center">
+                                                        Tinggi Muka Air
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        Elevasi Muka Air
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        Debit
+                                                    </div>
+                                                </div>
+                                                
+                                        <div class="progress-meter mt-2 mb-2">
+                                            <div class="meter meter-normal meter-left" style="width: 25%;" title="Normal <br> < 6 m"><span class="fw-normal meter-text" style="color: #4DC27E;">0</span></div>
+                                            <div class="meter meter-waspada meter-left" style="width: 25%;" title="Siaga 3 <br> 657.05 mdpl - 657.2 mdpl"><span class="fw-normal meter-text" style="color: #FFDA4F;">657.05 mdpl</span></div>
+                                            <div class="meter meter-siaga meter-left" style="width: 25%;" title="Siaga 2 <br> 657.2 mdpl - 658.5 mdpl"><span class="fw-normal meter-text" style="color: #FFA600;">657.2 mdpl</span></div>
+                                            <div class="meter meter-awas meter-left" style="width: 25%;" title="Siaga 1 <br> > 658.5 mdpl"><span class="fw-normal meter-text" style="color: #EF5350;">658.5 mdpl</span></div>
+                                        </div>
+                                    
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="card-station-awlr" data-ts-id="bff8eee4-0fe5-497f-a29e-7e6af18dbeb9" id="card-station-awlr-bff8eee4-0fe5-497f-a29e-7e6af18dbeb9" data-last-update="2024-05-13 13:00:11">
+                                        <div class="card card-station animate__animated animate__fadeInLeft">
+                                            
+                                        <div class="card-header">
+                                            <div class="d-flex align-items-center">
+                                                <span class="reading-at"><small class="mdi mdi-circle text-success"></small> Online </span>
+                                                <span class="reading-at ms-auto">Hari Ini, <span class="text-muted">13:00</span> WIB</span>
+                                            </div>
+                                        </div>
+                                    
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <div class="w-100">
+                                                        <a href="/Station/Detail/PDA-OXBOW-BOJONGSOANG-(KOLAM)" target="_blank">
+                                                        <h4 class="card-title text-station-name m-0 align-self-center">POS IRIGASI 2</h4>
+                                                        </a>
+                                                    </div>
+                                                    <span class="badge badge-awlr-normal rounded-1 ms-1 align-self-center">NORMAL</span>
+                                                </div>
+
+                                                <div class="reading-device d-flex align-items-center mb-1">
+                                                        <span><i class="fe-hard-drive"></i> Higertech</span>
+                                                        <span class="badge badge-outline-secondary rounded-1 ms-1" style="color: #A9ABB8;border-color: #A9ABB8;">HGT426</span>
+                                                        <span><i class="mdi mdi-battery-charging-high ms-1" style="color: #F69696;"></i> 13.11 Volt</span>
+                                                </div>
+
+                                                <div class="d-flex justify-content-around align-items-center reading-text">
+                                                    <div class="col-4 text-center">
+                                                        <h4>-</h4>
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        <h4>658.37 <sup>mdpl</sup></h4>
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        <h4>-</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-around reading-text">
+                                                    <div class="col-4 text-center">
+                                                        Tinggi Muka Air
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        Elevasi Muka Air
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        Debit
+                                                    </div>
+                                                </div>
+                                                
+                                        <div class="progress-meter mt-2 mb-2">
+                                            <div class="meter meter-normal meter-left" style="width: 25%;" title="Normal <br> < 6 m"><span class="fw-normal meter-text" style="color: #4DC27E;">0</span></div>
+                                            <div class="meter meter-waspada meter-left" style="width: 25%;" title="Siaga 3 <br> 657.05 mdpl - 657.2 mdpl"><span class="fw-normal meter-text" style="color: #FFDA4F;">657.05 mdpl</span></div>
+                                            <div class="meter meter-siaga meter-left" style="width: 25%;" title="Siaga 2 <br> 657.2 mdpl - 658.5 mdpl"><span class="fw-normal meter-text" style="color: #FFA600;">657.2 mdpl</span></div>
+                                            <div class="meter meter-awas meter-left" style="width: 25%;" title="Siaga 1 <br> > 658.5 mdpl"><span class="fw-normal meter-text" style="color: #EF5350;">658.5 mdpl</span></div>
+                                        </div>
+                                    
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @* </div> *@
+                </div>
+            </div>
+
+
+<div class="content h-100">
+    <div class="container-fluid p-1 pt-2 h-100">
+        <div class="row d-flex justify-content-between h-100">
+            <div class="col-center full-height">
+               <div class="row row-center-1">
+                    <div class="card card-body m-0 p-0">
+                        @* <div class="w-100" id="mapCihaur" style="height: 88vh;"></div> *@
+                        <iframe id="figma-iframe" style="border: 1px solid rgba(0, 0, 0, 0.1);" height="1100" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F73yi9QsD1m4kGd1L9uw9oe%2Fsiderja%3Fnode-id%3D52-142%26t%3DaTpa4VYyYzCu6DGb-1%26scaling%3Dmin-zoom%26content-scaling%3Dfixed%26page-id%3D0%253A1" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

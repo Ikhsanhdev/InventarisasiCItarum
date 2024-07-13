@@ -1,0 +1,2970 @@
+@using IrigasiManganti.Helpers;
+@{
+    Layout = "~/Views/Shared/_LayoutNavbarOnly.cshtml";
+    ViewData["Title"] = "Telemetry Map";
+}
+
+@section styles {
+    <link href="~/lib/c3/c3.min.css" rel="stylesheet" type="text/css">
+    <link href="~/lib/leaflet/leaflet.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <link href="~/lib/mapbox-gl/mapbox-gl.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.css" integrity="sha512-aiVWmB2G8oV+XfHo1CR6hEAxzCl48Lrl3UBzQ6P+BEMkT8qY1tGecdQx6x/X8i9cCVrwQU9ipsOsZlNkRh9n7w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/lib/owl.carousel2/assets/owl.carousel.min.css">
+    <link href="~/lib/owl.carousel2/assets/owl.theme.green.min.css">
+    <link href="~/lib/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/animate.css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/animate.css/animate.compat.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap">
+    <link href="~/lib/blueimp-gallery/css/blueimp-gallery.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/photoswipe.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+    <style>
+        .card-station-awlr, .card-station-arr {
+            cursor: pointer;
+        }
+
+        /*Legend specific*/
+        .legend {
+            padding: 6px 8px;
+            font: 14px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            line-height: 24px;
+            color: #555;
+        }
+        .legend h4 {
+            text-align: center;
+            font-size: 16px;
+            margin: 2px 12px 8px;
+            color: #777;
+        }
+
+        .legend span {
+            position: relative;
+            bottom: 3px;
+        }
+
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin: 0 8px 0 0;
+            opacity: 0.7;
+        }
+
+        .legend i.icon {
+            background-size: 18px;
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        .leaflet-popup-content {
+            min-width: 200px;
+            margin: 0.7rem 0.7rem;
+        }
+
+        .blueimp-gallery > .indicator > li {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            margin: 6px 3px 0 3px;
+            -webkit-box-sizing: content-box;
+                -moz-box-sizing: content-box;
+                    box-sizing: content-box;
+            border: 1px solid transparent;
+            background: #ccc;
+            background: rgba(255, 255, 255, 0.25) center no-repeat;
+            border-radius: 2px;
+            box-shadow: 0 0 2px #000;
+            opacity: 0.5;
+            cursor: pointer;
+        }
+        .blueimp-gallery>.indicator{
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+                -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+        h4.text-range-hour {
+            font-size: 0.85rem;
+        }
+
+        .ts-marker-wrapper {
+          -webkit-transform: scale(1);
+                  transform: scale(1);
+          -webkit-transform-origin: 0 2.75rem;
+                   transform-origin: 0 2.75rem;
+          transition: .3s ease;
+        }
+
+        .leaflet-div-icon {
+            background-color: transparent;
+            border: none;
+        }
+
+        .leaflet-marker-icon.ts-hide-marker .ts-marker {
+            -webkit-transform: scale(0);
+                    transform: scale(0);
+        }
+
+        .ts-marker {
+            display: inline-block;
+            position: relative;
+            padding-bottom: .5rem;
+            transition: .6s cubic-bezier(.16, .64, .31, 1.68);
+            -webkit-transform: translateY(0) rotate(.002deg);
+                    transform: translateY(0) rotate(.002deg);
+        }
+
+        .ts-marker:hover, .ts-marker.ts-hover {
+            color: inherit;
+            -webkit-transform: translateY(-0.25rem);
+                    transform: translateY(-0.25rem);
+            z-index: 1;
+        }
+
+        .ts-marker:hover .ts-marker__title, .ts-marker:hover .ts-marker__info,
+        .ts-marker.ts-hover .ts-marker__title, .ts-marker.ts-hover .ts-marker__info {
+            opacity: 1;
+            -webkit-transform: translateX(0);
+                    transform: translateX(0);
+        }
+
+        .ts-marker:hover .ts-marker__info, .ts-marker.ts-hover .ts-marker__info {
+            transition-delay: .05s;
+        }
+
+        .ts-marker:hover:before, .ts-marker.ts-hover:before {
+            -webkit-transform: translateY(.25rem) scaleX(.8);
+                    transform: translateY(.25rem) scaleX(.8);
+            opacity: .2;
+        }
+
+        .ts-marker .ts-marker__feature {
+            @* top: 0;
+            left: -0.625rem; *@
+            position: absolute;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ts-marker .ts-marker__feature i {
+            line-height: 1.5;
+        }
+
+        .ts-marker .ts-marker__feature__blue > * {
+            background-color: #1976D2;
+            border-radius: 50%;
+            color: #fff;
+            font-size: .8rem;
+            width: 1.7rem;
+            text-align: center;
+            height: 1.7rem;
+        }
+
+        @@keyframes blink-fade {
+            0%, 50%, 100% {
+                opacity: 1;
+            }
+            25%, 75% {
+                opacity: 0.2;
+            }
+        }
+
+        .ts-marker .ts-marker__feature__blue i {
+            line-height: 2.2;
+        }
+
+        .ts-marker .ts-marker__feature__green > * {
+            background-color: #16A75C;
+            @* box-shadow: 0 .125rem .3125rem rgba(0, 0, 0, .1); *@
+            border-radius: 50%;
+            color: #fff;
+            font-size: .9rem;
+            width: 1.7rem;
+            text-align: center;
+            height: 1.7rem;
+        }
+
+        .ts-marker .ts-marker__feature__red > * {
+            background-color: rgb(255, 105, 97);
+            border-radius: 50%;
+            color: #fff;
+            font-size: .8rem;
+            width: 1.7rem;
+            text-align: center;
+            height: 1.7rem;
+        }
+
+        .ts-marker .ts-marker__feature__red i {
+            line-height: 2.2;
+        }
+
+        .ts-marker .ts-marker__feature__yellow > * {
+            background-color: #FFA600;
+            box-shadow: 0 .125rem .3125rem rgba(0, 0, 0, .1);
+            border-radius: 50%;
+            color: #fff;
+            font-size: .7rem;
+            width: 1.375rem;
+            text-align: center;
+            height: 1.375rem;
+            line-height: 1.375rem;
+        }
+
+        .ts-marker .ts-marker__feature__primary > * {
+            background-color: #00f;
+            box-shadow: 0 .125rem .3125rem rgba(0, 0, 0, .1);
+            border-radius: 50%;
+            color: #fff;
+            font-size: .7rem;
+            width: 1.375rem;
+            text-align: center;
+            height: 1.375rem;
+            line-height: 1.375rem;
+        }
+
+        .ts-marker .ts-marker__feature__info > * {
+            background-color: #766ec8;
+            box-shadow: 0 .125rem .3125rem rgba(0, 0, 0, .1);
+            border-radius: 50%;
+            color: #fff;
+            font-size: .7rem;
+            width: 1.375rem;
+            text-align: center;
+            height: 1.375rem;
+            line-height: 1.375rem;
+        }
+
+        .ts-marker .ts-marker__feature__warning > * {
+            background-color: #f0ad4e;
+            box-shadow: 0 .125rem .3125rem rgba(0, 0, 0, .1);
+            border-radius: 50%;
+            color: #fff;
+            font-size: .7rem;
+            width: 1.375rem;
+            text-align: center;
+            height: 1.375rem;
+            line-height: 1.375rem;
+        }
+
+        .ts-marker .ts-marker__feature__danger > * {
+            background-color: #d9534f;
+            box-shadow: 0 .125rem .3125rem rgba(0, 0, 0, .1);
+            border-radius: 50%;
+            color: #fff;
+            font-size: .7rem;
+            width: 1.375rem;
+            text-align: center;
+            height: 1.375rem;
+            line-height: 1.375rem;
+        }
+
+        .ts-marker:before {
+          /* content: url("../img/marker-shadow.png"); */
+          bottom: -0.375rem;
+          left: -0.0625rem;
+          position: absolute;
+          opacity: .8;
+          transition: .6s cubic-bezier(.16, .64, .31, 1.68);
+          -webkit-transform: translateY(0) scaleX(1);
+                  transform: translateY(0) scaleX(1);
+          -webkit-transform-origin: left;
+                   transform-origin: left;
+      }
+
+      .ts-marker .ts-marker__title, .ts-marker .ts-marker__info {
+          box-shadow: 0 .125rem .3125rem rgba(0, 0, 0, .1);
+          position: absolute;
+          font-size: .6875rem;
+          font-weight: 500;
+          left: .25rem;
+          white-space: nowrap;
+          border-radius: .0625rem;
+          pointer-events: none;
+          padding: .0625rem .25rem;
+          transition: .5s cubic-bezier(.03, .18, .05, 1.01);
+          -webkit-transform: translateX(.25rem);
+                  transform: translateX(.25rem);
+          opacity: 0;
+      }
+
+      .ts-marker .ts-marker__title {
+          background-color: #fff;
+          top: .25rem;
+          left: 1.8rem;
+          z-index: 1000;
+      }
+    </style>
+}
+
+@* <div class="content h-100">
+    <div class="container-fluid p-1 pt-2 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-10"> <!-- Adjust the column width as needed -->
+                <div class="card card-body m-0 p-0">
+                    <div class="w-100" id="map" style="height: 88vh;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> *@
+
+<div id="map" style="height: 88vh;"></div>
+
+@section scripts {
+    <script src="~/lib/moment/min/moment.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" integrity="sha512-ZwR1/gSZM3ai6vCdI+LVF1zSq/5HznD3ZSTk7kajkaj4D292NLuduDCO1c/NT8Id+jE58KYLKT7hXnbtryGmMg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <script src="~/lib/leaflet/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+    <script src="~/lib/mapbox-gl/mapbox-gl.js"></script>
+    <script src="~/lib/mapbox-gl-leaflet/leaflet-mapbox-gl.js"></script>
+    <script src="~/lib/leaflet-switch-basemap/src/main.eb127ecea7b7559c70ac.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.js" integrity="sha512-Tndo4y/YJooD/mGXS9D6F1YyBcSyrWnnSWQ5Z9IcKt6bljicjyka9qcP99qMFbQ5+omfOtwwIapv1DjBCZcTJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/lib/owl.carousel2/owl.carousel.min.js"></script>
+    <script src="~/lib/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="~/lib/blueimp-gallery/js/blueimp-gallery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.8/signalr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/photoswipe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+    <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
+    @* <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> *@
+}
+
+@section additionalScripts {
+    <script>
+        Chart.register(ChartDataLabels);
+
+        const dataMonitoringDeviceStatus = {
+            labels: [
+                'Online',
+                'Offline'
+            ],
+            datasets: [{
+                label: 'Total Pos',
+                data: [0, 0],
+                backgroundColor: [
+                    'rgba(26,188,156)',
+                    'rgba(241,85,108)'
+                ],
+                borderWidth: 1,
+                hoverOffset: 4
+            }]
+
+        };
+
+        const optionsMonitoringDeviceStatus = {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+                datalabels: {
+                    anchor: 'center',
+                    align: 'center',
+                    color: '#CDCED5',        
+                    font: {
+                    weight: 'bold'
+                    },
+                    formatter: Math.round
+                },
+                legend: {
+                    labels: {
+                        color: '#CDCED5',
+                        borderColor: '#222',
+                        usePointStyle: true,
+                        boxWidth: 6,
+                        boxHeight: 6
+                    },
+                    position: 'bottom'
+                }
+            },
+        };
+
+        const totalDeviceStatus = {
+            id: 'centerText',
+            dynamicText: "0\nTotal Pos",
+            setDynamicText(text) {
+                this.dynamicText = text;
+            },
+            beforeDatasetsDraw(chart, args, pluginOptions) {
+                const { ctx, data } = chart;
+
+                const dynamicText = this.dynamicText;
+
+                ctx.save();
+                const x = chart.getDatasetMeta(0).data[0].x;
+                const y = chart.getDatasetMeta(0).data[0].y;
+
+                // Split the text into lines
+                const lines = dynamicText.split('\n');
+
+                // Set font properties
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.font = 'bold sans-serif'; // Adjust the font size as needed
+                ctx.fillStyle = "white";
+
+                // Draw each line
+                lines.forEach((line, index) => {
+                    ctx.fillText(line, x, y - (lines.length - 1) * 10 + index * 20);
+                });
+
+                ctx.restore();
+            }
+        };
+
+        @* const chartMonitoringDeviceStatus = new Chart(ctxMonitoringDeviceStatus, {
+            type: 'doughnut',
+            data: dataMonitoringDeviceStatus,
+            options: optionsMonitoringDeviceStatus,
+            plugins: [totalDeviceStatus] 
+        }); *@
+
+        const mapLatitude = -7.3729674;
+        const mapLongitude = 108.5936714;
+        const mapZoom = 10;
+
+        var currentTime = new Date();
+        var maxDifference = 10 * 60 * 1000;
+    </script>
+
+    <script>
+        var stations = [
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b301",
+                "name": "Cirahong",
+                "type": "AWLR",
+                "latitude": "7°20'24.83\"S",
+                "longitude": "108°19'1.26\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "kab": "Tasikmalaya",
+                "kec": "Manonjaya",
+                "desa": "Margaluyu"
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Bojongsalawe",
+                "type": "AWLR",
+                "latitude": "7°21'44.41\"S",
+                "longitude": "108°27'24.53\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "kab": "Ciamis",
+                "kec": "Cimaragas",
+                "desa": "Cimaragas"
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Karangpucung",
+                "type": "AWLR",
+                "latitude": "7°21'16.54\"S",
+                "longitude": "108°29'45.47\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "kab": "Banjar",
+                "kec": "Banjar",
+                "desa": "Jajawar"
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Cipadung",
+                "type": "AWLR",
+                "latitude": "7°21'36.47\"S",
+                "longitude": "108°32'3.73\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "kab": "Banjar",
+                "kec": "Purwaharja",
+                "desa": "Purwaharja"
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Pataruman",
+                "type": "AWLR",
+                "latitude": "7°22'3.19\"S",
+                "longitude": "108°33'34.84\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Karangpanimbal",
+                "kec": "Purwaharja",
+                "kab": "Banjar"
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Cikawung",
+                "type": "AWLR",
+                "latitude": "7°22'26.07\"S",
+                "longitude": "108°40'49.50\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Cintaratu",
+                "kec": "Lakbok",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Gunungcupu",
+                "type": "AWLR",
+                "latitude": "7°17'59.55\"S",
+                "longitude": "108°13'39.40\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Gunungcupu",
+                "kec": "Sindangkasih",
+                "kab": "Ciamis"                
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Karangsari",
+                "type": "AWLR",
+                "latitude": "7°28'17.66\"S",
+                "longitude": "108°43'14.21\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Bojongsari",
+                "kec": "Bojongsari",
+                "kab": "Cilacap"                
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Karangwangkal",
+                "type": "AWLR",
+                "latitude": "7°34'33.40\"S",
+                "longitude": "108°44'54.64\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Sukanagara",
+                "kec": "Padaherang",
+                "kab": "Pangandaran"                
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Tunggilis",
+                "type": "AWLR",
+                "latitude": "7°36'33.27\"S",
+                "longitude": "108°44'15.79\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Sidamukti",
+                "kec": "Patimuan",
+                "kab": "Cilacap"                
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Kalipucang",
+                "type": "AWLR",
+                "latitude": "7°38'20.77\"S",
+                "longitude": "108°45'15.86\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Kalipucang",
+                "kec": "Kalipucang",
+                "kab": "Pangandaran"                
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Majingklak",
+                "type": "AWLR",
+                "latitude": "7°40'26.65\"S",
+                "longitude": "108°48'2.11\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Pamotan",
+                "kec": "Kalipucang",
+                "kab": "Pangandaran"
+            },
+            {
+                "id": "d57652b1-0d54-4cc9-947b-1cb1ab28778a",
+                "name": "Sidareja (Jemb. S",
+                "type": "AWLR",
+                "latitude": "7°29'32.27\"S",
+                "longitude": "108°46'10.96\"E",
+                "ws": "Citanduy",
+                "das": "Cibeureum",
+                "desa": "Bangunreja",
+                "kec": "Kedungreja",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "c74a2ed1-5fd6-4d26-822b-9b1d841d8f0b",
+                "name": "Sidareja",
+                "type": "AWLR",
+                "latitude": "7°29'23.12\"S",
+                "longitude": "108°47'27.94\"E",
+                "ws": "Citanduy",
+                "das": "Cibeureum",
+                "desa": "Tegalsari",
+                "kec": "Sidareja",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "63b9df2d-542d-4d90-978f-4372f12b2b7e",
+                "name": "Kedung Daon",
+                "type": "AWLR",
+                "latitude": "7°32'53.02\"S",
+                "longitude": "108°48'54.51\"E",
+                "ws": "Citanduy",
+                "das": "Cibeureum",
+                "desa": "Kaliwungu",
+                "kec": "Kedungreja",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "b7f80c51-6c7e-4b7f-8b62-28e9c768d0e8",
+                "name": "Banaruka",
+                "type": "AWLR",
+                "latitude": "7°18'46.05\"S",
+                "longitude": "108°26'8.74\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Karanganyar",
+                "kec": "Cijeungjing",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "3fb5f717-d755-4b85-8b5a-0b1b8ab1f3c1",
+                "name": "Cibeka",
+                "type": "AWLR",
+                "latitude": "7°20'51.86\"S",
+                "longitude": "108°28'43.43\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Karangkamulyan",
+                "kec": "Cijeungjing",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "f98e0cde-0cc0-4d50-b80e-5a885ba5d09e",
+                "name": "Batununggul",
+                "type": "AWLR",
+                "latitude": "7°20'42.97\"S",
+                "longitude": "108°29'41.03\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Mekarmukti",
+                "kec": "Cisaga",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "f7e95f99-9fbc-4a5f-98b3-62e5d9a1bbf8",
+                "name": "Tenjolaya",
+                "type": "AWLR",
+                "latitude": "7°19'7.99\"S",
+                "longitude": "108°30'14.47\"E",
+                "ws": "Citanduy",
+                "das": "Cimuntur",
+                "desa": "Karyamulya",
+                "kec": "Cisaga",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "e775f5c8-f456-49da-8123-092f9df32b09",
+                "name": "Gimbal",
+                "type": "AWLR",
+                "latitude": "7°29'2.10\"S",
+                "longitude": "108°41'56.90\"E",
+                "ws": "Citanduy",
+                "das": "Ciseel",
+                "desa": "Mangunjaya",
+                "kec": "Mangunjaya",
+                "kab": "Pangandaran"
+            },
+            {
+                "id": "52d2c8e4-5f3b-4e2f-9939-c8ebc1f8a989",
+                "name": "Situbatu",
+                "type": "AWLR",
+                "latitude": "7°23'20.92\"S",
+                "longitude": "108°28'59.05\"E",
+                "ws": "Citanduy",
+                "das": "Ciseel",
+                "desa": "Pasirnagara",
+                "kec": "Pamarican",
+                "kab": "Banjar"
+            },
+            {
+                "id": "6ab86d4d-b97e-42a1-8fc8-86969b06dcf6",
+                "name": "Bendung Ciputra",
+                "type": "AWLR",
+                "latitude": "7°28'52.94\"S",
+                "longitude": "108°35'43.27\"E",
+                "ws": "Citanduy",
+                "das": "Ciseel",
+                "desa": "Sukasari",
+                "kec": "Banjarsari",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "e61a4679-d6f2-495f-8122-ecf541b6e0d5",
+                "name": "Bunter",
+                "type": "AWLR",
+                "latitude": "7°17'17.81\"S",
+                "longitude": "108°28'48.54\"E",
+                "ws": "Citanduy",
+                "das": "Ciliung",
+                "desa": "Bunter",
+                "kec": "Sukadana",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "183e56db-0c2d-4f97-917b-c5e9d5a4e9b6",
+                "name": "Bunar",
+                "type": "AWLR",
+                "latitude": "7°20'20.48\"S",
+                "longitude": "108°26'12.66\"E",
+                "ws": "Citanduy",
+                "das": "Cimuntur",
+                "desa": "Bojongmengger",
+                "kec": "Cijeungjing",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "91ff5c0e-c159-4669-bf1b-cbd4356395b7",
+                "name": "Cikadu",
+                "type": "AWLR",
+                "latitude": "7°14'41.42\"S",
+                "longitude": "108°35'0.32\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Bingkeng",
+                "kec": "Dayeuhluhur",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "2fa6f498-b92e-4f53-b1b8-9a0d36fc328b",
+                "name": "Bebedahan",
+                "type": "AWLR",
+                "latitude": "7°19'35.53\"S",
+                "longitude": "108°33'31.77\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Bangunharja",
+                "kec": "Cisaga",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Binangun",
+                "type": "AWLR",
+                "latitude": "7°24'32.78\"S",
+                "longitude": "108°31'34.40\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Binangun",
+                "kec": "Pataruman",
+                "kab": "Banjar"
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Ciawitali",
+                "type": "AWLR",
+                "latitude": "7°27'6.69\"S",
+                "longitude": "108°39'16.92\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Sindangasih",
+                "kec": "Banjarsari",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Kedungkuda",
+                "type": "AWLR",
+                "latitude": "7°29'44.3\"S",
+                "longitude": "108°42'17.9\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Sukamaju",
+                "kec": "Mangunjaya",
+                "kab": "Pangandaran"
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Pitulasi/Panyaran",
+                "type": "AWLR",
+                "latitude": "7°21'43.08\"S",
+                "longitude": "108°45'54.52\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Mekarsari",
+                "kec": "Cipari",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Cukangleuleus",
+                "type": "AWLR",
+                "latitude": "7°21'12.45\"S",
+                "longitude": "108°42'15.25\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Adimulya",
+                "kec": "Wanareja",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "5b04bfe3-3de1-4d1d-af1c-7ee5fbd14fa8",
+                "name": "Wanareja",
+                "type": "AWLR",
+                "latitude": "7°19'59.28\"S",
+                "longitude": "108°40'23.64\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Wanareja",
+                "kec": "Wanareja",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "5b04bfe3-3de1-4d1d-af1c-7ee5fbd14fa8",
+                "name": "Stinggil",
+                "type": "AWLR",
+                "latitude": "7°32'54.41\"S",
+                "longitude": "108°52'50.19\"E",
+                "ws": "Cimeneng",
+                "das": "Cimeneng",
+                "desa": "Bulaksari",
+                "kec": "Bantarsari",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "5b04bfe3-3de1-4d1d-af1c-7ee5fbd14fa8",
+                "name": "Cikondang",
+                "type": "AWLR",
+                "latitude": "7°22'13.33\"S",
+                "longitude": "108°52'53.66\"E",
+                "ws": "Citanduy",
+                "das": "Cikawung",
+                "desa": "Mandala",
+                "kec": "Cimanggu",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "5b04bfe3-3de1-4d1d-af1c-7ee5fbd14fa8",
+                "name": "Surusunda",
+                "type": "AWLR",
+                "latitude": "7°22'31.36\"S",
+                "longitude": "108°53'55.32\"E",
+                "ws": "Citanduy",
+                "das": "Cirajayu",
+                "desa": "Surusunda",
+                "kec": "Karangpucung",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "5b04bfe3-3de1-4d1d-af1c-7ee5fbd14fa8",
+                "name": "Sawangan",
+                "type": "AWLR",
+                "latitude": "7°35'56.03\"S",
+                "longitude": "108°59'50.31\"E",
+                "ws": "Cimeneng",
+                "das": "Donan",
+                "desa": "Sawangan",
+                "kec": "Jeruklegi",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "5b04bfe3-3de1-4d1d-af1c-7ee5fbd14fa8",
+                "name": "Sukaharja",
+                "type": "AWLR",
+                "latitude": "7°8'31.297\"S",
+                "longitude": "108°12'11.437\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Kertaraharja",
+                "kec": "Panumbangan",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "5b04bfe3-3de1-4d1d-af1c-7ee5fbd14fa8",
+                "name": "Selajambe",
+                "type": "AWLR",
+                "latitude": "7°8'20.58\"S",
+                "longitude": "108°30'43.798\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Bangunjaya",
+                "kec": "Subang",
+                "kab": "Kuningan"
+            },
+            {
+                "id": "d8b59344-2a35-4d15-a74d-9565b531c6f7",
+                "name": "Kadipaten",
+                "type": "ARR",
+                "latitude": "7°07'06.2\"S",
+                "longitude": "108°05'57.5\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Kadipaten",
+                "kec": "Kadipaten",
+                "kab": "Tasikmalaya"
+            },
+            {
+                "id": "e9162131-ea87-4629-b878-8349b519b302",
+                "name": "Pagerageung",
+                "type": "ARR",
+                "latitude": "7°6'56.96\"S",
+                "longitude": "108°9'37.38\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Pagerageung",
+                "kec": "Pagerageung",
+                "kab": "Tasikmalaya"
+            },
+            {
+                "id": "dcb5c8c2-b2d7-4ac4-8cfb-26af9c586e81",
+                "name": "Cihonje",
+                "type": "ARR",
+                "latitude": "7°11'32.17\"S",
+                "longitude": "108°11'8.46\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Tanjungpura",
+                "kec": "Rajapolah",
+                "kab": "Tasikmalaya"
+            },
+            {
+                "id": "f138b65a-79ff-46b1-8a38-72a92d3d016f",
+                "name": "Cigaleuh",
+                "type": "ARR",
+                "latitude": "7°15'5.60\"S",
+                "longitude": "108°7'53.76\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Cisayong",
+                "kec": "Cisayong",
+                "kab": "Tasikmalaya"
+            },
+            {
+                "id": "0ec8dcd9-c5e8-439f-8a45-34349904a804",
+                "name": "Cikasasah",
+                "type": "ARR",
+                "latitude": "7°18'16.02\"S",
+                "longitude": "108°7'16.07\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Cisaruni",
+                "kec": "Padakembang",
+                "kab": "Tasikmalaya"
+            },
+            {
+                "id": "3dddb9c8-41fc-4bb5-96af-6159d6a35e6c",
+                "name": "Cibeureum",
+                "type": "ARR",
+                "latitude": "7°20'59.90\"S",
+                "longitude": "108°14'7.09\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Setiajaya",
+                "kec": "Cibeureum",
+                "kab": "Tasikmalaya"
+            },
+            {
+                "id": "036d707e-9cd2-4b83-86e7-35b4b1b8687c",
+                "name": "Cineam",
+                "type": "ARR",
+                "latitude": "7°24'31.74\"S",
+                "longitude": "108°21'34.19\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Cineam",
+                "kec": "Cineam",
+                "kab": "Tasikmalaya"
+            },
+            {
+                "id": "5fcf7c59-167e-4aaf-aa0b-4e58926f4bb4",
+                "name": "Panjalu",
+                "type": "ARR",
+                "latitude": "7° 8'10.36\"S",
+                "longitude": "108°16'9.54\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Panjalu",
+                "kec": "Panjalu",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "a0470d1e-c8a7-4903-bf35-fa6ab2c6d755",
+                "name": "Panawangan",
+                "type": "ARR",
+                "latitude": "7° 7'37.78\"S",
+                "longitude": "108°21'58.76\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Kertayasa",
+                "kec": "Panawangan",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "fd0563c5-87a1-49a6-8de4-7aef5b207ee3",
+                "name": "Danasari",
+                "type": "ARR",
+                "latitude": "7°17'13.03\"S",
+                "longitude": "108°25'14.99\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Salakaria",
+                "kec": "Sukadana",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "7c5e7a3f-67a6-49f0-bda1-b99f84e28d1a",
+                "name": "Kawali",
+                "type": "ARR",
+                "latitude": "7°11'13.21\"S",
+                "longitude": "108°22'11.31\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Kawali",
+                "kec": "Kawali",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "f7da0f9a-e7b7-4f45-8f25-5f31cc238779",
+                "name": "Sadananya",
+                "type": "ARR",
+                "latitude": "7°14'59.40\"S",
+                "longitude": "108°18'31.76\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Gunungsari",
+                "kec": "Sadananya",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "2f1dcb30-6b4d-4b4b-bc5f-265c6b64fdec",
+                "name": "Tanjungjaya",
+                "type": "ARR",
+                "latitude": "7°19'23.29\"S",
+                "longitude": "108°29'30.35\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Tanjungjaya",
+                "kec": "Sukadana",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "78f13e8b-4cd6-40c5-83d0-239c0ff2f7ae",
+                "name": "Kaso",
+                "type": "ARR",
+                "latitude": "7°14'23.75\"S",
+                "longitude": "108°33'34.81\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Kaso",
+                "kec": "Tambaksari",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "08ab5b76-1674-4b5b-8bbf-535570f6d4d2",
+                "name": "Subang",
+                "type": "ARR",
+                "latitude": "7° 8'51.27\"S",
+                "longitude": "108°32'35.72\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Pamulihan",
+                "kec": "Subang",
+                "kab": "Kuningan"
+            },
+            {
+                "id": "c1ec2f47-5487-4dcf-8540-f3698dcd02a5",
+                "name": "Janggala",
+                "type": "ARR",
+                "latitude": "7°23'35.97\"S",
+                "longitude": "108°25'31.26\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Janggala",
+                "kec": "Cidolog",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "0c0ffcb7-f2fc-46f0-a6db-fb0584be53e6",
+                "name": "Rancah",
+                "type": "ARR",
+                "latitude": "7°11'47.34\"S",
+                "longitude": "108°30'27.00\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Rancah",
+                "kec": "Rancah",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "87c218b4-401d-4cb1-97fc-8b57525b2725",
+                "name": "Gn. Babakan",
+                "type": "ARR",
+                "latitude": "7°21'32.26\"S",
+                "longitude": "108°33'14.80\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Karangpanimbal",
+                "kec": "Purwaharja",
+                "kab": "Banjar"
+            },
+            {
+                "id": "6b84c0d0-832b-49ff-9d83-8a252c22e45b",
+                "name": "Sidamulih",
+                "type": "ARR",
+                "latitude": "7°28'20.74\"S",
+                "longitude": "108°28'57.27\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Sidamulih",
+                "kec": "Pamarican",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "bf3b1d79-44ef-4ed6-a67e-d7d3b98b300d",
+                "name": "Cikupa",
+                "type": "ARR",
+                "latitude": "7°31'6.87\"S",
+                "longitude": "108°28'35.62\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Cikupa",
+                "kec": "Banjarsari",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "7f0c117d-285d-404b-9d62-c5fffb3b8f6d",
+                "name": "Gunungputri",
+                "type": "ARR",
+                "latitude": "7°25'45.58\"S",
+                "longitude": "108°30'56.90\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Sukajaya",
+                "kec": "Pamarican",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "4449160d-e7c5-4e28-805b-6b781dfd78f5",
+                "name": "Langensari",
+                "type": "ARR",
+                "latitude": "7°22'1.44\"S",
+                "longitude": "108°37'34.53\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Rejasari",
+                "kec": "Langensari",
+                "kab": "Banjar"
+            },
+            {
+                "id": "6e1db308-3a66-4cf5-836f-18f87253a8ae",
+                "name": "Padaringan",
+                "type": "ARR",
+                "latitude": "7°25'20.94\"S",
+                "longitude": "108°36'32.31\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Padaringan",
+                "kec": "Purwadadi",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "f00b0ba7-f8f3-46b6-a306-9b02b634fa6e",
+                "name": "Ciawitali",
+                "type": "ARR",
+                "latitude": "7°27'18.06\"S",
+                "longitude": "108°39'36.16\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Sindangasih",
+                "kec": "Banjarsari",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "06b2b82d-7f73-4c7f-b731-8a4de80bcdd8",
+                "name": "Wanareja",
+                "type": "ARR",
+                "latitude": "7°20'7.50\"S",
+                "longitude": "108°40'49.84\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Wanareja",
+                "kec": "Wanareja",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "d2a9d0b0-38f6-44e6-b2e4-02d62770db7e",
+                "name": "Ujungbarang",
+                "type": "ARR",
+                "latitude": "7°13'18.50\"S",
+                "longitude": "108°47'7.96\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Ujungbarang",
+                "kec": "Majenang",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "7b7c5f7a-fef7-43e7-8ff1-fb7c958b2136",
+                "name": "Cimanggu",
+                "type": "ARR",
+                "latitude": "7°21'18.36\"S",
+                "longitude": "108°50'22.97\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Cimanggu",
+                "kec": "Cimanggu",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "7b67fd3c-b142-4d0e-8f34-31d0d312fcdf",
+                "name": "Karangbawang",
+                "type": "ARR",
+                "latitude": "7°35'6.27\"S",
+                "longitude": "108°53'55.98\"E",
+                "ws": "Citanduy",
+                "das": "Cimeneng",
+                "desa": "Kawunganten",
+                "kec": "Kawunganten",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "d7c1e6e5-1688-4fc4-8127-b6a7a6a9f83c",
+                "name": "Surusunda",
+                "type": "ARR",
+                "latitude": "7°22'44.26\"S",
+                "longitude": "108°53'31.92\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Surusunda",
+                "kec": "Karangpucung",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "c4e7f67b-8af0-4a01-b6ae-2556404704d2",
+                "name": "Karanganyar",
+                "type": "ARR",
+                "latitude": "7°41'3.95\"S",
+                "longitude": "108°48'29.81\"E",
+                "ws": "Citanduy",
+                "das": "Cikonde",
+                "desa": "Ujunggagak",
+                "kec": "Kampung Laut",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "c2853c15-591e-4e52-a13e-54b6b89acb5d",
+                "name": "Lumbir",
+                "type": "ARR",
+                "latitude": "7°26'53.4\"S",
+                "longitude": "108°55'25.9\"E",
+                "ws": "Citanduy",
+                "das": "Cimeneng",
+                "desa": "Cingebul",
+                "kec": "Lumbir",
+                "kab": "Banyumas"
+            },
+            {
+                "id": "23f4a1e6-290b-4c61-b2cc-7a4953b3c646",
+                "name": "Majenang",
+                "type": "ARR",
+                "latitude": "7°17'51.12\"S",
+                "longitude": "108°45'52.13\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Jenang",
+                "kec": "Majenang",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "e8dcdf36-8996-4ccf-99e8-54d39ec0db90",
+                "name": "Bd. Cileumeuh",
+                "type": "ARR",
+                "latitude": "7°18'30.96\"S",
+                "longitude": "108°48'1.12\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Cileumeuh",
+                "kec": "Cimanggu",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "083d0a70-17c2-4954-b22c-1b2e776a6a5b",
+                "name": "Bd. Cijalu",
+                "type": "ARR",
+                "latitude": "7°17'27.19\"S",
+                "longitude": "108°45'31.74\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Jenang",
+                "kec": "Majenang",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "7d7d9d02-ec38-4383-88dc-e8c1e67fa3c0",
+                "name": "Karangsari",
+                "type": "ARR",
+                "latitude": "7°28'24.30\"S",
+                "longitude": "108°43'19.42\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Bojongsari",
+                "kec": "Kedungreja",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "1b14a79e-c5cb-48e7-9f6c-fc5010c026b5",
+                "name": "Cibariwal",
+                "type": "ARR",
+                "latitude": "7°8'15.09\"S",
+                "longitude": "108°22'26.33\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Kertayasa",
+                "kec": "Panawangan",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "28928c1a-5421-4cf4-b5aa-108f4be6d431",
+                "name": "Ciamis",
+                "type": "ARR",
+                "latitude": "7°19'57.76\"S",
+                "longitude": "108°22'7.89\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Kertasari",
+                "kec": "Ciamis",
+                "kab": "Ciamis"
+            },
+            {
+                "id": "944ac9e3-bd25-4730-8a57-c3453fd19b7c",
+                "name": "Cisayong",
+                "type": "ARR",
+                "latitude": "7°15'34.57\"S",
+                "longitude": "108°8'44.55\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Cisayong",
+                "kec": "Cisayong",
+                "kab": "Tasikmalaya"
+            },
+            {
+                "id": "e54b46b4-dc9e-4c7b-a742-7e693ae70f40",
+                "name": "Padaherang",
+                "type": "ARR",
+                "latitude": "7°32'26.62\"S",
+                "longitude": "108°42'1.81\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Karangpawitan",
+                "kec": "Padaherang",
+                "kab": "Pangandaran"
+            },
+            {
+                "id": "7dba52f4-3a09-4a79-b09b-2a20875e6f7d",
+                "name": "Sidareja",
+                "type": "ARR",
+                "latitude": "7°28'16.45\"S",
+                "longitude": "108°48'14.16\"E",
+                "ws": "Citanduy",
+                "das": "Cibeureum",
+                "desa": "Kunci",
+                "kec": "Sidareja",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "8d6c505e-cd2f-4a0e-ae7d-8c73e68e41b7",
+                "name": "Dayeuhluhur",
+                "type": "ARR",
+                "latitude": "7°15'32.36\"S",
+                "longitude": "108°37'14.1\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Dayeuluhur",
+                "kec": "Dayeuluhur",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "5d3b399d-12e8-46a7-92a5-3fdc5adbb8c1",
+                "name": "Manganti",
+                "type": "ARR",
+                "latitude": "7°26'54.36\"S",
+                "longitude": "108°43'7.69\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Bojongsari",
+                "kec": "Kedungreja",
+                "kab": "Cilacap"
+            },
+            {
+                "id": "ac99e3e1-f79e-4576-9500-2ff74d8a6354",
+                "name": "Pataruman",
+                "type": "AWS",
+                "latitude": "7°22'3.56\"S",
+                "longitude": "108°33'47.69\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Pataruman",
+                "kec": "Pataruman",
+                "kab": "Banjar"
+            },
+            {
+                "id": "d3d1e4a7-4956-4fbb-83c3-e87d90fe32a8",
+                "name": "Majenang",
+                "type": "AWS",
+                "latitude": "7°18'10.80\"S",
+                "longitude": "108°44'51.39\"E",
+                "ws": "Citanduy",
+                "das": "Citanduy",
+                "desa": "Cibeunying",
+                "kec": "Majenang",
+                "kab": "Cilacap"
+            }
+        ];
+
+        function convertDMSToDecimal(degrees, minutes, seconds, direction) {
+            let decimal = degrees + (minutes / 60) + (seconds / 3600);
+            // Jika arah adalah 'S' atau 'W', hasilnya harus negatif
+            if (direction === 'S' || direction === 'W') {
+                decimal *= -1;
+            }
+            return decimal;
+        }
+
+        // Fungsi untuk parsing string DMS dan mengonversinya
+        function parseDMS(input) {
+            // Regular expression untuk menangkap bagian dari string DMS
+            const parts = input.match(/(\d+)[^\d]+(\d+)[^\d]+(\d+(\.\d+)?)[^\d]*([NSEW])/i);
+            if (!parts) {
+                throw new Error("Format DMS tidak valid.");
+            }
+            
+            const degrees = parseFloat(parts[1]);
+            const minutes = parseFloat(parts[2]);
+            const seconds = parseFloat(parts[3]);
+            const direction = parts[5].toUpperCase();
+            
+            return convertDMSToDecimal(degrees, minutes, seconds, direction);
+        }
+
+
+        const latitudeDMS = "7°20'24.83\"S";
+        const longitudeDMS = "108°19'1.26\"E";
+
+        const parsedLatitude = parseDMS(latitudeDMS);
+        const parsedLongitude = parseDMS(longitudeDMS);
+
+        console.log(`Latitude: ${parsedLatitude}`);
+        console.log(`Longitude: ${parsedLongitude}`);
+
+        const awlr_marker = L.layerGroup();
+        const arr_marker = L.layerGroup();
+        const aws_marker = L.layerGroup();
+
+        const map = L.map('map', {
+            center: [parseFloat(mapLatitude), parseFloat(mapLongitude)],
+            zoom: mapZoom,
+            layers: [awlr_marker, arr_marker, aws_marker]
+        });
+
+        map.attributionControl.setPrefix(false);
+
+        new L.basemapsSwitcher([
+        {
+            layer: L.mapboxGL({
+                accessToken: 'pk.eyJ1IjoiaGFuZHlhc3dhbiIsImEiOiJjbDY3YmNmcGgwODAxM2R0YjZzY3ZkN3M5In0.7aDstmvWZvOmZIwyPfMB4g',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                attribution: `&copy;${new Date().getFullYear()} - BBWS Citanduy - Higertech`
+            }).addTo(map), //DEFAULT MAP
+            icon: '/images/basemaps/basemap-grayscale.jpg',
+            name: 'Grayscale'
+        },
+        {
+            layer: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: `&copy;${new Date().getFullYear()} - BBWS Citanduy - Higertech`
+            }),
+            icon: '/images/basemaps/world-imagery.jpg',
+            name: 'W.Imagery'
+        },
+        {
+            layer: L.mapboxGL({
+                accessToken: 'pk.eyJ1IjoiaGFuZHlhc3dhbiIsImEiOiJjbDY3YmNmcGgwODAxM2R0YjZzY3ZkN3M5In0.7aDstmvWZvOmZIwyPfMB4g',
+                style: 'mapbox://styles/mapbox/satellite-streets-v12',
+                attribution: `&copy;${new Date().getFullYear()} - BBWS Citanduy - Higertech`
+            }),
+            icon: '/images/basemaps/basemap-satellite.jpg',
+            name: 'Satellite'
+        }
+        ], { position: 'topright' }).addTo(map);
+
+        const overlays = {
+            'Pos Duga Air': awlr_marker,
+            'Pos Curah Hujan': arr_marker,
+            'Pos Klimatologi': aws_marker
+        };
+
+        const layerControl = L.control.layers(null, overlays).addTo(map);
+
+        $(document).ready(function() {
+            @* loadAwlrLastReading();
+            loadArrLastReading();
+            loadAwsLastReading();
+            loadMonitoringDeviceStatus();
+            loadMonitoringAwlr();
+            loadMonitoringArr(); *@
+
+            const lastTab = localStorage.getItem('tab-center-left');
+
+            if (lastTab) {
+                // Activate the last selected tab
+                $(`#tab-center-left a[href="#${lastTab}"]`).tab('show');
+            } else {
+                $(`#tab-center-left a[href="#tab-awlr"]`).tab('show');
+            }
+
+            // Store the selected tab in local storage when a tab is clicked
+            $('#tab-center-left a').on('click', function (e) {
+                const selectedTab = $(this).attr('href').replace('#', '');
+                localStorage.setItem('tab-center-left', selectedTab);
+            });
+
+            L.TopoJSON = L.GeoJSON.extend({
+                addData: function (data) {
+                var geojson, key;
+                if (data.type === "Topology") {
+                    for (key in data.objects) {
+                    if (data.objects.hasOwnProperty(key)) {
+                        geojson = topojson.feature(data, data.objects[key]);
+                        L.GeoJSON.prototype.addData.call(this, geojson);
+                    }
+                    }
+                    return this;
+                }
+                L.GeoJSON.prototype.addData.call(this, data);
+                return this;
+                }
+            });
+
+            L.topoJson = function (data, options) {
+                return new L.TopoJSON(data, options);
+            };
+
+            async function getGeoData(url) {
+                let response = await fetch(url);
+                let data = await response.json();
+                return data;
+            }
+
+            const colors = [
+                '#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', 
+                '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', 
+                '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', 
+                '#aaffc3', '#808000', '#ffd8b1', '#000075', '#ff6f61', 
+                '#6a0572', '#a6cee3', '#1f78b4', '#b2df8a'
+            ];
+
+
+            let i = 0;
+
+            @* getData(`/RiverArea/GetAllRiverArea`).then(res => {
+                let result = res.data;
+                if(result.code == 200) {
+                    $.each(result.response, function (key, river_area) {
+                        if(river_area.shpFile != null && river_area.shpFile != '') {
+                            
+                        }
+                    });
+                }
+            }).catch(err => {
+                console.log(err.response)
+            }) *@
+
+            getGeoData(`/data/das-citanduy.json`).then(data => {
+                var geojsonLayer = L.topoJson(null, {
+                    onEachFeature: function(feature, layer) {
+                        if (feature.properties.NAMA_DAS != null && feature.properties.NAMA_DAS != '') {
+                            layer.bindTooltip(showDetailDas(`WS Citanduy`, feature.properties), 
+                            { 
+                                direction: 'right',
+                                permanent: false,
+                                sticky: true,
+                                offset: [10, 0],
+                                opacity: 0.9,
+                                className: 'leaflet-tooltip-own' 
+                            }).openTooltip();
+
+                            layer.setStyle({fill: true, stroke: true, color: '#502909', fillColor: colors[i], weight: 1, fillOpacity: 0.3 });
+
+                            layer.on("mouseout", function() {
+                                layer.setStyle({fillOpacity: 0.3, weight: 1})
+                            });
+                            layer.on("mouseover", function() {
+                                layer.setStyle({fillOpacity: 0.5, weight: 1.5})
+                        
+                            });
+                        } else {
+                            layer.setStyle({fill: false, stroke: false });
+                        }
+                        i++;
+                        if (i > 24) i = 0;
+                    }
+                }).addTo(map);
+                geojsonLayer.addData(data);
+                layerControl.addOverlay(geojsonLayer, `DAS WS Citanduy`);
+            });
+
+            function showDetailDas(river_area, properties) {
+                var panelContent = `<p style="color: #fcfcfc;font-size: 0.55rem;margin: 0;">${river_area}</p>
+                    <h5 style="font-size: 0.75rem;margin: 3px 0;"><span style="color: #0ECAF0;">#${properties.KODE_DAS}: </span> <span style="color: #FFC10A;">${properties.NAMA_DAS}</span></h5>
+                    @* <p style="color: #fcfcfc;font-size: 0.65rem;margin: 0;">Luas: ${properties.luas.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (Ha)</p> *@
+                `;
+                return panelContent;
+            }
+
+            $.getJSON('/data/sungai_ordo1.json', function (geojson) {
+                var geojsonLayer = L.geoJson(geojson, {
+                    style: function (feature) {
+                        return {
+                            'weight': 2,
+                            'color': '#FF0000'
+                        }
+                    }
+                }).addTo(map);
+
+                layerControl.addOverlay(geojsonLayer, "Sungai Ordo 1");
+            });
+
+            $.getJSON('/data/sungai_ordo2.json', function (geojson) {
+                var geojsonLayer = L.geoJson(geojson, {
+                    style: function (feature) {
+                        return {
+                            'weight': 2,
+                            'color': '#008000'
+                        }
+                    }
+                }).addTo(map);
+
+                layerControl.addOverlay(geojsonLayer, "Sungai Ordo 2");
+            });
+
+            $.getJSON('/data/sungai_ordo3.json', function (geojson) {
+                var geojsonLayer = L.geoJson(geojson, {
+                    style: function (feature) {
+                        return {
+                            'weight': 2,
+                            'color': '#FFFF00'
+                        }
+                    }
+                }).addTo(map);
+
+                layerControl.addOverlay(geojsonLayer, "Sungai Ordo 3");
+            });
+
+            $.getJSON('/data/sungai_ordo4.json', function (geojson) {
+                var geojsonLayer = L.geoJson(geojson, {
+                    style: function (feature) {
+                        return {
+                            'weight': 2,
+                            'color': '#6574CA'
+                        }
+                    }
+                }).addTo(map);
+
+                layerControl.addOverlay(geojsonLayer, "Sungai Ordo 4");
+            });
+
+             @* setInterval(loadLastReading, 300000); *@
+
+             stations.forEach(station => {
+                try {
+                    station.latitude = parseDMS(station.latitude);
+                    station.longitude = parseDMS(station.longitude);
+                    
+                    if(station.type == 'AWLR') {
+                        var customIcon = L.divIcon({ 
+                            iconSize: new L.Point(40, 20), 
+                            iconAnchor: new L.Point(20, 20), 
+                            html:  `<div class="ts-marker-wrapper"><a href="javascript:void(0)" class="ts-marker ts-awlr" data-ts-id="64" data-ts-ln="60" style="outline: none;"><div class="ts-marker__title">${station.name}</div><div class="ts-marker__feature ts-marker__feature__blue"><i class="fas fa-water"></i></div></a></div>`
+                        });
+
+                        var stationMarker = L.marker([station.latitude, station.longitude], {
+                            icon: customIcon,
+                        }).bindPopup(createDetailPanelStation(station)).addTo(awlr_marker);
+
+                        stationMarker.options.id = station.id;
+
+                        $('.card-station-awlr[data-ts-id="' + station.id + '"]').on('click', function () {
+                            map.setView([station.latitude, station.longitude], 12);
+                            stationMarker.openPopup();
+                        });
+                    } else if(station.type == 'ARR') {
+                        var customIcon = L.divIcon({ 
+                            iconSize: new L.Point(40, 20), 
+                            iconAnchor: new L.Point(20, 20), 
+                            html:  `<div class="ts-marker-wrapper"><a href="javascript:void(0)" class="ts-marker ts-arr" data-ts-id="64" data-ts-ln="60" style="outline: none;"><div class="ts-marker__title">${station.name}</div><image src="/images/arr/berawan.png" height="26" /></a></div>`}
+                        );
+
+                        var stationMarker = L.marker([station.latitude, station.longitude], {
+                            icon: customIcon,
+                        }).bindPopup(createDetailPanelStation(station)).addTo(arr_marker);
+
+                        stationMarker.options.id = station.id;
+
+                        $('.card-station-arr[data-ts-id="' + station.id + '"]').on('click', function () {
+                            map.setView([station.latitude, station.longitude], 12);
+                            stationMarker.openPopup();
+                        });
+                    } else if(station.type == 'AWS') {
+                        var customIcon = L.divIcon({ 
+                            iconSize: new L.Point(40, 20), 
+                            iconAnchor: new L.Point(20, 20), 
+                            html:  `<div class="ts-marker-wrapper"><a href="javascript:void(0)" class="ts-marker ts-awlr" data-ts-id="64" data-ts-ln="60" style="outline: none;"><div class="ts-marker__title">${station.name}</div><div class="ts-marker__feature ts-marker__feature__red"><i class="fas fa-wind"></i></div></a></div>`
+                        });
+
+                        var stationMarker = L.marker([station.latitude, station.longitude], {
+                            icon: customIcon,
+                        }).bindPopup(createDetailPanelStation(station)).addTo(aws_marker);
+
+                        stationMarker.options.id = station.id;
+
+                        $('.card-station-aws[data-ts-id="' + station.id + '"]').on('click', function () {
+                            map.setView([station.latitude, station.longitude], 12);
+                            stationMarker.openPopup();
+                        });
+                    }
+
+                } catch (error) {
+                    console.error(`Error parsing DMS for station ${station.name}: ${error.message}`);
+                }
+            });
+        });
+
+        function createDetailPanelStation(reading) {
+            var photo = '/images/logos/logo-pu.jpeg';
+
+            if(reading.photo != null) {
+                var photo = `/uploads/images/stations/${reading.photo}`;
+            }
+
+            var device_status = '<small class="mdi mdi-circle text-danger"></small> Offline';
+
+            if(reading.deviceStatus == 'online') {
+                device_status = '<small class="mdi mdi-circle text-success"></small> Online';
+            }
+
+            var panelContent = '<table class="table mb-2 font-12"><tbody>';
+            
+            panelContent += '<tr>';
+            panelContent += `<td class="px-0 py-2" colspan="3">
+                <div class="d-flex align-items-start">
+                    <img class="me-2 rounded-3" src="${photo}" width="35" height="35" alt="${reading.name}">
+                    <div class="w-100">
+                        <h5 class="mt-0 mb-1 fw-semibold font-12">${reading.name}</h5>
+                        ${device_status}
+                    </div>
+                </div>
+            </td>`;
+            panelContent += '</tr>';
+
+            @* panelContent += '<tr>';
+            panelContent += `<td class="py-1 px-0">Logger</td>`;
+            panelContent += `<td class="py-1 px-2">:</td>`;
+            panelContent += `<td class="py-1 px-0 align-middle">
+                ${reading.brandName} <span class="badge badge-outline-secondary rounded-1">${reading.deviceId}</span>
+            </td>`;
+            panelContent += '</tr>'; *@
+
+            panelContent += '<tr>';
+            panelContent += `<td class="py-1 px-0">WS / DAS</td>`;
+            panelContent += `<td class="py-1 px-2">:</td>`;
+            panelContent += `<td class="py-1 px-0 align-middle">
+                ${reading.ws}, ${reading.das}
+            </td>`;
+            panelContent += '</tr>';
+
+            panelContent += '<tr>';
+            panelContent += `<td class="py-1 px-0">Koordinat</td>`;
+            panelContent += `<td class="py-1 px-2">:</td>`;
+            panelContent += `<td class="py-1 px-0 align-middle fw-semibold"><a href="https://www.google.com/maps?q=${reading.latitude},${reading.longitude}" target="_blank">${reading.latitude.toFixed(6)}, ${reading.longitude.toFixed(6)}<a></td>`;
+            panelContent += '</tr>';
+
+            panelContent += '<tr>';
+            panelContent += `<td class="py-1 px-0">Lokasi</td>`;
+            panelContent += `<td class="py-1 px-2">:</td>`;
+            panelContent += `<td class="py-1 px-0 align-middle">
+                Kab. ${reading.kab}, Kec. ${reading.kec}, ${reading.desa}
+            </td>`;
+            panelContent += '</tr>';
+
+            if(reading.readingAt != null) {
+                panelContent += '<tr>';
+                panelContent += `<td class="py-1 px-0">Waktu</td>`;
+                panelContent += `<td class="py-1 px-2">:</td>`;
+                panelContent += `<td class="py-1 px-0">${moment(reading.readingAt).locale('id').format('D MMMM YYYY HH:mm')} WIB</td>`;
+                panelContent += '</tr>';
+
+                if(reading.type == 'AWLR') {
+                    var water_level_elevation = reading.waterLevelElevation == null ? '-' : `${reading.waterLevelElevation.toFixed(2)} <sup>Mdpl</sup>`;
+                    var debit = reading.debit == null ? '-' : `${reading.debit} <sup>m3/s</sup>`;
+
+                    var text_tma = `${reading.waterLevel.toFixed(2)} <sup>${reading.unitDisplay}`;
+
+                    if(reading.unitSensor == 'cmdpl' || reading.unitSensor == 'mdpl') {
+                        var text_tma = '-';
+                    }
+
+                    panelContent += '<tr>';
+                    panelContent += `<td class="py-1 px-0 nowrap">Tinggi Muka Air</td>`;
+                    panelContent += `<td class="py-1 px-2">:</td>`;
+                    panelContent += `<td class="py-1 px-0 fw-semibold">${text_tma}</td>`;
+                    panelContent += '</tr>';
+
+                    panelContent += '<tr>';
+                    panelContent += `<td class="py-1 px-0 nowrap">Elevasi Muka Air</td>`;
+                    panelContent += `<td class="py-1 px-2">:</td>`;
+                    panelContent += `<td class="py-1 px-0 fw-semibold">${water_level_elevation}</td>`;
+                    panelContent += '</tr>';
+
+                    panelContent += '<tr>';
+                    panelContent += `<td class="py-1 px-0 nowrap">Debit</td>`;
+                    panelContent += `<td class="py-1 px-2">:</td>`;
+                    panelContent += `<td class="py-1 px-0 fw-semibold">${debit}</td>`;
+                    panelContent += '</tr>';
+                } else if(reading.type == 'ARR') {
+                    panelContent += '<tr>';
+                    panelContent += `<td class="py-1 px-0 nowrap">Curah Hujan</td>`;
+                    panelContent += `<td class="py-1 px-2">:</td>`;
+                    panelContent += `<td class="py-1 px-0 fw-semibold">${reading.rainfall.toFixed(2)} <sup>mm</sup></td>`;
+                    panelContent += '</tr>';
+
+                    panelContent += '<tr>';
+                    panelContent += `<td class="py-1 px-0 nowrap">Curah Hujan Maks.</td>`;
+                    panelContent += `<td class="py-1 px-2">:</td>`;
+                    panelContent += `<td class="py-1 px-0 fw-semibold">${reading.rainfallMax.toFixed(2)} <sup>mm</sup></td>`;
+                    panelContent += '</tr>';
+                }
+            }
+            
+            panelContent += '</tbody></table>';
+
+            panelContent += `<a href="/Station/Detail/${reading.slug}" target="_blank" class="btn btn-sm btn-primary rounded-pill waves-effect waves-light text-white w-100">Lihat Detail</a>`;
+
+            return panelContent;
+        }
+
+        function loadAwlrLastReading() {
+            awlr_marker.clearLayers();
+
+            $('#tab-awlr').empty();
+            $('#tab-awlr').html(loadShimmerLastReading);
+            getData(`/Home/GetAwlrLastReading`).then(res => {
+                $('#tab-awlr').empty();
+                let result = res.data
+                
+                if (result.code == 200) {
+                    $('#total-awlr').html(result.response.length);
+                    $.each(result.response, function (key, awlr_last_reading) {
+                        @* console.log(awlr_last_reading); *@
+                        var contentStation = loadContentAwlrLastReading(awlr_last_reading);
+
+                        if($(`#card-station-awlr-${awlr_last_reading.id}`).length) {
+                            $(`#card-station-awlr-${awlr_last_reading.id}`).html(contentStation);
+                        } else {
+
+                            if(awlr_last_reading.riverAreaId == null) {
+                                $(`#tab-awlr`).append(contentStation);
+                            } else {
+                                if($(`#awlr-river-area-${awlr_last_reading.riverAreaId}`).length == 0) {
+                                    $('#tab-awlr').append(`<h4 class="text-center m-0" style="padding: 0.7rem;font-size: 0.8rem;background-color: #2F3567;" id="awlr-river-area-${awlr_last_reading.riverAreaId}">
+                                        <span style="color: #CDCED5;">${awlr_last_reading.riverAreaCode}: </span>
+                                        <span class="ms-1" style="color: #CDCED5;">WS ${awlr_last_reading.riverAreaName}</span>
+                                    </h4>
+                                    <div class="accordion custom-accordion" id="awlr-accordion-${awlr_last_reading.riverAreaId}">
+                                    </div>`);
+                                }
+
+                                if($(`#awlr-watershed-${awlr_last_reading.watershedId}`).length == 0) {
+                                    $(`#awlr-accordion-${awlr_last_reading.riverAreaId}`).append(`<div class="card mb-0">
+                                        <div class="card-header card-header-watershed">
+                                            <h5 class="m-0 position-relative">
+                                                <a class="custom-accordion-title d-block d-flex align-items-center"
+                                                    data-bs-toggle="collapse" href="#awlr-watershed-${awlr_last_reading.watershedId}"
+                                                    aria-expanded="true" aria-controls="awlr-watershed-${awlr_last_reading.watershedId}">
+                                                    <span style="color: #0ECAF0;font-weight: 600">#${awlr_last_reading.watershedCode}: </span>
+                                                    <span class="ms-1" style="color: #FFC10A;font-weight: 400;">${awlr_last_reading.watershedName}</span>
+                                                    <i class="mdi mdi-chevron-down accordion-arrow" style="color: #D0D1D8;"></i>
+                                                </a>
+                                            </h5>
+                                        </div>
+
+                                        <div id="awlr-watershed-${awlr_last_reading.watershedId}" class="collapse show">
+                                            <div class="card-body content-watershed" style="border-bottom: 1px solid #293067;padding: 0;">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>`);
+                                }
+
+                                $(`#awlr-watershed-${awlr_last_reading.watershedId} .content-watershed`).append(contentStation);
+                            }
+                        }
+
+                        
+                        // Load Running Text
+                        if(awlr_last_reading.waterLevel != null) {
+                            var reading_at = new Date(awlr_last_reading.readingAt);
+                            var timeDifference = Math.abs(currentTime - reading_at);
+
+                            if (timeDifference <= maxDifference) {
+                                var running_text = getRunningText(awlr_last_reading);
+
+                                if ($('.running-text-awlr').length) {
+                                    $('#running-text-awlr').append(`<span style="margin: 0 0.5rem;">•</span>`);
+                                }
+
+                                $('#running-text-awlr').append(running_text);
+                            }
+                        }
+                        
+                        if(awlr_last_reading.latitude != null && awlr_last_reading.longitude != null) {
+                            let awlr_level_class = '';
+
+                            switch (awlr_last_reading.warningStatus) {
+                                case 'Normal':
+                                    awlr_level_class = '';
+                                    break;
+                                case 'Siaga 3':
+                                    awlr_level_class = 'alert-siaga3';
+                                    break;
+                                case 'Siaga 2':
+                                    awlr_level_class = 'alert-siaga2';
+                                    break;
+                                case 'Siaga 1':
+                                    awlr_level_class = 'alert-siaga1';
+                                    break;
+                                default:
+                                    awlr_level_class = '';
+                                    break;
+                            }
+                            
+                            var customIcon = L.divIcon({ 
+                                iconSize: new L.Point(40, 20), 
+                                iconAnchor: new L.Point(20, 20), 
+                                html:  `<div class="ts-marker-wrapper"><a href="javascript:void(0)" class="ts-marker ts-awlr" data-ts-id="64" data-ts-ln="60" style="outline: none;"><div class="ts-marker__title">${awlr_last_reading.name}</div><div class="ts-marker__feature ts-marker__feature__blue ${awlr_level_class}"><i class="fas fa-water"></i></div></a></div>`
+                            });
+
+                            var stationMarker = L.marker([awlr_last_reading.latitude, awlr_last_reading.longitude], {
+                                icon: customIcon,
+                            }).bindPopup(createDetailPanelStation(awlr_last_reading)).addTo(awlr_marker);
+
+                            // Add a custom attribute to the marker to associate it with the corresponding div
+                            stationMarker.options.id = awlr_last_reading.id;
+
+                            // Add a click event listener to the corresponding div
+                            $('.card-station-awlr[data-ts-id="' + awlr_last_reading.id + '"]').on('click', function () {
+                                map.setView([awlr_last_reading.latitude, awlr_last_reading.longitude], 12);
+                                stationMarker.openPopup();
+                            });
+                        }
+                    });
+                }
+            }).catch(err => {
+                console.log(err.response)
+            })
+        }
+
+        function loadArrLastReading() {
+            arr_marker.clearLayers();
+
+            $('#tab-arr').empty();
+            $('#tab-arr').html(loadShimmerLastReading);
+            getData(`/Home/GetArrLastReading`).then(res => {
+                $('#tab-arr').empty();
+                let result = res.data
+                
+                if (result.code == 200) {
+                    $('#total-arr').html(result.response.length);
+                    $.each(result.response, function (key, arr_last_reading) {
+                        var contentStation = loadContentArrLastReading(arr_last_reading);
+
+                        if($(`#card-station-arr-${arr_last_reading.id}`).length) {
+                            $(`#card-station-arr-${arr_last_reading.id}`).html(contentStation);
+                        } else {
+
+                            if(arr_last_reading.riverAreaId == null) {
+                                $(`#tab-arr`).append(contentStation);
+                            } else {
+                                if($(`#arr-river-area-${arr_last_reading.riverAreaId}`).length == 0) {
+                                    $('#tab-arr').append(`<h4 class="text-center m-0" style="padding: 0.7rem;font-size: 0.8rem;background-color: #2F3567;" id="arr-river-area-${arr_last_reading.riverAreaId}">
+                                        <span style="color: #CDCED5;">${arr_last_reading.riverAreaCode}: </span>
+                                        <span class="ms-1" style="color: #CDCED5;">WS ${arr_last_reading.riverAreaName}</span>
+                                    </h4>
+                                    <div class="accordion custom-accordion" id="arr-accordion-${arr_last_reading.riverAreaId}">
+                                    </div>`);
+                                }
+
+                                if($(`#arr-watershed-${arr_last_reading.watershedId}`).length == 0) {
+                                    $(`#arr-accordion-${arr_last_reading.riverAreaId}`).append(`<div class="card mb-0">
+                                        <div class="card-header card-header-watershed">
+                                            <h5 class="m-0 position-relative">
+                                                <a class="custom-accordion-title d-block d-flex align-items-center"
+                                                    data-bs-toggle="collapse" href="#arr-watershed-${arr_last_reading.watershedId}"
+                                                    aria-expanded="true" aria-controls="arr-watershed-${arr_last_reading.watershedId}">
+                                                    <span style="color: #0ECAF0;font-weight: 600">#${arr_last_reading.watershedCode}: </span>
+                                                    <span class="ms-1" style="color: #FFC10A;font-weight: 400;">${arr_last_reading.watershedName}</span>
+                                                    <i class="mdi mdi-chevron-down accordion-arrow" style="color: #D0D1D8;"></i>
+                                                </a>
+                                            </h5>
+                                        </div>
+
+                                        <div id="arr-watershed-${arr_last_reading.watershedId}" class="collapse show">
+                                            <div class="card-body content-watershed" style="border-bottom: 1px solid #293067;padding: 0;">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>`);
+                                }
+
+                                $(`#arr-watershed-${arr_last_reading.watershedId} .content-watershed`).append(contentStation);
+                            }
+                        }
+
+                        
+                        // Load Running Text
+                        if(arr_last_reading.rainfallLastHour != null) {
+                            var reading_at = new Date(arr_last_reading.readingAt);
+                            var timeDifference = Math.abs(currentTime - reading_at);
+
+                            if (timeDifference <= maxDifference) {
+                                var running_text = getRunningText(arr_last_reading);
+
+                                $('#running-text-arr').append(`<span style="margin: 0 0.5rem;">•</span>`);
+                                $('#running-text-arr').append(running_text);
+                            }
+                        }
+
+                        var intensity = 'arr-icon-offline.png';
+                        var blinking_class = '';
+
+                        if(arr_last_reading.deviceStatus == 'online') {
+                            intensity = getIntensityIcon(arr_last_reading.intensityLastHour);
+                            if(arr_last_reading.intensityLastHour != 'Berawan') {
+                                blinking_class = 'blinking-content';
+                            }
+                        }
+
+                        if(arr_last_reading.latitude != null && arr_last_reading.longitude != null) {
+                            
+                            var customIcon = L.divIcon({ 
+                                iconSize: new L.Point(40, 20), 
+                                iconAnchor: new L.Point(20, 20), 
+                                html:  `<div class="ts-marker-wrapper"><a href="javascript:void(0)" class="ts-marker ts-arr" data-ts-id="64" data-ts-ln="60" style="outline: none;"><div class="ts-marker__title">${arr_last_reading.name}</div><image class="${blinking_class}" src="/images/arr/${intensity}" height="26" /></a></div>`}
+                            );
+                            
+                            var stationMarker = L.marker([arr_last_reading.latitude, arr_last_reading.longitude], {
+                                icon: customIcon,
+                            }).bindPopup(createDetailPanelStation(arr_last_reading)).addTo(arr_marker);
+                            
+
+                            // Add a custom attribute to the marker to associate it with the corresponding div
+                            stationMarker.options.id = arr_last_reading.id;
+
+                            // Add a click event listener to the corresponding div
+                            $('.card-station-arr[data-ts-id="' + arr_last_reading.id + '"]').on('click', function () {
+                                map.setView([arr_last_reading.latitude, arr_last_reading.longitude], 12);
+                                stationMarker.openPopup();
+                            });
+                        }
+                    });
+                }
+            }).catch(err => {
+                console.log(err.response)
+            })
+        }
+
+        function loadAwsLastReading() {
+            aws_marker.clearLayers();
+
+            $('#tab-aws').empty();
+            $('#tab-aws').html(loadShimmerLastReading);
+            getData(`/Home/GetAwsLastReading`).then(res => {
+                $('#tab-aws').empty();
+                let result = res.data;
+
+                console.log(result)
+                
+                if (result.code == 200) {
+                    $('#total-aws').html(result.response.length);
+                    $.each(result.response, function (key, aws_last_reading) {
+                        var contentStation = loadContentAwsLastReading(aws_last_reading);
+
+                        if($(`#card-station-aws-${aws_last_reading.id}`).length) {
+                            $(`#card-station-aws-${aws_last_reading.id}`).html(contentStation);
+                        } else {
+
+                            if(aws_last_reading.riverAreaId == null) {
+                                $(`#tab-aws`).append(contentStation);
+                            } else {
+                                if($(`#aws-river-area-${aws_last_reading.riverAreaId}`).length == 0) {
+                                    $('#tab-aws').append(`<h4 class="text-center m-0" style="padding: 0.7rem;font-size: 0.8rem;background-color: #2F3567;" id="aws-river-area-${aws_last_reading.riverAreaId}">
+                                        <span style="color: #CDCED5;">${aws_last_reading.riverAreaCode}: </span>
+                                        <span class="ms-1" style="color: #CDCED5;">WS ${aws_last_reading.riverAreaName}</span>
+                                    </h4>
+                                    <div class="accordion custom-accordion" id="aws-accordion-${aws_last_reading.riverAreaId}">
+                                    </div>`);
+                                }
+
+                                if($(`#aws-watershed-${aws_last_reading.watershedId}`).length == 0) {
+                                    $(`#aws-accordion-${aws_last_reading.riverAreaId}`).append(`<div class="card mb-0">
+                                        <div class="card-header card-header-watershed">
+                                            <h5 class="m-0 position-relative">
+                                                <a class="custom-accordion-title d-block d-flex align-items-center"
+                                                    data-bs-toggle="collapse" href="#aws-watershed-${aws_last_reading.watershedId}"
+                                                    aria-expanded="true" aria-controls="aws-watershed-${aws_last_reading.watershedId}">
+                                                    <span style="color: #0ECAF0;font-weight: 600">#${aws_last_reading.watershedCode}: </span>
+                                                    <span class="ms-1" style="color: #FFC10A;font-weight: 400;">${aws_last_reading.watershedName}</span>
+                                                    <i class="mdi mdi-chevron-down accordion-arrow" style="color: #D0D1D8;"></i>
+                                                </a>
+                                            </h5>
+                                        </div>
+
+                                        <div id="aws-watershed-${aws_last_reading.watershedId}" class="collapse show">
+                                            <div class="card-body content-watershed" style="border-bottom: 1px solid #293067;padding: 0;">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>`);
+                                }
+
+                                $(`#aws-watershed-${aws_last_reading.watershedId} .content-watershed`).append(contentStation);
+                            }
+                        }
+
+                        
+                        // Load Running Text
+                        if(aws_last_reading.rainfallLastHour != null) {
+                            var reading_at = new Date(aws_last_reading.readingAt);
+                            var timeDifference = Math.abs(currentTime - reading_at);
+
+                            if (timeDifference <= maxDifference) {
+                                var running_text = getRunningText(aws_last_reading);
+
+                                $('#running-text-aws').append(`<span style="margin: 0 0.5rem;">•</span>`);
+                                $('#running-text-aws').append(running_text);
+                            }
+                        }
+
+                        var intensity = 'arr-icon-offline.png';
+                        var blinking_class = '';
+
+                        if(aws_last_reading.deviceStatus == 'online') {
+                            intensity = getIntensityIcon(aws_last_reading.intensityLastHour);
+                            if(aws_last_reading.intensityLastHour != 'Berawan') {
+                                blinking_class = 'blinking-content';
+                            }
+                        }
+
+                        if(aws_last_reading.latitude != null && aws_last_reading.longitude != null) {
+                            
+                            var customIcon = L.divIcon({ 
+                                iconSize: new L.Point(40, 20), 
+                                iconAnchor: new L.Point(20, 20), 
+                                html:  `<div class="ts-marker-wrapper"><a href="javascript:void(0)" class="ts-marker ts-arr" data-ts-id="64" data-ts-ln="60" style="outline: none;"><div class="ts-marker__title">${aws_last_reading.name}</div><image class="${blinking_class}" src="/images/arr/${intensity}" height="26" /></a></div>`}
+                            );
+                            
+                            var stationMarker = L.marker([aws_last_reading.latitude, aws_last_reading.longitude], {
+                                icon: customIcon,
+                            }).bindPopup(createDetailPanelStation(aws_last_reading)).addTo(arr_marker);
+                            
+
+                            // Add a custom attribute to the marker to associate it with the corresponding div
+                            stationMarker.options.id = aws_last_reading.id;
+
+                            // Add a click event listener to the corresponding div
+                            $('.card-station-aws[data-ts-id="' + aws_last_reading.id + '"]').on('click', function () {
+                                map.setView([aws_last_reading.latitude, aws_last_reading.longitude], 12);
+                                stationMarker.openPopup();
+                            });
+                        }
+                    });
+                }
+            }).catch(err => {
+                console.log(err.response)
+            })
+        }
+
+        function loadMonitoringDeviceStatus() {
+            getData(`/Home/GetMonitoringDeviceStatus`).then(res => {
+                let result = res.data
+                if (result.code == 200) {
+                    var data = result.response;
+                    totalDeviceStatus.setDynamicText(`${data.totalStation}\nTotal Pos`);
+                    dataMonitoringDeviceStatus.datasets[0].data = [data.totalOnline, data.totalOffline];
+                    chartMonitoringDeviceStatus.update();
+                }
+            }).catch(err => {
+                console.log(err.response)
+            })
+        }
+
+        function loadMonitoringAwlr() {
+            getData(`/Home/GetMonitoringAwlr`).then(res => {
+                let result = res.data
+                if (result.code == 200) {
+                    var data = result.response;
+                    const total_station_awlr = parseInt(data.totalStation);
+                    let total_siaga1 = data.totalSiaga1;
+                    let total_siaga2 = data.totalSiaga2;
+                    let total_siaga3 = data.totalSiaga3;
+                    let total_normal = data.totalNormal;
+                    let total_nostatus = data.totalNoStatus;
+
+                    $('#bar-nostatus, #bar-normal, #bar-siaga3, #bar-siaga2, #bar-siaga1').attr('aria-valuemax', total_station_awlr);
+
+                    // Set Bar Value
+                    $('#bar-siaga1').attr('aria-valuenow', total_siaga1).css('width', `${getPercentageBar(total_siaga1, total_station_awlr)}%`);
+                    $('#bar-siaga2').attr('aria-valuenow', total_siaga2).css('width', `${getPercentageBar(total_siaga2, total_station_awlr)}%`);
+                    $('#bar-siaga3').attr('aria-valuenow', total_siaga3).css('width', `${getPercentageBar(total_siaga3, total_station_awlr)}%`);
+                    $('#bar-normal').attr('aria-valuenow', total_normal).css('width', `${getPercentageBar(total_normal, total_station_awlr)}%`);
+                    $('#bar-nostatus').attr('aria-valuenow', total_nostatus).css('width', `${getPercentageBar(total_nostatus, total_station_awlr)}%`);
+                    
+                    // Set Text Value
+                    $('#text-monitoring-siaga1').text(total_siaga1);
+                    $('#text-monitoring-siaga2').text(total_siaga2);
+                    $('#text-monitoring-siaga3').text(total_siaga3);
+                    $('#text-monitoring-normal').text(total_normal);
+                    $('#text-monitoring-nostatus').text(total_nostatus);
+                }
+            }).catch(err => {
+                console.log(err.response)
+            })
+        }
+
+        function getPercentageBar(value, total) {
+            if(value == 0 && total == 0) {
+                return 0;
+            }
+            return (value / total) * 100;
+        }
+
+        function loadMonitoringArr() {
+            getData(`/Home/GetMonitoringArr`).then(res => {
+                let result = res.data
+                if (result.code == 200) {
+                    var data = result.response;
+
+                    const total_station_arr = parseInt(data.totalStation);
+                    let total_hujan_sangat_lebat = data.totalHujanSangatLebat;
+                    let total_hujan_lebat = data.totalHujanLebat;
+                    let total_hujan_sedang = data.totalHujanSedang;
+                    let total_hujan_ringan = data.totalHujanRingan;
+                    let total_berawan = data.totalBerawan;
+
+                    $('#bar-berawan, #bar-hujan-ringan, #bar-hujan-sedang, #bar-hujan-lebat, #bar-hujan-sangat-lebat').attr('aria-valuemax', total_station_arr);
+
+                    // Set Bar Value
+                    $('#bar-hujan-sangat-lebat').attr('aria-valuenow', total_hujan_sangat_lebat).css('width',`${getPercentageBar(total_hujan_sangat_lebat, total_station_arr)}%`);
+                    $('#bar-hujan-lebat').attr('aria-valuenow', total_hujan_lebat).css('width',`${getPercentageBar(total_hujan_lebat, total_station_arr)}%`);
+                    $('#bar-hujan-sedang').attr('aria-valuenow', total_hujan_sedang).css('width',`${getPercentageBar(total_hujan_sedang, total_station_arr)}%`);
+                    $('#bar-hujan-ringan').attr('aria-valuenow', total_hujan_ringan).css('width',`${getPercentageBar(total_hujan_ringan, total_station_arr)}%`);
+                    $('#bar-berawan').attr('aria-valuenow', total_berawan).css('width',`${getPercentageBar(total_berawan, total_station_arr)}%`);
+                    
+                    // Set Text Value
+                    $('#text-monitoring-hujan-sangat-lebat').text(total_hujan_sangat_lebat);
+                    $('#text-monitoring-hujan-lebat').text(total_hujan_lebat);
+                    $('#text-monitoring-hujan-sedang').text(total_hujan_sedang);
+                    $('#text-monitoring-hujan-ringan').text(total_hujan_ringan);
+                    $('#text-monitoring-berawan').text(total_berawan);
+                }
+            }).catch(err => {
+                console.log(err.response)
+            })
+        }
+
+        function getRunningText(reading) {
+            var result  = ``;
+            if(reading.type == 'AWLR') {
+                var change_status = '';
+                var text_warning_status = '';
+
+                switch (reading.changeStatus) {
+                    case 'increase':
+                        change_status = '<i class="mdi mdi-arrow-up-circle text-danger ms-1"></i>';
+                        break;
+                    case 'decrease':
+                        change_status = '<i class="mdi mdi-arrow-down-circle text-success ms-1"></i>';
+                        break;
+                }
+
+                if(reading.warningStatus != null) {
+                    switch (reading.warningStatus) {
+                        case 'Normal':
+                            text_warning_status = '<span class="fw-semibold ms-1" style="color: #4DC27E;"> Normal</span>';
+                            break;
+                        case 'Siaga 1':
+                            text_warning_status = '<span class="fw-semibold ms-1" style="color: #EF5350;"> AWAS</span>';
+                            break;
+                        case 'Siaga 2':
+                            text_warning_status = '<span class="fw-semibold ms-1" style="color: #FFA600;"> SIAGA</span>';
+                            break;
+                        case 'Siaga 3':
+                            text_warning_status = '<span class="fw-semibold ms-1" style="color: #FFDA4F;"> WASPADA</span>';
+                            break;
+                    }
+                }
+
+                result = `<span class="running-text-awlr" id="running-text-${reading.id}"> ${reading.name} : ${change_status} <span style="color: #D0D1D8;">${reading.waterLevel.toFixed(2)} ${reading.unitDisplay}</span> ${text_warning_status} </span>`;
+            } else if(reading.type == 'ARR') {
+                var text_intensity = '';
+
+                if(reading.intensityLastHour != null) {
+                    switch (reading.intensityLastHour) {
+                        case 'Berawan':
+                            text_intensity = '<span class="fw-semibold ms-1" style="color: #959392;"> Berawan</span>';
+                            break;
+                        case 'Hujan Ringan':
+                            text_intensity = '<span class="fw-semibold ms-1" style="color: #1abc9c;"> Hujan Ringan</span>';
+                            break;
+                        case 'Hujan Sedang':
+                            text_intensity = '<span class="fw-semibold ms-1" style="color: #f7b84b;"> Hujan Sedang</span>';
+                            break;
+                        case 'Hujan Lebat':
+                            text_intensity = '<span class="fw-semibold ms-1" style="color: #FF781F;"> Hujan Lebat</span>';
+                            break;
+                        case 'Hujan Sangat Lebat':
+                            text_intensity = '<span class="fw-semibold ms-1" style="color: #f1556c;"> Hujan Sangat Lebat</span>';
+                            break;
+                    }
+                }
+
+                result = `<span class="running-text-arr" id="running-text-${reading.id}"> ${reading.name} : <span style="color: #D0D1D8;">${reading.rainfallLastHour.toFixed(2)} mm</span> ${text_intensity} </span>`;
+            }
+
+            return result;
+        }
+
+        function loadContentAwlrLastReading(awlr_last_reading) {
+            // Reading
+            var wl_elevation_operator = awlr_last_reading.waterLevelElevation > 0 ? '+' : '';
+            var change_status = '';
+            switch (awlr_last_reading.changeStatus) {
+                case 'increase':
+                    change_status = '<i class="mdi mdi-arrow-up-circle text-danger me-1"></i>';
+                    break;
+                case 'decrease':
+                    change_status = '<i class="mdi mdi-arrow-down-circle text-success me-1"></i>';
+                    break;
+            }
+
+            // Warning Status
+            var class_warning_status = '';
+            var warning_status = '<span class="badge badge-awlr-nostatus rounded-1 ms-1 align-self-center">TANPA STATUS</span>';
+            switch (awlr_last_reading.warningStatus) {
+                case 'Normal':
+                    warning_status = '<span class="badge badge-awlr-normal rounded-1 ms-1 align-self-center">NORMAL</span>';
+                    class_warning_status = 'normal';
+                    break;
+                case 'Siaga 3':
+                    warning_status = '<span class="badge badge-awlr-siaga3 rounded-1 ms-1 align-self-center blinking-content">WASPADA</span>';
+                    class_warning_status = 'siaga3';
+                    break;
+                case 'Siaga 2':
+                    warning_status = '<span class="badge badge-awlr-siaga2 rounded-1 ms-1 align-self-center blinking-content">SIAGA</span>';
+                    class_warning_status = 'siaga2';
+                    break;
+                case 'Siaga 1':
+                    warning_status = '<span class="badge badge-awlr-siaga1 rounded-1 ms-1 align-self-center blinking-content">AWAS</span>';
+                    class_warning_status = 'siaga1';
+                    break;
+            }
+
+            var water_level = awlr_last_reading.waterLevel != null ? `<h4 class="text-status-${class_warning_status}">${change_status} ${awlr_last_reading.waterLevel.toFixed(2)} <sup>${awlr_last_reading.unitDisplay}</sup></h4>` : '-';
+            var water_level_elevation = awlr_last_reading.waterLevelElevation != null ? `${wl_elevation_operator}${awlr_last_reading.waterLevelElevation} <sup>mdpl</sup>` : '-';
+
+            if(awlr_last_reading.unitSensor == 'cmdpl' || awlr_last_reading.unitSensor == 'mdpl') {
+                water_level = '<h4>-</h4>';
+                water_level_elevation = `${awlr_last_reading.waterLevelElevation} <sup>mdpl</sup>`;
+            }
+
+            var debit = awlr_last_reading.debit != null ? `${awlr_last_reading.debit} <sup>m<sup>3</sup>/s</sup>` : '-';
+
+            // Device
+            var device_status = `<small class="mdi mdi-circle text-danger"></small> Offline `;
+            if(awlr_last_reading.deviceStatus == 'online') {
+                device_status = `<small class="mdi mdi-circle text-success"></small> Online `;
+            }
+
+            // Location
+            
+
+            // Level Warning
+            var warning_status_bar = '';
+            if(awlr_last_reading.siaga1 != null && awlr_last_reading.siaga2 != null && awlr_last_reading.siaga3 != null) {
+                warning_status_bar = `
+                    <div class="progress-meter mt-2 mb-2">
+                        <div class="meter meter-normal meter-left" style="width: 25%;" title="Normal <br> < 6 m"><span class="fw-normal meter-text" style="color: #4DC27E;">0</span></div>
+                        <div class="meter meter-waspada meter-left" style="width: 25%;" title="Siaga 3 <br> ${awlr_last_reading.siaga3} ${awlr_last_reading.unitDisplay} - ${awlr_last_reading.siaga2} ${awlr_last_reading.unitDisplay}"><span class="fw-normal meter-text" style="color: #FFDA4F;">${awlr_last_reading.siaga3} ${awlr_last_reading.unitDisplay}</span></div>
+                        <div class="meter meter-siaga meter-left" style="width: 25%;" title="Siaga 2 <br> ${awlr_last_reading.siaga2} ${awlr_last_reading.unitDisplay} - ${awlr_last_reading.siaga1} ${awlr_last_reading.unitDisplay}"><span class="fw-normal meter-text" style="color: #FFA600;">${awlr_last_reading.siaga2} ${awlr_last_reading.unitDisplay}</span></div>
+                        <div class="meter meter-awas meter-left" style="width: 25%;" title="Siaga 1 <br> > ${awlr_last_reading.siaga1} ${awlr_last_reading.unitDisplay}"><span class="fw-normal meter-text" style="color: #EF5350;">${awlr_last_reading.siaga1} ${awlr_last_reading.unitDisplay}</span></div>
+                    </div>
+                `;
+            }
+
+            var battery = '';
+
+            if(awlr_last_reading.battery != null) {
+                if(awlr_last_reading.battery < 7) {
+                    battery = `<span><i class="mdi mdi-battery-charging-low ms-1" style="color: #F69696;"></i> ${awlr_last_reading.battery} Volt</span>`;
+                } else {
+                    battery = `<span><i class="mdi mdi-battery-charging-high ms-1" style="color: #F69696;"></i> ${awlr_last_reading.battery} Volt</span>`;
+                }
+            }
+
+            var card_header = null;
+
+            if(awlr_last_reading.readingAt != null) {
+                const currentDate = moment().format('YYYY-MMM-DD'); 
+                var reading_at = '';
+
+                if(moment(awlr_last_reading.readingAt).format("YYYY-MMM-DD") == currentDate) {
+                    reading_at = `Hari Ini, <span class="text-muted">${moment(awlr_last_reading.readingAt).format("HH:mm")}</span>`;
+                } else {
+                    reading_at = moment(awlr_last_reading.readingAt).locale('id').format('D MMMM YYYY HH:mm');
+                }
+
+                card_header = `
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <span class="reading-at">${device_status}</span>
+                            <span class="reading-at ms-auto">${reading_at} ${awlr_last_reading.timeZone}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            var card_footer = null;
+
+            if(awlr_last_reading.deviceStatus == 'offline') {
+                if(awlr_last_reading.readingAt == null) {
+                    card_footer = `<div class="card-footer">
+                        <small class="m-0 d-flex align-items-center text-warning fw-normal" style="color: #ED8F2A;">
+                            <i class="mdi mdi-alert-circle-outline font-14 me-1"></i>
+                            Alat belum aktif
+                        </small>
+                    </div>`;
+                } else {
+                    card_footer = `<div class="card-footer">
+                        <small class="m-0 d-flex align-items-center text-warning fw-normal" style="color: #ED8F2A;">
+                            <i class="mdi mdi-alert-circle-outline font-14 me-1"></i>
+                            Alat tidak aktif lebih dari 24 jam
+                        </small>
+                    </div>`;
+                }
+            }
+
+            return `
+                <div class="card-station-awlr" data-ts-id="${awlr_last_reading.id}" id="card-station-awlr-${awlr_last_reading.id}" data-last-update="${(awlr_last_reading.readingAt == null) ? '' : moment(awlr_last_reading.readingAt).locale('id').format('YYYY-MM-DD HH:mm:ss')}">
+                    <div class="card card-station animate__animated animate__fadeInLeft">
+                        ${card_header != null ? card_header : ''}
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="w-100">
+                                    <a href="/Station/Detail/${awlr_last_reading.slug}" target="_blank">
+                                    <h4 class="card-title text-station-name m-0 align-self-center">${awlr_last_reading.name}</h4>
+                                    </a>
+                                </div>
+                                ${warning_status}
+                            </div>
+
+                            <div class="reading-device d-flex align-items-center mb-1">
+                                    <span><i class="fe-hard-drive"></i> ${awlr_last_reading.brandName}</span>
+                                    <span class="badge badge-outline-secondary rounded-1 ms-1" style="color: #A9ABB8;border-color: #A9ABB8;">${awlr_last_reading.deviceId}</span>
+                                    ${battery}
+                            </div>
+
+                            <div class="d-flex justify-content-around align-items-center reading-text">
+                                <div class="col-4 text-center">
+                                    ${water_level}
+                                </div>
+                                <div class="col-4 text-center">
+                                    <h4>${water_level_elevation}</h4>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <h4>${debit}</h4>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-around reading-text">
+                                <div class="col-4 text-center">
+                                    Tinggi Muka Air
+                                </div>
+                                <div class="col-4 text-center">
+                                    Elevasi Muka Air
+                                </div>
+                                <div class="col-4 text-center">
+                                    Debit
+                                </div>
+                            </div>
+                            ${warning_status_bar}
+                        </div>
+                        ${card_footer != null ? card_footer : ''}
+                    </div>
+                </div>
+            `;
+            
+        }
+
+        function loadContentArrLastReading(arr_last_reading) {
+            // Device
+            var device_status = `<small class="mdi mdi-circle text-danger"></small> Offline `;
+            if(arr_last_reading.deviceStatus == 'online') {
+                device_status = `<small class="mdi mdi-circle text-success"></small> Online `;
+            }
+
+            // Location
+            
+
+            // Intensitas Per Jam
+            var intensity_per_hour = ``;
+            var blinking_class = '';
+
+            if(arr_last_reading.intensityLastHour != 'Berawan' && arr_last_reading.deviceStatus == 'online') {
+                blinking_class = 'blinking-content';
+            }
+
+            if(arr_last_reading.rainfallLastHour != null && arr_last_reading.intensityLastHour != null) {
+                intensity_per_hour = `
+                    <h4 class="text-center mt-2 fw-normal" style="font-size: 0.7rem;">Intensitas 1 Jam Terakhir :</h4>
+                    <div class="d-flex justify-content-around align-items-center reading-text mb-1">
+                        <div class="col-4 text-center">
+                            <h4 class="text-range-hour">${moment(arr_last_reading.readingAt).format('HH:mm')}</h4>
+                        </div>
+                        <div class="col-4 text-center">
+                            <h4>${arr_last_reading.rainfallLastHour.toFixed(2)} <sup>mm</sup></h4>
+                        </div>
+                        <div class="col-4 col-intensity text-center">
+                            <img class="${blinking_class}" src="/images/arr/${getIntensityIcon(arr_last_reading.intensityLastHour)}" alt="${arr_last_reading.intensityLastHour}">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around reading-text">
+                        <div class="col-4 text-center">
+                            Waktu (${arr_last_reading.timeZone})
+                        </div>
+                        <div class="col-4 text-center">
+                            Curah Hujan
+                        </div>
+                        <div class="col-4 text-center fst-italic">
+                            ${arr_last_reading.intensityLastHour}
+                        </div>
+                    </div>
+                `;
+            }
+
+            var battery = '';
+
+            if(arr_last_reading.battery != null) {
+                if(arr_last_reading.battery < 7) {
+                    battery = `<span><small class="mdi mdi-battery-charging-low ms-1" style="color: #F69696;"></small> ${arr_last_reading.battery} Volt</span>`;
+                } else {
+                    battery = `<span><small class="mdi mdi-battery-charging-high ms-1" style="color: #F69696;"></small> ${arr_last_reading.battery} Volt</span>`;
+                }
+            }
+
+            var card_header = null;
+
+            if(arr_last_reading.readingAt != null) {
+                const currentDate = moment().format('YYYY-MMM-DD'); 
+                var reading_at = '';
+
+                if(moment(arr_last_reading.readingAt).format("YYYY-MMM-DD") == currentDate) {
+                    reading_at = `Hari Ini`;
+                } else {
+                    reading_at = moment(arr_last_reading.readingAt).locale('id').format('D MMMM YYYY');
+                }
+
+                card_header = `
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <span class="reading-at">${device_status}</span>
+                            <span class="reading-at ms-auto">${reading_at}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            var card_footer = null;
+
+            if(arr_last_reading.deviceStatus == 'offline') {
+                if(arr_last_reading.readingAt == null) {
+                    card_footer = `<div class="card-footer">
+                        <small class="m-0 d-flex align-items-center text-warning fw-normal" style="color: #ED8F2A;">
+                            <i class="mdi mdi-alert-circle-outline font-14 me-1"></i>
+                            Alat belum aktif
+                        </small>
+                    </div>`;
+                } else {
+                    card_footer = `<div class="card-footer">
+                        <small class="m-0 d-flex align-items-center text-warning fw-normal" style="color: #ED8F2A;">
+                            <i class="mdi mdi-alert-circle-outline font-14 me-1"></i>
+                            Alat tidak aktif lebih dari 24 jam
+                        </small>
+                    </div>`;
+                }
+            }
+
+            return `
+                <div class="card-station-arr" data-ts-id="${arr_last_reading.id}" id="card-station-arr-${arr_last_reading.id}" data-last-update="${(arr_last_reading.readingAt == null) ? '' : moment(arr_last_reading.readingAt).locale('id').format('YYYY-MM-DD HH:mm:ss')}">
+                    <div class="card card-station animate__animated animate__fadeInLeft">
+                        ${card_header != null ? card_header : ''}
+                        <div class="card-body">
+                            <div class="w-100">
+                                <a href="/Station/Detail/${arr_last_reading.slug}" target="_blank">
+                                    <h4 class="card-title text-station-name m-0 mb-2">${arr_last_reading.name}</h4>
+                                </a>
+                            </div>
+                            <div class="reading-device d-flex align-items-center mb-1">
+                                    <span><i class="fe-hard-drive"></i> ${arr_last_reading.brandName}</span>
+                                    <span class="badge badge-outline-secondary rounded-1 ms-1" style="color: #A9ABB8;border-color: #A9ABB8;">${arr_last_reading.deviceId}</span>
+                                    ${battery}
+                            </div>
+                            ${intensity_per_hour}
+                        </div>
+                        ${card_footer != null ? card_footer : ''}
+                    </div>
+                </div>
+            `;
+            
+        }
+
+        function loadContentAwsLastReading(aws_last_reading) {
+            // Device
+            var device_status = `<small class="mdi mdi-circle text-danger"></small> Offline `;
+            if(aws_last_reading.deviceStatus == 'online') {
+                device_status = `<small class="mdi mdi-circle text-success"></small> Online `;
+            }
+
+            // Location
+            
+
+            // Intensitas Per Jam
+            var content_sensor = ``;
+            var blinking_class = '';
+
+            if(aws_last_reading.intensityLastHour != 'Berawan' && aws_last_reading.deviceStatus == 'online') {
+                blinking_class = 'blinking-content';
+            }
+
+            if(aws_last_reading.rainfallLastHour != null && aws_last_reading.intensityLastHour != null) {
+                var humidity = '-';
+                var rainfall = '-';
+                var intensity_icon = '';
+                var intensity_status = '';
+                var pressure = '-';
+                var wind_direction = '<h4>-</h4>';
+                var solar_radiation = '-';
+                var temperature = '-';
+                var wind_speed = '-';
+                var evaporation = '-';
+
+                if(aws_last_reading.humidity != null) {
+                    console.log(humidity)
+                    humidity = `${aws_last_reading.humidity}%`;
+                }
+
+                if(aws_last_reading.rainfall != null) {
+                    rainfall = `${aws_last_reading.rainfallLastHour} <sup>mm</sup>`;
+                    intensity_status = `<div class="col-4 text-center fst-italic">
+                        ${aws_last_reading.intensityLastHour}
+                    </div>`;
+                    intensity_icon = `<div class="col-4 col-intensity text-center">
+                        <img class="${blinking_class}" src="/images/arr/${getIntensityIcon(aws_last_reading.intensityLastHour)}" alt="${aws_last_reading.intensityLastHour}">
+                    </div>`;
+                }
+
+                if(aws_last_reading.pressure != null) {
+                    pressure = `${aws_last_reading.pressure} <sup>MB</sup>`;
+                }
+
+                if(aws_last_reading.wind_direction != null) {
+                    wind_direction = `<div class="d-flex justify-content-center align-items-center">
+                        <h4 style="transform: rotate(${aws_last_reading.windDirection}deg);"><i class="mdi mdi-navigation"></i></h4>
+                        <h4 class="ms-1">${aws_last_reading.windDirection} <sup>&deg;</sup></h4>
+                    </div>`;
+                }
+
+                if(aws_last_reading.solar_radiation != null) {
+                    solar_radiation = `${aws_last_reading.solarRadiation} <sup>W/m2</sup>`;
+                }
+
+                if(aws_last_reading.temperature != null) {
+                    temperature = `${aws_last_reading.temperature} <sup>&deg;C</sup>`;
+                }
+
+                if(aws_last_reading.wind_speed != null) {
+                    wind_speed = `${aws_last_reading.windSpeed} <sup>km/h</sup>`;
+                }
+
+                if(aws_last_reading.evaporation != null) {
+                    evaporation = `${aws_last_reading.evaporation} <sup>mm</sup>`;
+                }
+
+                content_sensor = `
+                    <div class="d-flex justify-content-around align-items-center reading-text">
+                        <div class="col-4 text-center">
+                            <h4>${humidity}</h4>
+                        </div>
+                        <div class="col-4 text-center">
+                            <h4>${pressure}</h4>
+                        </div>
+                        <div class="col-4 text-center">
+                            ${wind_direction}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around reading-text mb-2">
+                        <div class="col-4 text-center">
+                            Kelembapan
+                        </div>
+                        <div class="col-4 text-center">
+                            Tekanan
+                        </div>
+                        <div class="col-4 text-center">
+                            Arah Angin
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around align-items-center reading-text">
+                        <div class="col-4 text-center">
+                            <h4>${solar_radiation}</h4>
+                        </div>
+                        <div class="col-4 text-center">
+                            <h4>${temperature}</h4>
+                        </div>
+                        <div class="col-4 text-center">
+                            <h4>${evaporation}</h4>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around reading-text mb-2">
+                        <div class="col-4 text-center">
+                            Radiasi Matahari
+                        </div>
+                        <div class="col-4 text-center">
+                            Suhu
+                        </div>
+                        <div class="col-4 text-center">
+                            Penguapan
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around align-items-center reading-text mb-1">
+                        <div class="col-4 text-center">
+                            <h4 class="text-range-hour">${wind_speed}</h4>
+                        </div>
+                        <div class="col-4 text-center">
+                            <h4>${aws_last_reading.rainfallLastHour.toFixed(2)} <sup>mm</sup></h4>
+                        </div>
+                        ${intensity_icon}
+                    </div>
+                    <div class="d-flex justify-content-around reading-text">
+                        <div class="col-4 text-center">
+                            Kecepatan Angin
+                        </div>
+                        <div class="col-4 text-center">
+                            Curah Hujan
+                        </div>
+                        ${intensity_status}
+                    </div>
+                `;
+            }
+
+            var battery = '';
+
+            if(aws_last_reading.battery != null) {
+                if(aws_last_reading.battery < 7) {
+                    battery = `<span><small class="mdi mdi-battery-charging-low ms-1" style="color: #F69696;"></small> ${aws_last_reading.battery} Volt</span>`;
+                } else {
+                    battery = `<span><small class="mdi mdi-battery-charging-high ms-1" style="color: #F69696;"></small> ${aws_last_reading.battery} Volt</span>`;
+                }
+            }
+
+            var card_header = null;
+
+            if(aws_last_reading.readingAt != null) {
+                const currentDate = moment().format('YYYY-MMM-DD'); 
+                var reading_at = '';
+
+                if(moment(aws_last_reading.readingAt).format("YYYY-MMM-DD") == currentDate) {
+                    reading_at = `Hari Ini, <span class="text-muted">${moment(aws_last_reading.readingAt).format("HH:mm")}</span>`;
+                } else {
+                    reading_at = moment(aws_last_reading.readingAt).locale('id').format('D MMMM YYYY HH:mm');
+                }
+
+                card_header = `
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <span class="reading-at">${device_status}</span>
+                            <span class="reading-at ms-auto">${reading_at} ${aws_last_reading.timeZone}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            var card_footer = null;
+
+            if(aws_last_reading.deviceStatus == 'offline') {
+                if(aws_last_reading.readingAt == null) {
+                    card_footer = `<div class="card-footer">
+                        <small class="m-0 d-flex align-items-center text-warning fw-normal" style="color: #ED8F2A;">
+                            <i class="mdi mdi-alert-circle-outline font-14 me-1"></i>
+                            Alat belum aktif
+                        </small>
+                    </div>`;
+                } else {
+                    card_footer = `<div class="card-footer">
+                        <small class="m-0 d-flex align-items-center text-warning fw-normal" style="color: #ED8F2A;">
+                            <i class="mdi mdi-alert-circle-outline font-14 me-1"></i>
+                            Alat tidak aktif lebih dari 24 jam
+                        </small>
+                    </div>`;
+                }
+            }
+
+            return `
+                <div class="card-station-aws" data-ts-id="${aws_last_reading.id}" id="card-station-aws-${aws_last_reading.id}" data-last-update="${(aws_last_reading.readingAt == null) ? '' : moment(aws_last_reading.readingAt).locale('id').format('YYYY-MM-DD HH:mm:ss')}">
+                    <div class="card card-station animate__animated animate__fadeInLeft">
+                        ${card_header != null ? card_header : ''}
+                        <div class="card-body">
+                            <div class="w-100">
+                                <a href="/Station/Detail/${aws_last_reading.slug}" target="_blank">
+                                    <h4 class="card-title text-station-name m-0 mb-2">${aws_last_reading.name}</h4>
+                                </a>
+                            </div>
+                            <div class="reading-device d-flex align-items-center mb-1">
+                                    <span><i class="fe-hard-drive"></i> ${aws_last_reading.brandName}</span>
+                                    <span class="badge badge-outline-secondary rounded-1 ms-1" style="color: #A9ABB8;border-color: #A9ABB8;">${aws_last_reading.deviceId}</span>
+                                    ${battery}
+                            </div>
+                            ${content_sensor}
+                        </div>
+                        ${card_footer != null ? card_footer : ''}
+                    </div>
+                </div>
+            `;
+            
+        }
+
+        function loadShimmerLastReading() {
+            var totalShimmer = 5;
+            var contentShimmer = ``;
+
+            for (let i = 1; i <= totalShimmer; i++) {
+                contentShimmer += `<div class="card card-station mb-2">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-start mb-2">
+                            <box class="shine me-2" style="width: 3rem;height: 3rem;"></box>
+                            <div class="col-md-8">
+                                <div class="box-shine-3 shine m-0"></div>
+                                <div class="box-shine-1 shine m-0"></div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-around reading-text mb-2">
+                            <div class="text-center">
+                                <div class="box-shine-1 shine" style="width: 3rem;"></div>
+                                <br>
+                                <div class="box-shine-2 shine" style="width: 5rem;"></div>
+                            </div>
+                            <div class="text-center">
+                                <div class="box-shine-1 shine" style="width: 3rem;"></div>
+                                <br>
+                                <div class="box-shine-2 shine" style="width: 5rem;"></div>
+                            </div>
+                            <div class="text-center">
+                                <div class="box-shine-1 shine" style="width: 3rem;"></div>
+                                <br>
+                                <div class="box-shine-2 shine" style="width: 5rem;"></div>
+                            </div>
+                        </div>
+                        <div class="box-shine-3 shine"></div>
+                    </div>
+                </div>`;
+            }
+
+
+            return `
+                <div class="row">
+                    <div class="col-12">
+                        ${contentShimmer}
+                    </div>
+                </div>
+            `;
+        }
+
+        function toTitleCase(str) {
+            return str.replace(/\w\S*/g, function(txt) {
+                if(txt == 'DKI') {
+                    return txt;
+                }
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
+        }
+
+        function getIntensityIcon(status) {
+
+            let timeOfDay = 'pagi';
+
+            let momentjs = moment();
+            momentjs.locale('id');
+
+            momentjs.tz("Asia/Jakarta");
+
+            let currentHour = momentjs.hours();
+
+            if (currentHour >= 5 && currentHour < 10) {
+                timeOfDay = 'pagi';
+            } else if (currentHour >= 10 && currentHour < 17) {
+                timeOfDay = 'siang';
+            } else if (currentHour >= 17 && currentHour < 19) {
+                timeOfDay = 'sore';
+            } else {
+                timeOfDay = 'malam';
+            }
+
+            let icon = 'berawan.png';
+
+            switch (status) {
+                case 'Berawan':
+                    icon = `berawan-${timeOfDay}.png`;
+                    break;
+
+                case 'Hujan Ringan':
+                    icon = 'hujan-ringan.png';
+                    break;
+
+                case 'Hujan Sedang':
+                    icon = 'hujan-sedang.png';
+                    break;
+
+                case 'Hujan Lebat':
+                    icon = 'hujan-lebat.png';
+                    break;
+
+                case 'Hujan Sangat Lebat':
+                    icon = 'hujan-sangat-lebat.png';
+                    break;
+            }
+
+            return icon;
+        }
+
+        function loadLastReading() {
+            loadAwlrLastReading();
+            loadArrLastReading();
+            loadMonitoringDeviceStatus();
+            loadMonitoringAwlr();
+            loadMonitoringArr();
+        }
+    </script>
+}

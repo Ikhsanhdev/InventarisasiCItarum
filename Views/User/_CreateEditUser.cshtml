@@ -1,0 +1,110 @@
+@model IrigasiManganti.Models.User;
+
+<style>
+    .select2-selection__clear {
+        display: none !important;
+    }
+</style>
+<form id="form-user" class="parsley-validation px-2" method="POST" onsubmit="saveUser(this,event)">
+    <div class="modal-header">
+        @if (Model.Id == Guid.Empty)
+        {
+            <h4 class="modal-title" id="pengamat-modalLabel">Tambah Pengguna</h4>
+        }
+        else
+        {
+            <h4 class="modal-title" id="pengamat-modalLabel">Edit Pengguna</h4>
+        }
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" asp-for="Id">
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <div class="mb-3">
+                    <label for="Username" class="form-label">Username <span class="text-danger">*</span></label>
+                    <input class="form-control" data-parsley-required-message="Username Lengkap wajib diisi."
+                        placeholder="Username" required="" autocomplete="off" asp-for="Username">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Name" class="form-label">Name <span class="text-danger">*</span></label>
+                    <input class="form-control" data-parsley-required-message="Nama wajib diisi." placeholder="Nama"
+                        required="" autocomplete="off" asp-for="Name">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Email" class="form-label">Email <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" data-parsley-required-message="Email wajib diisi."
+                        placeholder="Email" required="" autocomplete="off" asp-for="Email">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Phone" class="form-label">No. Handphone </label>
+                    <input type="text" inputmode="numeric" class="form-control" placeholder="No. Handphone"
+                        autocomplete="off" asp-for="Phone">
+                </div>
+
+                @if (string.IsNullOrEmpty(Model.Password))
+                {
+                    <div class="mb-3">
+                        <label for="Password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input class="form-control" data-parsley-required-message="Password wajib diisi."
+                            placeholder="Password" required="" autocomplete="off" asp-for="Password">
+                    </div>
+                }
+                else
+                {
+                    <div class="form-horizontal">
+                        <div class="row mb-1 d-flex justify-content-start align-items-center">
+                            <label for="inputEmail3" class="col-8 col-form-label">Apakah Anda ingin mengganti
+                                password?</label>
+                            <div class="col-4 d-flex justify-content-start align-items-center">
+                                <input type="checkbox" class="form-check-input" id="show-input-password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3" style="display: none;" id="parent-password">
+                        <label for="Password" class="form-label">Password Baru<span class="text-danger">*</span></label>
+                        <input class="form-control" data-parsley-required-message="Password baru wajib diisi."
+                            placeholder="Password" autocomplete="off" asp-for="Password" value="">
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="modal-footer p-0">
+            <button type="button" class="btn btn-soft-danger waves-effect" data-bs-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary px-3 m-0">Simpan</button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+    $('.parsley-validation').parsley();
+    $('.selectize').selectize();
+    $("[data-password]").on('click', function () {
+        if ($(this).attr('data-password') == "false") {
+            $(this).siblings("input").attr("type", "text");
+            $(this).attr('data-password', 'true');
+            $(this).addClass("show-password");
+        } else {
+            $(this).siblings("input").attr("type", "password");
+            $(this).attr('data-password', 'false');
+            $(this).removeClass("show-password");
+        }
+    });
+    $("#show-input-password").change(function () {
+        // Check if the checkbox is checked
+        if ($(this).is(":checked")) {
+            $("#Password").attr("required", "required");
+            $("#parent-password").fadeIn(100);
+        } else {
+            $("#Password").val('');
+            $("#Password").removeAttr("required");
+            $("#parent-password").fadeOut(100);
+        }
+    });
+</script>

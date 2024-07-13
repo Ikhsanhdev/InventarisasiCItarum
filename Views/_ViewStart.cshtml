@@ -1,0 +1,12 @@
+﻿@{
+    string[] url = ViewContext.HttpContext.Request.Path.ToString().Split('/');
+    var route = url[1];
+
+    @if(route == "Template") {
+        Layout = "_LayoutTemplate";
+    } else {
+        Layout = "_Layout";
+    }
+
+    
+}

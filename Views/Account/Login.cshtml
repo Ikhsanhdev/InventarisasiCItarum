@@ -1,0 +1,179 @@
+@{ Layout = string.Empty; } 
+@using IrigasiManganti.Helpers;
+@model IrigasiManganti.ViewModels.VMLogin;
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Login | DI. Manganti</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="PT. Higertech Karya Sinergi" name="author" />
+    <meta content="Realtime Monitoring Telemetry | Powered By PT. Higertech Karya Sinergi" name="description" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/images/favicon.png" />
+
+    <!-- Bootstrap css -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- App css -->
+    <link href="~/css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+      @* .card-login {
+        background-color: rgb(255, 255, 255, .9);
+      }
+      .form-control {
+        background-color: rgb(255, 255, 255, .6);
+      } *@
+      body.authentication-bg {
+        background-color: #213271;
+      }
+      body.authentication-bg-pattern {
+          background-image: url(../images/bg-auth.jpg);
+      }
+      body {
+        background-color: #213271;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      h1, h2, h3, h4, h5, h6, p, span {
+          font-family: 'Poppins', sans-serif;
+      }
+
+      #Password {
+        border-bottom-left-radius: 50rem;
+        border-top-left-radius: 50rem;
+      }
+
+      .input-group-text {
+        border-bottom-right-radius: 50rem;
+        border-top-right-radius: 50rem;
+      }
+
+      .card-login {
+        border-radius: 0.8rem;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+      }
+
+      .btn-submit {
+          font-size: 1rem;
+      }
+
+      .parsley-errors-list>li {
+          @* padding-left: 0; *@
+          margin-top: 0.25rem;
+          font-size: .75rem;
+          color: #f1556c;
+      }
+      
+      .parsley-errors-list>li:before {
+          content: "\f05d6";
+          font-size: .85rem;
+          @* "\f0028" *@
+      }
+
+      footer {
+        font-size: 0.8rem;
+      }
+    </style>
+    <!-- icons -->
+    <link href="~/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Head js -->
+    <script src="~/js/head.min.js"></script>
+  </head>
+
+  <body class="authentication-bg">
+    <!-- Pre-loader -->
+    <div id="preloader">
+        <div id="status">
+            <div class="spinner">Loading...</div>
+        </div>
+    </div>
+    <!-- End Preloader-->
+    <div class="account-pages mt-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <a href="/" class="text-white font-13 fw-500"><i class="fe-arrow-left"></i> Kembali ke Halaman Utama</a>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-8 col-lg-6 col-xl-4">
+            <div class="card card-login">
+              <div class="card-body p-4">
+                <div class="text-center m-auto">
+                  <a href="/" class="logo logo-light text-center mb-3">
+                    <span class="logo-lg">
+                      <img class="rounded-3" src="~/images/logos/logo-pu.jpeg" alt="" height="75" />
+                    </span>
+                  </a>
+                  <h4 class="mb-2 font-15 fw-bold">DI. Manganti</h4>
+                  <p class="mb-3 font-13">Silahkan login untuk mengakses aplikasi</p>
+                </div>
+               
+                <form class="parsley-validation" id="login-form" method="POST" onsubmit="login(this,event)">
+                  <div class="mb-3">
+                    <label for="Username" class="form-label ms-1">Username</label>
+                    <input class="form-control rounded-pill" type="text" asp-for="Username" placeholder="Masukkan Username" data-parsley-errors-container="#error-username" data-parsley-required-message="Username tidak boleh kosong" required/>
+                    <span id="error-username"></span>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="Password" class="form-label ms-1">Password</label>
+                    <div class="input-group input-group-merge">
+                      <input type="password" asp-for="Password" class="form-control" placeholder="Masukkan password" data-parsley-errors-container="#error-password" data-parsley-required-message="Password tidak boleh kosong" required/>
+                      <div class="input-group-text" data-password="false">
+                        <span class="password-eye"></span>
+                      </div>
+                    </div>
+                    <span id="error-password"></span>
+                  </div>
+
+                  <div class="mb-3">
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" asp-for="KeepLoggedIn" />
+                      <label class="form-check-label" for="KeepLoggedIn">Ingatkan Saya</label>
+                    </div>
+                  </div>
+
+                  <div class="text-center mb-3 d-grid">
+                    <button type="submit" class="btn btn-primary rounded-pill waves-effect waves-light btn-submit">Login <i class="fe-log-in ms-1"></i></button>
+                  </div>
+
+                  <p class="mb-1 text-center font-13">Powered By</p>
+                  <p class="mb-0 text-center fw-semibold font-13">PT. Higertech Karya Sinergi</p>
+                </form>
+              </div>
+              <!-- end card-body -->
+            </div>
+            <!-- end card -->
+
+            <!-- end row -->
+          </div>
+          <!-- end col -->
+        </div>
+        <!-- end row -->
+      </div>
+      <!-- end container -->
+    </div>
+    <!-- end page -->
+
+    <!-- Vendor js -->
+    <script src="~/js/vendor.min.js"></script>
+
+    <!-- App js -->
+    <script src="~/js/app.min.js"></script>
+
+    <script src="~/lib/axios/axios.min.js"></script>
+    <script src="~/js/global.min.js"></script>
+
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/lib/parsleyjs/parsley.min.js"></script>
+
+    <!-- Login js -->
+    <script src="~/js/pages/login.min.js"></script>
+  </body>
+</html>

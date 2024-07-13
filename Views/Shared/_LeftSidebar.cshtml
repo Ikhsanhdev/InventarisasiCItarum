@@ -1,0 +1,199 @@
+﻿<div class="left-side-menu">
+
+    <div class="h-100" data-simplebar>
+
+        <!-- User box -->
+        <div class="user-box text-center">
+            <img src="~/images/users/user-1.jpg" alt="user-img" title="Mat Helme"
+                 class="rounded-circle avatar-md">
+            <div class="dropdown">
+                <a href="javascript: void(0);" class="text-dark dropdown-toggle h5 mt-2 mb-1 d-block"
+                   data-bs-toggle="dropdown">Geneva Kennedy</a>
+                <div class="dropdown-menu user-pro-dropdown">
+
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="fe-user me-1"></i>
+                        <span>My Account</span>
+                    </a>
+
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="fe-settings me-1"></i>
+                        <span>Settings</span>
+                    </a>
+
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="fe-lock me-1"></i>
+                        <span>Lock Screen</span>
+                    </a>
+
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="fe-log-out me-1"></i>
+                        <span>Logout</span>
+                    </a>
+
+                </div>
+            </div>
+            <p class="text-muted">Admin Head</p>
+        </div>
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+
+            <ul id="side-menu">
+
+                <li class="menu-title">Setup</li>
+
+                <li>
+                    <a asp-controller="BankAccountInfo" asp-action="Index">
+                        <i class="mdi mdi-bank-outline"></i>
+                        <span> Bank Account Information </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#sidebarDatasetSetup" data-bs-toggle="collapse">
+                        <i class="mdi mdi-clipboard-edit-outline"></i>
+                        <span> Dataset Setup </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarDatasetSetup">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a asp-controller="DatasetSetup" asp-action="Attribute">Attribute</a>
+                            </li>
+                            <li>
+                                <a asp-controller="DatasetSetup" asp-action="Dataset">Dataset</a>
+                            </li>
+                            <li>
+                                <a asp-controller="DatasetSetup" asp-action="TransactionType">Transaction Type</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#sidebarTaskCirculation" data-bs-toggle="collapse">
+                        <i class="mdi mdi-clipboard-check-multiple-outline"></i>
+                        <span> Task Circulation </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarTaskCirculation">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a asp-controller="apps" asp-action="ecommerce-dashboard">Task</a>
+                            </li>
+                            <li>
+                                <a asp-controller="TaskCirculation" asp-action="Role">Role</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#sidebarSecuritySetup" data-bs-toggle="collapse">
+                        <i class="mdi mdi-cog-outline"></i>
+                        <span> Security Setup </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarSecuritySetup">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a asp-controller="apps" asp-action="ecommerce-dashboard">Menu Maintenance</a>
+                            </li>
+                            <li>
+                                <a asp-controller="apps" asp-action="ecommerce-dashboard">User Account Maintenance</a>
+                            </li>
+                            <li>
+                                <a asp-controller="apps" asp-action="ecommerce-dashboard">Company</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="menu-title mt-2">Operational</li>
+
+                <li>
+                    <a href="#sidebarBankAccount" data-bs-toggle="collapse">
+                        <i class="mdi mdi-scale-balance"></i>
+                        <span> Bank Account </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarBankAccount">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="#sidebarOcbcNisp" data-bs-toggle="collapse">
+                                    <img src="~/images/logos/ocbc-nisp.png" alt="" width="72"> <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarOcbcNisp">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="javascript: void(0);">History List Inquiry</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript: void(0);">Transfer - IFT</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript: void(0);">Transfer - BI Fast</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript: void(0);">Transfer - RTGS</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript: void(0);">Transfer - LLG</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li>
+                                <a href="#sidebarBankBca" data-bs-toggle="collapse">
+                                    <img src="~/images/logos/bank-bca.png" alt="" width="42"> <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarBankBca">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="javascript: void(0);">History List Inquiry</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript: void(0);">Transfer - IFT</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript: void(0);">Transfer - BI Fast</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript: void(0);">Transfer - RTGS</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript: void(0);">Transfer - LLG</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="menu-title mt-2">Report</li>
+
+                <li>
+                    <a asp-controller="apps" asp-action="fileManager">
+                        <i class="mdi mdi-text-box-search-outline"></i>
+                        <span> Transaction History </span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Sidebar -left -->
+
+</div>

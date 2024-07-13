@@ -1,0 +1,81 @@
+<div class="topnav">
+    <div class="container-fluid">
+        <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
+
+            <div class="collapse navbar-collapse" id="topnav-menu-content">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link arrow-none" asp-controller="Station" asp-action="Index">
+                            <i class="fe-map-pin me-1"></i> Pos Telemetri
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link arrow-none" href="javascript:void(0);"
+                            onclick="showMessage('info', 'Mohon Maaf', 'Fitur sedang dalam pengembangan.');">
+                            <i class="fe-video me-1"></i> CCTV
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link arrow-none" asp-controller="DownloadData" asp-action="Index">
+                            <i class="fe-file-text me-1"></i> Laporan
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fe-database me-1"></i> Master Data <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-apps">
+                            <a href='@Url.Action("Index","User")' class="dropdown-item"><i class="fe-users me-1"></i>
+                                Data Pengguna</a>
+                            <a href='@Url.Action("Index","RiverArea")' class="dropdown-item"><i class="fe-map me-1"></i>
+                                Wilayah Sungai</a>
+                            <a href='@Url.Action("Index","Watershed")' class="dropdown-item"><i
+                                    class="fe-activity me-1"></i> Daerah Aliran Sungai</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link arrow-none" href="/StationSchema">
+                            <i class="fe-git-pull-request me-1"></i> Skema Sebaran Pos
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link arrow-none" href="/Api">
+                            <i class="fe-globe me-1"></i> Daftar API
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fe-settings me-1"></i> Pengaturan <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-apps">
+                            <a href="javascript:void(0);"
+                                onclick="showMessage('info', 'Mohon Maaf', 'Fitur sedang dalam pengembangan.');"
+                                class="dropdown-item"><i class="mdi mdi-whatsapp me-1"></i>
+                                Notifikasi Whatsapp</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link arrow-none" href="javascript:void(0);"
+                            onclick="showMessage('info', 'Mohon Maaf', 'Fitur sedang dalam pengembangan.');">
+                            <i class="fe-clipboard me-1"></i> Data Pencatatan Manual
+                        </a>
+                    </li>
+                    @* <li class="nav-item">
+                    <a class="nav-link arrow-none" href='@Url.Action("Index","Brand")'>
+                    <i class="fe-link-2 me-1"></i> Daftar API
+                    </a>
+                    </li> *@
+                </ul> <!-- end navbar-->
+            </div> <!-- end .collapsed-->
+        </nav>
+    </div> <!-- end container-fluid -->
+</div> <!-- end topnav-->

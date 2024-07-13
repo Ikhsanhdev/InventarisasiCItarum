@@ -1,0 +1,34 @@
+stages:
+  - deploy production
+
+deploy to production:
+  stage: deploy production
+  before_script:
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - |
+      SSH_CMD=$(cat << EOF
+        set -x
+        set -e
+
+        sudo apt update
+        cd /var/www/source/web-telemetry
+        sudo git fetch
+        sudo git checkout $CI_COMMIT_REF_NAME
+        sudo git reset --hard origin/$CI_COMMIT_REF_NAME
+        sudo git pull origin $CI_COMMIT_REF_NAME
+        sudo dotnet clean
+        sudo dotnet build
+        sudo systemctl stop web-telemetry
+        sudo dotnet publish -c Release -o /var/www/publish/web-telemetry
+        sudo systemctl start web-telemetry
+        exit 0
+      EOF
+      )
+    - echo "$SSH_CMD"
+    - ssh $SSH_USER@$SSH_HOST "$SSH_CMD"
+  only:
+    - production
