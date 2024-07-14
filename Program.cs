@@ -46,9 +46,9 @@ namespace IrigasiManganti
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
             #region Logging
-            // Log.Logger = new LoggerConfiguration()
-            //     .WriteTo.File("ErrorLog/Error.log", rollingInterval: RollingInterval.Month)
-            //     .CreateLogger();
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("ErrorLog/Error.log", rollingInterval: RollingInterval.Month)
+                .CreateLogger();
 
             #endregion Logging
 

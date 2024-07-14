@@ -81,11 +81,19 @@
             padding: 5px;
         }
 
+        .panah-aliran {
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+            margin: 0;
+        }
+
         .transparent-tooltip {
             background-color: transparent;
             border: none;
             box-shadow: none;
             margin: 0;
+            @* padding: 0; *@
         }
 
         .bs-title {
@@ -95,25 +103,44 @@
             color: #000;
         }
 
-        .box-bangunan-detail {
+        .bangunan-sadap-title {
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+            margin: 0;
+            padding: 0;
             font-family: 'Manrope', sans-serif;
             font-size: 7px;
+            font-weight: 600;
             color: #000;
         }
-        .box-bangunan-detail table {
+
+        .box-petak {
+            font-family: 'Manrope', sans-serif;
+            font-size: 8px;
+            color: #000;
+        }
+
+        .box-petak table {
             width: 100%;
             border-collapse: collapse;
         }
-        .box-bangunan-detail th, .box-bangunan-detail td {
+        
+        .box-petak th, .box-petak td {
             padding-left: 5px;
             padding-right: 5px;
-            text-align: center;
             border: 1px solid #000;
         }
 
-        .leaflet-tooltip-right {
-            padding: 0;
+        .golongan-a th, .golongan-a td {
+            border: 1.5px solid #1abc9c;
         }
+
+        
+
+        
+
+        
 
         .leaflet-tooltip-left {
             padding: 0;
@@ -124,10 +151,33 @@
             margin: 0;
         }
 
+        .leaflet-tooltip-right {
+            padding: 0;
+        }
+
         .leaflet-tooltip-right:before {
             display: none;
             margin: 0;
         }
+
+        .leaflet-tooltip-top {
+            padding: 0;
+        }
+
+        .leaflet-tooltip-top:before {
+            display: none;
+            margin: 0;
+        }
+
+        .leaflet-tooltip-bottom {
+            padding: 0;
+        }
+
+        .leaflet-tooltip-bottom:before {
+            display: none;
+            margin: 0;
+        }
+
         .arrow {
             animation: dash 1s linear infinite;
         }
@@ -140,6 +190,20 @@
         #table-legenda td {
             color: #222;
             font-size: 12px;
+        }
+
+        .text-sumber-aliran {
+            font-size: 11px;
+            white-space: nowrap;
+            color: #222;
+            font-weight: bold;
+        }
+
+        .text-saluran-sekunder {
+            font-size: 10px;
+            white-space: nowrap;
+            color: #222;
+            font-weight: 500;
         }
     </style>
 }

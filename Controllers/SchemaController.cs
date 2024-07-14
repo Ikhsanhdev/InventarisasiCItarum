@@ -6,6 +6,7 @@ using IrigasiManganti.Models;
 using IrigasiManganti.Models.Datatables;
 using IrigasiManganti.Helpers;
 using IrigasiManganti.Models.Customs;
+using Serilog;
 
 namespace IrigasiManganti.Controllers
 {
@@ -21,6 +22,25 @@ namespace IrigasiManganti.Controllers
     public IActionResult Index()
     {
       return View();
+    }
+
+    [Route("/Schema/GetSchemaDataByDate/{tanggal}")]
+    public async Task<JsonResult> GetSchemaDataByDate(string tanggal) {
+      var result = new ApiResponse();
+      try
+      {
+          result.MetaData.Code = 200;
+          result.MetaData.Message = "OK";
+          result.Response = await _unitOfWorkRepository.Schemas.GetSchemaDataByDateAsync(tanggal);
+      }
+      catch (Exception ex)
+      {
+          result.MetaData.Code = 500;
+          result.MetaData.Message = "Sorry, something went wrong. Please try again later or contact administrator.";
+          Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace });
+      }
+
+      return Json(result);
     }
 
     public IActionResult Sidareja() {
