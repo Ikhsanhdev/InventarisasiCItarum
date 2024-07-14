@@ -7,16 +7,19 @@ namespace IrigasiManganti.Repositories
         public UnitOfWorkRepository(
             IGlobalRepository globalRepository,
             IUserRepository userRepository,
-            IForecastKetersediaanRepository ForecastKetersediaanRepository
+            IForecastKetersediaanRepository ForecastKetersediaanRepository,
+            IRecomendationRepository recomendationRepository
         )
         {
             Globals = globalRepository;
             Users = userRepository;
             forecastKetersediaan = ForecastKetersediaanRepository;
+            RecomendationRepositories = recomendationRepository;
         }
 
         public IGlobalRepository Globals { get; }
         public IUserRepository Users { get; }
         public IForecastKetersediaanRepository forecastKetersediaan {get;}
+        public IRecomendationRepository RecomendationRepositories { get;}
     }
 }

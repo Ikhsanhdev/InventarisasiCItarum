@@ -7,5 +7,6 @@ namespace IrigasiManganti.Interfaces
         IGlobalRepository Globals { get; }
         IUserRepository Users { get; }
         IForecastKetersediaanRepository forecastKetersediaan { get; }
+        IRecomendationRepository RecomendationRepositories { get; }
     }
 }
