@@ -17,12 +17,19 @@ namespace IrigasiManganti.Repositories
     public class SchemaRepository : ISchemaRepository
     {
         private readonly IrigasiMangantiContext _context;
-        private readonly IDbConnection _db;
+        private readonly string? _connectionString;
+        private readonly IConfiguration _config;
 
         public SchemaRepository(IrigasiMangantiContext context, IConfiguration configuration)
         {
             _context = context;
-            _db = new NpgsqlConnection(configuration.GetConnectionString("DefaultConnection"));
+            _config = configuration;
+            _connectionString = _config.GetConnectionString("DefaultConnection");
+
+            if (_connectionString == null)
+            {
+                Log.Error("Connection string is null. Check your configuration.");
+            }
 
         }
 
@@ -30,6 +37,7 @@ namespace IrigasiManganti.Repositories
         {
             try
             {
+                using var _db = new NpgsqlConnection(_connectionString);
                 var query = @$"
                     SELECT *, null as debit_rekomendasi FROM petak
                 ";

@@ -1,4 +1,5 @@
 using IrigasiManganti.Interfaces;
+using IrigasiManganti.Jobs;
 using IrigasiManganti.Repositories;
 using IrigasiManganti.Services;
 
@@ -15,17 +16,22 @@ namespace IrigasiManganti
 
             #region ========== [ Register Services ] ==========
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ICsvService, CsvService>();
             #endregion
 
             #region ========== [ Register Repositories ] ==========
             services.AddScoped<IGlobalRepository, GlobalRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IForecastKetersediaanRepository, ForecastKetersediaanRepository>();
+            services.AddScoped<IRecomendationRepository, RecomendationRepository>();
+            services.AddScoped<IKetersediaanResository, KetersediaanRepository>();
             services.AddScoped<ISchemaRepository, SchemaRepository>();
+            services.AddScoped<IDebitBendungRepository, DebitBendungRepository>();
             #endregion
 
             #region ========== [ Register Jobs ] ==========
-            
+            services.AddScoped<IReRecomendationJob, RecomendationJob>();
+            services.AddScoped<IKetersediaanJob, KetersediaanJob>();
             #endregion
         }
     }
