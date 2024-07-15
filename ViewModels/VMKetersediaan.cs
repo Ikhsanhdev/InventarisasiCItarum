@@ -11,9 +11,12 @@ namespace IrigasiManganti.ViewModels
         public double? ketersediaan_min { get; set; }
         public double? ketersediaan_max { get; set; }
         public double? ketersediaan_avg { get; set; }
+        public double? kebutuhan { get; set; }
+        public string? satuan { get; set; } = "m3/s";
     }
 
     public class VMDebitBendung : VMKetersediaan{
         public Guid id { get; set; }
+        
     }
 }

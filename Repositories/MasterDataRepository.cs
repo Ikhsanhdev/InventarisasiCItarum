@@ -11,8 +11,8 @@ using Serilog;
 namespace IrigasiManganti.Repositories
 {
     public interface IMasterDataRepository{
-        Task<List<VMDebitBendung>> GetDataDebitBendung(VMDateRange range);
-        Task<List<VMDebitIrigasi>> GetDataDebitIrigasi(VMDateRange range);
+        Task<IEnumerable<dynamic>> GetDataDebitBendung(VMDateRange range);
+        Task<IEnumerable<dynamic>> GetDataDebitIrigasi(VMDateRange range);
     }
     public class MasterDataRepository : IMasterDataRepository
     {
@@ -25,18 +25,23 @@ namespace IrigasiManganti.Repositories
             this._connectionString = configuration.GetConnectionString("DefaultConnection") ?? "";
         }
 
-        public async Task<List<VMDebitBendung>> GetDataDebitBendung(VMDateRange range)
+        public async Task<IEnumerable<dynamic>> GetDataDebitBendung(VMDateRange range)
         {
-            var result = new List<VMDebitBendung>();
-
+            
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 try
                 {
-                    
-
-                    var query = @"SELECT * FROM debit_bendung
-                               WHERE tanggal >= @Start::date AND tanggal <= @End::date";
+                    var query = @"SELECT 
+                                    id,
+                                    TO_CHAR(tanggal, 'YYYY-MM-DD') as tanggal,
+                                    ketersediaan_min,
+                                    ketersediaan_max,
+                                    ketersediaan_avg,
+                                    kebutuhan
+                                FROM debit_bendung
+                                WHERE tanggal >= @Start::date AND tanggal <= @End::date
+                                ORDER BY tanggal";
 
                     if (range.end < range.start) range.end = range.start;
 
@@ -52,11 +57,9 @@ namespace IrigasiManganti.Repositories
                         End = range.end
                     };
 
-                    var data = await connection.QueryAsync<VMDebitBendung>(query, parameters, commandTimeout: 60);
+                    var data = await connection.QueryAsync<dynamic>(query, parameters, commandTimeout: 60);
 
-                    result = data.ToList();
-
-                    return result;
+                    return data;
                 }
                 catch (Npgsql.NpgsqlException ex)
                 {
@@ -78,24 +81,35 @@ namespace IrigasiManganti.Repositories
             }
         }
 
-        public async Task<List<VMDebitIrigasi>> GetDataDebitIrigasi(VMDateRange range)
+        public async Task<IEnumerable<dynamic>> GetDataDebitIrigasi(VMDateRange range)
         {
-            var result = new List<VMDebitIrigasi>();
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 try
                 {
-                   
-
-                    var query = @"SELECT * FROM debit_irigasi
-                               WHERE tanggal >= @Start::date AND tanggal <= @End::date";
+                    var query = @"SELECT
+                                    p.id,
+                                    TO_CHAR(di.tanggal, 'YYYY-MM-DD') as tanggal,
+                                    p.nama_petak,
+                                    p.jenis_bangunan,
+                                    p.luas,
+                                    p.debit_kebutuhan,
+                                    di.debit_aktual,
+                                    di.debit_rekomendasi,
+                                    TO_CHAR(di.updated_at, 'YYYY-MM-DD HH:mm:ss') as updated_at
+                                    
+                                FROM
+                                    debit_irigasi AS di
+                                    JOIN petak AS P ON di.petak_id = P.ID
+                                WHERE tanggal >= @Start::date AND tanggal <= @End::date
+                                ORDER BY di.tanggal";
 
                     if (range.end < range.start) range.end = range.start;
 
                     if (!range.start.HasValue && !range.end.HasValue)
                     {
                         range.start = DateOnly.FromDateTime(DateTime.Now);
-                        range.end = DateOnly.FromDateTime(DateTime.Now.AddMonths(6));
+                        range.end = DateOnly.FromDateTime(DateTime.Now.AddMonths(1));
                     }
 
                     var parameters = new
@@ -104,11 +118,8 @@ namespace IrigasiManganti.Repositories
                         End = range.end
                     };
 
-                    var data = await connection.QueryAsync<VMDebitIrigasi>(query, parameters, commandTimeout : 60);
-
-                    result = data.ToList();
-
-                    return result;
+                    var data = await connection.QueryAsync<dynamic>(query, parameters, commandTimeout : 60);
+                    return data;
                 }
                 catch (Npgsql.NpgsqlException ex)
                 {
