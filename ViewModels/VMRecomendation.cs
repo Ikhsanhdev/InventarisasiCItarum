@@ -17,8 +17,13 @@ namespace IrigasiManganti.ViewModels
     public class VMDebitIrigasi
     {
         public Guid petak_id { get; set; }
-        public DateTime tanggal { get; set; }
+        public DateOnly tanggal { get; set; }
+        public string? nama_petak { get; set; }
+        public string? jenis_bangunan { get; set; }
+        public double? luas { get; set; }
+        public double? debit_kebutuhan { get; set; }
         public double? debit_aktual { get; set; }
         public double? debit_rekomendasi { get; set; }
+        public DateTime? updated_at { get; set; }
     }
 }
