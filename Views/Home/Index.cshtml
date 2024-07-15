@@ -1,6 +1,6 @@
 @{
     Layout = "~/Views/Shared/_LayoutNavbarOnly.cshtml";
-    ViewData["Title"] = "Prediksi Home";
+    ViewData["Title"] = "Bendung Manganti";
 }
 
 @section styles {
@@ -379,8 +379,9 @@
                                 <tr>
                                     <th  class="text-center" scope="col" rowspan="2">No.</th>
                                     <th  class="text-center" scope="col" rowspan="2">Tanggal</th>
-                                    <th  class="text-center" scope="col" colspan="3">Debit Ketersediaan (m<sup>3</sup>/s)</th>
-                                    <th  class="text-center" scope="col" rowspan="2">Debit Kebutuhan (m<sup>3</sup>/s)</th>
+                                    <th  class="text-center" scope="col" colspan="3">Ketersediaan (m<sup>3</sup>/s)</th>
+                                    <th  class="text-center" scope="col" rowspan="2">Kebutuhan (m<sup>3</sup>/s)</th>
+                                    <th  class="text-center" scope="col" rowspan="2">Persentase (%)</th>
                                 </tr>
                                 <tr>
                                     <th class="text-center">Minimal</th>
@@ -730,6 +731,25 @@
                             }
 
                             return `<span class="kebutuhan-color fw-semibold">${kebutuhan}</span>`;
+                        }
+                    },
+                    { 
+                        data: null,
+                        name: null,
+                        render: function (data, type, row) {
+                            var status_percent = 'text-dark';
+
+                            if(row.ketersediaan_avg != null && row.kebutuhan != null) {
+                                var percent_avg_kebutuhan = (row.ketersediaan_avg/row.kebutuhan)*100;
+
+                                if(percent_avg_kebutuhan >= 100) {
+                                    status_percent = 'text-success';
+                                } else {
+                                    status_percent = 'text-warning';
+                                }
+                            }
+
+                            return `<span class="${status_percent} fw-semibold">${percent_avg_kebutuhan.toFixed(2)}</span>`;
                         }
                     }
                 ],
