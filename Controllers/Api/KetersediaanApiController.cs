@@ -17,6 +17,7 @@ using Serilog;
 
 namespace IrigasiManganti.Controllers.Api
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     [ApiController]
     public class KetersediaanApiController : ControllerBase

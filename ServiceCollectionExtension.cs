@@ -27,6 +27,7 @@ namespace IrigasiManganti
             services.AddScoped<IKetersediaanResository, KetersediaanRepository>();
             services.AddScoped<ISchemaRepository, SchemaRepository>();
             services.AddScoped<IDebitBendungRepository, DebitBendungRepository>();
+            services.AddScoped<IMasterDataRepository, MasterDataRepository>();
             #endregion
 
             #region ========== [ Register Jobs ] ==========

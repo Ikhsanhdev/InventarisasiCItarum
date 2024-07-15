@@ -9,7 +9,7 @@ using Serilog;
 
 namespace IrigasiManganti.Controllers.Api
 {
-
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     [ApiController]
     public class RecomendationApiController : ControllerBase
@@ -24,7 +24,7 @@ namespace IrigasiManganti.Controllers.Api
             this._service = service;
         }
 
-        [HttpPost("/v1/recomendation/upload")]
+        [HttpPost("/v1/rekomendasi/upload")]
         public  IActionResult UploadFile(IFormFile file)
         {
             var result = new ApiResponse();

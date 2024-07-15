@@ -92,11 +92,13 @@ namespace IrigasiManganti.Repositories
                 parameters.Add("@PageSize", request.PageSize);
 
                 result = (await connection.QueryAsync<dynamic>(query, parameters)).ToList();
-
+                
                 return (result, total);
+                
             }
             catch (NpgsqlException ex)
             {
+                
                 Log.Error(ex, "PostgreSQL Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Request = request });
                 throw;
             }

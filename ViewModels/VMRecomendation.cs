@@ -13,4 +13,12 @@ namespace IrigasiManganti.ViewModels
         public double? debit_rekomendasi { get; set; }
         public DateTime updated_at { get; set; } = DateTime.Now;
     }
+
+    public class VMDebitIrigasi
+    {
+        public Guid petak_id { get; set; }
+        public DateTime tanggal { get; set; }
+        public double? debit_aktual { get; set; }
+        public double? debit_rekomendasi { get; set; }
+    }
 }
