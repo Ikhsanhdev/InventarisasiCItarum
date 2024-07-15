@@ -15,16 +15,16 @@ deploy to production:
         set -e
 
         sudo apt update
-        cd /var/www/source/smart-irigasi-manganti
+        cd /var/www/source/irigasi-manganti
         sudo git fetch
         sudo git checkout $CI_COMMIT_REF_NAME
         sudo git reset --hard origin/$CI_COMMIT_REF_NAME
         sudo git pull origin $CI_COMMIT_REF_NAME
         sudo dotnet clean
         sudo dotnet build
-        # sudo systemctl stop smart-irigasi-manganti
-        # sudo dotnet publish -c Release -o /var/www/publish/smart-irigasi-manganti
-        # sudo systemctl start smart-irigasi-manganti
+        # sudo systemctl stop irigasi-manganti
+        # sudo dotnet publish -c Release -o /var/www/publish/irigasi-manganti
+        # sudo systemctl start irigasi-manganti
         exit 0
       EOF
       )
