@@ -114,7 +114,7 @@ namespace IrigasiManganti
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Prediksi}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.MapRazorPages();
 

@@ -8,5 +8,6 @@ namespace IrigasiManganti.Interfaces
         IUserRepository Users { get; }
         IForecastKetersediaanRepository forecastKetersediaan { get; }
         ISchemaRepository Schemas { get; }
+        IDebitBendungRepository DebitBendungs { get; }
     }
 }

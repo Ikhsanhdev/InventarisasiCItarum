@@ -47,7 +47,7 @@ namespace IrigasiManganti.Controllers
       return View();
     }
 
-    public IActionResult SidarejaAndri() {
+    public IActionResult SidarejaBagja() {
       return View();
     }
 

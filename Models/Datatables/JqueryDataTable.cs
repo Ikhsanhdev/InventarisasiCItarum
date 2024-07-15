@@ -13,7 +13,7 @@ namespace IrigasiManganti.Models.Datatables
         public int RecordsTotal { get; set; }
     }
 
-    public class JqueryDataTableRequestStation
+    public class JqueryDataTableRequestDebitBendung
     {
         public string? Draw { get; set; }
         public string? Start { get; set; }
@@ -24,10 +24,7 @@ namespace IrigasiManganti.Models.Datatables
         public int PageSize { get; set; }
         public int Skip { get; set; }
         public int RecordsTotal { get; set; }
-        public string? WatershedId { get; set; }
-        public string? BrandCode { get; set; }
-        public string? Type { get; set; }
-        public string? DeviceStatus { get; set; }
+        public string? RangeDate { get; set; }
 
 
     }

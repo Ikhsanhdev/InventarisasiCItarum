@@ -34,10 +34,6 @@ namespace IrigasiManganti.Controllers
             }
         }
 
-        public IActionResult Prediksi() {
-            return View();
-        }
-
         public IActionResult Map() {
             return View();
         }
