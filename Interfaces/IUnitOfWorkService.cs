@@ -6,6 +6,5 @@ namespace IrigasiManganti.Interfaces
     {
         IAuthService Auths { get; }
         ICsvService Csvs { get; }
-        IFileUploadService FileUploads { get; }
     }
 }

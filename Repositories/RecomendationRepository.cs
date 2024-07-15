@@ -15,21 +15,19 @@ using IrigasiManganti.Interfaces;
 namespace IrigasiManganti.Repositories
 {
     public interface IRecomendationRepository{
-        Task SaveRecomendationDataAsync(List<VMRecomendation> data, IFormFile file, PerformContext context);
+        Task SaveRecomendationDataAsync(List<VMRecomendation> data, string filePath, PerformContext context);
         Guid? GetPetakIdByPetakForecastName(string forecastName);
     }
     public class RecomendationRepository : IRecomendationRepository
     {
         private string _connectionString;
-        private readonly IUnitOfWorkService _service;
 
-        public RecomendationRepository(IConfiguration configuration, IUnitOfWorkService service)
+        public RecomendationRepository(IConfiguration configuration)
         {
             this._connectionString = configuration.GetConnectionString("DefaultConnection") ?? "";
-            this._service = service;
         }
 
-        public async Task SaveRecomendationDataAsync(List<VMRecomendation> data, IFormFile file, PerformContext context)
+        public async Task SaveRecomendationDataAsync(List<VMRecomendation> data, string filePath, PerformContext context)
         {
             string jobId = context.BackgroundJob.Id;
             
@@ -95,8 +93,7 @@ namespace IrigasiManganti.Repositories
                             string query = @"INSERT INTO forecast_rekomendasi (id,updated_at,file_path,status,job_id)
                                         VALUES(@id, @updated_at, @file_path, @status, @job_id)";
 
-                            var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "upload", "rekomendasi");
-                            string filePath = await _service.FileUploads.SaveFileAsync(file, directory);
+                            
                             var parameter = new
                             {
                                 id = Guid.NewGuid(),
@@ -120,7 +117,8 @@ namespace IrigasiManganti.Repositories
                             Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while insert data to table forecast_rekomendasi" });
                             throw;
                         }
-                       
+
+                        await connection.CloseAsync();
                     }
                     
                 }
@@ -131,16 +129,54 @@ namespace IrigasiManganti.Repositories
         public Guid? GetPetakIdByPetakForecastName(string forecastName){
             try
             {
-                using (var connection = new NpgsqlConnection(_connectionString)){}
-                    using var _connection = new NpgsqlConnection(_connectionString);
-                string query = @"SELECT id FROM petak WHERE nama_petak_forecast = @forecastName";
-                var data = _connection.QueryFirstOrDefault<Guid>(query, new {forecastName});
-                return data;
-                
+                using (var connection = new NpgsqlConnection(_connectionString)){
+                    string query = @"SELECT id FROM petak WHERE nama_petak_forecast = @forecastName";
+                    var data = connection.QueryFirstOrDefault<Guid>(query, new { forecastName });
+                    return data;
+                }
+                    
             }
-            catch (System.Exception)
-            {
+            catch(NpgsqlException ex){
+                Log.Error(ex, "Sql Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while try to get id from table petak" });
                 throw;
+            }
+            catch (System.Exception ex)
+            {
+                Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while try to get id from table petak" });
+                throw;
+            }
+        }
+
+        private async Task<string> SaveFileAsync(IFormFile file, string uploadDirectory)
+        {
+            try
+            {
+                EnsureDirectoryExists(uploadDirectory);
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                fileName = $"{DateTime.Now.ToString("dd/MMM/YYYY")}_{fileName}"; ;
+                var filePath = Path.Combine(uploadDirectory, fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+                return filePath;
+            }
+            catch (System.Exception ex)
+            {
+                Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while try to save file rekomendasi to folder" });
+                throw;
+                throw;
+            }
+            
+        }
+
+        private void EnsureDirectoryExists(string directory)
+        {
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
             }
         }
     }

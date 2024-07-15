@@ -1,38 +1,34 @@
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using Hangfire;
 using IrigasiManganti.Interfaces;
 using IrigasiManganti.ViewModels;
+using Serilog;
 
 namespace IrigasiManganti.Jobs
 {
     public interface IReRecomendationJob{
-        void SaveRecomendationJob(IFormFile file);
-        
+        void SaveRecomendationJob(DataTable file, string filePath);
     }
     public class RecomendationJob : IReRecomendationJob
     {
         private readonly IUnitOfWorkRepository _repository;
-        private readonly IUnitOfWorkService _service;
         private readonly IBackgroundJobClient _backgroundJobClient;
-        public RecomendationJob(IUnitOfWorkRepository repository, IBackgroundJobClient backgroundJobClient, IUnitOfWorkService service)
+        
+        public RecomendationJob(IUnitOfWorkRepository repository, IBackgroundJobClient backgroundJobClient)
         {
             this._repository = repository;
             this._backgroundJobClient = backgroundJobClient;
-            this._service = service;
+            
         }
-        public void SaveRecomendationJob(IFormFile file)
+        public void SaveRecomendationJob(DataTable table, string filePath)
         {
             try
             {
-                var table = _service.Csvs.ReadCsvToDataTable(file);
+                
                 // check if data recomendation is empty
                 if (table.Rows.Count == 0) return;
-                
+
                 foreach (DataRow row in table.Rows)
                 {
                     var modelData = new List<VMRecomendation>();
@@ -82,12 +78,13 @@ namespace IrigasiManganti.Jobs
                         index++;
                     }
 
-                    _backgroundJobClient.Enqueue(() => _repository.RecomendationRepositories.SaveRecomendationDataAsync(modelData,file, null));
+                    _backgroundJobClient.Enqueue(() => _repository.RecomendationRepositories.SaveRecomendationDataAsync(modelData, filePath, null));
                 }
                 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error in SaveRecomendationJob" });
                 throw;
             }
         }

@@ -8,18 +8,24 @@ namespace IrigasiManganti.Repositories
             IGlobalRepository globalRepository,
             IUserRepository userRepository,
             IForecastKetersediaanRepository ForecastKetersediaanRepository,
-            IRecomendationRepository recomendationRepository
+            IRecomendationRepository recomendationRepository,
+            ISchemaRepository schemaRepository,
+            IKetersediaanResository ketersediaanResository
         )
         {
             Globals = globalRepository;
             Users = userRepository;
             forecastKetersediaan = ForecastKetersediaanRepository;
             RecomendationRepositories = recomendationRepository;
+            Schemas = schemaRepository;
+            KetersediaanRepositories = ketersediaanResository;
         }
 
         public IGlobalRepository Globals { get; }
         public IUserRepository Users { get; }
         public IForecastKetersediaanRepository forecastKetersediaan {get;}
         public IRecomendationRepository RecomendationRepositories { get;}
+        public IKetersediaanResository KetersediaanRepositories { get;}
+        public ISchemaRepository Schemas {get;}
     }
 }

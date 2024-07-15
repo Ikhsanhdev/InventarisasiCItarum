@@ -29,7 +29,7 @@ namespace IrigasiManganti.Services
                         var firstRecord = records.First() as IDictionary<string, object>;
                         foreach (var kvp in firstRecord)
                         {
-                            dataTable.Columns.Add(kvp.Key);
+                            dataTable.Columns.Add(generateColumnName(kvp.Key));
                         }
 
                         // Add rows to DataTable
@@ -56,6 +56,19 @@ namespace IrigasiManganti.Services
             {
                 throw;
             }
+        }
+
+        private string generateColumnName(string columnName){
+            if (string.IsNullOrEmpty(columnName)) return "";
+            string result = "";
+            List<string> columnKetersediaan = new List<string>(){"min","max","avg","mean","average","minimal","maximal","minimum","maksimun","rerata","rata-rata","tanggal","date"};
+
+            int index = columnKetersediaan.IndexOf(columnName.ToLower());
+            if (index == -1) return columnName.ToLower();
+
+            result = columnKetersediaan[index];
+
+            return result;
         }
     }
 }

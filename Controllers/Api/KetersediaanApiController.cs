@@ -1,31 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Hangfire;
 using IrigasiManganti.Helpers;
 using IrigasiManganti.Interfaces;
 using IrigasiManganti.Jobs;
 using IrigasiManganti.Models.Customs;
+using IrigasiManganti.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
 namespace IrigasiManganti.Controllers.Api
 {
-
     [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     [ApiController]
-    public class RecomendationApiController : ControllerBase
+    public class KetersediaanApiController : ControllerBase
     {
-        private readonly IReRecomendationJob _job;
+        private readonly IKetersediaanJob _job;
         private readonly IBackgroundJobClient _backgroundJobClient;
         private readonly IUnitOfWorkService _service;
-        public RecomendationApiController(IReRecomendationJob job, IBackgroundJobClient backgroundJobClient, IUnitOfWorkService service)
+        public KetersediaanApiController(IBackgroundJobClient backgroundJobClient, IUnitOfWorkService service, IKetersediaanJob job)
         {
-            this._job = job;
             this._backgroundJobClient = backgroundJobClient;
             this._service = service;
+            this._job = job;
         }
 
-        [HttpPost("/v1/recomendation/upload")]
-        public  IActionResult UploadFile(IFormFile file)
+        [HttpPost("/v1/ketersediaan/upload")]
+        public IActionResult UploadFile(IFormFile file)
         {
             var result = new ApiResponse();
             try
@@ -47,15 +54,15 @@ namespace IrigasiManganti.Controllers.Api
                 }
 
                 var table = _service.Csvs.ReadCsvToDataTable(file);
-                // var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "rekomendasi");
-                // string filePath = FileHelper.SaveFile(file, directory);
+                var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "ketersediaan");
+                string filePath = FileHelper.SaveFile(file, directory);
 
-                // _backgroundJobClient.Enqueue(() => _job.SaveRecomendationJob(table, filePath)) ;
-                
+                _backgroundJobClient.Enqueue(() => _job.SaveKetersediaanJob(table, filePath)) ;
+               
 
                 result.MetaData.Code = 200;
                 result.MetaData.Message = "OK";
-                result.Response = table;
+                
                 return Ok(result);
             }
             catch (System.Exception ex)
@@ -65,7 +72,8 @@ namespace IrigasiManganti.Controllers.Api
                 Log.Error(ex, "general Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data from api -- API ERROR" });
                 return BadRequest(result);
             }
-           
+
         }
+
     }
 }
