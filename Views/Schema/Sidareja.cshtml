@@ -2,21 +2,14 @@
 
 @{
     Layout = "~/Views/Shared/_LayoutNavbarOnly.cshtml";
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Saluran Irigasi Sidareja";
 }
 
 @section styles {
-    <link href="~/lib/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/lib/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap">
     <link href="~/lib/leaflet/leaflet.css" rel="stylesheet" type="text/css">
-    <link href="~/lib/mapbox-gl/mapbox-gl.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.css" integrity="sha512-aiVWmB2G8oV+XfHo1CR6hEAxzCl48Lrl3UBzQ6P+BEMkT8qY1tGecdQx6x/X8i9cCVrwQU9ipsOsZlNkRh9n7w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="~/lib/leaflet.markercluster/MarkerCluster.css" rel="stylesheet" type="text/css">
-    <link href="~/lib/leaflet.markercluster/MarkerCluster.Default.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-    <link href="~/lib/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
 }
 
 @section customStyles {
@@ -199,6 +192,30 @@
             color: #222;
             font-weight: 500;
         }
+
+        .btn-circle {
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 30px;
+            height: 30px;
+            padding: 6px 0px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.42857;
+        }
+
+        .form-control[readonly] {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border-color: rgb(255, 255, 255, .2);
+            box-shadow: none;
+        }
+
+        .btn-prev-next {
+            box-shadow: rgba(3, 18, 26, 0.15) 0px 2px 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 0px solid black;
+        }
     </style>
 }
 
@@ -211,31 +228,36 @@
 
         <div class="row mb-4">
             <div class="col-12">
-                <div class="card card-body m-0 p-0">
-                    <div class="w-100" id="map"></div>
-                </div>
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center" style="background: rgb(2, 100, 200);">
+                        <h4 class="card-title mb-0 text-white">SALURAN IRIGASI SIDAREJA</h4>
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="input-group">
+                                <button class="input-group-text text-white btn-prev-next" id="btn-prev">
+                                    <i class="mdi mdi-chevron-left font-16"></i>
+                                </button>
+                                <input type="text" class="form-control text-center" placeholder="" id="filter-date" readonly="readonly">
+                                <button class="input-group-text text-white btn-prev-next" id="btn-next">
+                                    <i class="mdi mdi-chevron-right font-16"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="w-100" id="map"></div>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
             </div>
         </div>
     </div>
 </div>
 
 @section scripts {
-    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="~/lib/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="~/lib/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="~/lib/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
     <script src="~/lib/leaflet/leaflet.js"></script>
-    <script src="~/lib/mapbox-gl/mapbox-gl.js"></script>
-    <script src="~/lib/mapbox-gl-leaflet/leaflet-mapbox-gl.js"></script>
-    <script src="~/lib/leaflet-polylinedecorator/leaflet.polylineDecorator.js"></script>
-    <script src="~/lib/leaflet-switch-basemap/src/main.eb127ecea7b7559c70ac.js"></script>
-    <script src="~/lib/leaflet.markercluster/leaflet.markercluster.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.js" integrity="sha512-Tndo4y/YJooD/mGXS9D6F1YyBcSyrWnnSWQ5Z9IcKt6bljicjyka9qcP99qMFbQ5+omfOtwwIapv1DjBCZcTJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
-    <script src="~/lib/tippy.js/tippy.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.8/signalr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="~/lib/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="~/lib/flatpickr/flatpickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script>
 }
 
 @section additionalScripts {
@@ -252,7 +274,7 @@
     @{
         long currTimestamp = DateTime.Now.Ticks;
     }
-    
+
 
     <script src="~/js/schemas/sidareja.min.js?v=@currTimestamp"></script>
 }

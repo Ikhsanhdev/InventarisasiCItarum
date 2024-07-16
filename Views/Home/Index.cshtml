@@ -164,7 +164,7 @@
                             <div class="col-6">
                                 <div class="text-end">
                                     <h3 class="text-dark mt-1"><span data-plugin="counterup" id="das-ketersediaan"></span></h3>
-                                    <p class="text-muted mb-1 text-truncate">Ketersediaan(today)</p>
+                                    <p class="text-muted mb-1 text-truncate">Ketersediaan (Hari Ini)</p>
                                 </div>
                             </div>
                         </div> <!-- end row-->
@@ -184,7 +184,7 @@
                             <div class="col-6">
                                 <div class="text-end">
                                     <h3 class="text-dark mt-1"><span data-plugin="counterup" id="das-kebutuhan"></span></h3>
-                                    <p class="text-muted mb-1 text-truncate">Kebutuhan(today)</p>
+                                    <p class="text-muted mb-1 text-truncate">Kebutuhan (Hari Ini)</p>
                                 </div>
                             </div>
                         </div> <!-- end row-->
@@ -204,7 +204,7 @@
                             <div class="col-6">
                                 <div class="text-end">
                                     <h3 class="text-dark mt-1"><span data-plugin="counterup" id="das-presentase"></span></h3>
-                                    <p class="text-muted mb-1 text-truncate">Presentase(today)</p>
+                                    <p class="text-muted mb-1 text-truncate">Persentase (Hari Ini)</p>
                                 </div>
                             </div>
                         </div> <!-- end row-->
@@ -413,10 +413,37 @@
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <script src="~/lib/apexcharts/apexcharts.min.js"></script>
 } 
 
 @section additionalScripts {
     <script>
+        var colors = ['#f1556c'];
+        var dataColors = $("#total-revenue").data('colors');
+        if (dataColors) {
+            colors = dataColors.split(",");
+        }
+        var options = {
+            series: [68],
+            chart: {
+                height: 242,
+                type: 'radialBar',
+            },
+            plotOptions: {
+                radialBar: {
+                    hollow: {
+                        size: '65%',
+                    }
+                },
+            },
+            colors: colors,
+            labels: ['Revenue'],
+        };
+
+        var chart1 = new ApexCharts(document.querySelector("#total-revenue"), options);
+        chart1.render();
+
         var dtDebitBendung;
         let chart;
         let chartType = 'spline'; // Default chart type
