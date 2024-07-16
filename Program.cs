@@ -11,6 +11,8 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using IrigasiManganti.BasicAuthService;
 using Microsoft.AspNetCore.Authentication;
+using System.Reflection;
+using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace IrigasiManganti
 {
@@ -88,15 +90,15 @@ namespace IrigasiManganti
             // Register the Swagger generator
             builder.Services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Irigasi Citanduy", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API DI. Manganti", Version = "v1" });
 
                 // Include only controllers in the 'Controllers.Api' namespace
-                c.DocInclusionPredicate((docName, apiDesc) =>
-                {
-                    if (!apiDesc.TryGetMethodInfo(out var methodInfo)) return false;
-                    var controllerNamespace = methodInfo.DeclaringType.Namespace;
-                    return controllerNamespace != null && controllerNamespace.StartsWith("IrigasiManganti.Controllers.Api");
-                });
+                // c.DocInclusionPredicate((docName, apiDesc) =>
+                // {
+                //     if (!apiDesc.TryGetMethodInfo(out var methodInfo)) return false;
+                //     var controllerNamespace = methodInfo.DeclaringType.Namespace;
+                //     return controllerNamespace != null && controllerNamespace.StartsWith("IrigasiManganti.Controllers.Api");
+                // });
                 // Add Basic Authentication
                 var securityScheme = new OpenApiSecurityScheme
                 {
@@ -108,8 +110,42 @@ namespace IrigasiManganti
                 };
                 c.AddSecurityDefinition("Basic", securityScheme);
 
+                c.EnableAnnotations();
                 // Add Operation Filters to add Authorization header
                 c.OperationFilter<SwaggerBasicAuthFilter>();
+
+                c.TagActionsBy(api =>
+                {
+                    var controllerActionDescriptor = api.ActionDescriptor as ControllerActionDescriptor;
+                    if (controllerActionDescriptor != null)
+                    {
+                        // Periksa apakah controller berada di dalam folder 'Controllers/Api'
+                        var namespaceParts = controllerActionDescriptor.ControllerTypeInfo.Namespace.Split('.');
+                        if (namespaceParts.Contains("Api"))
+                        {
+                            // Mengubah nama grup berdasarkan namespace atau folder
+                            return new[] { "Data Forecast" };
+                        }
+                        return new[] { controllerActionDescriptor.ControllerName };
+                    }
+                    return new[] { "Default" };
+                });
+                
+                // Filter untuk hanya menyertakan controller dari folder Controllers/Api
+                c.DocInclusionPredicate((docName, apiDesc) =>
+                {
+                    var controllerActionDescriptor = apiDesc.ActionDescriptor as ControllerActionDescriptor;
+                    if (controllerActionDescriptor != null)
+                    {
+                        var namespaceParts = controllerActionDescriptor.ControllerTypeInfo.Namespace.Split('.');
+                        if (namespaceParts.Contains("Api"))
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+
             });
 
             builder.Services.AddAuthentication("BasicAuthentication")
@@ -142,7 +178,8 @@ namespace IrigasiManganti
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Irigasi Citanduy");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API DI. Manganti");
+                
             });
 
             // app.UseMiddleware<Middlewares.SubdomainMiddleware>();
