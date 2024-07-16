@@ -1074,19 +1074,19 @@ function getSchemaData(tanggal) {
       var debit_rekomendasi = 'QR= <strong>-</strong>';
       $.each(result.response, function (key, data) {
         if(data.luas != null) {
-          luas = `A= ${data.luas.toFixed(2)} Ha`;
+          luas = `A= ${formatNumber(data.luas)} Ha`;
         }
 
         if(data.debit_kebutuhan != null) {
-          debit_kebutuhan = `QK= ${data.debit_kebutuhan.toFixed(2)} m3/s`;
+          debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} m3/s`;
         }
 
         if(data.debit_aktual != null) {
-          debit_aktual = `QA= ${data.debit_aktual.toFixed(2)} m3/s`;
+          debit_aktual = `QA= ${formatNumber(data.debit_aktual)} m3/s`;
         }
 
         if(data.debit_rekomendasi != null) {
-          debit_rekomendasi = `QR= ${data.debit_rekomendasi.toFixed(2)} m3/s`;
+          debit_rekomendasi = `QR= ${formatNumber(data.debit_rekomendasi)} m3/s`;
         }
 
         $('.box-petak tbody').html(`
@@ -1113,6 +1113,19 @@ function getSchemaData(tanggal) {
         console.log(error.message)
     }
   })
+}
+
+function formatNumber(value) {
+  // Convert the number to a string and use parseFloat to remove unnecessary zeros
+  let formattedValue = parseFloat(value.toFixed(2)).toString();
+
+  // Check if the formatted string ends with .00 and remove it
+  if (formattedValue.endsWith('.00')) {
+      formattedValue = formattedValue.slice(0, -3); // Remove the .00 part
+  }
+
+  // Return the formatted value
+  return formattedValue;
 }
 
 // function refreshTooltips() {
