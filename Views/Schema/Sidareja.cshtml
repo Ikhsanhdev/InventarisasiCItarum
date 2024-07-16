@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_LayoutNavbarOnly.cshtml";
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Saluran Irigasi Sidareja";
 }
 
 @section styles {
@@ -199,6 +199,17 @@
             color: #222;
             font-weight: 500;
         }
+
+        .btn-circle {
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 30px;
+            height: 30px;
+            padding: 6px 0px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.42857;
+        }
     </style>
 }
 
@@ -211,9 +222,24 @@
 
         <div class="row mb-4">
             <div class="col-12">
-                <div class="card card-body m-0 p-0">
-                    <div class="w-100" id="map"></div>
-                </div>
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center" style="background: rgb(2, 100, 200);">
+                        <h4 class="card-title mb-0 text-white">SALURAN IRIGASI SIDAREJA</h4>
+                        <div class="">
+                            <button type="button" class="btn btn-default btn-circle"><i class="mdi mdi-chevron-right"></i></button>
+                            <div class="input-group">
+                                <span class="input-group-text bg-blue border-blue text-white">
+                                    <i class="mdi mdi-calendar-range font-16"></i>
+                                </span>
+                                <input type="hidden" class="form-control border flatpickr-input" id="dash-daterange" value="2024-07-12 to 2024-07-16"><input class="form-control border input" placeholder="" tabindex="0" type="text" readonly="readonly">
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="w-100" id="map"></div>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
             </div>
         </div>
     </div>
@@ -252,7 +278,7 @@
     @{
         long currTimestamp = DateTime.Now.Ticks;
     }
-    
+
 
     <script src="~/js/schemas/sidareja.min.js?v=@currTimestamp"></script>
 }
