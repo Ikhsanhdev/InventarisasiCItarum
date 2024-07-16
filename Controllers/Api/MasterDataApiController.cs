@@ -1,17 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+using System.ComponentModel;
 using IrigasiManganti.Interfaces;
 using IrigasiManganti.Models.Customs;
 using IrigasiManganti.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace IrigasiManganti.Controllers.Api
 {
-    [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "BasicAuthentication")]
+    
     public class MasterDataApiController : ControllerBase
     {
         private readonly IUnitOfWorkRepository _repository;
@@ -23,6 +23,7 @@ namespace IrigasiManganti.Controllers.Api
 
         [HttpGet]
         [Route("/v1/debit-bendung")]
+        
         public async Task<IActionResult> GetDebitBendungan([FromQuery] VMDateRange query){
 
             var result = new ApiResponse();
