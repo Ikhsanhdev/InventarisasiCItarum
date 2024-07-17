@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Hangfire.Server;
 using IrigasiManganti.ViewModels;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Npgsql;
 using Serilog;
 
@@ -12,7 +14,7 @@ namespace IrigasiManganti.Repositories
 {
     public interface IKetersediaanResository
     {
-        Task SaveKetersediaanDataAsync(List<VMKetersediaan> data, string filePath, PerformContext context);
+        Task SaveKetersediaanDataAsync(List<VMKetersediaan> data, string filePath, string jobId);
     }
     public class KetersediaanRepository : IKetersediaanResository
     {
@@ -22,10 +24,8 @@ namespace IrigasiManganti.Repositories
         {
             this._connectionString = configuration.GetConnectionString("DefaultConnection") ?? ""; ;
         }
-        public async Task SaveKetersediaanDataAsync(List<VMKetersediaan> data, string filePath, PerformContext context)
+        public async Task SaveKetersediaanDataAsync(List<VMKetersediaan> data, string filePath, string jobId)
         {
-            string jobId = context.BackgroundJob.Id;
-
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
@@ -34,18 +34,49 @@ namespace IrigasiManganti.Repositories
                 {
                     try
                     {
-                        var sql = @"
-                        INSERT INTO debit_bendung (tanggal, ketersediaan_min, ketersediaan_max, ketersediaan_avg) 
-                        VALUES (@tanggal, @ketersediaan_min, @ketersediaan_max, @ketersediaan_avg)
-                        ON CONFLICT (tanggal) DO UPDATE 
-                        SET 
-                            ketersediaan_min = EXCLUDED.ketersediaan_min,
-                            ketersediaan_max = EXCLUDED.ketersediaan_max,
-                            ketersediaan_avg = EXCLUDED.ketersediaan_avg
-                        ";
-
-                        await connection.ExecuteAsync(sql, data, transaction: transaction);
-                        await transaction.CommitAsync();
+                        /* check if data with tanggal exisi */
+                        
+                        foreach (var row in data)
+                        {
+                            var currentRow = "SELECT COUNT(*) FROM debit_bendung WHERE tanggal::date = @tanggal::date";
+                            var count = await connection.QueryAsync<dynamic>(currentRow, new {row.tanggal});
+                            var x = count.ToList().Count;
+                            var parameters = new {
+                                row.id,
+                                row.tanggal,
+                                row.ketersediaan_min,
+                                row.ketersediaan_max,
+                                row.ketersediaan_avg,
+                                row.updated_at
+                            };
+                            if(x == 0){
+                                /* Insert Data*/
+                                var insertQuery = @"INSERT INTO debit_bendung 
+                                                    (id, tanggal, ketersediaan_min, ketersediaan_max, ketersediaan_avg, updated_at) 
+                                                    VALUES (@id, @tanggal, @ketersediaan_min, @ketersediaan_max, @ketersediaan_avg, @updated_at)";
+                                await connection.QueryAsync(insertQuery, parameters);
+                                Console.WriteLine("INSERT NEW debit_bendung");
+                            }else{
+                                var parameterUpdate = new
+                                {
+                                    row.ketersediaan_min,
+                                    row.ketersediaan_max,
+                                    row.ketersediaan_avg,
+                                    row.updated_at,
+                                    row.tanggal
+                                };
+                                var updateQuery = @"UPDATE debit_bendung 
+                                                    SET
+                                                        ketersediaan_min = @ketersediaan_min,
+                                                        ketersediaan_max = @ketersediaan_max,
+                                                        ketersediaan_avg = @ketersediaan_avg,
+                                                        updated_at = @updated_at
+                                                    WHERE tanggal::date = @tanggal::date";
+                                await connection.QueryAsync(updateQuery, parameterUpdate);
+                                Console.WriteLine($"UPDATE debit_bendung ------------ tangaal: {row.tanggal}");
+                            }
+                        }
+    
                         isSuccess = true;
                     }
                     catch (Npgsql.NpgsqlException ex)
@@ -79,6 +110,7 @@ namespace IrigasiManganti.Repositories
                             await connection.ExecuteAsync(query, parameter);
 
                             await transaction.CommitAsync();
+
                         }
                         catch (Npgsql.NpgsqlException ex)
                         {
@@ -93,10 +125,11 @@ namespace IrigasiManganti.Repositories
                             throw;
                         }
 
-                        await connection.CloseAsync();
+                         await connection.CloseAsync();
                     }
                 }
 
+                await connection.CloseAsync();
             }
         }
 
