@@ -461,8 +461,8 @@
             const percent = ketersediaanAvgToday && kebutuhanToday ? (ketersediaanAvgToday / kebutuhanToday) * 100 : 0;
 
             document.getElementById('das-presentase').textContent = percent.toFixed(2) + '%';
-            document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2);
-            document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2);
+            document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2) + ' lt/dt';
+            document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2) + ' lt/dt';
             
             createChart(ketersediaanData, avgData, kebutuhanData);
         }
@@ -522,10 +522,10 @@
                         const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
 
                         return `<b>${day}, ${formattedDate}</b><br/>
-                                Kebutuhan: ${kebutuhanPoint.y.toFixed(2)} m<sup>3</sup>/s<br/>
-                                Min: ${ketersediaanPoint.point.low.toFixed(2)} m<sup>3</sup>/s<br/>
-                                Max: ${ketersediaanPoint.point.high.toFixed(2)} m<sup>3</sup>/s<br/>
-                                Rerata: ${avgPoint.y.toFixed(2)} m<sup>3</sup>/s`;
+                                Kebutuhan: ${kebutuhanPoint.y.toFixed(2)} lt/dt<br/>
+                                Min: ${ketersediaanPoint.point.low.toFixed(2)} lt/dt<br/>
+                                Max: ${ketersediaanPoint.point.high.toFixed(2)} lt/dt<br/>
+                                Rerata: ${avgPoint.y.toFixed(2)} lt/dt`;
                     }
                 },
                 series: [
@@ -651,6 +651,25 @@
                             return `<span class="${status_percent} fw-semibold">${percent_avg_kebutuhan.toFixed(2)}%</span>`;
                         }
                     }
+                ],
+                columnDefs: [
+                    {
+                        targets: 0,
+                        render: function (data) {
+                            if(data != null) {
+                                return `${moment(data).locale('id').format("D MMMM YYYY")}`;
+                            }
+
+                            return null;
+                        },
+                    },
+                    {
+                        targets: -1,
+                        searchable: false,
+                        orderable: false,
+                        // width: '20%',
+                        className: "text-center"
+                    },
                 ],
                 drawCallback: function() {
                     createChartFromDataTable();
