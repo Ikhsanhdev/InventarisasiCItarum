@@ -13,6 +13,7 @@ namespace IrigasiManganti.Repositories
 {
     public interface IDebitBendungRepository
     {
+        Task<(IReadOnlyList<dynamic>, int)> GetDatatableByRangeDateAsync2(JqueryDataTableRequestDebitBendung request);
         Task<(IReadOnlyList<dynamic>, int)> GetDatatableByRangeDateAsync(JqueryDataTableRequestDebitBendung request);
     }
     public class DebitBendungRepository : IDebitBendungRepository
@@ -34,7 +35,7 @@ namespace IrigasiManganti.Repositories
 
         }
 
-        public async Task<(IReadOnlyList<dynamic>, int)> GetDatatableByRangeDateAsync(JqueryDataTableRequestDebitBendung request)
+        public async Task<(IReadOnlyList<dynamic>, int)> GetDatatableByRangeDateAsync2(JqueryDataTableRequestDebitBendung request)
         {
             try
             {
@@ -109,5 +110,80 @@ namespace IrigasiManganti.Repositories
             }
         }
         
+        public async Task<(IReadOnlyList<dynamic>, int)> GetDatatableByRangeDateAsync(JqueryDataTableRequestDebitBendung request)
+        {
+            try
+            {
+                using var connection = new NpgsqlConnection(_connectionString);
+
+                List<dynamic> result = new List<dynamic>();
+                var query = "SELECT * FROM debit_bendung";
+
+                var parameters = new DynamicParameters();
+                var whereConditions = new List<string>();
+
+                if (!string.IsNullOrEmpty(request.RangeDate))
+                {
+                    int rangeDays;
+                    DateTime daysLater;
+                    DateTime today = DateTime.Now;
+
+                    switch (request.RangeDate)
+                    {
+                        case "7d":
+                            rangeDays = 7;
+                            break;
+                        case "15d":
+                            rangeDays = 15;
+                            break;
+                        case "30d":
+                            rangeDays = 30;
+                            break;
+                        default:
+                            rangeDays = 7;
+                            break;
+                    }
+
+                    daysLater = today.AddDays(rangeDays);
+                    whereConditions.Add(@"""tanggal"" BETWEEN @FormattedToday AND @FormattedLater");
+                    parameters.Add("@FormattedLater", daysLater.Date);
+                    parameters.Add("@FormattedToday", today.Date);
+                }
+
+                var whereClause = whereConditions.Count > 0 ? "WHERE " + string.Join(" AND ", whereConditions) : "";
+                query += " " + whereClause;
+
+                int total = 0;
+                var sql_count = $"SELECT COUNT(*) FROM ({query}) as total";
+                total = connection.ExecuteScalar<int>(sql_count, parameters);
+
+                if (!string.IsNullOrEmpty(request.SortColumn) && !string.IsNullOrEmpty(request.SortColumnDirection))
+                {
+                    query += @$" ORDER BY {request.SortColumn} {request.SortColumnDirection}";
+                }
+                else
+                {
+                    query += " ORDER BY \"tanggal\"";
+                }
+
+                query += " OFFSET @Skip LIMIT @PageSize;";
+                parameters.Add("@Skip", request.Skip);
+                parameters.Add("@PageSize", request.PageSize);
+
+                result = (await connection.QueryAsync<dynamic>(query, parameters)).ToList();
+
+                return (result, total);
+            }
+            catch (NpgsqlException ex)
+            {
+                Log.Error(ex, "PostgreSQL Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Request = request });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Request = request });
+                throw;
+            }
+        }
     }
 }

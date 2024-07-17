@@ -363,7 +363,6 @@
                         </div>
 
                         <div class="btn-group mb-3 range-buttons">
-                            @* <a href="#" id="range-1d" class="btn btn-blue active" aria-current="page">1 Hari</a> *@
                             <a href="#" id="range-7d" class="btn btn-blue active" aria-current="page">7 hari</a>
                             <a href="#" id="range-15d" class="btn btn-blue">15 Hari</a>
                             <a href="#" id="range-30d" class="btn btn-blue">30 Hari</a>
@@ -377,7 +376,7 @@
                         <table class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100" id="table-debit-bendung">
                             <thead class="bg-blue text-white">
                                 <tr>
-                                    <th  class="text-center" scope="col" rowspan="2">No.</th>
+                                    @* <th  class="text-center" scope="col" rowspan="2">No.</th> *@
                                     <th  class="text-center" scope="col" rowspan="2">Tanggal</th>
                                     <th  class="text-center" scope="col" colspan="3">Ketersediaan (m<sup>3</sup>/s)</th>
                                     <th  class="text-center" scope="col" rowspan="2">Kebutuhan (m<sup>3</sup>/s)</th>
@@ -419,139 +418,57 @@
 
 @section additionalScripts {
     <script>
-        var colors = ['#f1556c'];
-        var dataColors = $("#total-revenue").data('colors');
-        if (dataColors) {
-            colors = dataColors.split(",");
-        }
-        var options = {
-            series: [68],
-            chart: {
-                height: 242,
-                type: 'radialBar',
-            },
-            plotOptions: {
-                radialBar: {
-                    hollow: {
-                        size: '65%',
-                    }
-                },
-            },
-            colors: colors,
-            labels: ['Revenue'],
-        };
-
-        var chart1 = new ApexCharts(document.querySelector("#total-revenue"), options);
-        chart1.render();
-
-        var dtDebitBendung;
         let chart;
-        let chartType = 'spline'; // Default chart type
-        let currentRange = '7d'; // Default range
+        var dtDebitBendung;
+        var currentRange = '7d'; // Default range
+        var chartType = 'spline'
 
-        function setRange(range) {
+        function createChartFromDataTable() {
             const today = new Date();
-            const now = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+            const ketersediaanData = [];
+            const avgData = [];
+            const kebutuhanData = [];
+            const rows = dtDebitBendung.rows().data();
 
-            const millisecondsInADay = 24 * 60 * 60 * 1000;
-            const futureDate = new Date(now + (30 * millisecondsInADay));
-            const futureDateUTC = Date.UTC(futureDate.getUTCFullYear(), futureDate.getUTCMonth(), futureDate.getUTCDate());
+            let kebutuhanToday = 0;
+            let ketersediaanAvgToday = 0;
+            let presentaseToday = 0;
 
-            let min, max;
+            rows.each(function(row) {
+                const date = new Date(row.tanggal);
+                const timestamp = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+                const ketersediaanMin = parseFloat(row.ketersediaan_min);
+                const ketersediaanMax = parseFloat(row.ketersediaan_max);
+                const ketersediaanAvg = parseFloat(row.ketersediaan_avg);
+                const kebutuhan = parseFloat(row.kebutuhan);
 
-            switch(range) {
-                case '7d':
-                    min = now;
-                    max = now + 7 * 24 * 3600 * 1000;
-                    break;
-                case '15d':
-                    min = now;
-                    max = now + 15 * 24 * 3600 * 1000;
-                    break;
-                case '30d':
-                    min = now;
-                    max = futureDateUTC;
-                    break;
-            }
+                if (!isNaN(ketersediaanMin) && !isNaN(ketersediaanMax)) {
+                    ketersediaanData.push([timestamp, ketersediaanMin, ketersediaanMax]);
+                }
+                if (!isNaN(ketersediaanAvg)) {
+                    avgData.push([timestamp, ketersediaanAvg]);
+                    if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
+                        ketersediaanAvgToday = ketersediaanAvg; // Set today's kebutuhan value
+                    }
+                }
+                if (!isNaN(kebutuhan)) {
+                    kebutuhanData.push([timestamp, kebutuhan]);
+                    if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
+                        kebutuhanToday = kebutuhan; // Set today's kebutuhan value
+                    }
+                }
+            });
 
-            chart.xAxis[0].setExtremes(min, max);
-            currentRange = range;
+            const percent = ketersediaanAvgToday && kebutuhanToday ? (ketersediaanAvgToday / kebutuhanToday) * 100 : 0;
+
+            document.getElementById('das-presentase').textContent = percent.toFixed(2) + '%';
+            document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2);
+            document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2);
+            
+            createChart(ketersediaanData, avgData, kebutuhanData);
         }
 
-        function createChart() {
-            const today = new Date();
-
-            const ketersediaanData = (() => {
-                const startDate = new Date(); // Get today's date
-                const data = [];
-                for (let i = 0; i < 31; i++) {
-                    const date = new Date(startDate);
-                    date.setDate(startDate.getDate() + i); // Increment date by i days
-                    const low = 500 + (Math.random() * 200); // Base low value around 400 with a small random variation
-                    const high = low + (Math.random() * 200); // Base high value around low with a small random variation
-                    data.push([Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()), low, high]);
-                }
-                console.log('Ketersediaan Data:', data);
-                return data;
-            })();
-
-            const todayKetersediaan = ketersediaanData.find(item => {
-                const itemDate = new Date(item[0]);
-                return itemDate.getUTCFullYear() === today.getUTCFullYear() &&
-                    itemDate.getUTCMonth() === today.getUTCMonth() &&
-                    itemDate.getUTCDate() === today.getUTCDate();
-            });
-
-            if (todayKetersediaan) {
-                const ketersediaanValue = todayKetersediaan[1].toFixed(2);
-                document.getElementById('das-ketersediaan').innerText = ketersediaanValue;
-            }
-
-            const avgData = ketersediaanData.map(d => {
-                const date = d[0];
-                const low = d[1];
-                const high = d[2];
-                const avg = (low + high) / 2;
-                return [date, avg];
-            });
-
-            const kebutuhanData = (() => {
-                const startDate = new Date(); // Get today's date
-                const data = [];
-                for (let i = 0; i < 31; i++) {
-                    const date = new Date(startDate);
-                    date.setDate(startDate.getDate() + i); // Increment date by i days
-                    const value = 700 + (i * 5) + (Math.random() * 100 - 50); // Linear increase with larger random variation
-                    data.push([Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()), value]);
-                }
-                console.log('Kebutuhan Data:', data);
-                return data;
-            })();
-
-            const todayKebutuhan = kebutuhanData.find(item => {
-                const itemDate = new Date(item[0]);
-                return itemDate.getUTCFullYear() === today.getUTCFullYear() &&
-                    itemDate.getUTCMonth() === today.getUTCMonth() &&
-                    itemDate.getUTCDate() === today.getUTCDate();
-            });
-
-            if (todayKebutuhan) {
-                const kebutuhanValue = todayKebutuhan[1].toFixed(2);
-                document.getElementById('das-kebutuhan').innerText = kebutuhanValue;
-            }
-
-            if (todayKetersediaan && todayKebutuhan) {
-                const ketersediaanValue = todayKetersediaan[1].toFixed(2);
-                const kebutuhanValue = todayKebutuhan[1].toFixed(2);
-
-                // Calculate the presentase
-                const valueBagi = ketersediaanValue / kebutuhanValue;
-                const presentaseValue = (valueBagi * 100).toFixed(2) + '%';
-
-                // Display the presentase value
-                document.getElementById('das-presentase').innerText = presentaseValue;
-            }
-
+        function createChart(ketersediaanData, avgData, kebutuhanData) {
             chart = Highcharts.chart('container', {
                 title: {
                     text: '',
@@ -561,28 +478,29 @@
                     title: {
                         text: 'Debit (m<sup>3</sup>/s)'
                     },
-                    min: 0,  // Set minimum value to 0
-                    max: 1000 // Set maximum value to 1000
+                    min: 0,
+                    max: 1000
                 },
                 xAxis: {
                     type: 'datetime',
                     labels: {
-                        format: '{value:%d %B %Y}', // Display day, month, and year
-                        rotation: -45, // Rotate labels if needed
+                        format: '{value:%d %b %Y}',
+                        rotation: -45,
                         align: 'right'
                     },
                     tickInterval: 24 * 3600 * 1000, // One day interval
                     dateTimeLabelFormats: {
-                        day: '%d %B %Y'
+                        day: '%d %b %Y'
                     },
                     accessibility: {
-                        rangeDescription: 'Range: March 2024'
+                        rangeDescription: 'Range: Past 31 days'
                     }
                 },
                 legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle'
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'top',
+                    y: 20
                 },
                 plotOptions: {
                     series: {
@@ -591,42 +509,70 @@
                         }
                     }
                 },
-                series: [{
-                    name: 'Ketersediaan',
-                    type: 'spline',
-                    data: avgData,
-                    zIndex: 1,
-                    marker: {
-                        fillColor: 'white',
-                        lineWidth: 2,
-                        lineColor: Highcharts.getOptions().colors[0]
-                    },
-                    tooltip: {
-                        valueSuffix: ' ',
-                        valueDecimals: 2,
+                tooltip: {
+                    shared: true,
+                    crosshairs: true,
+                    useHTML: true,
+                    formatter: function () {
+                        const date = new Date(this.x);
+                        const day = date.toLocaleDateString('id-ID', { weekday: 'long' });
+                        const formattedDate = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+                        const kebutuhanPoint = this.points.find(point => point.series.name === 'Kebutuhan');
+                        const avgPoint = this.points.find(point => point.series.name === 'Average');
+                        const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
+
+                        return `<b>${day}, ${formattedDate}</b><br/>
+                                Kebutuhan: ${kebutuhanPoint.y.toFixed(2)} m<sup>3</sup>/s<br/>
+                                Min: ${ketersediaanPoint.point.low.toFixed(2)} m<sup>3</sup>/s<br/>
+                                Max: ${ketersediaanPoint.point.high.toFixed(2)} m<sup>3</sup>/s<br/>
+                                Rerata: ${avgPoint.y.toFixed(2)} m<sup>3</sup>/s`;
                     }
-                }, {
-                    name: 'AVG',
-                    data: ketersediaanData,
-                    type: 'arearange',
-                    lineWidth: 0,
-                    linkedTo: ':previous',
-                    color: Highcharts.getOptions().colors[0],
-                    fillOpacity: 0.3,
-                    zIndex: 0,
-                    marker: {
-                        enabled: false
+                },
+                series: [
+                    {
+                        name: 'Ketersediaan',
+                        data: ketersediaanData,
+                        type: 'arearange',
+                        lineWidth: 0,
+                        linkedTo: ':previous',
+                        color: Highcharts.getOptions().colors[0],
+                        fillOpacity: 0.3,
+                        zIndex: 0,
+                        marker: {
+                            enabled: false
+                        },
+                        tooltip: {
+                            valueSuffix: ' m3/s',
+                            valueDecimals: 2,
+                        }
                     },
-                    tooltip: {
-                        valueSuffix: ' ',
-                        valueDecimals: 2,
+                    {
+                        name: 'Average',
+                        type: chartType,
+                        data: avgData,
+                        zIndex: 1,
+                        marker: {
+                            fillColor: 'white',
+                            lineWidth: 2,
+                            lineColor: Highcharts.getOptions().colors[0]
+                        },
+                        tooltip: {
+                            valueSuffix: ' m3/s',
+                            valueDecimals: 2,
+                        }
+                    },
+                    {
+                        name: 'Kebutuhan',
+                        type: chartType,
+                        color: '#404040',
+                        data: kebutuhanData,
+                        tooltip: {
+                            valueSuffix: ' m3/s',
+                            valueDecimals: 2,
+                        }
                     }
-                }, {
-                    name: 'Kebutuhan', 
-                    type: chartType,
-                    color: '#404040', // Set color to black
-                    data: kebutuhanData
-                }],
+                ],
                 responsive: {
                     rules: [{
                         condition: {
@@ -642,13 +588,77 @@
                     }]
                 }
             });
+        }
 
-            setRange(currentRange); // Set the current range
+        function setRange(range) {
+            currentRange = range;
+            dtDebitBendung.ajax.reload();
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            createChart();
+            dtDebitBendung = $("#table-debit-bendung").DataTable({
+                processing: true,
+                serverSide: true,
+                dom: "tipr",
+                paging: false,
+                order: [],
+                ajax: {
+                    url: "/DebitBendung/GetDatatableByRangeDate",
+                    type: "POST",
+                    dataType: "JSON",
+                    data: function (data) {
+                        data.range_date = currentRange; // Use the current range
+                    }
+                },
+                columns: [
+                    //{ data: null, defaultContent: '' }, // Placeholder for row number
+                    { 
+                        data: "tanggal",
+                        name: "tanggal"
+                    },
+                    { 
+                        data: "ketersediaan_min",
+                        name: "ketersediaan_min",
+                        render: function (data) {
+                            return data ? `<span class="ketersediaan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
+                        }
+                    },
+                    { 
+                        data: "ketersediaan_max",
+                        name: "ketersediaan_max",
+                        render: function (data) {
+                            return data ? `<span class="ketersediaan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
+                        }
+                    },
+                    { 
+                        data: "ketersediaan_avg",
+                        name: "ketersediaan_avg",
+                        render: function (data) {
+                            return data ? `<span class="ketersediaan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
+                        }
+                    },
+                    { 
+                        data: "kebutuhan",
+                        name: "kebutuhan",
+                        render: function (data) {
+                            return data ? `<span class="kebutuhan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
+                        }
+                    },
+                    { 
+                        data: null,
+                        render: function (data, type, row) {
+                            const percent_avg_kebutuhan = row.ketersediaan_avg && row.kebutuhan ? (row.ketersediaan_avg / row.kebutuhan) * 100 : 0;
+                            const status_percent = percent_avg_kebutuhan >= 100 ? 'text-success' : 'text-warning';
+                            return `<span class="${status_percent} fw-semibold">${percent_avg_kebutuhan.toFixed(2)}%</span>`;
+                        }
+                    }
+                ],
+                drawCallback: function() {
+                    createChartFromDataTable();
+                }
+            });
 
+            // Range buttons
             document.getElementById('range-7d').addEventListener('click', function (event) {
                 event.preventDefault();
                 setRange('7d');
@@ -665,6 +675,7 @@
                 setActiveButton('range-30d', 'range-buttons');
             });
 
+            // Chart type buttons
             document.getElementById('chart-line').addEventListener('click', function (event) {
                 event.preventDefault();
                 chartType = 'spline';
@@ -687,136 +698,8 @@
 
             function recreateChart() {
                 chart.destroy();
-                createChart();
+                createChartFromDataTable();
             }
-        });
-
-        $(document).ready(function() {
-            dtDebitBendung = $("#table-debit-bendung").DataTable({
-                processing: true,
-                serverSide: true,
-                dom: "tipr",
-                paging: false,
-                order: [],
-                ajax: {
-                    url: "/DebitBendung/GetDatatableByRangeDate",
-                    type: "POST",
-                    dataType: "JSON",
-                    data: function (data) {
-                        data.range_date = '';
-                    }
-                },
-                columns: [
-                    { data: null},
-                    { 
-                        data: "tanggal",
-                        name: "tanggal"
-                    },
-                    { 
-                        data: "ketersediaan_min",
-                        name: "ketersediaan_min",
-                        render: function (data, type, row) {
-                            var ketersediaan_min = '-';
-                            if(data != null) {
-                                ketersediaan_min = data.toFixed(2);
-                            }
-
-                            return `<span class="ketersediaan-color fw-semibold">${ketersediaan_min}</span>`;
-                        }
-                    },
-                    { 
-                        data: "ketersediaan_max",
-                        name: "ketersediaan_max",
-                        render: function (data, type, row) {
-                            var ketersediaan_max = '-';
-                            if(data != null) {
-                                ketersediaan_max = data.toFixed(2);
-                            }
-
-                            return `<span class="ketersediaan-color fw-semibold">${ketersediaan_max}</span>`;
-                        }
-                    },
-                    { 
-                        data: "ketersediaan_avg",
-                        name: "ketersediaan_avg",
-                        render: function (data, type, row) {
-                            var ketersediaan_avg = '-';
-                            if(data != null) {
-                                ketersediaan_avg = data.toFixed(2);
-                            }
-
-                            return `<span class="ketersediaan-color fw-semibold">${ketersediaan_avg}</span>`;
-                        }
-                    },
-                    { 
-                        data: "kebutuhan",
-                        name: "kebutuhan",
-                        render: function (data, type, row) {
-                            var kebutuhan = '-';
-                            if(data != null) {
-                                kebutuhan = data.toFixed(2);
-                            }
-
-                            return `<span class="kebutuhan-color fw-semibold">${kebutuhan}</span>`;
-                        }
-                    },
-                    { 
-                        data: null,
-                        name: null,
-                        render: function (data, type, row) {
-                            var status_percent = 'text-dark';
-
-                            if(row.ketersediaan_avg != null && row.kebutuhan != null) {
-                                var percent_avg_kebutuhan = (row.ketersediaan_avg/row.kebutuhan)*100;
-
-                                if(percent_avg_kebutuhan >= 100) {
-                                    status_percent = 'text-success';
-                                } else {
-                                    status_percent = 'text-warning';
-                                }
-                            }
-
-                            return `<span class="${status_percent} fw-semibold">${percent_avg_kebutuhan.toFixed(2)}</span>`;
-                        }
-                    }
-                ],
-                columnDefs: [
-                    {
-                        targets: 0,
-                        searchable: false,
-                        orderable: false,
-                        width: '6%',
-                        className: "text-center",
-                    },
-                    {
-                        targets: 1,
-                        render: function (data) {
-                            if(data != null) {
-                                return `${moment(data).locale('id').format("D MMMM YYYY")}`;
-                            }
-
-                            return null;
-                        },
-                    }
-                ],
-                language: {
-                    url: '/data/datatable_locale_id.json',
-                    paginate: {
-                        previous: "<i class='mdi mdi-chevron-left'>",
-                        next: "<i class='mdi mdi-chevron-right'>"
-                    }
-                },
-                drawCallback: function () {
-                    $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-                }
-            });
-        
-            dtDebitBendung.on('draw.dt', function () {
-                var info = dtDebitBendung.page.info();
-                dtDebitBendung.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
-                    cell.innerHTML = i + 1 + info.start;
-                });
-            });
         });
     </script>
 }
