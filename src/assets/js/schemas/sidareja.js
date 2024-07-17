@@ -3,7 +3,7 @@
 const whiteBasemap = L.tileLayer('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwAB/3cwcakAAAAASUVORK5CYII=');
 
 const map = L.map('map', {
-    attributionControl: false,
+    // attributionControl: false,
     // center: [-7.444992423191618, 109.47077209463006],
     center: [-8.7, 110.4],
     zoom: 10,
@@ -38,7 +38,50 @@ var bangunanSadapList = [];
 var boxPetakList = [];
 
 var SkemaSidareja = (function () {
+    var initInput = function () {
+      const inputField = document.getElementById("filter-date");
+
+      const flatpickrInstance = $('#filter-date').flatpickr({
+        locale: "id",
+        defaultDate: new Date(),
+        altInput: true,
+        altFormat: "j F Y",
+        dateFormat: "Y-m-d",
+      });
+
+      // Function to add days to the current date
+      function addDays(date, days) {
+        const result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+      }
+
+      // Event listener for previous button
+      $("#btn-prev").on("click", function() {
+        const currentDate = flatpickrInstance.selectedDates[0] || new Date();
+        const newDate = addDays(currentDate, -1);
+        flatpickrInstance.setDate(newDate);
+        inputField.dispatchEvent(new Event('change'));
+      });
+
+      // Event listener for next button
+      $("#btn-next").on("click", function() {
+        const currentDate = flatpickrInstance.selectedDates[0] || new Date();
+        const newDate = addDays(currentDate, 1);
+        flatpickrInstance.setDate(newDate);
+        inputField.dispatchEvent(new Event('change'));
+      });
+
+      $("#filter-date").on("change", function () {
+        let tanggal = $(this).val();
+        getSchemaData(tanggal);
+      });
+    
+    };
     var initMap = function () {
+        map.attributionControl.setPrefix(false);
+        map.attributionControl.addAttribution('DI. Manganti Versi: R4 (Update 16 Juli 2024)');
+
         var legendControl = L.control({ position: 'topright' });
 
         legendControl.onAdd = function (map) {
@@ -743,6 +786,7 @@ var SkemaSidareja = (function () {
     return {
         //main function to initiate the module
         init: function () {
+            initInput();
             initMap();
 
             // Generate Skema
@@ -759,7 +803,7 @@ var SkemaSidareja = (function () {
 
 jQuery(document).ready(function () {
   SkemaSidareja.init();
-  getSchemaData('2024-07-14');
+  getSchemaData(getValueById('filter-date'));
 });
 
 function updateOffsetBangunanPembagi(point, zoom) {
@@ -951,9 +995,12 @@ function generateBoxPetak(petakId, petakName, lineCoords, position, golongan) {
   const tooltipContent = `
     <div class="box-petak golongan-a">
         <table id="petak-${petakId}">
+          <thead>
             <tr>
                 <th class="text-center" colspan="2">${petakName}</th>
             </tr>
+          </thead>
+          <tbody>
             <tr>
                 <td class="luas-petak">
                   A= <strong>-</strong>
@@ -966,6 +1013,7 @@ function generateBoxPetak(petakId, petakName, lineCoords, position, golongan) {
                   <span class="debit-rekomendasi text-warning">QR= <strong>-</strong></span>
                 </td>
             </tr>
+          </tbody>
         </table>
     </div>
   `;
@@ -994,37 +1042,90 @@ function generateTextSaluranSekunder(title, latlng, textDeg) {
   }).addTo(map);
 }
 
+const inputField = document.getElementById("filter-date");
+const prevButton = document.getElementById("btn-prev");
+const nextButton = document.getElementById("btn-next");
+
+// Function to disable elements
+function disableElements() {
+    prevButton.disabled = true;
+    nextButton.disabled = true;
+    inputField.disabled = true;
+    inputField.classList.add('disabled');
+}
+
+// Function to enable elements
+function enableElements() {
+    prevButton.disabled = false;
+    nextButton.disabled = false;
+    inputField.disabled = false;
+    inputField.classList.remove('disabled');
+}
+
 function getSchemaData(tanggal) {
-  console.log(boxPetakList)
+  disableElements();
+  $('.box-petak tbody').html(`<tr><td class="text-center" colspan="2"><img src="/images/loading.gif" /></td></tr>`);
   getData(`/Schema/GetSchemaDataByDate/${tanggal}`).then(res => {
     let result = res.data
     if (result.metaData.code == 200) {
+      var luas = 'A= <strong>-</strong>';
+      var debit_kebutuhan = 'QK= <strong>-</strong>';
+      var debit_aktual = 'QA= <strong>-</strong>';
+      var debit_rekomendasi = 'QR= <strong>-</strong>';
       $.each(result.response, function (key, data) {
-        if(data.luas == null) {
-          $(`#petak-${data.id}`).find('.luas-petak').html(`A= <strong>-</strong>`);
-        } else {
-          $(`#petak-${data.id}`).find('.luas-petak').html(`A= ${data.luas} Ha`);
+        if(data.luas != null) {
+          luas = `A= ${formatNumber(data.luas)} Ha`;
         }
 
-        if(data.debit_kebutuhan == null) {
-          $(`#petak-${data.id}`).find('.debit-kebutuhan').html(`QK= <strong>-</strong>`);
-        } else {
-          $(`#petak-${data.id}`).find('.debit-kebutuhan').html(`QK= ${data.debit_kebutuhan} m3/dt`);
+        if(data.debit_kebutuhan != null) {
+          debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} m3/s`;
         }
 
-        if(data.debit_rekomendasi == null) {
-          $(`#petak-${data.id}`).find('.debit-rekomendasi').html(`QR= <strong>-</strong>`);
-        } else {
-          $(`#petak-${data.id}`).find('.debit-rekomendasi').html(`QR= ${data.debit_rekomendasi} m3/dt`);
+        if(data.debit_aktual != null) {
+          debit_aktual = `QA= ${formatNumber(data.debit_aktual)} m3/s`;
         }
-      });                    
+
+        if(data.debit_rekomendasi != null) {
+          debit_rekomendasi = `QR= ${formatNumber(data.debit_rekomendasi)} m3/s`;
+        }
+
+        $('.box-petak tbody').html(`
+          <tr>
+            <td class="luas-petak">
+              ${luas}
+            </td>
+            <td>
+              <span class="debit-kebutuhan text-dark">${debit_kebutuhan}</span>
+              </br>
+              <span class="debit-aktual text-primary">${debit_aktual}</span>
+              </br>
+              <span class="debit-rekomendasi text-warning">${debit_rekomendasi}</span>
+            </td>
+          </tr>
+        `);
+      });    
+      enableElements();                
     }
   }).catch(err => {
+    enableElements();
     let error = err.response.data
     if(!error.success) {
         console.log(error.message)
     }
   })
+}
+
+function formatNumber(value) {
+  // Convert the number to a string and use parseFloat to remove unnecessary zeros
+  let formattedValue = parseFloat(value.toFixed(2)).toString();
+
+  // Check if the formatted string ends with .00 and remove it
+  if (formattedValue.endsWith('.00')) {
+      formattedValue = formattedValue.slice(0, -3); // Remove the .00 part
+  }
+
+  // Return the formatted value
+  return formattedValue;
 }
 
 // function refreshTooltips() {
