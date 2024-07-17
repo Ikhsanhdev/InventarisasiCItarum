@@ -461,8 +461,8 @@
             const percent = ketersediaanAvgToday && kebutuhanToday ? (ketersediaanAvgToday / kebutuhanToday) * 100 : 0;
 
             document.getElementById('das-presentase').textContent = percent.toFixed(2) + '%';
-            document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2);
-            document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2);
+            document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2) + ' lt/dt';
+            document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2) + ' lt/dt';
             
             createChart(ketersediaanData, avgData, kebutuhanData);
         }
