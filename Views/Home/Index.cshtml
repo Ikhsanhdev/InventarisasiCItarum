@@ -413,36 +413,10 @@
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
-
-    <script src="~/lib/apexcharts/apexcharts.min.js"></script>
 } 
 
 @section additionalScripts {
     <script>
-        var colors = ['#f1556c'];
-        var dataColors = $("#total-revenue").data('colors');
-        if (dataColors) {
-            colors = dataColors.split(",");
-        }
-        var options = {
-            series: [68],
-            chart: {
-                height: 242,
-                type: 'radialBar',
-            },
-            plotOptions: {
-                radialBar: {
-                    hollow: {
-                        size: '65%',
-                    }
-                },
-            },
-            colors: colors,
-            labels: ['Revenue'],
-        };
-
-        var chart1 = new ApexCharts(document.querySelector("#total-revenue"), options);
-        chart1.render();
 
         var dtDebitBendung;
         let chart;
@@ -765,9 +739,10 @@
                         name: null,
                         render: function (data, type, row) {
                             var status_percent = 'text-dark';
+                            var percent_avg_kebutuhan = '-';
 
                             if(row.ketersediaan_avg != null && row.kebutuhan != null) {
-                                var percent_avg_kebutuhan = (row.ketersediaan_avg/row.kebutuhan)*100;
+                                percent_avg_kebutuhan = ((row.ketersediaan_avg/row.kebutuhan)*100).toFixed(2);
 
                                 if(percent_avg_kebutuhan >= 100) {
                                     status_percent = 'text-success';
@@ -776,7 +751,7 @@
                                 }
                             }
 
-                            return `<span class="${status_percent} fw-semibold">${percent_avg_kebutuhan.toFixed(2)}</span>`;
+                            return `<span class="${status_percent} fw-semibold">${percent_avg_kebutuhan}</span>`;
                         }
                     }
                 ],
