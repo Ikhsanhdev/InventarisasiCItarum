@@ -3,9 +3,9 @@
 const whiteBasemap = L.tileLayer('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwAB/3cwcakAAAAASUVORK5CYII=');
 
 const map = L.map('map', {
-    attributionControl: false,
-    center: [-7.444992423191618, 109.47077209463006],
-    // center: [-8.5, 109.47077209463006],
+    // attributionControl: false,
+    // center: [-7.444992423191618, 109.47077209463006],
+    center: [-8.7, 110.4],
     zoom: 10,
     maxZoom: 13,
     minZoom: 10,
@@ -38,7 +38,50 @@ var bangunanSadapList = [];
 var boxPetakList = [];
 
 var SkemaSidareja = (function () {
+    var initInput = function () {
+      const inputField = document.getElementById("filter-date");
+
+      const flatpickrInstance = $('#filter-date').flatpickr({
+        locale: "id",
+        defaultDate: new Date(),
+        altInput: true,
+        altFormat: "j F Y",
+        dateFormat: "Y-m-d",
+      });
+
+      // Function to add days to the current date
+      function addDays(date, days) {
+        const result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+      }
+
+      // Event listener for previous button
+      $("#btn-prev").on("click", function() {
+        const currentDate = flatpickrInstance.selectedDates[0] || new Date();
+        const newDate = addDays(currentDate, -1);
+        flatpickrInstance.setDate(newDate);
+        inputField.dispatchEvent(new Event('change'));
+      });
+
+      // Event listener for next button
+      $("#btn-next").on("click", function() {
+        const currentDate = flatpickrInstance.selectedDates[0] || new Date();
+        const newDate = addDays(currentDate, 1);
+        flatpickrInstance.setDate(newDate);
+        inputField.dispatchEvent(new Event('change'));
+      });
+
+      $("#filter-date").on("change", function () {
+        let tanggal = $(this).val();
+        getSchemaData(tanggal);
+      });
+    
+    };
     var initMap = function () {
+        map.attributionControl.setPrefix(false);
+        map.attributionControl.addAttribution('DI. Manganti Versi: R4 (Update 16 Juli 2024)');
+
         var legendControl = L.control({ position: 'topright' });
 
         legendControl.onAdd = function (map) {
@@ -73,15 +116,15 @@ var SkemaSidareja = (function () {
                     <td><span style="vertical-align: middle;">Golongan C</span></td>
                   </tr>
                   <tr>
-                    <td class="text-center fw-bold">K</td>
+                    <td class="text-center fw-bold">QK</td>
                     <td>Debit Kebutuhan</td>
                   </tr>
                   <tr>
-                    <td class="text-center text-primary fw-bold">A</td>
+                    <td class="text-center text-primary fw-bold">QA</td>
                     <td>Debit Aktual</td>
                   </tr>
                   <tr>
-                    <td class="text-center text-warning fw-bold">R</td>
+                    <td class="text-center text-warning fw-bold">QR</td>
                     <td>Debit Rekomendasi</td>
                   </tr>
                 </tbody>
@@ -370,6 +413,362 @@ var SkemaSidareja = (function () {
 
     var initBs6 = function () {
       const bs6Point = [-8.38, 108.72];
+      const bck1Point = [bs6Point[0], 108.85];
+      const bck2Point = [bs6Point[0], 109.08];
+      const bck3Point = [bs6Point[0], 109.21];
+      const bck4Point = [bs6Point[0], 109.4];
+      const bck5Point = [bs6Point[0], 109.59];
+      const bck6Point = [bs6Point[0], 109.78];
+      const bck7Point = [bs6Point[0], 109.88];
+      const bck8Point = [bs6Point[0], 110.12];
+      const bck9Point = [bs6Point[0], 110.36];
+      const bck10Point = [bs6Point[0], 110.66];
+
+      const bld1Point = [bs6Point[0] - 0.215, 109.14];
+      const bld2Point = [bld1Point[0] - 0.17, bld1Point[1] + 0.2];
+      const bld3Point = [bld2Point[0] - 0.15, bld2Point[1] + 0.17];
+      const btr1Point = bck7Point;
+      const btr2Point = [bck7Point[0] - 0.2, bck7Point[1]];
+      const btr3Point = [bck7Point[0] - 0.32, bck7Point[1]];
+      const btr4Point = [bck7Point[0] - 0.46, bck7Point[1]];
+      const btr5Point = [bck7Point[0] - 0.6, bck7Point[1]];
+      const btr6Point = [bck7Point[0] - 0.74, bck7Point[1]];
+      const bdt1Point = [bck9Point[0] - 0.2, bck9Point[1]];
+      const bdt2Point = [bck9Point[0] - 0.32, bck9Point[1]];
+      const bdt3Point = [bck9Point[0] - 0.42, bck9Point[1]];
+      const bckki1Point = [bck10Point[0], bck10Point[1] + 0.14];
+      const bckki2Point = [bck10Point[0], bck10Point[1] + 0.34];
+      const bckkn1Point = [bck10Point[0] - 0.2, bck10Point[1]];
+      const bckkn12Point = [bck10Point[0] - 0.32, bck10Point[1]];
+      const bckkn13Point = [bck10Point[0] - 0.46, bck10Point[1]];
+      const bckkn14Point = [bck10Point[0] - 0.56, bck10Point[1]];
+      const bckkn15Point = [bck10Point[0] - 0.72, bck10Point[1]];
+      const bckkn16Point = [bck10Point[0] - 0.84, bck10Point[1]];
+      const bckkn17Point = [bck10Point[0] - 0.96, bck10Point[1]];
+      const bckkr17Point = [bck10Point[0] - 0.96, bck10Point[1]];
+      const bckkn18Point = [bck10Point[0] - 1.08, bck10Point[1]];
+
+      // Set BCk. 10
+
+      const linePtCk18Kn = [bckkn18Point, [bckkn18Point[0], bckkn18Point[1] - 0.06]];
+      generateBoxPetak('abf3088b-38b8-47a7-957e-b8a8c176d9d7', 'Pt. CK. 18-Kn', linePtCk18Kn, 'left');
+
+      const lineBckKn18 = [
+        bck10Point, 
+        bckkn18Point, 
+      ];
+      generateBangunanSadap('BCk. Kn18', 'centerright', lineBckKn18, 0);
+
+      const linePtCk17Kr = [bckkr17Point, [bckkr17Point[0], bckkr17Point[1] + 0.06]];
+      generateBoxPetak('c8e17113-3795-4562-bf19-e9365ed22acc', 'Pt. CK. 17-Kr', linePtCk17Kr, 'right');
+
+      const linePtCk17Kn = [bckkn17Point, [bckkn17Point[0], bckkn17Point[1] - 0.06]];
+      generateBoxPetak('288c23b6-bf60-4319-9d61-298b65b26521', 'Pt. CK. 17-Kn', linePtCk17Kn, 'left');
+
+      const lineBckKn17 = [
+        bck10Point, 
+        bckkn17Point, 
+      ];
+      generateBangunanSadap('BCk. Kn17', 'topright', lineBckKn17, 0);
+
+      const linePtCk16Kn = [bckkn16Point, [bckkn16Point[0], bckkn16Point[1] - 0.06]];
+      generateBoxPetak('7c88b4e5-99af-4703-b223-10f5032e65a1', 'Pt. CK. 16-Kn', linePtCk16Kn, 'left');
+
+      const lineBckKn16 = [
+        bck10Point, 
+        bckkn16Point, 
+      ];
+      generateBangunanSadap('BCk. Kn16', 'centerright', lineBckKn16, 0);
+
+      const linePtCk15Kn = [bckkn15Point, [bckkn15Point[0], bckkn15Point[1] - 0.06]];
+      generateBoxPetak('64f09dad-3f32-4439-90fb-09f3e3c2cef3', 'Pt. CK. 15-Kn', linePtCk15Kn, 'left');
+
+      const linePtCk15Kr = [bckkn15Point, [bckkn15Point[0], bckkn15Point[1] + 0.1]];
+      generateBoxPetak('6738f990-c821-4f1b-9a1d-a8b7dbcbf00f', 'Pt. CK. 15-Kr', linePtCk15Kr, 'right');
+
+      const lineBckKn15 = [
+        bck10Point, 
+        bckkn15Point, 
+      ];
+      generateBangunanSadap('BCk. Kn15', 'topright', lineBckKn15, 0);
+
+      const linePtCk14Kr = [bckkn14Point, [bckkn14Point[0], bckkn14Point[1] + 0.1]];
+      generateBoxPetak('5fb2294d-1f39-4cd7-8a46-9272f5cb70cb', 'Pt. CK. 14-Kr', linePtCk14Kr, 'right');
+
+      const lineBckKn14 = [
+        bck10Point, 
+        bckkn14Point, 
+      ];
+      generateBangunanSadap('BCk. Kn14', 'centerleft', lineBckKn14, 0);
+
+      const linePtCk13Kn = [bckkn13Point, [bckkn13Point[0], bckkn13Point[1] - 0.04]];
+      generateBoxPetak('dddcf36e-809a-4ef0-b1af-1a463f8cb2ac', 'Pt. CK. 13-Kn', linePtCk13Kn, 'left');
+
+      const lineBckKn13 = [
+        bck10Point, 
+        bckkn13Point, 
+      ];
+      generateBangunanSadap('BCk. Kn13', 'centerright', lineBckKn13, 0);
+
+      const linePtCk12Kr = [bckkn12Point, [bckkn12Point[0], bckkn12Point[1] + 0.1]];
+      generateBoxPetak('dddcf36e-809a-4ef0-b1af-1a463f8cb2ac', 'Pt. CK. 12-Kr', linePtCk12Kr, 'right');
+
+      const lineBckKn12 = [
+        bck10Point, 
+        bckkn12Point, 
+      ];
+      generateBangunanSadap('BCk. Kn12', 'centerleft', lineBckKn12, 0);
+
+      const linePtCk11Kr = [bckkn1Point, [bckkn1Point[0], bckkn1Point[1] + 0.1]];
+      generateBoxPetak('3d6328fe-45c3-4d59-ad14-90adf6c2cc6d', 'Pt. CK. 11-Kr', linePtCk11Kr, 'right');
+
+      const lineBckKn1 = [
+        bck10Point, 
+        bckkn1Point, 
+      ];
+      generateBangunanSadap('BCk. Kn1', 'centerleft', lineBckKn1, 0);
+
+      const linePtCkKi2Kn = [bckki2Point, [bckki2Point[0] - 0.04, bckki2Point[1]]];
+      generateBoxPetak('88aff689-aabc-4a7d-8f6b-d691cafa4b73', 'Pt. CK.Ki 2-Kn', linePtCkKi2Kn, 'bottom');
+
+      const lineBckKi2 = [
+        bck10Point, 
+        bckki2Point, 
+      ];
+      generateBangunanSadap('BCkKi. 2', 'topcenter', lineBckKi2, 90);
+
+      const linePtCkKi1Kn = [bckki1Point, [bckki1Point[0] - 0.04, bckki1Point[1]]];
+      generateBoxPetak('bfe0a3e4-a1ad-4241-a5cf-746098673441', 'Pt. CK.Ki 1-Kn', linePtCkKi1Kn, 'bottom');
+
+      const lineBckKi1 = [
+        bck10Point, 
+        bckki1Point, 
+      ];
+      generateBangunanSadap('BCkKi. 1', 'topcenter', lineBckKi1, 90);
+
+      const lineBck10 = [
+        bs6Point, 
+        bck10Point
+      ];
+      generateBangunanSadapDanPembagi('BCk. 10', 'topcenter', lineBck10, 90);
+
+      // Set BCk. 9
+
+      // Set BDt. 3
+      const linePtDt3 = [bdt3Point, [bdt3Point[0] - 0.04, bdt3Point[1]]];
+      generateBoxPetak('4822f056-c75e-4822-9120-b434b3d98bca', 'Pt. Dt. 3', linePtDt3, 'bottom');
+      
+      const lineBdt3 = [
+        bck9Point, 
+        bdt3Point, 
+      ];
+      generateBangunanSadap('BDt. 3', 'centerleft', lineBdt3, 0);
+
+      // Set BDt. 2
+      const linePtDt2Kn = [bdt2Point, [bdt2Point[0], bdt2Point[1] - 0.06]];
+      generateBoxPetak('08ea3e28-fadc-46bb-85ca-0e361dd9bf38', 'Pt. Dt. 2-Kn', linePtDt2Kn, 'left');
+      
+      const lineBdt2 = [
+        bck9Point, 
+        bdt2Point, 
+      ];
+      generateBangunanSadap('BDt. 2', 'topleft', lineBdt2, 0);
+
+      // Set BDt. 1
+      const linePtDt1Kr = [bdt1Point, [bdt1Point[0], bdt1Point[1] + 0.06]];
+      generateBoxPetak('f979e41e-c313-4f25-826e-d54ace194e74', 'Pt. Dt. 1-Kr', linePtDt1Kr, 'right');
+
+      const linePtDt1Kn = [bdt1Point, [bdt1Point[0], bdt1Point[1] - 0.06]];
+      generateBoxPetak('6ad63e56-5180-41c6-b81c-e1482e83c836', 'Pt. Dt. 1-Kn', linePtDt1Kn, 'left');
+      
+      const lineBdt1 = [
+        bck9Point, 
+        bdt1Point, 
+      ];
+      generateBangunanSadap('BDt. 1', 'topleft', lineBdt1, 0);
+
+      const lineBck9 = [
+        bs6Point, 
+        bck9Point
+      ];
+      generateBangunanSadapDanPembagi('BCk. 9', 'topcenter', lineBck9, 90);
+
+      // Set BCk. 8
+      const linePtCk8Kn = [bck8Point, [-8.42, bck8Point[1]]];
+      generateBoxPetak('0f715ffe-696b-4c85-8ef2-6017048ad341', 'Pt. Ck. 8-Kn', linePtCk8Kn, 'bottom');
+
+      const lineBck8 = [
+        bs6Point, 
+        bck8Point
+      ];
+      generateBangunanSadap('BCk. 8', 'topcenter', lineBck8, 90);
+
+      // Set BTr. 6
+      const linePtTr6 = [btr6Point, [btr6Point[0] - 0.06, btr6Point[1]]];
+      generateBoxPetak('f199f0d7-6f13-46bf-85f8-8d1f83d4fb65', 'Pt. Tr. 6', linePtTr6, 'bottom');
+
+      const linePtTr6Kr = [btr6Point, [btr6Point[0], btr6Point[1] + 0.06]];
+      generateBoxPetak('564531c7-761f-479f-b94d-d9e85affee3a', 'Pt. Tr. 6-Kr', linePtTr6Kr, 'right');
+      
+      const lineBtr6 = [
+        bck7Point, 
+        btr6Point, 
+      ];
+      generateBangunanSadap('BTr. 6', 'topright', lineBtr6, 0);
+
+      // Set BTr. 5
+      const linePtTr5Kr = [btr5Point, [btr5Point[0], btr5Point[1] + 0.06]];
+      generateBoxPetak('7595e215-b0bd-491b-9ce6-945cac35931c', 'Pt. Tr. 5-Kr', linePtTr5Kr, 'right');
+      
+      const lineBtr5 = [
+        bck7Point, 
+        btr5Point, 
+      ];
+      generateBangunanSadap('BTr. 5', 'topright', lineBtr5, 0);
+
+      // Set BTr. 4
+      const linePtTr4Kr = [btr4Point, [btr4Point[0], btr4Point[1] + 0.06]];
+      generateBoxPetak('5c41e1ea-9dfb-4727-ba3f-fc35b27226a1', 'Pt. Tr. 4-Kr', linePtTr4Kr, 'right');
+      
+      const lineBtr4 = [
+        bck7Point, 
+        btr4Point, 
+      ];
+      generateBangunanSadap('BTr. 4', 'topright', lineBtr4, 0);
+
+      // Set BTr. 3
+      const linePtTr3Kn = [btr3Point, [btr3Point[0], btr3Point[1] - 0.06]];
+      generateBoxPetak('f96a51b0-6fcc-4ca4-af2e-2de41b41bd75', 'Pt. Tr. 3-Kn', linePtTr3Kn, 'left');
+      
+      const lineBtr3 = [
+        bck7Point, 
+        btr3Point, 
+      ];
+      generateBangunanSadap('BTr. 3', 'centerright', lineBtr3, 0);
+
+      // Set BTr. 2
+      const linePtTr2Kn = [btr2Point, [btr2Point[0], btr2Point[1] - 0.06]];
+      generateBoxPetak('678b079a-46d7-4cdb-92b2-2df8d5a5a0e2', 'Pt. Tr. 2-Kn', linePtTr2Kn, 'left');
+      
+      const lineBtr2 = [
+        bck7Point, 
+        btr2Point, 
+      ];
+      generateBangunanSadap('BTr. 2', 'centerright', lineBtr2, 0);
+
+      // Set BTr. 1
+      const linePtTr1Kn = [btr1Point, [btr1Point[0] - 0.15, btr1Point[1] + 0.15]];
+      generateBoxPetak('dec728c0-64f2-4516-bbd4-79c023c331f3', 'Pt. Tr. 1-Kn', linePtTr1Kn, 'bottom');
+      
+      const lineBtr1 = [
+        btr1Point, 
+        bck7Point, 
+      ];
+      generateBangunanSadapDanPembagi('BTr. 1', 'bottomright', lineBtr1, 90);
+
+      // Set BCk. 7
+      const lineBck7 = [
+        bs6Point, 
+        bck7Point
+      ];
+      generateBangunanSadapDanPembagi('BCk. 7', 'topcenter', lineBck7, 90);
+
+      // Set BCk. 6
+      const linePtCk6Kn = [bck6Point, [-8.42, bck6Point[1]]];
+      generateBoxPetak('60eb2f2f-512a-4715-a75a-fd81596062f0', 'Pt. Ck. 6-Kn', linePtCk6Kn, 'bottom');
+
+      const lineBck6 = [
+        bs6Point, 
+        bck6Point
+      ];
+      generateBangunanSadap('BCk. 6', 'topcenter', lineBck6, 90);
+
+      // Set BCk. 5
+      const linePtCk5Kn = [bck5Point, [-8.42, bck5Point[1]]];
+      generateBoxPetak('cb1a52bb-e373-4e06-b8ef-3a8571ef1163', 'Pt. Ck. 5-Kn', linePtCk5Kn, 'bottom');
+
+      const lineBck5 = [
+        bs6Point, 
+        bck5Point
+      ];
+      generateBangunanSadap('BCk. 5', 'topcenter', lineBck5, 90);
+
+      // Set BCk. 4
+      const linePtCk4Kn = [bck4Point, [-8.45, bck4Point[1]]];
+      generateBoxPetak('8257c58d-23e4-4e69-96a8-5e752edee4a8', 'Pt. Ck. 4-Kn', linePtCk4Kn, 'bottom');
+
+      const lineBck4 = [
+        bs6Point, 
+        bck4Point
+      ];
+      generateBangunanSadap('BCk. 4', 'topcenter', lineBck4, 90);
+
+      // Set BCk. 3
+      const linePtCk3Kn = [bck3Point, [-8.42, bck3Point[1]]];
+      generateBoxPetak('a32dd81f-4736-4393-94cb-ddd69f14ac4d', 'Pt. Ck. 3-Kn', linePtCk3Kn, 'bottom');
+
+      const lineBck3 = [
+        bs6Point, 
+        bck3Point
+      ];
+      generateBangunanSadap('BCk. 3', 'topcenter', lineBck3, 90);
+
+      // Set BLd. 3
+      const linePtLd3 = [bld3Point, [bld3Point[0] - 0.015, bld3Point[1] + 0.018]];
+      generateBoxPetak('e4bc311d-72a5-4f05-b2c6-7a1924b0b971', 'Pt. Ld. 3', linePtLd3, 'bottom');
+      
+      const lineBld3 = [
+        bld2Point, 
+        bld3Point, 
+      ];
+      generateBangunanSadap('BLd. 3', 'topright', lineBld3, 330);
+
+      // Set BLd. 2
+      const linePtLd2Ki = [bld2Point, [bld2Point[0] + 0.02, bld2Point[1] + 0.06]];
+      generateBoxPetak('91abd34b-19d6-4851-b59d-7cf73f363a21', 'Pt. Ld. 2-Ki', linePtLd2Ki, 'right');
+
+      const linePtLd2Kn = [bld2Point, [bld2Point[0] - 0.01, bld2Point[1] - 0.1]];
+      generateBoxPetak('7c91a5b8-d19e-4539-954d-5a909a76f276', 'Pt. Ld. 2-Kn', linePtLd2Kn, 'left');
+      
+      const lineBld2 = [
+        bld1Point, 
+        bld2Point, 
+      ];
+      generateBangunanSadap('BLd. 2', 'bottomleft', lineBld2, 330);
+
+      // Set BLd. 1
+      const linePtLd1Ki = [bld1Point, [bld1Point[0] + 0.01, bld1Point[1] + 0.08]];
+      generateBoxPetak('96721e56-a46a-41af-8492-2141bbd5785b', 'Pt. Ld. 1-Ki', linePtLd1Ki, 'right');
+
+      const linePtLd1Kn = [bld1Point, [bld1Point[0] - 0.01, bld1Point[1] - 0.1]];
+      generateBoxPetak('8d4898ca-f935-4fa2-a579-e7128160dda4', 'Pt. Ld. 1-Kn', linePtLd1Kn, 'left');
+      
+      const lineBld1 = [
+        bck2Point, 
+        [bck2Point[0] - 0.16, bck2Point[1]], 
+        bld1Point, 
+      ];
+      generateBangunanSadap('BLd. 1', 'bottomleft', lineBld1, 330);
+
+      // Set BCk. 2
+      const lineBck2 = [
+        bs6Point, 
+        bck2Point
+      ];
+      generateBangunanSadapDanPembagi('BCk. 2', 'topcenter', lineBck2, 90);
+
+      // Set BCk. 1
+      const linePtCk1Ki = [bck1Point, [-8.32, bck1Point[1]]];
+      generateBoxPetak('c75657c4-1e68-4328-a18b-17a395d1e8e9', 'Pt. Ck. 1-Ki', linePtCk1Ki, 'top');
+
+      const linePtCk1Kn = [bck1Point, [-8.42, bck1Point[1]]];
+      generateBoxPetak('adcf560e-d7bc-48e1-8334-e85fb741faad', 'Pt. Ck. 1-Kn', linePtCk1Kn, 'bottom');
+
+      const lineBck1 = [
+        bs6Point, 
+        bck1Point
+      ];
+      generateBangunanSadap('BCk. 1', 'topright', lineBck1, 90);
 
       // Set BS. VI
       const lineBs6 = [
@@ -387,6 +786,7 @@ var SkemaSidareja = (function () {
     return {
         //main function to initiate the module
         init: function () {
+            initInput();
             initMap();
 
             // Generate Skema
@@ -403,7 +803,7 @@ var SkemaSidareja = (function () {
 
 jQuery(document).ready(function () {
   SkemaSidareja.init();
-  getSchemaData('2024-07-14');
+  getSchemaData(getValueById('filter-date'));
 });
 
 function updateOffsetBangunanPembagi(point, zoom) {
@@ -509,7 +909,7 @@ function generateBangunanSadap(title, titlePosition, lineCoords, textDeg) {
 
   const pointTitle = `<div class="bangunan-sadap-title" style="transform: rotate(${textDeg}deg);white-space: nowrap;">${title}</div>`;
 
-  var point = L.circle(lineCoords[1], 250, circleBgWhite).addTo(map);
+  var point = L.circle(lineCoords[lineCoords.length - 1], 250, circleBgWhite).addTo(map);
 
   var offset = [0, 0];
   var direction = 'center';
@@ -520,12 +920,62 @@ function generateBangunanSadap(title, titlePosition, lineCoords, textDeg) {
   } else if(titlePosition == 'topleft') {
     direction = 'top';
     offset = [-10, -10];
+  } else if(titlePosition == 'topright') {
+    direction = 'top';
+    offset = [10, -10];
   } else if(titlePosition == 'bottomcenter') {
     direction = 'bottom';
     offset = [0, 10];
   } else if(titlePosition == 'bottomright') {
     direction = 'bottom';
     offset = [8, 10];
+  } else if(titlePosition == 'bottomleft') {
+    direction = 'bottom';
+    offset = [-8, 10];
+  } else if(titlePosition == 'centerright') {
+    direction = 'right';
+    offset = [10, 0];
+  } else if(titlePosition == 'centerleft') {
+    direction = 'left';
+    offset = [-10, 0];
+  }
+
+  point.bindTooltip(pointTitle, {
+      permanent: true,
+      direction: direction,
+      className: 'transparent-tooltip',
+      offset: offset
+  }).openTooltip();
+
+  bangunanSadapList.push(point);
+}
+
+function generateBangunanSadapDanPembagi(title, titlePosition, lineCoords, textDeg) {
+  L.polyline(lineCoords, { color: 'black', weight: 1 }).addTo(map);
+
+  const pointTitle = `<div class="bangunan-sadap-title" style="transform: rotate(${textDeg}deg);white-space: nowrap;">${title}</div>`;
+
+  var point = L.circle(lineCoords[lineCoords.length - 1], 1000, circleBgWhite).addTo(map);
+  L.circle(lineCoords[lineCoords.length - 1], 380, circleBgBlack).addTo(map);
+
+  var offset = [0, 0];
+  var direction = 'center';
+
+  if(titlePosition == 'topcenter') {
+    direction = 'top';
+    offset = [3, -15];
+  } else if(titlePosition == 'topleft') {
+    direction = 'top';
+    offset = [-10, -10];
+  } else if(titlePosition == 'topright') {
+    direction = 'top';
+    offset = [10, -10];
+  } else if(titlePosition == 'bottomcenter') {
+    direction = 'bottom';
+    offset = [0, 10];
+  } else if(titlePosition == 'bottomright') {
+    direction = 'bottom';
+    offset = [8, 15];
   }
 
   point.bindTooltip(pointTitle, {
@@ -545,21 +995,25 @@ function generateBoxPetak(petakId, petakName, lineCoords, position, golongan) {
   const tooltipContent = `
     <div class="box-petak golongan-a">
         <table id="petak-${petakId}">
+          <thead>
             <tr>
                 <th class="text-center" colspan="2">${petakName}</th>
             </tr>
+          </thead>
+          <tbody>
             <tr>
                 <td class="luas-petak">
                   A= <strong>-</strong>
                 </td>
                 <td>
-                  <span class="debit-kebutuhan text-dark">K= <strong>-</strong></span>
+                  <span class="debit-kebutuhan text-dark">QK= <strong>-</strong></span>
                   </br>
-                  <span class="debit-aktual text-primary">A= <strong>-</strong></span>
+                  <span class="debit-aktual text-primary">QA= <strong>-</strong></span>
                   </br>
-                  <span class="debit-rekomendasi text-warning">R= <strong>-</strong></span>
+                  <span class="debit-rekomendasi text-warning">QR= <strong>-</strong></span>
                 </td>
             </tr>
+          </tbody>
         </table>
     </div>
   `;
@@ -588,37 +1042,90 @@ function generateTextSaluranSekunder(title, latlng, textDeg) {
   }).addTo(map);
 }
 
+const inputField = document.getElementById("filter-date");
+const prevButton = document.getElementById("btn-prev");
+const nextButton = document.getElementById("btn-next");
+
+// Function to disable elements
+function disableElements() {
+    prevButton.disabled = true;
+    nextButton.disabled = true;
+    inputField.disabled = true;
+    inputField.classList.add('disabled');
+}
+
+// Function to enable elements
+function enableElements() {
+    prevButton.disabled = false;
+    nextButton.disabled = false;
+    inputField.disabled = false;
+    inputField.classList.remove('disabled');
+}
+
 function getSchemaData(tanggal) {
-  console.log(boxPetakList)
+  disableElements();
+  $('.box-petak tbody').html(`<tr><td class="text-center" colspan="2"><img src="/images/loading.gif" /></td></tr>`);
   getData(`/Schema/GetSchemaDataByDate/${tanggal}`).then(res => {
     let result = res.data
     if (result.metaData.code == 200) {
+      var luas = 'A= <strong>-</strong>';
+      var debit_kebutuhan = 'QK= <strong>-</strong>';
+      var debit_aktual = 'QA= <strong>-</strong>';
+      var debit_rekomendasi = 'QR= <strong>-</strong>';
       $.each(result.response, function (key, data) {
-        if(data.luas == null) {
-          $(`#petak-${data.id}`).find('.luas-petak').html(`A= <strong>-</strong>`);
-        } else {
-          $(`#petak-${data.id}`).find('.luas-petak').html(`A= ${data.luas} Ha`);
+        if(data.luas != null) {
+          luas = `A= ${formatNumber(data.luas)} Ha`;
         }
 
-        if(data.debit_kebutuhan == null) {
-          $(`#petak-${data.id}`).find('.debit-kebutuhan').html(`K= <strong>-</strong>`);
-        } else {
-          $(`#petak-${data.id}`).find('.debit-kebutuhan').html(`K= ${data.debit_kebutuhan} m3/dt`);
+        if(data.debit_kebutuhan != null) {
+          debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} m3/s`;
         }
 
-        if(data.debit_rekomendasi == null) {
-          $(`#petak-${data.id}`).find('.debit-rekomendasi').html(`R= <strong>-</strong>`);
-        } else {
-          $(`#petak-${data.id}`).find('.debit-rekomendasi').html(`R= ${data.debit_rekomendasi} m3/dt`);
+        if(data.debit_aktual != null) {
+          debit_aktual = `QA= ${formatNumber(data.debit_aktual)} m3/s`;
         }
-      });                    
+
+        if(data.debit_rekomendasi != null) {
+          debit_rekomendasi = `QR= ${formatNumber(data.debit_rekomendasi)} m3/s`;
+        }
+
+        $('.box-petak tbody').html(`
+          <tr>
+            <td class="luas-petak">
+              ${luas}
+            </td>
+            <td>
+              <span class="debit-kebutuhan text-dark">${debit_kebutuhan}</span>
+              </br>
+              <span class="debit-aktual text-primary">${debit_aktual}</span>
+              </br>
+              <span class="debit-rekomendasi text-warning">${debit_rekomendasi}</span>
+            </td>
+          </tr>
+        `);
+      });    
+      enableElements();                
     }
   }).catch(err => {
+    enableElements();
     let error = err.response.data
     if(!error.success) {
         console.log(error.message)
     }
   })
+}
+
+function formatNumber(value) {
+  // Convert the number to a string and use parseFloat to remove unnecessary zeros
+  let formattedValue = parseFloat(value.toFixed(2)).toString();
+
+  // Check if the formatted string ends with .00 and remove it
+  if (formattedValue.endsWith('.00')) {
+      formattedValue = formattedValue.slice(0, -3); // Remove the .00 part
+  }
+
+  // Return the formatted value
+  return formattedValue;
 }
 
 // function refreshTooltips() {

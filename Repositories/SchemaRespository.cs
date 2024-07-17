@@ -39,7 +39,9 @@ namespace IrigasiManganti.Repositories
             {
                 using var _db = new NpgsqlConnection(_connectionString);
                 var query = @$"
-                    SELECT *, null as debit_rekomendasi FROM petak
+                    SELECT p.*, di.tanggal, di.debit_aktual, di.debit_rekomendasi FROM petak p
+                    LEFT JOIN debit_irigasi di ON p.id = di.petak_id
+                    WHERE di.tanggal = @Tanggal::date
                 ";
                 var results = await _db.QueryAsync<dynamic>(query, new { Tanggal = tanggal });
                 return results;
@@ -47,7 +49,7 @@ namespace IrigasiManganti.Repositories
             catch (NpgsqlException ex)
             {
                 Log.Error(ex, "PostgreSQL Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Tanggal = tanggal });
-                throw;
+                throw; 
             }
             catch (Exception ex)
             {

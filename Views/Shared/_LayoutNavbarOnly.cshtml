@@ -453,16 +453,16 @@
                     }
                     else
                     {
-                        <li>
+                        @* <li>
                             <a href="/Account/Login" class="nav-link waves-effect waves-light m-0" aria-haspopup="false"
                                 aria-expanded="false">LOGIN <i class="mdi mdi-login"></i></a>
-                        </li>
+                        </li> *@
                     }
 
-                    @* <li class="d-none d-xl-block">
+                    <li class="d-none d-xl-block">
                         <a class="nav-link waves-effect waves-light m-0" aria-haspopup="false" aria-expanded="false"
                             id="show_date"></a>
-                    </li> *@
+                    </li>
 
                     <li class="dropdown">
                         <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="fullscreen"
@@ -521,7 +521,7 @@
     <script>
 
         $(document).ready(function () {
-            @* let initDateClock = setInterval(showDateClock, 1000); *@
+            let initDateClock = setInterval(showDateClock, 1000);
         });
 
         window.logout = (input, evt) => {
@@ -548,15 +548,15 @@
             })
         }
 
-        @* window.showDateClock = function () {
+        window.showDateClock = function () {
             let momentjs = moment();
 
             momentjs.locale('id');
 
             momentjs.tz("Asia/Jakarta");
 
-            $('#show_date').html('<i class="fe-calendar"></i> ' + momentjs.format('D MMMM YYYY') + ' ' + momentjs.format('HH:mm:ss') + ` WIB`);
-        };                               *@
+            $('#show_date').html(momentjs.format('D MMMM YYYY') + ' ' + momentjs.format('HH:mm:ss') + ` WIB`);
+        };                              
     </script>
 
     @RenderSection("additionalScripts", false)
