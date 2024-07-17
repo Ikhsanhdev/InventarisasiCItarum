@@ -33,7 +33,7 @@ namespace IrigasiManganti.Controllers.Api
         }
 
         [HttpPost("/v1/ketersediaan/upload")]
-        public IActionResult UploadFile(IFormFile file)
+        public async  Task<IActionResult> UploadFile(IFormFile file)
         {
             var result = new ApiResponse();
             try
@@ -58,9 +58,9 @@ namespace IrigasiManganti.Controllers.Api
                 var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "ketersediaan");
                 string filePath = FileHelper.SaveFile(file, directory);
 
-                _backgroundJobClient.Enqueue(() => _job.SaveKetersediaanJob(table, filePath)) ;
-               
+                _backgroundJobClient.Enqueue(() => _job.SaveKetersediaanJob(table, filePath, null)) ;
 
+                // _job.SaveKetersediaanJob(table, filePath);
                 result.MetaData.Code = 200;
                 result.MetaData.Message = "OK";
                 

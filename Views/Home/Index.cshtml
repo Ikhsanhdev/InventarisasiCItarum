@@ -518,7 +518,7 @@
                         const formattedDate = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
                         const kebutuhanPoint = this.points.find(point => point.series.name === 'Kebutuhan');
-                        const avgPoint = this.points.find(point => point.series.name === 'Average');
+                        const avgPoint = this.points.find(point => point.series.name === 'Ketersediaan');
                         const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
 
                         return `<b>${day}, ${formattedDate}</b><br/>
@@ -547,7 +547,7 @@
                         }
                     },
                     {
-                        name: 'Average',
+                        name: 'Ketersediaan',
                         type: chartType,
                         data: avgData,
                         zIndex: 1,

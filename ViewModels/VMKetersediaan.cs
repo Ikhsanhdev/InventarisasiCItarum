@@ -7,11 +7,13 @@ namespace IrigasiManganti.ViewModels
 {
     public class VMKetersediaan
     {
+        public Guid id { get; set; } = Guid.NewGuid();
         public DateTime tanggal { get; set; }
         public double? ketersediaan_min { get; set; }
         public double? ketersediaan_max { get; set; }
         public double? ketersediaan_avg { get; set; }
         public double? kebutuhan { get; set; }
+        public DateTime? updated_at { get; set; } = DateTime.Now;
         public string? satuan { get; set; } = "m3/s";
     }
 

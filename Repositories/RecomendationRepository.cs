@@ -122,6 +122,8 @@ namespace IrigasiManganti.Repositories
                     }
                     
                 }
+
+                await connection.CloseAsync();
             }
 
         }

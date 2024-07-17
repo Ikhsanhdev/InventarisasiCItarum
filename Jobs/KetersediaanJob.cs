@@ -4,15 +4,18 @@ using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Office2021.Excel.Pivot;
 using Hangfire;
+using Hangfire.Server;
 using IrigasiManganti.Interfaces;
 using IrigasiManganti.ViewModels;
+using Serilog;
 
 namespace IrigasiManganti.Jobs
 {
     public interface IKetersediaanJob
     {
-        void SaveKetersediaanJob(DataTable data, string filePath);
+        Task SaveKetersediaanJob(DataTable data, string filePath, PerformContext context);
     }
     public class KetersediaanJob : IKetersediaanJob
     {
@@ -24,25 +27,30 @@ namespace IrigasiManganti.Jobs
             this._repository = repository;
             this._backgroundJobClient = backgroundJobClient;
         }
-        public void SaveKetersediaanJob(DataTable table, string filePath)
+        public async Task SaveKetersediaanJob(DataTable table, string filePath, PerformContext context)
         {
+            string jobId = context.BackgroundJob.Id;
             try
             {
                 // check if data recomendation is empty
                 if (table.Rows.Count == 0) return;
                 List<VMKetersediaan> modelData = new();
+                string strTgl = "";
                 foreach (DataRow item in table.Rows)
                 {
                     DateTime tanggal = new();
                     double? min = new();
                     double? max = new();
                     double? avg = new();
-
+                    
                     foreach (DataColumn col in table.Columns)
                     {
+                        var colName = col.ColumnName;
                         var value = item[col] ?? "";
-                        if (col.ColumnName == "tanggal")
+                        if (colName == "tanggal")
                         {
+                            if(value == null) break;
+                            if(value.ToString() == "") break;
                             List<string> formats = new List<string>() { "dd-MMM-yy", "M/d/yyyy", "MM-dd-yyyy", "MM/dd/yyyy" };
                             // Contoh data dari .csv
                             bool isParsed = false;
@@ -57,6 +65,19 @@ namespace IrigasiManganti.Jobs
                                     t = dateTime;
                                     break;
                                 }
+
+                                tanggal = t;
+                                strTgl = t.ToString("yyyy-MM-dd");
+                            }
+                            isParsed = false;
+                            if(!isParsed){
+                                string dateString = value.ToString();
+                                string format = "M/d/yyyy";
+                                CultureInfo provider = CultureInfo.InvariantCulture;
+
+                                DateTime date = DateTime.ParseExact(dateString, format, provider);
+                                tanggal = date;
+                                strTgl = date.ToString("yyyy-MM-dd");
                             }
 
                         }
@@ -97,20 +118,22 @@ namespace IrigasiManganti.Jobs
                             }
                         }
 
-                        modelData.Add(new VMKetersediaan
-                        {
-                            tanggal = tanggal,
-                            ketersediaan_min = min,
-                            ketersediaan_max = max,
-                            ketersediaan_avg = avg,
-                        });
                     }
 
-                    _backgroundJobClient.Enqueue(() => _repository.KetersediaanRepositories.SaveKetersediaanDataAsync(modelData, filePath, null));
+                    modelData.Add(new VMKetersediaan
+                    {
+                        tanggal = tanggal,
+                        ketersediaan_min = min,
+                        ketersediaan_max = max,
+                        ketersediaan_avg = avg,
+                    });
+
                 }
+                await _repository.KetersediaanRepositories.SaveKetersediaanDataAsync(modelData, filePath, jobId);
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Log.Error(ex, "general Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data from api -- API ERROR" });
                 throw;
             }
         }
