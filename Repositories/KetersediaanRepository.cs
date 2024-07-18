@@ -38,9 +38,9 @@ namespace IrigasiManganti.Repositories
                         
                         foreach (var row in data)
                         {
-                            var currentRow = "SELECT COUNT(*) FROM debit_bendung WHERE tanggal::date = @tanggal::date";
-                            var count = await connection.QueryAsync<dynamic>(currentRow, new {row.tanggal});
-                            var x = count.ToList().Count;
+                            var currentRow = "SELECT COUNT(*) > 0 FROM debit_bendung WHERE tanggal::date = @tanggal::date";
+                            var exists = await connection.QuerySingleOrDefaultAsync<bool>(currentRow, new { row.tanggal });
+                            
                             var parameters = new {
                                 row.id,
                                 row.tanggal,
@@ -49,7 +49,7 @@ namespace IrigasiManganti.Repositories
                                 row.ketersediaan_avg,
                                 row.updated_at
                             };
-                            if(x == 0){
+                            if(!exists){
                                 /* Insert Data*/
                                 var insertQuery = @"INSERT INTO debit_bendung 
                                                     (id, tanggal, ketersediaan_min, ketersediaan_max, ketersediaan_avg, updated_at) 

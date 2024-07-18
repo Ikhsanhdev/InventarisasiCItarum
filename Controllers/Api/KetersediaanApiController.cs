@@ -17,7 +17,7 @@ using Serilog;
 
 namespace IrigasiManganti.Controllers.Api
 {
-    [ApiExplorerSettings(IgnoreApi = true)]
+    [ApiExplorerSettings(IgnoreApi = false)]
     [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     [ApiController]
     public class KetersediaanApiController : ControllerBase
@@ -60,7 +60,7 @@ namespace IrigasiManganti.Controllers.Api
 
                 _backgroundJobClient.Enqueue(() => _job.SaveKetersediaanJob(table, filePath, null)) ;
 
-                // _job.SaveKetersediaanJob(table, filePath);
+                //await _job.SaveKetersediaanJob(table, filePath, null);
                 result.MetaData.Code = 200;
                 result.MetaData.Message = "OK";
                 
