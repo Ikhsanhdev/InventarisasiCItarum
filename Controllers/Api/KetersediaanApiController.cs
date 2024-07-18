@@ -70,7 +70,7 @@ namespace IrigasiManganti.Controllers.Api
             {
                 result.MetaData.Code = 500;
                 result.MetaData.Message = ex.Message;
-                Log.Error(ex, "general Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data from api -- API ERROR" });
+                Log.Error(ex, "general Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data from api" });
                 return BadRequest(result);
             }
 
