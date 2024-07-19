@@ -425,6 +425,8 @@
         function createChartFromDataTable() {
             const today = new Date();
             const ketersediaanData = [];
+            const minData = [];
+            const maxData = [];
             const avgData = [];
             const kebutuhanData = [];
             const rows = dtDebitBendung.rows().data();
@@ -443,6 +445,8 @@
 
                 if (!isNaN(ketersediaanMin) && !isNaN(ketersediaanMax)) {
                     ketersediaanData.push([timestamp, ketersediaanMin, ketersediaanMax]);
+                    minData.push([timestamp, ketersediaanMin]);
+                    maxData.push([timestamp, ketersediaanMax]);
                 }
                 if (!isNaN(ketersediaanAvg)) {
                     avgData.push([timestamp, ketersediaanAvg]);
@@ -464,129 +468,251 @@
             document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2) + ' lt/dt';
             document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2) + ' lt/dt';
             
-            createChart(ketersediaanData, avgData, kebutuhanData);
+            createChart(ketersediaanData, avgData, kebutuhanData, minData, maxData);
         }
 
-        function createChart(ketersediaanData, avgData, kebutuhanData) {
-            chart = Highcharts.chart('container', {
-                title: {
-                    text: '',
-                    align: 'left'
-                },
-                yAxis: {
+        function createChart(ketersediaanData, avgData, kebutuhanData, minData, maxData) {
+            if(chartType == 'spline') {
+                chart = Highcharts.chart('container', {
                     title: {
-                        text: 'Debit (m<sup>3</sup>/s)'
+                        text: '',
+                        align: 'left'
                     },
-                    min: 0,
-                    max: 45
-                },
-                xAxis: {
-                    type: 'datetime',
-                    labels: {
-                        format: '{value:%d %b %Y}',
-                        rotation: -45,
-                        align: 'right'
+                    yAxis: {
+                        title: {
+                            text: 'Debit (m<sup>3</sup>/s)'
+                        },
+                        min: 0,
+                        max: 45
                     },
-                    tickInterval: 24 * 3600 * 1000, // One day interval
-                    dateTimeLabelFormats: {
-                        day: '%d %b %Y'
-                    },
-                    accessibility: {
-                        rangeDescription: 'Range: Past 31 days'
-                    }
-                },
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'top',
-                    y: 20
-                },
-                plotOptions: {
-                    series: {
-                        label: {
-                            connectorAllowed: false
+                    xAxis: {
+                        type: 'datetime',
+                        labels: {
+                            format: '{value:%d %b %Y}',
+                            rotation: -45,
+                            align: 'right'
+                        },
+                        tickInterval: 24 * 3600 * 1000, // One day interval
+                        dateTimeLabelFormats: {
+                            day: '%d %b %Y'
+                        },
+                        accessibility: {
+                            rangeDescription: 'Range: Past 31 days'
                         }
+                    },
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'top',
+                        y: 20
+                    },
+                    plotOptions: {
+                        series: {
+                            label: {
+                                connectorAllowed: false
+                            }
+                        }
+                    },
+                    tooltip: {
+                        shared: true,
+                        crosshairs: true,
+                        useHTML: true,
+                        formatter: function () {
+                            const date = new Date(this.x);
+                            const day = date.toLocaleDateString('id-ID', { weekday: 'long' });
+                            const formattedDate = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+                            const kebutuhanPoint = this.points.find(point => point.series.name === 'Kebutuhan');
+                            const avgPoint = this.points.find(point => point.series.name === 'Average');
+                            const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
+
+                            return `<b>${day}, ${formattedDate}</b><br/>
+                                    Kebutuhan: ${kebutuhanPoint.y.toFixed(2)} lt/dt<br/>
+                                    Min: ${ketersediaanPoint.point.low.toFixed(2)} lt/dt<br/>
+                                    Max: ${ketersediaanPoint.point.high.toFixed(2)} lt/dt<br/>
+                                    Rerata: ${avgPoint.y.toFixed(2)} lt/dt`;
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Ketersediaan',
+                            data: ketersediaanData,
+                            type: 'arearange',
+                            lineWidth: 0,
+                            linkedTo: ':previous',
+                            color: Highcharts.getOptions().colors[0],
+                            fillOpacity: 0.3,
+                            zIndex: 0,
+                            marker: {
+                                enabled: false
+                            },
+                            tooltip: {
+                                valueSuffix: ' m3/s',
+                                valueDecimals: 2,
+                            }
+                        },
+                        {
+                            name: 'Average',
+                            type: 'spline',
+                            data: avgData,
+                            zIndex: 1,
+                            marker: {
+                                fillColor: 'white',
+                                lineWidth: 2,
+                                lineColor: Highcharts.getOptions().colors[0]
+                            },
+                            tooltip: {
+                                valueSuffix: ' m3/s',
+                                valueDecimals: 2,
+                            }
+                        },
+                        {
+                            name: 'Kebutuhan',
+                            type: 'spline',
+                            color: '#404040',
+                            data: kebutuhanData,
+                            tooltip: {
+                                valueSuffix: ' m3/s',
+                                valueDecimals: 2,
+                            }
+                        }
+                    ],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 100
+                            },
+                            chartOptions: {
+                                legend: {
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom'
+                                }
+                            }
+                        }]
                     }
-                },
-                tooltip: {
-                    shared: true,
-                    crosshairs: true,
-                    useHTML: true,
-                    formatter: function () {
-                        const date = new Date(this.x);
-                        const day = date.toLocaleDateString('id-ID', { weekday: 'long' });
-                        const formattedDate = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+                });
+            } else if(chartType == 'column') {
+                chart = Highcharts.chart('container', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: '',
+                        align: 'left'
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        labels: {
+                            format: '{value:%d %b %Y}',
+                            rotation: -45,
+                            align: 'right'
+                        },
+                        tickInterval: 24 * 3600 * 1000, // One day interval
+                        dateTimeLabelFormats: {
+                            day: '%d %b %Y'
+                        },
+                        accessibility: {
+                            rangeDescription: 'Range: Past 31 days'
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Debit (m<sup>3</sup>/s)'
+                        },
+                        min: 0,
+                        max: 45
+                    },
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'top',
+                        y: 20
+                    },
+                    tooltip: {
+                        shared: true,
+                        useHTML: true,
+                        formatter: function () {
+                            const date = new Date(this.x);
+                            const day = date.toLocaleDateString('id-ID', { weekday: 'long' });
+                            const formattedDate = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
-                        const kebutuhanPoint = this.points.find(point => point.series.name === 'Kebutuhan');
-                        const avgPoint = this.points.find(point => point.series.name === 'Ketersediaan');
-                        const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
+                            const kebutuhanPoint = this.points.find(point => point.series.name === 'Kebutuhan');
+                            const avgPoint = this.points.find(point => point.series.name === 'Ketersediaan');
+                            const maxPoint = this.points.find(point => point.series.name === 'Max');
+                            const minPoint = this.points.find(point => point.series.name === 'Min');
 
-                        return `<b>${day}, ${formattedDate}</b><br/>
-                                Kebutuhan: ${kebutuhanPoint.y.toFixed(2)} lt/dt<br/>
-                                Min: ${ketersediaanPoint.point.low.toFixed(2)} lt/dt<br/>
-                                Max: ${ketersediaanPoint.point.high.toFixed(2)} lt/dt<br/>
+                            return `<b>${day}, ${formattedDate}</b><br/>
+                                Kebutuhan: ${kebutuhanPoint.y.toFixed(2)} lt/dt<br>
+                                Min: ${minPoint.y.toFixed(2)} lt/dt<br>
+                                Max: ${maxPoint.y.toFixed(2)} lt/dt<br>
                                 Rerata: ${avgPoint.y.toFixed(2)} lt/dt`;
-                    }
-                },
-                series: [
-                    {
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            grouping: false,
+                            shadow: false,
+                            borderWidth: 0
+                        }
+                    },
+                    series: [{
+                        name: 'Max',
+                        color: '#16608E',
+                        data: maxData,
+                        tooltip: {
+                            valueSuffix: ' m3/s',
+                            valueDecimals: 2,
+                        },
+                        pointPadding: 0.2,
+                        pointPlacement: -0.2
+                    },{
                         name: 'Ketersediaan',
-                        data: ketersediaanData,
-                        type: 'arearange',
-                        lineWidth: 0,
-                        linkedTo: ':previous',
                         color: Highcharts.getOptions().colors[0],
-                        fillOpacity: 0.3,
-                        zIndex: 0,
-                        marker: {
-                            enabled: false
-                        },
-                        tooltip: {
-                            valueSuffix: ' m3/s',
-                            valueDecimals: 2,
-                        }
-                    },
-                    {
-                        name: 'Ketersediaan',
-                        type: chartType,
                         data: avgData,
-                        zIndex: 1,
-                        marker: {
-                            fillColor: 'white',
-                            lineWidth: 2,
-                            lineColor: Highcharts.getOptions().colors[0]
-                        },
                         tooltip: {
                             valueSuffix: ' m3/s',
                             valueDecimals: 2,
-                        }
-                    },
-                    {
+                        },
+                        pointPadding: 0.3,
+                        pointPlacement: -0.2
+                    }, {
+                        name: 'Min',
+                        color: '#83ccfb',
+                        data: minData,
+                        tooltip: {
+                            valueSuffix: ' m3/s',
+                            valueDecimals: 2,
+                        },
+                        pointPadding: 0.4,
+                        pointPlacement: -0.2
+                    },{
                         name: 'Kebutuhan',
-                        type: chartType,
                         color: '#404040',
                         data: kebutuhanData,
                         tooltip: {
                             valueSuffix: ' m3/s',
                             valueDecimals: 2,
-                        }
-                    }
-                ],
-                responsive: {
-                    rules: [{
-                        condition: {
-                            maxWidth: 100
                         },
-                        chartOptions: {
-                            legend: {
-                                layout: 'horizontal',
-                                align: 'center',
-                                verticalAlign: 'bottom'
+                        pointPadding: 0.3,
+                        pointPlacement: 0.2
+                    }],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 100
+                            },
+                            chartOptions: {
+                                legend: {
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom'
+                                }
                             }
-                        }
-                    }]
-                }
-            });
+                        }]
+                    }
+                });
+            }
         }
 
         function setRange(range) {
@@ -651,25 +777,6 @@
                             return `<span class="${status_percent} fw-semibold">${percent_avg_kebutuhan.toFixed(2)}%</span>`;
                         }
                     }
-                ],
-                columnDefs: [
-                    {
-                        targets: 0,
-                        render: function (data) {
-                            if(data != null) {
-                                return `${moment(data).locale('id').format("D MMMM YYYY")}`;
-                            }
-
-                            return null;
-                        },
-                    },
-                    {
-                        targets: -1,
-                        searchable: false,
-                        orderable: false,
-                        // width: '20%',
-                        className: "text-center"
-                    },
                 ],
                 drawCallback: function() {
                     createChartFromDataTable();
