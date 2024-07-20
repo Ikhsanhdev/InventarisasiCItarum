@@ -29,8 +29,8 @@ namespace IrigasiManganti.Jobs
         }
         public async Task SaveKetersediaanJob(DataTable table, string filePath, PerformContext context)
         {
-            //string jobId = context.BackgroundJob.Id;
-            string jobId = "11111";
+            string jobId = context.BackgroundJob.Id;
+            //string jobId = "11111";
             try
             {
                 // check if data recomendation is empty
