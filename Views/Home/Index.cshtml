@@ -467,6 +467,8 @@
             document.getElementById('das-presentase').textContent = percent.toFixed(2) + '%';
             document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2) + ' lt/dt';
             document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2) + ' lt/dt';
+
+            console.log(avgData);
             
             createChart(ketersediaanData, avgData, kebutuhanData, minData, maxData);
         }
@@ -523,7 +525,7 @@
                             const formattedDate = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
                             const kebutuhanPoint = this.points.find(point => point.series.name === 'Kebutuhan');
-                            const avgPoint = this.points.find(point => point.series.name === 'Rerata');
+                            const avgPoint = this.points.find(point => point.series.name === 'Ketersediaan');
                             const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
 
                             return `<b>${day}, ${formattedDate}</b><br/>
