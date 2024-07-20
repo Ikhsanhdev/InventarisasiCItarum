@@ -378,8 +378,8 @@
                                 <tr>
                                     @* <th  class="text-center" scope="col" rowspan="2">No.</th> *@
                                     <th  class="text-center" scope="col" rowspan="2">Tanggal</th>
-                                    <th  class="text-center" scope="col" colspan="3">Ketersediaan (m<sup>3</sup>/s)</th>
-                                    <th  class="text-center" scope="col" rowspan="2">Kebutuhan (m<sup>3</sup>/s)</th>
+                                    <th  class="text-center" scope="col" colspan="3">Ketersediaan (lt/dt)</th>
+                                    <th  class="text-center" scope="col" rowspan="2">Kebutuhan (lt/dt)</th>
                                     <th  class="text-center" scope="col" rowspan="2">Persentase (%)</th>
                                 </tr>
                                 <tr>
@@ -467,6 +467,8 @@
             document.getElementById('das-presentase').textContent = percent.toFixed(2) + '%';
             document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2) + ' lt/dt';
             document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2) + ' lt/dt';
+
+            console.log(avgData);
             
             createChart(ketersediaanData, avgData, kebutuhanData, minData, maxData);
         }
@@ -480,10 +482,10 @@
                     },
                     yAxis: {
                         title: {
-                            text: 'Debit (m<sup>3</sup>/s)'
+                            text: 'Debit (lt/dt)'
                         },
                         min: 0,
-                        max: 35
+                        max: 8000
                     },
                     xAxis: {
                         type: 'datetime',
@@ -523,7 +525,7 @@
                             const formattedDate = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
                             const kebutuhanPoint = this.points.find(point => point.series.name === 'Kebutuhan');
-                            const avgPoint = this.points.find(point => point.series.name === 'Rerata');
+                            const avgPoint = this.points.find(point => point.series.name === 'Ketersediaan');
                             const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
 
                             return `<b>${day}, ${formattedDate}</b><br/>
@@ -547,7 +549,7 @@
                                 enabled: false
                             },
                             tooltip: {
-                                valueSuffix: ' m3/s',
+                                valueSuffix: ' lt/dt',
                                 valueDecimals: 2,
                             }
                         },
@@ -562,7 +564,7 @@
                                 lineColor: Highcharts.getOptions().colors[0]
                             },
                             tooltip: {
-                                valueSuffix: ' m3/s',
+                                valueSuffix: ' lt/dt',
                                 valueDecimals: 2,
                             }
                         },
@@ -572,7 +574,7 @@
                             color: '#404040',
                             data: kebutuhanData,
                             tooltip: {
-                                valueSuffix: ' m3/s',
+                                valueSuffix: ' lt/dt',
                                 valueDecimals: 2,
                             }
                         }
@@ -618,10 +620,10 @@
                     },
                     yAxis: {
                         title: {
-                            text: 'Debit (m<sup>3</sup>/s)'
+                            text: 'Debit (lt/dt)'
                         },
                         min: 0,
-                        max: 45
+                        max: 8000
                     },
                     legend: {
                         layout: 'horizontal',
@@ -661,7 +663,7 @@
                         color: '#16608E',
                         data: maxData,
                         tooltip: {
-                            valueSuffix: ' m3/s',
+                            valueSuffix: ' lt/dt',
                             valueDecimals: 2,
                         },
                         pointPadding: 0.2,
@@ -671,7 +673,7 @@
                         color: Highcharts.getOptions().colors[0],
                         data: avgData,
                         tooltip: {
-                            valueSuffix: ' m3/s',
+                            valueSuffix: ' lt/dt',
                             valueDecimals: 2,
                         },
                         pointPadding: 0.3,
@@ -681,7 +683,7 @@
                         color: '#83ccfb',
                         data: minData,
                         tooltip: {
-                            valueSuffix: ' m3/s',
+                            valueSuffix: ' lt/dt',
                             valueDecimals: 2,
                         },
                         pointPadding: 0.4,
@@ -691,7 +693,7 @@
                         color: '#404040',
                         data: kebutuhanData,
                         tooltip: {
-                            valueSuffix: ' m3/s',
+                            valueSuffix: ' lt/dt',
                             valueDecimals: 2,
                         },
                         pointPadding: 0.3,

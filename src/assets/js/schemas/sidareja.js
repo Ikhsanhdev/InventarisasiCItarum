@@ -1078,15 +1078,15 @@ function getSchemaData(tanggal) {
         }
 
         if(data.debit_kebutuhan != null) {
-          debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} m3/s`;
+          debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} lt/dt`;
         }
 
         if(data.debit_aktual != null) {
-          debit_aktual = `QA= ${formatNumber(data.debit_aktual)} m3/s`;
+          debit_aktual = `QA= ${formatNumber(data.debit_aktual)} lt/dt`;
         }
 
         if(data.debit_rekomendasi != null) {
-          debit_rekomendasi = `QR= ${formatNumber(data.debit_rekomendasi)} m3/s`;
+          debit_rekomendasi = `QR= ${formatNumber(data.debit_rekomendasi)} lt/dt`;
         }
 
         $('.box-petak tbody').html(`
