@@ -484,8 +484,8 @@
                         title: {
                             text: 'Debit (m<sup>3</sup>/s)'
                         },
-                        min: 0,
-                        max: 35
+                        min: 6,
+                        max: 8
                     },
                     xAxis: {
                         type: 'datetime',
@@ -549,7 +549,7 @@
                                 enabled: false
                             },
                             tooltip: {
-                                valueSuffix: ' m3/s',
+                                valueSuffix: ' lt/dt',
                                 valueDecimals: 2,
                             }
                         },
@@ -564,7 +564,7 @@
                                 lineColor: Highcharts.getOptions().colors[0]
                             },
                             tooltip: {
-                                valueSuffix: ' m3/s',
+                                valueSuffix: ' lt/dt',
                                 valueDecimals: 2,
                             }
                         },
@@ -574,7 +574,7 @@
                             color: '#404040',
                             data: kebutuhanData,
                             tooltip: {
-                                valueSuffix: ' m3/s',
+                                valueSuffix: ' lt/dt',
                                 valueDecimals: 2,
                             }
                         }
@@ -620,10 +620,10 @@
                     },
                     yAxis: {
                         title: {
-                            text: 'Debit (m<sup>3</sup>/s)'
+                            text: 'Debit (lt/dt)'
                         },
-                        min: 0,
-                        max: 45
+                        min: 6,
+                        max: 8
                     },
                     legend: {
                         layout: 'horizontal',
@@ -663,7 +663,7 @@
                         color: '#16608E',
                         data: maxData,
                         tooltip: {
-                            valueSuffix: ' m3/s',
+                            valueSuffix: ' lt/dt',
                             valueDecimals: 2,
                         },
                         pointPadding: 0.2,
@@ -673,7 +673,7 @@
                         color: Highcharts.getOptions().colors[0],
                         data: avgData,
                         tooltip: {
-                            valueSuffix: ' m3/s',
+                            valueSuffix: ' lt/dt',
                             valueDecimals: 2,
                         },
                         pointPadding: 0.3,
@@ -683,7 +683,7 @@
                         color: '#83ccfb',
                         data: minData,
                         tooltip: {
-                            valueSuffix: ' m3/s',
+                            valueSuffix: ' lt/dt',
                             valueDecimals: 2,
                         },
                         pointPadding: 0.4,
@@ -693,7 +693,7 @@
                         color: '#404040',
                         data: kebutuhanData,
                         tooltip: {
-                            valueSuffix: ' m3/s',
+                            valueSuffix: ' lt/dt',
                             valueDecimals: 2,
                         },
                         pointPadding: 0.3,
