@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Office2021.Excel.Pivot;
 using Hangfire;
 using Hangfire.Server;
+using IrigasiManganti.Helpers;
 using IrigasiManganti.Interfaces;
 using IrigasiManganti.ViewModels;
 using Serilog;
@@ -30,7 +31,7 @@ namespace IrigasiManganti.Jobs
         public async Task SaveKetersediaanJob(DataTable table, string filePath, PerformContext context)
         {
             // string jobId = context.BackgroundJob.Id;
-            string jobId = DateTime.Now.ToString("dd-MM-yyyy-HH:mm:ss");
+            string jobId = FormatHelper.ConvertToGmtPlus7FromLocal(DateTime.Now).ToString("dd-MM-yyyy-HH:mm:ss");
             try
             {
                 // check if data recomendation is empty

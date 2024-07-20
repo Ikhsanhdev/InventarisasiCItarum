@@ -89,5 +89,21 @@ namespace IrigasiManganti.Helpers
                 return false;
             }
         }
+
+        public static DateTime ConvertToGmtPlus7FromLocal(DateTime localDateTime)
+        {
+            // Convert local time to UTC
+            DateTime utcDateTime = localDateTime.ToUniversalTime();
+
+            // Define the GMT+7 time zone
+            TimeZoneInfo gmtPlus7 = TimeZoneInfo.CreateCustomTimeZone(
+                "GMT+7", new TimeSpan(7, 0, 0), "GMT+7", "GMT+7");
+
+            // Convert the UTC DateTime to GMT+7
+            DateTime gmtPlus7DateTime = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, gmtPlus7);
+
+            return gmtPlus7DateTime;
+        }
+
     }
 }

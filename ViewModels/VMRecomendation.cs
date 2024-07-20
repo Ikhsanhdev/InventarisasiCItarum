@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IrigasiManganti.Helpers;
 
 namespace IrigasiManganti.ViewModels
 {
@@ -11,7 +12,7 @@ namespace IrigasiManganti.ViewModels
         public DateOnly tanggal { get; set; }
         public double? debit_aktual { get; set; }
         public double? debit_rekomendasi { get; set; }
-        public DateTime updated_at { get; set; } = DateTime.Now;
+        public DateTime updated_at { get; set; } = FormatHelper.ConvertToGmtPlus7FromLocal(DateTime.Now);
     }
 
     public class VMDebitIrigasi
