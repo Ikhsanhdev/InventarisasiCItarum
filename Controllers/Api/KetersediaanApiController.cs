@@ -58,9 +58,9 @@ namespace IrigasiManganti.Controllers.Api
                 var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "ketersediaan");
                 string filePath = FileHelper.SaveFile(file, directory);
 
-                _backgroundJobClient.Enqueue(() => _job.SaveKetersediaanJob(table, filePath, null)) ;
+                //_backgroundJobClient.Enqueue(() => _job.SaveKetersediaanJob(table, filePath, null)) ;
 
-                //await _job.SaveKetersediaanJob(table, filePath, null);
+                await _job.SaveKetersediaanJob(table, filePath, null);
                 result.MetaData.Code = 200;
                 result.MetaData.Message = "OK";
                 

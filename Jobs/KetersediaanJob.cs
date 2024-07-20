@@ -29,7 +29,8 @@ namespace IrigasiManganti.Jobs
         }
         public async Task SaveKetersediaanJob(DataTable table, string filePath, PerformContext context)
         {
-            string jobId = context.BackgroundJob.Id;
+            //string jobId = context.BackgroundJob.Id;
+            string jobId = "11111";
             try
             {
                 // check if data recomendation is empty
@@ -51,38 +52,49 @@ namespace IrigasiManganti.Jobs
                         {
                             if(value == null) break;
                             if(value.ToString() == "") break;
-                            List<string> formats = new List<string>() { "dd-MMM-yy", "M/d/yyyy", "MM-dd-yyyy", "MM/dd/yyyy" };
-                            // Contoh data dari .csv
-                            bool isParsed = false;
-                            DateTime dateTime;
-                            DateTime t = new();
-                            foreach (string format in formats)
-                            {
-                                value = value ?? string.Empty;
-                                if (DateTime.TryParseExact(value.ToString(), format, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime))
-                                {
-                                    isParsed = true;
-                                    t = dateTime;
-                                    break;
-                                }
+                            // List<string> formats = new List<string>() { "dd-MMM-yy", "M/d/yyyy", "MM-dd-yyyy", "MM/dd/yyyy, yyyy-MM-dd" };
+                            // // Contoh data dari .csv
+                            // bool isParsed = false;
+                            // DateTime dateTime;
+                            // DateTime t = new();
+                            // foreach (string format in formats)
+                            // {
+                            //     value = value ?? string.Empty;
+                            //     if (DateTime.TryParseExact(value.ToString(), format, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime))
+                            //     {
+                            //         isParsed = true;
+                            //         t = dateTime;
+                            //         break;
+                            //     }
 
-                                tanggal = t;
-                                strTgl = t.ToString("yyyy-MM-dd");
-                            }
-                            isParsed = false;
-                            if(!isParsed){
-                                string dateString = value.ToString();
-                                string format = "M/d/yyyy";
-                                CultureInfo provider = CultureInfo.InvariantCulture;
+                            //     tanggal = t;
+                            //     strTgl = t.ToString("yyyy-MM-dd");
+                            // }
+                            // isParsed = false;
+                            // if(!isParsed){
+                            //     string dateString = value.ToString();
+                            //     string format = "yyyy-MM-dd";
+                            //     CultureInfo provider = CultureInfo.InvariantCulture;
 
-                                DateTime date = DateTime.ParseExact(dateString, format, provider);
-                                tanggal = date;
-                                strTgl = date.ToString("yyyy-MM-dd");
-                            }
+                            //     DateTime date = DateTime.ParseExact(dateString, format, provider);
+                            //     tanggal = date;
+                            //     strTgl = date.ToString("yyyy-MM-dd");
+                            // }
+
+                            string dateString = value.ToString();
+                            string format = "yyyy-MM-dd";
+                            CultureInfo provider = CultureInfo.InvariantCulture;
+
+                            DateTime date = DateTime.ParseExact(dateString, format, provider);
+                            tanggal = date;
+                            strTgl = date.ToString("yyyy-MM-dd");
 
                         }
                         else
                         {
+                            var column = new List<string>() { "min","max","mean"};
+                            if (!column.Contains(colName)) continue;
+
                             double? dataValue = null;
                             if (value != null && value != "")
                             {
