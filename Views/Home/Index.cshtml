@@ -483,7 +483,7 @@
                             text: 'Debit (m<sup>3</sup>/s)'
                         },
                         min: 0,
-                        max: 45
+                        max: 35
                     },
                     xAxis: {
                         type: 'datetime',
@@ -523,7 +523,7 @@
                             const formattedDate = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
                             const kebutuhanPoint = this.points.find(point => point.series.name === 'Kebutuhan');
-                            const avgPoint = this.points.find(point => point.series.name === 'Average');
+                            const avgPoint = this.points.find(point => point.series.name === 'Rerata');
                             const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
 
                             return `<b>${day}, ${formattedDate}</b><br/>
@@ -552,7 +552,7 @@
                             }
                         },
                         {
-                            name: 'Average',
+                            name: 'Ketersediaan',
                             type: 'spline',
                             data: avgData,
                             zIndex: 1,
@@ -739,7 +739,14 @@
                     //{ data: null, defaultContent: '' }, // Placeholder for row number
                     { 
                         data: "tanggal",
-                        name: "tanggal"
+                        name: "tanggal",
+                        render: function (data) {
+                            if(data != null) {
+                                return `${moment(data).locale('id').format("D MMMM YYYY")}`;
+                            }
+
+                            return '-';
+                        }
                     },
                     { 
                         data: "ketersediaan_min",
