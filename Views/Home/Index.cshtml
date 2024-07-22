@@ -474,6 +474,13 @@
         }
 
         function createChart(ketersediaanData, avgData, kebutuhanData, minData, maxData) {
+            const maxValues = [
+                ...ketersediaanData.map(data => data[1]), 
+                ...avgData.map(data => data[1]), 
+                ...kebutuhanData.map(data => data[1]) 
+            ];
+            const maxYAxisValue = Math.max(...maxValues);
+
             if(chartType == 'spline') {
                 chart = Highcharts.chart('container', {
                     title: {
@@ -485,7 +492,7 @@
                             text: 'Debit (lt/dt)'
                         },
                         min: 0,
-                        max: 8000
+                        max: maxYAxisValue
                     },
                     xAxis: {
                         type: 'datetime',
@@ -623,7 +630,7 @@
                             text: 'Debit (lt/dt)'
                         },
                         min: 0,
-                        max: 8000
+                        max: maxYAxisValue
                     },
                     legend: {
                         layout: 'horizontal',
