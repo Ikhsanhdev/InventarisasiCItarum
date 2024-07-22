@@ -71,16 +71,6 @@ namespace IrigasiManganti.Controllers.Api
                 return BadRequest(result);
             }
 
-
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        [Route("/v1/kebutuhan")]
-        public async Task<IActionResult> GetKebutuhan(){
-
-            await _job.InsertDataKebutuhanFromSmopi();
-            return Ok();
         }
     }
 }

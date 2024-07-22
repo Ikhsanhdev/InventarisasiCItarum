@@ -13,11 +13,13 @@ using IrigasiManganti.BasicAuthService;
 using Microsoft.AspNetCore.Authentication;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using IrigasiManganti.Jobs;
 
 namespace IrigasiManganti
 {
     public class Program
     {
+        [Obsolete]
         public static void Main(string[] args)
         {
 
@@ -183,6 +185,9 @@ namespace IrigasiManganti
             });
 
             // app.UseMiddleware<Middlewares.SubdomainMiddleware>();
+
+            app.UseHangfireServer();
+            RecurringJob.AddOrUpdate<IKebutuhanJob>(service => service.InsertDataKebutuhanFromSmopi(), Cron.Weekly);
 
             app.UseStaticFiles();
 
