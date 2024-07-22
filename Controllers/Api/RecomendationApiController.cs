@@ -9,7 +9,7 @@ using Serilog;
 
 namespace IrigasiManganti.Controllers.Api
 {
-    [ApiExplorerSettings(IgnoreApi = true)]
+    [ApiExplorerSettings(IgnoreApi = false)]
     [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     [ApiController]
     public class RecomendationApiController : ControllerBase
@@ -47,10 +47,10 @@ namespace IrigasiManganti.Controllers.Api
                 }
 
                 var table = _service.Csvs.ReadCsvToDataTable(file);
-                // var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "rekomendasi");
-                // string filePath = FileHelper.SaveFile(file, directory);
+                var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "rekomendasi");
+                string filePath = FileHelper.SaveFile(file, directory);
 
-                // _backgroundJobClient.Enqueue(() => _job.SaveRecomendationJob(table, filePath)) ;
+                _backgroundJobClient.Enqueue(() => _job.SaveRecomendationJob(table, filePath)) ;
                 
 
                 result.MetaData.Code = 200;

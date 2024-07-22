@@ -15,6 +15,7 @@ namespace IrigasiManganti.Repositories
     public interface IKetersediaanResository
     {
         Task SaveKetersediaanDataAsync(List<VMKetersediaan> data, string filePath, string jobId);
+        Task UpdateKebutuhanFromSmopiAsync(List<VMKebutuhanSmopi> data);
     }
     public class KetersediaanRepository : IKetersediaanResository
     {
@@ -133,5 +134,36 @@ namespace IrigasiManganti.Repositories
             }
         }
 
+        public async Task UpdateKebutuhanFromSmopiAsync(List<VMKebutuhanSmopi> data)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString)){
+                await connection.OpenAsync();
+                using (var transaction = connection.BeginTransaction()){
+                    try
+                    {
+                        string query = @"
+                                INSERT INTO debit_bendung (id, tanggal, kebutuhan, updated_at)
+                                VALUES (@id, @tanggal, @kebutuhan, @updated_at)
+                                ON CONFLICT (tanggal) DO UPDATE
+                                SET kebutuhan = EXCLUDED.kebutuhan,
+                                    updated_at = @updated_at
+                            ";
+
+                        await connection.ExecuteAsync(query, data);
+                        
+                        await transaction.CommitAsync();
+                        
+                    }catch{
+                       await transaction.RollbackAsync();
+                    }
+                    finally
+                    {
+                        await connection.CloseAsync();
+                    }
+                }
+
+                await connection.CloseAsync();
+            }
+        }
     }
 }
