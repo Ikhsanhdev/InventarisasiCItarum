@@ -28,7 +28,7 @@ namespace IrigasiManganti.Jobs
                 
                 // check if data recomendation is empty
                 if (table.Rows.Count == 0) return;
-                int idx = 0;
+              
                 foreach (DataRow row in table.Rows)
                 {
                     var modelData = new List<VMRecomendation>();
@@ -80,8 +80,6 @@ namespace IrigasiManganti.Jobs
 
                     _backgroundJobClient.Enqueue(() => _repository.RecomendationRepositories.SaveRecomendationDataAsync(modelData, filePath, null));
 
-                    idx++;
-                    Console.WriteLine($"Eksekusi job ke-{idx}");
                 }
                 
             }
