@@ -6,5 +6,6 @@ namespace IrigasiManganti.Interfaces
     {
         IAuthService Auths { get; }
         ICsvService Csvs { get; }
+        IKebutuhanService Kebutuhan { get; }
     }
 }

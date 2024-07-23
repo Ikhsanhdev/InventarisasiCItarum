@@ -22,4 +22,12 @@ namespace IrigasiManganti.ViewModels
         public Guid id { get; set; }
         
     }
+
+    public class VMKebutuhanSmopi{
+        public Guid id { get; set; } = Guid.NewGuid();
+        public DateTime tanggal { get; set; }
+        public double? kebutuhan { get; set; }
+        public DateTime? updated_at { get; set; } = FormatHelper.ConvertToGmtPlus7FromLocal(DateTime.Now);
+
+    }
 }

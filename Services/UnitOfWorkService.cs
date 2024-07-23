@@ -6,17 +6,21 @@ namespace IrigasiManganti.Services
     {
         public UnitOfWorkService(
             IAuthService authService,
-            ICsvService csvService
+            ICsvService csvService,
+            IKebutuhanService kebutuhanService
            
         )
         {
             Auths = authService;
             Csvs = csvService;
-           
+            Kebutuhan = kebutuhanService;
+
+
         }
 
         public IAuthService Auths { get; }
         public ICsvService Csvs { get; }
+        public IKebutuhanService Kebutuhan { get; }
         
     }
 }

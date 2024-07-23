@@ -90,6 +90,24 @@ namespace IrigasiManganti.Helpers
             }
         }
 
+        public static int TotalDays(string dateString)
+        {
+
+            int bulan = int.Parse(dateString.Split("-")[1]);
+            int tahun = int.Parse(dateString.Split("-")[0]);
+
+            if(bulan < 10){
+                dateString = $"{tahun}-0{bulan}";   
+            }
+
+            // Parse the string to DateTime
+            DateTime date = DateTime.ParseExact(dateString, "yyyy-MM", null);
+
+            // Determine the number of days in the month
+            int daysInMonth = DateTime.DaysInMonth(date.Year, date.Month);
+
+            return daysInMonth;
+        }
         public static DateTime ConvertToGmtPlus7FromLocal(DateTime localDateTime)
         {
             // Convert local time to UTC

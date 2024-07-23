@@ -1,10 +1,12 @@
 
 using System.ComponentModel;
 using IrigasiManganti.Interfaces;
+using IrigasiManganti.Jobs;
 using IrigasiManganti.Models.Customs;
 using IrigasiManganti.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace IrigasiManganti.Controllers.Api
@@ -15,10 +17,13 @@ namespace IrigasiManganti.Controllers.Api
     public class MasterDataApiController : ControllerBase
     {
         private readonly IUnitOfWorkRepository _repository;
+        private readonly IKebutuhanJob _job;
+       
 
-        public MasterDataApiController(IUnitOfWorkRepository repository)
+        public MasterDataApiController(IUnitOfWorkRepository repository, IKebutuhanJob job)
         {
             this._repository = repository;
+            this._job = job;
         }
 
         [HttpGet]
@@ -65,7 +70,6 @@ namespace IrigasiManganti.Controllers.Api
                 result.MetaData.Message = ex.Message;
                 return BadRequest(result);
             }
-
 
         }
     }

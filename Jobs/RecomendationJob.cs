@@ -28,7 +28,7 @@ namespace IrigasiManganti.Jobs
                 
                 // check if data recomendation is empty
                 if (table.Rows.Count == 0) return;
-
+              
                 foreach (DataRow row in table.Rows)
                 {
                     var modelData = new List<VMRecomendation>();
@@ -48,7 +48,7 @@ namespace IrigasiManganti.Jobs
                         if (index > 5)
                         {
                             string columnName = column.ColumnName;
-                            string format = "dd-MMM-yy";
+                            string format = "dd-MMM-yyyy";
                             DateTime dateTime = DateTime.ParseExact(columnName, format, CultureInfo.InvariantCulture);
                             DateOnly dateOnly = DateOnly.FromDateTime(dateTime);
                             var valueStr = row[column] ?? null;
@@ -79,6 +79,7 @@ namespace IrigasiManganti.Jobs
                     }
 
                     _backgroundJobClient.Enqueue(() => _repository.RecomendationRepositories.SaveRecomendationDataAsync(modelData, filePath, null));
+
                 }
                 
             }

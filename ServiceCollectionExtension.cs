@@ -17,6 +17,7 @@ namespace IrigasiManganti
             #region ========== [ Register Services ] ==========
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICsvService, CsvService>();
+            services.AddScoped<IKebutuhanService, KebutuhanService>();
             #endregion
 
             #region ========== [ Register Repositories ] ==========
@@ -33,6 +34,7 @@ namespace IrigasiManganti
             #region ========== [ Register Jobs ] ==========
             services.AddScoped<IReRecomendationJob, RecomendationJob>();
             services.AddScoped<IKetersediaanJob, KetersediaanJob>();
+            services.AddScoped<IKebutuhanJob, KebutuhanJob>();
             #endregion
         }
     }
