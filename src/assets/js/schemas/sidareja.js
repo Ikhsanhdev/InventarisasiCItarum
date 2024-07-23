@@ -1,5 +1,5 @@
 "use strict";
-
+console.log("test");
 const whiteBasemap = L.tileLayer('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwAB/3cwcakAAAAASUVORK5CYII=');
 
 const map = L.map('map', {
@@ -605,7 +605,7 @@ var SkemaSidareja = (function () {
 
       // Set BTr. 6
       const linePtTr6 = [btr6Point, [btr6Point[0] - 0.06, btr6Point[1]]];
-      generateBoxPetak('f199f0d7-6f13-46bf-85f8-8d1f83d4fb65', 'Pt. Tr. 6', linePtTr6, 'bottom');
+      generateBoxPetak('f199f0d7-6f13-46bf-85f8-8d1f83d4fb65', 'Pt. Tr. 6 cik', linePtTr6, 'bottom');
 
       const linePtTr6Kr = [btr6Point, [btr6Point[0], btr6Point[1] + 0.06]];
       generateBoxPetak('564531c7-761f-479f-b94d-d9e85affee3a', 'Pt. Tr. 6-Kr', linePtTr6Kr, 'right');
@@ -993,7 +993,7 @@ function generateBoxPetak(petakId, petakName, lineCoords, position, golongan) {
   const linePetak = L.polyline(lineCoords, { color: 'black', weight: 1 }).addTo(map);
 
   const tooltipContent = `
-    <div class="box-petak golongan-a">
+    <div class="box-petak golongan-a" id="${petakId}-petak">
         <table id="petak-${petakId}">
           <thead>
             <tr>
@@ -1069,11 +1069,13 @@ function getSchemaData(tanggal) {
     let result = res.data
     if (result.metaData.code == 200) {
       var luas = 'A= <strong>-</strong>';
-      var debit_kebutuhan = 'QK= <strong>-</strong>';
+      var debit_kebutuhan = 'K= <strong>-</strong>';
       var debit_aktual = 'QA= <strong>-</strong>';
       var debit_rekomendasi = 'QR= <strong>-</strong>';
+      console.log(result.response);
       $.each(result.response, function (key, data) {
         if(data.luas != null) {
+          console.log(data.debit_kebutuhan);
           luas = `A= ${formatNumber(data.luas)} Ha`;
         }
 
@@ -1089,19 +1091,28 @@ function getSchemaData(tanggal) {
           debit_rekomendasi = `QR= ${formatNumber(data.debit_rekomendasi)} lt/dt`;
         }
 
-        $('.box-petak tbody').html(`
-          <tr>
-            <td class="luas-petak">
-              ${luas}
-            </td>
-            <td>
-              <span class="debit-kebutuhan text-dark">${debit_kebutuhan}</span>
-              </br>
-              <span class="debit-aktual text-primary">${debit_aktual}</span>
-              </br>
-              <span class="debit-rekomendasi text-warning">${debit_rekomendasi}</span>
-            </td>
-          </tr>
+        $(`#${data.id}-petak`).html(`
+          <table id="petak-${data.id}">
+            <thead>
+              <tr>
+                <th class="text-center" colspan="2">${data.nama_petak}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="luas-petak">
+                  ${luas}
+                </td>
+                <td>
+                  <span class="debit-kebutuhan text-dark">${debit_kebutuhan}</span>
+                  </br>
+                  <span class="debit-aktual text-primary">${debit_aktual}</span>
+                  </br>
+                  <span class="debit-rekomendasi text-warning">${debit_rekomendasi}</span>
+                </td>
+              </tr>
+            <tbody>
+          </table>
         `);
       });    
       enableElements();                
