@@ -118,6 +118,7 @@ public partial class IrigasiMangantiContext : DbContext
     public virtual DbSet<WqmsLastReading> WqmsLastReadings { get; set; }
     public virtual DbSet<ForecastKetersediaan> ForecastKetersediaans { get; set; }
     public virtual DbSet<Skema> Skemas { get; set; }
+    public virtual DbSet<MasterPetak> MasterPetaks { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Name=ConnectionStrings:DefaultConnection");
@@ -1540,6 +1541,21 @@ public partial class IrigasiMangantiContext : DbContext
             entity.Property(e => e.IconUrl).HasColumnName("iconUrl");
             entity.Property(e => e.Lokasi).HasColumnName("lokasi");
             entity.Property(e => e.Type).HasColumnName("type");
+        });
+
+        modelBuilder.Entity<MasterPetak>(entity => {
+            entity.ToTable("petak");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("id");
+
+            entity.Property(e => e.NamaPetak).HasColumnName("nama_petak");
+            entity.Property(e => e.JenisBangunan).HasColumnName("jenis_bangunan");
+            entity.Property(e => e.Luas).HasColumnType("double precision").HasColumnName("luas");
+            // entity.Property(e => e.BangunanId).HasColumnName("bangunan_id");
+            entity.Property(e => e.DebitKebutuhan).HasColumnType("double precision").HasColumnName("debit_kebutuhan");
+            entity.Property(e => e.Location).HasColumnName("location");
         });
 
         modelBuilder.HasSequence("brand_code_seq");

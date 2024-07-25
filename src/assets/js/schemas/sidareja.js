@@ -116,6 +116,10 @@ var SkemaSidareja = (function () {
                     <td><span style="vertical-align: middle;">Golongan C</span></td>
                   </tr>
                   <tr>
+                    <td class="text-center fw-bold">A</td>
+                    <td>Luas Petak</td>
+                  </tr>
+                  <tr>
                     <td class="text-center fw-bold">QK</td>
                     <td>Debit Kebutuhan</td>
                   </tr>
@@ -125,7 +129,8 @@ var SkemaSidareja = (function () {
                   </tr>
                   <tr>
                     <td class="text-center text-warning fw-bold">QR</td>
-                    <td>Debit Rekomendasi</td>
+                    <td>Debit Rekomendasi
+                    (Hasil Model AI)</td>
                   </tr>
                 </tbody>
               </table>
@@ -502,7 +507,7 @@ var SkemaSidareja = (function () {
       generateBangunanSadap('BCk. Kn14', 'centerleft', lineBckKn14, 0);
 
       const linePtCk13Kn = [bckkn13Point, [bckkn13Point[0], bckkn13Point[1] - 0.04]];
-      generateBoxPetak('dddcf36e-809a-4ef0-b1af-1a463f8cb2ac', 'Pt. CK. 13-Kn', linePtCk13Kn, 'left');
+      generateBoxPetak('2720ee3e-519b-47cc-8559-3c50dd860f90', 'Pt. CK. 13-Kn', linePtCk13Kn, 'left');
 
       const lineBckKn13 = [
         bck10Point, 
@@ -1064,30 +1069,30 @@ function enableElements() {
 
 function getSchemaData(tanggal) {
   disableElements();
-  $('.box-petak tbody').html(`<tr><td class="text-center" colspan="2"><img src="/images/loading.gif" /></td></tr>`);
+  // $('.box-petak tbody').html(`<tr><td class="text-center" colspan="2"><img src="/images/loading.gif" /></td></tr>`);
   getData(`/Schema/GetSchemaDataByDate/${tanggal}`).then(res => {
-    let result = res.data
+    let result = res.data;
+
     if (result.metaData.code == 200) {
-      var luas = 'A= <strong>-</strong>';
-      var debit_kebutuhan = 'K= <strong>-</strong>';
-      var debit_aktual = 'QA= <strong>-</strong>';
-      var debit_rekomendasi = 'QR= <strong>-</strong>';
-      console.log(result.response);
       $.each(result.response, function (key, data) {
-        if(data.luas != null) {
-          console.log(data.debit_kebutuhan);
+        var luas = 'A= <strong>-</strong>';
+        var debit_kebutuhan = 'QK= <strong>-</strong>';
+        var debit_aktual = 'QA= <strong>-</strong>';
+        var debit_rekomendasi = 'QR= <strong>-</strong>';
+
+        if (data.luas != null) {
           luas = `A= ${formatNumber(data.luas)} Ha`;
         }
 
-        if(data.debit_kebutuhan != null) {
+        if (data.debit_kebutuhan != null) {
           debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} lt/dt`;
         }
 
-        if(data.debit_aktual != null) {
+        if (data.debit_aktual != null) {
           debit_aktual = `QA= ${formatNumber(data.debit_aktual)} lt/dt`;
         }
 
-        if(data.debit_rekomendasi != null) {
+        if (data.debit_rekomendasi != null) {
           debit_rekomendasi = `QR= ${formatNumber(data.debit_rekomendasi)} lt/dt`;
         }
 
@@ -1114,16 +1119,17 @@ function getSchemaData(tanggal) {
             <tbody>
           </table>
         `);
-      });    
-      enableElements();                
+      });
+
+      enableElements();
     }
   }).catch(err => {
     enableElements();
-    let error = err.response.data
-    if(!error.success) {
-        console.log(error.message)
+    let error = err.response.data;
+    if (!error.success) {
+      console.log(error.message);
     }
-  })
+  });
 }
 
 function formatNumber(value) {
