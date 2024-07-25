@@ -9,7 +9,7 @@ using Serilog;
 
 namespace IrigasiManganti.Controllers.Api
 {
-    [ApiExplorerSettings(IgnoreApi = true)]
+    [ApiExplorerSettings(IgnoreApi = false)]
     [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     [ApiController]
     public class RecomendationApiController : ControllerBase

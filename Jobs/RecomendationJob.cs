@@ -33,45 +33,76 @@ namespace IrigasiManganti.Jobs
                 {
                     var modelData = new List<VMRecomendation>();
                     string petakName = "";
+                    string petakNameCol1 = "";
                     Guid petak_id = Guid.Empty;
                     int index = 0;
                     foreach (DataColumn column in table.Columns)
                     {
+                        
+                        if (index == 1){
+                            petakNameCol1 = row[column].ToString() ?? "";
+                        }
+
                         if (index == 3)
                         {
                             petakName = row[column].ToString() ?? "";
+                            
+                            if(string.IsNullOrEmpty(petakName)){
+                                petakName = petakNameCol1;
+                            }
+
                             if (!string.IsNullOrEmpty(petakName))
                             {
                                 petak_id = _repository.RecomendationRepositories.GetPetakIdByPetakForecastName(petakName) ?? Guid.Empty;
+
                             }
                         }
                         if (index > 5)
                         {
                             string columnName = column.ColumnName;
-                            string format = "dd-MMM-yyyy";
-                            DateTime dateTime = DateTime.ParseExact(columnName, format, CultureInfo.InvariantCulture);
-                            DateOnly dateOnly = DateOnly.FromDateTime(dateTime);
-                            var valueStr = row[column] ?? null;
-                            double? value = null;
-                            if (valueStr != null && valueStr != "")
+                            // string format = "dd-MMM-yyyy";
+                            // DateTime dateTime = DateTime.ParseExact(columnName, format, CultureInfo.InvariantCulture);
+                            // DateOnly dateOnly = DateOnly.FromDateTime(dateTime);
+
+                            /* Tambahan */
+                            string[] formats = { "dd/MM/yyyy", "dd-MMM-yyyy", "yyyy-MM-dd" }; // Array format
+                            DateTime dateTime;
+                            DateOnly dateOnly;
+
+                            // Mencoba untuk mem-parse dengan beberapa format
+                            if (DateTime.TryParseExact(columnName, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
                             {
-                                if (valueStr.ToString().Contains(","))
+                                DateOnly dateOnlyTemp = DateOnly.FromDateTime(dateTime);
+                                dateOnly = dateOnlyTemp;
+                                Console.WriteLine($"Parsed date: {dateOnlyTemp}");
+
+                                var valueStr = row[column] ?? null;
+                                double? value = null;
+                                if (valueStr != null && valueStr != "")
                                 {
-                                    value = double.Parse(valueStr.ToString().Replace(",", "."));
+                                    if (valueStr.ToString().Contains(","))
+                                    {
+                                        value = double.Parse(valueStr.ToString().Replace(",", "."));
+                                    }
+                                    else
+                                    {
+                                        value = double.Parse(valueStr.ToString());
+                                    }
                                 }
-                                else
+
+                                modelData.Add(new VMRecomendation
                                 {
-                                    value = double.Parse(valueStr.ToString());
-                                }
+                                    id_petak = petak_id,
+                                    debit_rekomendasi = value,
+                                    tanggal = dateOnly,
+
+                                });
+
                             }
-
-                            modelData.Add(new VMRecomendation
+                            else
                             {
-                                id_petak = petak_id,
-                                debit_rekomendasi = value,
-                                tanggal = dateOnly,
-
-                            });
+                                Console.WriteLine("Unable to parse the date.");
+                            }
 
                         }
 
