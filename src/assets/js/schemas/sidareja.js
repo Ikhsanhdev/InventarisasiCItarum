@@ -1,5 +1,5 @@
 "use strict";
-
+console.log("test");
 const whiteBasemap = L.tileLayer('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwAB/3cwcakAAAAASUVORK5CYII=');
 
 const map = L.map('map', {
@@ -116,6 +116,10 @@ var SkemaSidareja = (function () {
                     <td><span style="vertical-align: middle;">Golongan C</span></td>
                   </tr>
                   <tr>
+                    <td class="text-center fw-bold">A</td>
+                    <td>Luas Petak</td>
+                  </tr>
+                  <tr>
                     <td class="text-center fw-bold">QK</td>
                     <td>Debit Kebutuhan</td>
                   </tr>
@@ -125,7 +129,8 @@ var SkemaSidareja = (function () {
                   </tr>
                   <tr>
                     <td class="text-center text-warning fw-bold">QR</td>
-                    <td>Debit Rekomendasi</td>
+                    <td>Debit Rekomendasi
+                    (Hasil Model AI)</td>
                   </tr>
                 </tbody>
               </table>
@@ -502,7 +507,7 @@ var SkemaSidareja = (function () {
       generateBangunanSadap('BCk. Kn14', 'centerleft', lineBckKn14, 0);
 
       const linePtCk13Kn = [bckkn13Point, [bckkn13Point[0], bckkn13Point[1] - 0.04]];
-      generateBoxPetak('dddcf36e-809a-4ef0-b1af-1a463f8cb2ac', 'Pt. CK. 13-Kn', linePtCk13Kn, 'left');
+      generateBoxPetak('2720ee3e-519b-47cc-8559-3c50dd860f90', 'Pt. CK. 13-Kn', linePtCk13Kn, 'left');
 
       const lineBckKn13 = [
         bck10Point, 
@@ -605,7 +610,7 @@ var SkemaSidareja = (function () {
 
       // Set BTr. 6
       const linePtTr6 = [btr6Point, [btr6Point[0] - 0.06, btr6Point[1]]];
-      generateBoxPetak('f199f0d7-6f13-46bf-85f8-8d1f83d4fb65', 'Pt. Tr. 6', linePtTr6, 'bottom');
+      generateBoxPetak('f199f0d7-6f13-46bf-85f8-8d1f83d4fb65', 'Pt. Tr. 6 cik', linePtTr6, 'bottom');
 
       const linePtTr6Kr = [btr6Point, [btr6Point[0], btr6Point[1] + 0.06]];
       generateBoxPetak('564531c7-761f-479f-b94d-d9e85affee3a', 'Pt. Tr. 6-Kr', linePtTr6Kr, 'right');
@@ -993,7 +998,7 @@ function generateBoxPetak(petakId, petakName, lineCoords, position, golongan) {
   const linePetak = L.polyline(lineCoords, { color: 'black', weight: 1 }).addTo(map);
 
   const tooltipContent = `
-    <div class="box-petak golongan-a">
+    <div class="box-petak golongan-a" id="${petakId}-petak">
         <table id="petak-${petakId}">
           <thead>
             <tr>
@@ -1064,55 +1069,67 @@ function enableElements() {
 
 function getSchemaData(tanggal) {
   disableElements();
-  $('.box-petak tbody').html(`<tr><td class="text-center" colspan="2"><img src="/images/loading.gif" /></td></tr>`);
+  // $('.box-petak tbody').html(`<tr><td class="text-center" colspan="2"><img src="/images/loading.gif" /></td></tr>`);
   getData(`/Schema/GetSchemaDataByDate/${tanggal}`).then(res => {
-    let result = res.data
+    let result = res.data;
+
     if (result.metaData.code == 200) {
-      var luas = 'A= <strong>-</strong>';
-      var debit_kebutuhan = 'QK= <strong>-</strong>';
-      var debit_aktual = 'QA= <strong>-</strong>';
-      var debit_rekomendasi = 'QR= <strong>-</strong>';
       $.each(result.response, function (key, data) {
-        if(data.luas != null) {
+        var luas = 'A= <strong>-</strong>';
+        var debit_kebutuhan = 'QK= <strong>-</strong>';
+        var debit_aktual = 'QA= <strong>-</strong>';
+        var debit_rekomendasi = 'QR= <strong>-</strong>';
+
+        if (data.luas != null) {
           luas = `A= ${formatNumber(data.luas)} Ha`;
         }
 
-        if(data.debit_kebutuhan != null) {
+        if (data.debit_kebutuhan != null) {
           debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} lt/dt`;
         }
 
-        if(data.debit_aktual != null) {
+        if (data.debit_aktual != null) {
           debit_aktual = `QA= ${formatNumber(data.debit_aktual)} lt/dt`;
         }
 
-        if(data.debit_rekomendasi != null) {
+        if (data.debit_rekomendasi != null) {
           debit_rekomendasi = `QR= ${formatNumber(data.debit_rekomendasi)} lt/dt`;
         }
 
-        $('.box-petak tbody').html(`
-          <tr>
-            <td class="luas-petak">
-              ${luas}
-            </td>
-            <td>
-              <span class="debit-kebutuhan text-dark">${debit_kebutuhan}</span>
-              </br>
-              <span class="debit-aktual text-primary">${debit_aktual}</span>
-              </br>
-              <span class="debit-rekomendasi text-warning">${debit_rekomendasi}</span>
-            </td>
-          </tr>
+        $(`#${data.id}-petak`).html(`
+          <table id="petak-${data.id}">
+            <thead>
+              <tr>
+                <th class="text-center" colspan="2">${data.nama_petak}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="luas-petak">
+                  ${luas}
+                </td>
+                <td>
+                  <span class="debit-kebutuhan text-dark">${debit_kebutuhan}</span>
+                  </br>
+                  <span class="debit-aktual text-primary">${debit_aktual}</span>
+                  </br>
+                  <span class="debit-rekomendasi text-warning">${debit_rekomendasi}</span>
+                </td>
+              </tr>
+            <tbody>
+          </table>
         `);
-      });    
-      enableElements();                
+      });
+
+      enableElements();
     }
   }).catch(err => {
     enableElements();
-    let error = err.response.data
-    if(!error.success) {
-        console.log(error.message)
+    let error = err.response.data;
+    if (!error.success) {
+      console.log(error.message);
     }
-  })
+  });
 }
 
 function formatNumber(value) {
