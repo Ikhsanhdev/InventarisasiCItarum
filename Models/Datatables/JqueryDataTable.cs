@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic;
+
 namespace IrigasiManganti.Models.Datatables
 {
     public class JqueryDataTableRequest
@@ -27,5 +29,11 @@ namespace IrigasiManganti.Models.Datatables
         public string? RangeDate { get; set; }
 
 
+    }
+
+    public class JqueryDataTableRequestKebutuhan : JqueryDataTableRequest{
+        public int Year { get; set; } = DateAndTime.Now.Year;
+        public int Month { get; set; } = DateAndTime.Now.Month;
+        public int Periode { get; set; } = DateAndTime.Now.Day < 16 ? 1 : 2;
     }
 }
