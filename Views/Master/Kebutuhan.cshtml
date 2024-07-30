@@ -1,0 +1,183 @@
+@{
+    Layout = "~/Views/Shared/_LayoutNavbarOnly.cshtml";
+    ViewData["Title"] = "Master Data Petak";
+}
+
+@section styles {
+    <link href="~/lib/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+}
+
+<div class="content">
+    <!-- Start Content-->
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+                            <li class="breadcrumb-item active">Master Data Ketersediaan</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">Master Data Ketersediaan</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-end">
+                        <button id="btn-sync-smopi" type="button" class="btn btn-success  waves-effect waves-light">
+                            Sinkronsisasi Data SMOPI
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                
+                    <ul class="nav nav-tabs nav-bordered nav-justified">
+                        <li class="nav-item">
+                            <a href="#home-b2" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
+                                DATA KETERSEDIAAN
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#profile-b2" data-bs-toggle="tab" aria-expanded="true" class="nav-link ">
+                                DATA KEBUTUHAN SMOPI
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home-b2">
+                            <div class="row mb-2">
+                                <div class="col-lg-6">
+                                    <div class="d-flex flex-wrap align-items-center">
+                                        <label for="length-kebutuhan-table" class="me-2">Show</label>
+                                        <div class="me-2">
+                                            <select class="form-select form-select-sm rounded-pill my-1 my-lg-0"
+                                                id="length-kebutuhan-table">
+                                                <option selected>10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="-1">All</option>
+                                            </select>
+                                        </div>
+                                        <label for="length-petak-table" class="me-3">Entries</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="d-flex flex-wrap align-items-center float-end">
+                                        <div class="row ">
+                                            <div class="col-7 col-xl-7">
+                                                <input type="text" id="month-year" name="month-year"
+                                                    class="form-control"     placeholder="Pilih bulan-tahun"
+                                                    autocomplete="false">
+                                            </div>
+                                            <div class="col-5 col-xl-5">
+                                                <select class="form-control" id="periode" name="periode" width="100%">
+                                                    <option value="" disabled selected>Pilih periode</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                </select>
+                                            </div>
+                                            <input type="hidden" id="year">
+                                            <input type="hidden" id="month">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="table-responsive">
+                                <table
+                                    class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100"
+                                    id="table-kebutuhan-db">
+                                    <thead class="bg-blue text-white">
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>Periode</th>
+                                            <th>Ketersedian Minimal <small class="text-light">(lt/d)</small></th>
+                                            <th>Ketersedian Maksimal <small class="text-light">(lt/d)</small></th>
+                                            <th>Ketersedian Rata-Rata <small class="text-light">(lt/d)</small></th>
+                                            <th>Kebutuhan <small class="text-light">(lt/d)</small></th>
+                                            <th>Update terakhir</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="profile-b2">
+                            <div class="table-responsive">
+                                <table
+                                    class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100"
+                                    id="table-smopi">
+                                    <thead class="bg-blue text-white">
+                                        <tr>
+                                            
+                                            <th>Nama Rentang</th>
+                                            <th>Tahun</th>
+                                            <th>Bulan</th>
+                                            <th>Periode</th>
+                                            <th>Kebutuhan Air (lt/d)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end card-->
+        </div> <!-- end col -->
+    </div>
+    <!-- end row -->
+
+        
+
+    </div> <!-- container -->
+
+</div> <!-- content -->
+
+<!-- Modal Create Edit -->
+<div id="modalCreateEditPetak" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="modalLabelUser" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div><!-- /.modal -->
+
+@section scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/lib/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/lib/parsleyjs/parsley.min.js"></script>
+    <script src="~/lib/moment/min/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/id.min.js"
+        integrity="sha512-he8U4ic6kf3kustvJfiERUpojM8barHoz0WYpAUDWQVn61efpm3aVAD8RWL8OloaDDzMZ1gZiubF9OSdYBqHfQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.id.min.js"></script>
+    <script src="~/js/pages/master.min.js"></script>
+}

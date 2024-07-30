@@ -12,6 +12,7 @@ namespace IrigasiManganti.Services
 {
     public interface IKebutuhanService{
         Task<List<VMKebutuhanSmopi>> GetKebutuhanSmopiAsync();
+        Task<List<VMKebutuhan>> GetDataFromApiSmopi();
     }
     public class KebutuhanService : IKebutuhanService
     {
@@ -71,7 +72,7 @@ namespace IrigasiManganti.Services
 
             return result;
         }
-        private async Task<List<VMKebutuhan>> GetDataFromApiSmopi(){
+        public async Task<List<VMKebutuhan>> GetDataFromApiSmopi(){
             try
             {
                 HttpResponseMessage response = await client.GetAsync("http://smopi.info/index.php?r=Api/kebAir");

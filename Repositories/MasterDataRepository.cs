@@ -17,6 +17,7 @@ namespace IrigasiManganti.Repositories
         Task<IEnumerable<dynamic>> GetDataDebitBendung(VMDateRange range);
         Task<IEnumerable<dynamic>> GetDataDebitIrigasi(VMDateRange range);
         Task<(IReadOnlyList<dynamic>, int)> GetDataPetak(JqueryDataTableRequest request);
+        Task<(IReadOnlyList<dynamic>, int)> GetDataKebutuhan(JqueryDataTableRequestKebutuhan request);
         Task<(int code, string message)> DeletePetak(Guid id);
         MasterPetak? GetDataPetakById(Guid id);
         Task<(int, string)> SavePetak(MasterPetak model);
@@ -292,6 +293,97 @@ namespace IrigasiManganti.Repositories
                 {
                     
                 }
+            }
+        }
+
+        public async Task<(IReadOnlyList<dynamic>, int)> GetDataKebutuhan(JqueryDataTableRequestKebutuhan request)
+        {
+            try
+            {
+                using var connection = new NpgsqlConnection(_connectionString);
+                List<dynamic> result = new List<dynamic>();
+
+                var query = @"
+                    SELECT
+                        * 
+                    FROM
+                        (
+                        SELECT
+                            tanggal :: DATE,
+                            EXTRACT ( YEAR FROM tanggal ) :: INTEGER AS tahun,
+                            EXTRACT ( MONTH FROM tanggal ) :: INTEGER AS bulan,
+                        CASE
+                            WHEN EXTRACT ( DAY FROM tanggal ) < 16 THEN
+                            1 ELSE 2 
+                        END AS periode,
+                        ketersediaan_min,
+                        ketersediaan_max,
+                        ketersediaan_avg,
+                        kebutuhan,
+                        updated_at 
+                        FROM
+                            ""debit_bendung"" 
+                        ORDER BY tanggal
+                        ) AS data_kebutuhan 
+                    WHERE
+                        tahun = @Tahun
+                        AND bulan = @Bulan 
+                        AND periode = @Periode";
+
+                var parameters = new DynamicParameters();
+                var whereConditions = new List<string>();
+
+                parameters.Add("Tahun", request.Year);
+                parameters.Add("Bulan", request.Month);
+                parameters.Add("Periode", request.Periode);
+
+                if (!string.IsNullOrEmpty(request.SearchValue))
+                {
+                    if (request.SearchValue.Contains('\''))
+                    {
+                        request.SearchValue = request.SearchValue.Replace("'", "''");
+                    }
+
+                    if (request.SearchValue.Contains('['))
+                    {
+                        request.SearchValue = request.SearchValue.Replace("[", "''");
+                    }
+
+                    whereConditions.Add(@"
+                    (LOWER(tanggal) LIKE @SearchValue OR
+                    LOWER(tahun) LIKE @SearchValue OR
+                    LOWER(bulan) LIKE @SearchValue OR
+                    LOWER(periode) LIKE @SearchValue 
+                   ");
+                    parameters.Add("@SearchValue", "%" + request.SearchValue.ToLower() + "%");
+                }
+
+                var whereClause = whereConditions.Count > 0 ? "WHERE " + string.Join(" AND ", whereConditions) : "";
+
+                query += whereClause;
+
+                int total = 0;
+                var sql_count = $"SELECT COUNT(*) FROM ({query}) as total";
+                total = connection.ExecuteScalar<int>(sql_count, parameters);
+
+                query += @" 
+                OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY;";
+                parameters.Add("@Skip", request.Skip);
+                parameters.Add("@PageSize", request.PageSize);
+
+                result = (await connection.QueryAsync<dynamic>(query, parameters)).ToList();
+
+                return (result, total);
+            }
+            catch (Npgsql.NpgsqlException ex)
+            {
+                Log.Error(ex, "Sql Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
+                throw;
+            }
+            catch (System.Exception ex)
+            {
+                Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
+                throw;
             }
         }
     }
