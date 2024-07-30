@@ -7,12 +7,9 @@ using IrigasiManganti.Models.Datatables;
 using IrigasiManganti.Helpers;
 using IrigasiManganti.Models.Customs;
 using Serilog;
-<<<<<<< HEAD
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
-=======
 using IrigasiManganti.Jobs;
->>>>>>> 19ce2ecbab7c82bbf9dfe7e6264481c0ea0e5a9d
 
 namespace IrigasiManganti.Controllers {
     public class MasterController : BaseController {
