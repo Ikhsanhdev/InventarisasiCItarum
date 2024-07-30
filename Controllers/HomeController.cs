@@ -5,9 +5,13 @@ using IrigasiManganti.Models.Datatables;
 using Serilog;
 
 using HtmlAgilityPack;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace IrigasiManganti.Controllers
 {
+    // [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class HomeController : BaseController
     {
         private readonly IUnitOfWorkRepository _unitOfWorkRepository;

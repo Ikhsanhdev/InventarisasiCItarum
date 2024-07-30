@@ -1,4 +1,9 @@
 @using IrigasiManganti.Helpers;
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
 
 @{ 
     var currentController = ViewContext.RouteData.Values["controller"].ToString();
@@ -393,7 +398,8 @@
                     </li>
                 </ul>
                 <ul class="list-unstyled topnav-menu float-end mb-0">
-                    @if (!string.IsNullOrEmpty(ClaimIdentity.Name))
+                    @* @if (!string.IsNullOrEmpty(ClaimIdentity.Name)) *@
+                    @if(User.Identity.IsAuthenticated)
                     {
                         <li class="dropdown notification-list topbar-dropdown">
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light"
@@ -453,10 +459,10 @@
                     }
                     else
                     {
-                        @* <li>
+                        <li>
                             <a href="/Account/Login" class="nav-link waves-effect waves-light m-0" aria-haspopup="false"
                                 aria-expanded="false">LOGIN <i class="mdi mdi-login"></i></a>
-                        </li> *@
+                        </li>
                     }
 
                     <li class="d-none d-xl-block">

@@ -24,13 +24,14 @@ namespace IrigasiManganti.Controllers
             _unitOfWorkRepository = unitOfWorkRepository;
         }
 
+        [HttpGet]
         public IActionResult Login()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
 
             if (claimUser?.Identity?.IsAuthenticated == true)
             {
-                return RedirectToAction("Index", "Home");
+                return Redirect("/");
             }
 
             return View();
@@ -48,22 +49,37 @@ namespace IrigasiManganti.Controllers
                 if (result.MetaData.Code == 200 && result.Response is User user)
                 {
                     var userClaims = new List<Claim>()
-                {
-                    new Claim("Username", result.Response.Username),
-                    new Claim("UserId", result.Response.Id.ToString()),
-                    new Claim("Name", result.Response.Name),
-                    new Claim("IPAddress", HttpContext.Connection.RemoteIpAddress?.ToString() ?? ""),
-                    new Claim("Email", result.Response.Email ?? ""),
-                    new Claim("LoginDate", DateTime.Now.ToString("yyyy-MM-dd H:mm:ss"))
-                };
+                    {
+                        // new Claim("Username", result.Response.Username),
+                        // new Claim("UserId", result.Response.Id.ToString()),
+                        // new Claim("Name", result.Response.Name),
+                        // new Claim("IPAddress", HttpContext.Connection.RemoteIpAddress?.ToString() ?? ""),
+                        // new Claim("Email", result.Response.Email ?? ""),
+                        // new Claim("LoginDate", DateTime.Now.ToString("yyyy-MM-dd H:mm:ss"))
+                        new Claim(ClaimTypes.Name, user.Username),
+                        new Claim("UserId", user.Id.ToString()),
+                        new Claim("Name", user.Name),
+                        new Claim("IPAddress", HttpContext.Connection.RemoteIpAddress?.ToString() ?? ""),
+                        new Claim(ClaimTypes.Email, user.Email ?? ""),
+                        new Claim("LoginDate", DateTime.Now.ToString("yyyy-MM-dd H:mm:ss"))
+                    };
 
-                    CookieOptions options = new CookieOptions();
+                    // CookieOptions options = new CookieOptions();
                     // options.Expires = DateTime.Now.AddHours(5);
 
-                    var grandmaIdentity = new ClaimsIdentity(userClaims, "IrigasiMangantiCookiesAuth");
+                    // var grandmaIdentity = new ClaimsIdentity(userClaims, "IrigasiMangantiCookiesAuth");
+                    var grandmaIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var userPrincipal = new ClaimsPrincipal(new[] { grandmaIdentity });
-                    await HttpContext.SignInAsync(userPrincipal);
+                    Console.WriteLine("after use pricipal");
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal);  
+                    Console.WriteLine("after await");
                 }
+            }  catch (InvalidOperationException invOpEx)
+            {
+                Console.WriteLine("InvalidOperationException: " + invOpEx.Message);
+                Log.Error(invOpEx, "Invalid Operation Exception: {@ExceptionDetails}", new { invOpEx.Message, invOpEx.StackTrace });
+                result.MetaData.Code = 500;
+                result.MetaData.Message = "Sorry, something went wrong. Please try again later or contact administrator.";
             }
             catch (Exception ex)
             {
@@ -85,7 +101,7 @@ namespace IrigasiManganti.Controllers
                 Response.Cookies.Delete(cookie);
             }
 
-            await HttpContext.SignOutAsync();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
 

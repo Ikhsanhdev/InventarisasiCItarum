@@ -7,6 +7,8 @@ using IrigasiManganti.Models.Datatables;
 using IrigasiManganti.Helpers;
 using IrigasiManganti.Models.Customs;
 using Serilog;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace IrigasiManganti.Controllers {
     public class MasterController : BaseController {
@@ -17,7 +19,10 @@ namespace IrigasiManganti.Controllers {
             _unitOfWorkRepository = unitOfWorkRepository;
         }
 
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult Petak() {
+            ClaimsPrincipal claimUser = HttpContext.User;
+            Console.WriteLine(claimUser?.Identity?.IsAuthenticated);
             return View();
         }
 

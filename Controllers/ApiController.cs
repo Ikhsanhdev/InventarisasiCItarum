@@ -12,10 +12,12 @@ using Dapper;
 using IrigasiManganti.Interfaces;
 using IrigasiManganti.Services;
 using IrigasiManganti.Models.Customs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IrigasiManganti.Controllers
 {
     [ApiController]
+    [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     [Route("api/[controller]")]
     public class ApiController : Controller
     {

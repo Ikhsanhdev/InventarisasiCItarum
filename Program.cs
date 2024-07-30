@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using IrigasiManganti.Jobs;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace IrigasiManganti
 {
@@ -35,15 +36,16 @@ namespace IrigasiManganti
             // Injecting Services Dependency.
             builder.Services.RegisterServices();
 
-            builder.Services.AddAuthorization();
-            builder.Services.AddAuthentication("CookieAuthentication")
-            .AddCookie("CookieAuthentication", options =>
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
             {
                 options.Cookie.Name = "IrigasiMangantiCookiesAuth";
                 options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.ExpireTimeSpan = TimeSpan.FromHours(6);
             });
+
+            builder.Services.AddAuthorization();
 
             builder.Services.AddHttpContextAccessor();
 

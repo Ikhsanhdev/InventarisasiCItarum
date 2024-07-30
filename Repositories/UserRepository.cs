@@ -31,11 +31,7 @@ namespace IrigasiManganti.Repositories
 
             try
             {
-                var query = @$"
-                    SELECT ""Users"".* FROM ""Users"" 
-                    JOIN ""OrganizationHasUsers"" ON ""Users"".""Id"" = ""OrganizationHasUsers"".""UserId"" AND ""OrganizationHasUsers"".""OrganizationCode"" = @OrganizationCode 
-                    WHERE ""Username"" = @Username AND ""RoleCode"" = 'R002'
-                    LIMIT 1";
+                var query = @$"SELECT * FROM users WHERE username = @Username LIMIT 1";
                 var result = await _db.QueryFirstOrDefaultAsync<User>(query, new { Username = username, OrganizationCode = organizationCode });
                 return result;
             }

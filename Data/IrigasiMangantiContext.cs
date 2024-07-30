@@ -352,36 +352,36 @@ public partial class IrigasiMangantiContext : DbContext
                 .HasConstraintName("fk_cctvs_organization_code");
         });
 
-        modelBuilder.Entity<DamLake>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("DamLakes_pkey");
+        // modelBuilder.Entity<DamLake>(entity =>
+        // {
+        //     entity.HasKey(e => e.Id).HasName("DamLakes_pkey");
 
-            entity.HasIndex(e => e.Name, "idx_dam_lakes_name");
+        //     entity.HasIndex(e => e.Name, "idx_dam_lakes_name");
 
-            entity.HasIndex(e => e.OrganizationCode, "idx_dam_lakes_organization_code");
+        //     entity.HasIndex(e => e.OrganizationCode, "idx_dam_lakes_organization_code");
 
-            entity.Property(e => e.Id).HasDefaultValueSql("uuid_generate_v4()");
-            entity.Property(e => e.CreatedAt).HasColumnType("timestamp(0) without time zone");
-            entity.Property(e => e.Name).HasMaxLength(255);
-            entity.Property(e => e.OrganizationCode).HasMaxLength(10);
-            entity.Property(e => e.ShpFile)
-                .HasMaxLength(255)
-                .HasDefaultValueSql("NULL::character varying");
-            entity.Property(e => e.UpdatedAt).HasColumnType("timestamp(0) without time zone");
+        //     entity.Property(e => e.Id).HasDefaultValueSql("uuid_generate_v4()");
+        //     entity.Property(e => e.CreatedAt).HasColumnType("timestamp(0) without time zone");
+        //     entity.Property(e => e.Name).HasMaxLength(255);
+        //     entity.Property(e => e.OrganizationCode).HasMaxLength(10);
+        //     entity.Property(e => e.ShpFile)
+        //         .HasMaxLength(255)
+        //         .HasDefaultValueSql("NULL::character varying");
+        //     entity.Property(e => e.UpdatedAt).HasColumnType("timestamp(0) without time zone");
 
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.DamLakeCreatedByNavigations)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_dam_lakes_created_by");
+        //     entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.DamLakeCreatedByNavigations)
+        //         .HasForeignKey(d => d.CreatedBy)
+        //         .OnDelete(DeleteBehavior.ClientSetNull)
+        //         .HasConstraintName("fk_dam_lakes_created_by");
 
-            entity.HasOne(d => d.OrganizationCodeNavigation).WithMany(p => p.DamLakes)
-                .HasForeignKey(d => d.OrganizationCode)
-                .HasConstraintName("fk_dam_lakes_organization_code");
+        //     entity.HasOne(d => d.OrganizationCodeNavigation).WithMany(p => p.DamLakes)
+        //         .HasForeignKey(d => d.OrganizationCode)
+        //         .HasConstraintName("fk_dam_lakes_organization_code");
 
-            entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.DamLakeUpdatedByNavigations)
-                .HasForeignKey(d => d.UpdatedBy)
-                .HasConstraintName("fk_dam_lakes_updated_by");
-        });
+        //     entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.DamLakeUpdatedByNavigations)
+        //         .HasForeignKey(d => d.UpdatedBy)
+        //         .HasConstraintName("fk_dam_lakes_updated_by");
+        // });
 
         modelBuilder.Entity<Device>(entity =>
         {
@@ -935,25 +935,25 @@ public partial class IrigasiMangantiContext : DbContext
                 .HasConstraintName("fk_OrganizationHasProvinces_ProvinceId");
         });
 
-        modelBuilder.Entity<OrganizationHasUser>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("OrganizationHasUsers_pkey");
+        // modelBuilder.Entity<OrganizationHasUser>(entity =>
+        // {
+        //     entity.HasKey(e => e.Id).HasName("OrganizationHasUsers_pkey");
 
-            entity.HasIndex(e => e.OrganizationCode, "idx_organization_has_users_organization_code");
+        //     entity.HasIndex(e => e.OrganizationCode, "idx_organization_has_users_organization_code");
 
-            entity.HasIndex(e => e.UserId, "idx_organization_has_users_user_id");
+        //     entity.HasIndex(e => e.UserId, "idx_organization_has_users_user_id");
 
-            entity.Property(e => e.Id).HasDefaultValueSql("uuid_generate_v4()");
-            entity.Property(e => e.OrganizationCode).HasMaxLength(10);
+        //     entity.Property(e => e.Id).HasDefaultValueSql("uuid_generate_v4()");
+        //     entity.Property(e => e.OrganizationCode).HasMaxLength(10);
 
-            entity.HasOne(d => d.OrganizationCodeNavigation).WithMany(p => p.OrganizationHasUsers)
-                .HasForeignKey(d => d.OrganizationCode)
-                .HasConstraintName("fk_organization_has_users_organization_code");
+        //     entity.HasOne(d => d.OrganizationCodeNavigation).WithMany(p => p.OrganizationHasUsers)
+        //         .HasForeignKey(d => d.OrganizationCode)
+        //         .HasConstraintName("fk_organization_has_users_organization_code");
 
-            entity.HasOne(d => d.User).WithMany(p => p.OrganizationHasUsers)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("fk_organization_has_users_user_id");
-        });
+        //     entity.HasOne(d => d.User).WithMany(p => p.OrganizationHasUsers)
+        //         .HasForeignKey(d => d.UserId)
+        //         .HasConstraintName("fk_organization_has_users_user_id");
+        // });
 
         modelBuilder.Entity<OrganizationSchema>(entity =>
         {
@@ -1122,39 +1122,39 @@ public partial class IrigasiMangantiContext : DbContext
                 .HasConstraintName("fk_regencies_province_id");
         });
 
-        modelBuilder.Entity<RiverArea>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("RiverAreas_pkey");
+        // modelBuilder.Entity<RiverArea>(entity =>
+        // {
+        //     entity.HasKey(e => e.Id).HasName("RiverAreas_pkey");
 
-            entity.HasIndex(e => e.Code, "idx_river_areas_code");
+        //     entity.HasIndex(e => e.Code, "idx_river_areas_code");
 
-            entity.HasIndex(e => e.Name, "idx_river_areas_name");
+        //     entity.HasIndex(e => e.Name, "idx_river_areas_name");
 
-            entity.HasIndex(e => e.OrganizationCode, "idx_river_areas_organization_code");
+        //     entity.HasIndex(e => e.OrganizationCode, "idx_river_areas_organization_code");
 
-            entity.Property(e => e.Id).HasDefaultValueSql("uuid_generate_v4()");
-            entity.Property(e => e.Code).HasMaxLength(255);
-            entity.Property(e => e.CreatedAt).HasColumnType("timestamp(0) without time zone");
-            entity.Property(e => e.Name).HasMaxLength(255);
-            entity.Property(e => e.OrganizationCode).HasMaxLength(10);
-            entity.Property(e => e.ShpFile)
-                .HasMaxLength(255)
-                .HasDefaultValueSql("NULL::character varying");
-            entity.Property(e => e.UpdatedAt).HasColumnType("timestamp(0) without time zone");
+        //     entity.Property(e => e.Id).HasDefaultValueSql("uuid_generate_v4()");
+        //     entity.Property(e => e.Code).HasMaxLength(255);
+        //     entity.Property(e => e.CreatedAt).HasColumnType("timestamp(0) without time zone");
+        //     entity.Property(e => e.Name).HasMaxLength(255);
+        //     entity.Property(e => e.OrganizationCode).HasMaxLength(10);
+        //     entity.Property(e => e.ShpFile)
+        //         .HasMaxLength(255)
+        //         .HasDefaultValueSql("NULL::character varying");
+        //     entity.Property(e => e.UpdatedAt).HasColumnType("timestamp(0) without time zone");
 
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.RiverAreaCreatedByNavigations)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_river_areas_created_by");
+        //     entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.RiverAreaCreatedByNavigations)
+        //         .HasForeignKey(d => d.CreatedBy)
+        //         .OnDelete(DeleteBehavior.ClientSetNull)
+        //         .HasConstraintName("fk_river_areas_created_by");
 
-            entity.HasOne(d => d.OrganizationCodeNavigation).WithMany(p => p.RiverAreas)
-                .HasForeignKey(d => d.OrganizationCode)
-                .HasConstraintName("fk_river_areas_organization_code");
+        //     entity.HasOne(d => d.OrganizationCodeNavigation).WithMany(p => p.RiverAreas)
+        //         .HasForeignKey(d => d.OrganizationCode)
+        //         .HasConstraintName("fk_river_areas_organization_code");
 
-            entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.RiverAreaUpdatedByNavigations)
-                .HasForeignKey(d => d.UpdatedBy)
-                .HasConstraintName("fk_river_areas_updated_by");
-        });
+        //     entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.RiverAreaUpdatedByNavigations)
+        //         .HasForeignKey(d => d.UpdatedBy)
+        //         .HasConstraintName("fk_river_areas_updated_by");
+        // });
 
         modelBuilder.Entity<Role>(entity =>
         {
@@ -1302,48 +1302,52 @@ public partial class IrigasiMangantiContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("Users_pkey");
 
+            entity.ToTable("users");
+
             entity.HasIndex(e => e.Id, "idx_users_id");
 
             entity.HasIndex(e => e.Phone, "idx_users_phone");
 
-            entity.HasIndex(e => e.RoleCode, "idx_users_role_id");
-
             entity.HasIndex(e => e.Username, "idx_users_username");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.AccessToken).HasMaxLength(1500);
-            entity.Property(e => e.CreatedAt).HasColumnType("timestamp(0) without time zone");
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp(0) without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
             entity.Property(e => e.DeletedAt)
                 .HasDefaultValueSql("NULL::timestamp without time zone")
-                .HasColumnType("timestamp(0) without time zone");
+                .HasColumnType("timestamp(0) without time zone")
+                .HasColumnName("deleted_at");
             entity.Property(e => e.Email)
                 .HasMaxLength(255)
-                .HasDefaultValueSql("NULL::character varying");
+                .HasDefaultValueSql("NULL::character varying")
+                .HasColumnName("email");
             entity.Property(e => e.LastLogin)
                 .HasDefaultValueSql("NULL::timestamp without time zone")
-                .HasColumnType("timestamp(0) without time zone");
-            entity.Property(e => e.Name).HasMaxLength(255);
-            entity.Property(e => e.Password).HasMaxLength(255);
+                .HasColumnType("timestamp(0) without time zone")
+                .HasColumnName("last_login");
+            entity.Property(e => e.Name)
+                .HasMaxLength(255)
+                .HasColumnName("name");
+            entity.Property(e => e.Password)
+                .HasMaxLength(255)
+                .HasColumnName("password");
             entity.Property(e => e.Phone)
                 .HasMaxLength(20)
-                .HasDefaultValueSql("NULL::character varying");
-            entity.Property(e => e.Photo).HasMaxLength(1000);
-            entity.Property(e => e.Pin)
-                .HasMaxLength(6)
-                .HasDefaultValueSql("NULL::bpchar")
-                .IsFixedLength();
-            entity.Property(e => e.RoleCode).HasMaxLength(4);
+                .HasDefaultValueSql("NULL::character varying")
+                .HasColumnName("phone");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("NULL::timestamp without time zone")
-                .HasColumnType("timestamp(0) without time zone");
+                .HasColumnType("timestamp(0) without time zone")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.UpdatedBy).HasColumnName("updated_by");
             entity.Property(e => e.Username)
                 .HasMaxLength(255)
-                .HasDefaultValueSql("NULL::character varying");
-
-            entity.HasOne(d => d.RoleCodeNavigation).WithMany(p => p.Users)
-                .HasForeignKey(d => d.RoleCode)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_users_role_code");
+                .HasDefaultValueSql("NULL::character varying")
+                .HasColumnName("username");
         });
 
         modelBuilder.Entity<Village>(entity =>
@@ -1415,53 +1419,53 @@ public partial class IrigasiMangantiContext : DbContext
                 .HasConstraintName("vnotch_settings_device_foreign");
         });
 
-        modelBuilder.Entity<Watershed>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("Watersheds_pkey");
+        // modelBuilder.Entity<Watershed>(entity =>
+        // {
+        //     entity.HasKey(e => e.Id).HasName("Watersheds_pkey");
 
-            entity.HasIndex(e => e.Code, "idx_watersheds_code");
+        //     entity.HasIndex(e => e.Code, "idx_watersheds_code");
 
-            entity.HasIndex(e => e.Name, "idx_watersheds_name");
+        //     entity.HasIndex(e => e.Name, "idx_watersheds_name");
 
-            entity.HasIndex(e => e.RiverAreaId, "idx_watersheds_river_area_id");
+        //     entity.HasIndex(e => e.RiverAreaId, "idx_watersheds_river_area_id");
 
-            entity.Property(e => e.Id).HasDefaultValueSql("uuid_generate_v4()");
-            entity.Property(e => e.Code).HasMaxLength(50);
-            entity.Property(e => e.CreatedAt).HasColumnType("timestamp(0) without time zone");
-            entity.Property(e => e.Name).HasMaxLength(255);
-            entity.Property(e => e.UpdatedAt).HasColumnType("timestamp(0) without time zone");
+        //     entity.Property(e => e.Id).HasDefaultValueSql("uuid_generate_v4()");
+        //     entity.Property(e => e.Code).HasMaxLength(50);
+        //     entity.Property(e => e.CreatedAt).HasColumnType("timestamp(0) without time zone");
+        //     entity.Property(e => e.Name).HasMaxLength(255);
+        //     entity.Property(e => e.UpdatedAt).HasColumnType("timestamp(0) without time zone");
 
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.WatershedCreatedByNavigations)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_watersheds_created_by");
+        //     entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.WatershedCreatedByNavigations)
+        //         .HasForeignKey(d => d.CreatedBy)
+        //         .OnDelete(DeleteBehavior.ClientSetNull)
+        //         .HasConstraintName("fk_watersheds_created_by");
 
-            entity.HasOne(d => d.RiverArea).WithMany(p => p.Watersheds)
-                .HasForeignKey(d => d.RiverAreaId)
-                .HasConstraintName("fk_watersheds_river_area_id");
+        //     entity.HasOne(d => d.RiverArea).WithMany(p => p.Watersheds)
+        //         .HasForeignKey(d => d.RiverAreaId)
+        //         .HasConstraintName("fk_watersheds_river_area_id");
 
-            entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.WatershedUpdatedByNavigations)
-                .HasForeignKey(d => d.UpdatedBy)
-                .HasConstraintName("fk_watersheds_updated_by");
-        });
+        //     entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.WatershedUpdatedByNavigations)
+        //         .HasForeignKey(d => d.UpdatedBy)
+        //         .HasConstraintName("fk_watersheds_updated_by");
+        // });
 
-        modelBuilder.Entity<WhatsAppNotification>(entity =>
-        {
-            entity.HasKey(e => new { e.RecipientId, e.StationId, e.SentAt }).HasName("pkey_whatsapp_notifications");
+        // modelBuilder.Entity<WhatsAppNotification>(entity =>
+        // {
+        //     entity.HasKey(e => new { e.RecipientId, e.StationId, e.SentAt }).HasName("pkey_whatsapp_notifications");
 
-            entity.HasIndex(e => e.RecipientId, "idx_whatsapp_notifications_recipient_identifier");
+        //     entity.HasIndex(e => e.RecipientId, "idx_whatsapp_notifications_recipient_identifier");
 
-            entity.HasIndex(e => e.StationId, "idx_whatsapp_notifications_station_id");
+        //     entity.HasIndex(e => e.StationId, "idx_whatsapp_notifications_station_id");
 
-            entity.Property(e => e.SentAt).HasColumnType("timestamp(0) without time zone");
-            entity.Property(e => e.Data).HasMaxLength(255);
-            entity.Property(e => e.IsSent).HasDefaultValue(false);
+        //     entity.Property(e => e.SentAt).HasColumnType("timestamp(0) without time zone");
+        //     entity.Property(e => e.Data).HasMaxLength(255);
+        //     entity.Property(e => e.IsSent).HasDefaultValue(false);
 
-            entity.HasOne(d => d.Station).WithMany(p => p.WhatsAppNotifications)
-                .HasForeignKey(d => d.StationId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_whatsapp_notifications_station_id");
-        });
+        //     entity.HasOne(d => d.Station).WithMany(p => p.WhatsAppNotifications)
+        //         .HasForeignKey(d => d.StationId)
+        //         .OnDelete(DeleteBehavior.ClientSetNull)
+        //         .HasConstraintName("fk_whatsapp_notifications_station_id");
+        // });
 
         modelBuilder.Entity<WhatsAppRecipient>(entity =>
         {

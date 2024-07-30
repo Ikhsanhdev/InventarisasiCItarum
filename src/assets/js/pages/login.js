@@ -36,9 +36,11 @@ window.login = (form, evt) => {
         formData.append("Password", getValueById('Password'));
         
         postData('/Account/Login', formData).then(res => {
-            let result = res.data;
+            let result = res.data.metaData;
+            console.log(result);
             if (result.code == 200) {
-                location.reload();
+                // location.reload();
+                window.location.href = '/';
             } else if (result.code == 401) {
                 $('#error-password').fadeIn(300);
                 $('#error-password').html(`<ul class="parsley-errors-list filled parsley-custom" aria-hidden="false"><li class="parsley-required">${result.message}</li></ul>`);
