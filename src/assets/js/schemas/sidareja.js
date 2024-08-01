@@ -879,7 +879,7 @@ var SkemaSidareja = (function () {
             initMap();
 
             // Generate Skema
-            initBs10();
+            // initBs10();
             initBs9();
             initBs8();
             initBs7();
