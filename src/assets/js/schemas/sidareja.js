@@ -8,7 +8,7 @@ const map = L.map('map', {
     center: [-8.7, 110.4],
     zoom: 10,
     maxZoom: 13,
-    minZoom: 10,
+    minZoom: 5,
     layers: [whiteBasemap]
 });
 
@@ -788,6 +788,90 @@ var SkemaSidareja = (function () {
       // generateTextSaluranSekunder('SS. CIKALAPA', [-7.9, 109.3], 0);
     }
 
+    var initBs7 = function() {
+      const bs7Point = [-8.75, 108.72];
+      const linePtSm4 = [bs7Point, [bs7Point[0], 108.81]];
+      generateBoxPetak('ece08111-0685-4435-8963-4860a4d0c356', 'Pt.Sm-4', linePtSm4, 'right', 'golongan-b');
+
+      const lineBs7 = [
+        [-8.38, 108.72],
+        bs7Point
+      ];
+      generateBangunanPembagiDanSadap('BS.VII', lineBs7);
+    }
+
+    var initBs8 = function() {
+      const bs8Point = [-9.00, 108.72];
+      const bsd1Point = [bs8Point[0], 108.85];
+      const bsd2Point = [bs8Point[0], 109.08];
+
+      const lineBsd1Ki = [bsd1Point, [-8.94, bsd1Point[1]]];
+      generateBoxPetak('0739446b-88d9-457e-a08c-03c11c926689', 'B.Sd 1-Ki', lineBsd1Ki, 'top', 'golongan-b');
+
+      const lineBsd1Ka = [bsd1Point, [-9.05, bsd1Point[1]]];
+      generateBoxPetak('200845cd-a500-4c12-9590-ba9c05e03b63', 'B.Sd 1-Ka', lineBsd1Ka, 'bottom', 'golongan-b');
+
+      const lineBsd2 = [bsd1Point, [-9.00, 109.1]];
+      generateBoxPetak('0b8e2745-fb8f-40a3-956b-fb7109707cd2', 'B.Sd 2', lineBsd2, 'right', 'golongan-b');
+
+      const lineBsd1 = [
+        bs8Point,
+        bsd1Point
+      ];
+      generateBangunanSadap('BSd. 1', 'bottomright', lineBsd1, 90);
+
+      const lineBsd2bagi = [
+        bs8Point,
+        bsd2Point
+      ];
+      generateBangunanSadap('BSd. 2', 'bottomright', lineBsd2bagi, 90);
+
+      const lineBs8 = [
+        [-8.75, 108.72],
+        bs8Point
+      ];
+      generateBangunanPembagi('BS.VIII', lineBs8);
+      generateTextSaluranSekunder('SS. SIDODADI', [-8.95, 109.1], 0);
+    }
+
+    var initBs9 = function() {
+      const bs9Point = [-9.35, 108.72];
+      const bsh1Point = [bs9Point[0], 108.85];
+      const bsh2Point = [bs9Point[0], 109.08];
+
+      const lineBsh1Ki = [bsh1Point, [-9.29, bsh1Point[1]]];
+      generateBoxPetak('2035c600-85a6-4e95-9e7c-576b4060435e', 'B.Sh 1-Ki', lineBsh1Ki, 'top', 'golongan-b');
+
+      const lineBsh1Ka = [bsh1Point, [-9.41, bsh1Point[1]]];
+      generateBoxPetak('5716d697-3b8f-411e-a22b-b6e1822215e1', 'B.Sh 1-Ka', lineBsh1Ka, 'bottom', 'golongan-b');
+
+      const lineBsh2 = [bsh1Point, [-9.35, 109.1]];
+      generateBoxPetak('85866435-e4b6-4850-a895-4c9838e7d88d', 'B.Sh 2', lineBsh2, 'right', 'golongan-b');
+    
+      const lineBsh1 = [
+        bs9Point,
+        bsh1Point
+      ];
+      generateBangunanSadap('BSh. 1', 'bottomright', lineBsh1, 90);
+
+      const lineBsh2bagi = [
+        bs9Point,
+        bsh2Point
+      ];
+      generateBangunanSadap('BSh. 2', 'bottomright', lineBsh2bagi, 90);
+
+      const lineBs9 = [
+        [-9.00, 108.72],
+        bs9Point
+      ];
+      generateBangunanPembagiDanSadap('BS.IX', lineBs9);
+      generateTextSaluranSekunder('SS. SIDAHURIP', [-9.3, 109.1], 0);
+    }
+
+    // var initBs10 = function() {
+    //   const bs10Point = [-10.35, 108.72];
+    // }
+
     return {
         //main function to initiate the module
         init: function () {
@@ -795,6 +879,10 @@ var SkemaSidareja = (function () {
             initMap();
 
             // Generate Skema
+            initBs10();
+            initBs9();
+            initBs8();
+            initBs7();
             initBs6();
             initBs5();
             initBs4();
