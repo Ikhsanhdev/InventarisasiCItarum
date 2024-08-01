@@ -25,7 +25,7 @@ namespace IrigasiManganti.Controllers {
             this._job = job;
         }
 
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        // [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult Petak() {
             ClaimsPrincipal claimUser = HttpContext.User;
             Console.WriteLine(claimUser?.Identity?.IsAuthenticated);

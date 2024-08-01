@@ -8,6 +8,10 @@
 @{ 
     var currentController = ViewContext.RouteData.Values["controller"].ToString();
     var currentAction = ViewContext.RouteData.Values["action"].ToString();
+    var nameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value ?? "Guest";
+    var nameParts = nameClaim.Split('.');
+    var avatarText = nameParts.Length > 1 ? $"{nameParts[0][0]}{nameParts[nameParts.Length - 1][0]}" : $"{nameClaim[0]}";
+    Console.WriteLine(ClaimIdentity.Name);
 }
 
 <!DOCTYPE html>
@@ -399,36 +403,21 @@
                 </ul>
                 <ul class="list-unstyled topnav-menu float-end mb-0">
                     @* @if (!string.IsNullOrEmpty(ClaimIdentity.Name)) *@
-                    @if(User.Identity.IsAuthenticated)
+                    @if (User.Identity.IsAuthenticated)
                     {
                         <li class="dropdown notification-list topbar-dropdown">
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light"
-                                data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
-                                aria-expanded="false">
+                            data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                            aria-expanded="false">
                                 <div id='element-avatar'>
-                                    @{
-                                        var result = "";
-                                        var name = ClaimIdentity.Name;
-                                        var arrName = name.Split(".");
-                                        if (arrName.Length > 1)
-                                        {
-                                            result = $"{arrName[0][0]}{arrName[arrName.Length - 1][0]}";
-                                        }
-                                        else
-                                        {
-                                            result = $"{name[0]}";
-                                        }
-                                        <span class="e-avatar e-avatar-xlarge e-avatar-circle rose">@result.ToUpper()</span>
-                                    }
-
-                                    <span class="spanforname">@ClaimIdentity.Name <i
-                                            class="fas fa-chevron-down ms-1"></i></span>
+                                    <span class="e-avatar e-avatar-xlarge e-avatar-circle rose">@avatarText.ToUpper()</span>
+                                    <span class="spanforname">@nameClaim <i class="fas fa-chevron-down ms-1"></i></span>
                                 </div>
                                 <span class="pro-user-name ms-1">
                                     Administrator <i class="mdi mdi-chevron-down"></i>
                                 </span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
+                            <div class="dropdown-menu dropdown-menu-end profile-dropdown">
                                 <!-- item-->
                                 <a href="/Station" class="dropdown-item notify-item">
                                     <i class="fe-log-in"></i>
@@ -445,25 +434,24 @@
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item"
-                                    onclick="logout(this, event)">
+                                onclick="logout(this, event)">
                                     <i class="fe-log-out"></i>
                                     <span>Logout</span>
                                     <form id="logout-form" action="@Url.Action("Logout","Account")" method="POST"
                                         style="display: none;">
-
                                     </form>
                                 </a>
-
                             </div>
                         </li>
                     }
                     else
                     {
                         <li>
-                            <a href="/Account/Login" class="nav-link waves-effect waves-light m-0" aria-haspopup="false"
-                                aria-expanded="false">LOGIN <i class="mdi mdi-login"></i></a>
+                            <a href="/Account/Login" class="nav-link waves-effect waves-light m-0"
+                            aria-haspopup="false" aria-expanded="false">LOGIN <i class="mdi mdi-login"></i></a>
                         </li>
                     }
+
 
                     <li class="d-none d-xl-block">
                         <a class="nav-link waves-effect waves-light m-0" aria-haspopup="false" aria-expanded="false"

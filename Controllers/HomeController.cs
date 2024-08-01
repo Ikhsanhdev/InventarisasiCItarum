@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
-using IrigasiManganti.Helpers;
-using IrigasiManganti.Interfaces;
-using IrigasiManganti.Models.Datatables;
-using Serilog;
-
-using HtmlAgilityPack;
-using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using IrigasiManganti.Interfaces;
+using IrigasiManganti.Models;
+using IrigasiManganti.Models.Datatables;
+using IrigasiManganti.Helpers;
+using IrigasiManganti.Models.Customs;
+using Serilog;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using IrigasiManganti.Jobs;
 
 namespace IrigasiManganti.Controllers
 {
