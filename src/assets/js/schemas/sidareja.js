@@ -8,7 +8,7 @@ const map = L.map('map', {
     center: [-8.7, 110.4],
     zoom: 10,
     maxZoom: 13,
-    minZoom: 5,
+    minZoom: 10,
     layers: [whiteBasemap]
 });
 
