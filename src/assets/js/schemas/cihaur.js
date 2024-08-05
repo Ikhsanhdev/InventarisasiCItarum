@@ -6,8 +6,6 @@ const map = L.map('map', {
     // attributionControl: false,
     // Default location
     center: [-7, 109.5],
-    // Develop
-    center: [-5.7, 118.7],
     zoom: 10,
     maxZoom: 13,
     minZoom: 10,
@@ -431,7 +429,7 @@ var SkemaSidareja = (function () {
       generateBoxPetak('38ad1ff7-d21d-4f21-ad1d-e1b09a8de6ed', 'Ms 5 Ki', lineBms5ki, 'top');
 
       const lineBms5ka = [bms5Point,[-8.2, 107.99]];
-      generateBoxPetak('7fda2b19-669c-4ac9-a123-861f0447fe30', 'Ms 5 Ka', lineBms5ka, 'righ');
+      generateBoxPetak('7fda2b19-669c-4ac9-a123-861f0447fe30', 'Ms 5 Ka', lineBms5ka, 'right');
 
       // Petak B.CH 1
       const lineBch1 = [bch2Point,bch1Point];
@@ -453,14 +451,14 @@ var SkemaSidareja = (function () {
       generateBangunanPembagi('Manganti','centerleft',lineManganti);
 
       generateTextSaluranPrimer('S A L.  I N D U K    C I H A U R', [-7.8,106.6], 270)
-      generateTextSaluranPrimer('SAL.SEKUNDER MARGASARI', [-8.25,107.05], 0)
-      generateTextSaluranPrimer('SAL.SEKUNDER GAYAM SARI', [-7.78,106.85], 0)
-      generateTextSaluranPrimer('SAL.SEKUNDER PUDAKSARI', [-7.65,107], 0)
-      generateTextSaluranPrimer('SAL.SEK.NUSADADI', [-7.65, 107.83], 270)
+      generateTextSaluranSekunder('SAL.SEKUNDER MARGASARI', [-8.25,107.05], 0)
+      generateTextSaluranSekunder('SAL.SEKUNDER GAYAM SARI', [-7.78,106.85], 0)
+      generateTextSaluranSekunder('SAL.SEKUNDER PUDAKSARI', [-7.65,107], 0)
+      generateTextSaluranSekunder('SAL.SEK.NUSADADI', [-7.65, 107.83], 270)
       generateTextSaluranPrimer("S A L U R A N   I N D U K   C I H A U R", [-7.3, 108.33], 0)
-      generateTextSaluranPrimer('SAL.SEK.CIDURIAN', [-7.75, 108.55], 270)
-      generateTextSaluranPrimer('SAL.SEK.KEDUNGWRINGIN', [-8.65, 108.63], 270)
-      generateTextSaluranPrimer('SAL.INDUK SIDAREJA', [-8.6,106.86], 0)
+      generateTextSaluranSekunder('SAL.SEK.CIDURIAN', [-7.75, 108.55], 270)
+      generateTextSaluranSekunder('SAL.SEK.KEDUNGWRINGIN', [-8.65, 108.63], 270)
+      generateTextSaluranPrimer('SAL.INDUK SIDAREJA', [-8.6,106.89], 0)
       generateTextSaluranPrimer('BENDUNG MANGANTI', [-8.6,106], 0)
 
     }
@@ -495,7 +493,7 @@ var SkemaSidareja = (function () {
 
         // Petak B.Ch 26
         const lineCw2Ka = [bcw2Point, [bcw2Point[0], 111.72]];
-        generateBoxPetak('ba4ec83a-a600-416f-a599-1a81273b32d6', 'Cw 2 Ka', lineCw2Ka, 'left');
+        generateBoxPetak('359fd776-b065-4762-b0a6-f47ddc8f40c4', 'Cw 2 Ka', lineCw2Ka, 'left');
 
         const lineBcw2 = [
             bch26Point, 
@@ -504,7 +502,7 @@ var SkemaSidareja = (function () {
         generateBangunanSadap('B.Cw 2', 'centerright', lineBcw2, 0);
 
         const lineCw1Ka = [bcw1Point, [bcw1Point[0], 111.72]];
-        generateBoxPetak('13210921-967b-4bdc-9490-a8a7c33132bb', 'Cw 1 Ka', lineCw1Ka, 'left');
+        generateBoxPetak('0c81b0ec-22c5-4789-8231-54052a09df4f', 'Cw 1 Ka', lineCw1Ka, 'left');
 
         const lineBcw1 = [
             bch26Point, 
@@ -513,7 +511,7 @@ var SkemaSidareja = (function () {
         generateBangunanSadap('B.Cw 1', 'centerright', lineBcw1, 0);
 
         const lineCh26Ka = [bch26Point, [-6.65, 111.95]];
-        generateBoxPetak('be135653-0e70-4322-96f1-672c82bb4a3f', 'Ch 26 Ka', lineCh26Ka, 'bottom');
+        generateBoxPetak('81d3ab5e-3889-48f9-a904-7b777286c997', 'Ch 26 Ka', lineCh26Ka, 'bottom');
 
         // Petak B.Ch 25
         const lineCh25Ka = [bch25Point, [-6.63, bch25Point[1]]];
@@ -854,7 +852,7 @@ var SkemaSidareja = (function () {
       generateBangunanSadap('B.Pwd 2', 'centerright', linePwd2, 0);
 
       const linepwd2ka = [bpwd2Point,[-7.53,113.2]];
-      generateBoxPetak('4b377fab-3224-4132-8d4b-05e04ebf27c4', 'Pwd 2 Ka', linepwd2ka, 'left');
+      generateBoxPetak('70259b90-92f0-40d7-b0bb-5b98bb53b334', 'Pwd 2 Ka', linepwd2ka, 'left');
 
       const lineBss4 = [bss3Point, bss4Point];
       generateBangunanSadap('B.Ss 4', 'centerright', lineBss4, 0);
@@ -1550,7 +1548,7 @@ var SkemaSidareja = (function () {
       generateBangunanSadap("B.Jd 5'", 'bottomright', lineBjd5i, 0);
 
       const linBjd5iki = [bjd5iPoint, [bjd5iPoint[0], 116.95]];
-      generateBoxPetak('9d06cd07-db03-4f95-9f46-cf000b72d757', "Jd. 5' Ki", linBjd5iki, 'right');
+      generateBoxPetak('9d06cd07-db03-4f95-9f46-cf000b72d757', "Jd. 5 Ki'", linBjd5iki, 'right');
 
       const lineBjd5 = [bjd5iPoint, bjd5Point];
       generateBangunanSadap('B.Jd 5', 'topright', lineBjd5, 0);
@@ -1662,15 +1660,534 @@ var SkemaSidareja = (function () {
       generateBoxPetak('091766a8-e622-4c56-bac6-a1fff4a89efe', 'Ch 54 Ka', lineBch54ka, 'bottom');
     
       generateTextSaluranPrimer('SALURAN INDUK CIHAUR', [-6.2, 116.2], 270)
-      generateTextSaluranPrimer('SAL.SEKUNDER JAGADENDA', [-6.18, 116.88], 270)
-      generateTextSaluranPrimer('Ss  KAWUNGANTEN KANAN', [-6.5, 117.55], 270)
-      generateTextSaluranPrimer('SAL.SEK.KAWUNGANTEN', [-6.05, 118], 0)
+      generateTextSaluranSekunder('SAL.SEKUNDER JAGADENDA', [-6.18, 116.88], 270)
+      generateTextSaluranSekunder('Ss  KAWUNGANTEN KANAN', [-6.5, 117.55], 270)
+      generateTextSaluranSekunder('SAL.SEK.KAWUNGANTEN', [-6.05, 118], 0)
     
       
     }
 
     var initBch19 = function () {
       const bch54Point = [-5.65, 118.7];
+      const bch55Point = [-5.65, 119.05];
+      const bch56Point = [-5.5, 119.2];
+      const bch57Point = [-5.15, bch56Point[1]];
+      const bch58Point = [bch57Point[0], 119.5];
+      const bch59Point = [bch57Point[0], 119.7];
+      const bch60Point = [bch57Point[0], 119.9];
+      const bch61iPoint = [bch57Point[0], 120.07];
+      const bch61iiPoint = [bch57Point[0], 120.15];
+      const bch61Point = [bch57Point[0], 120.25];
+      const bch62Point = [bch57Point[0], 120.45];
+      const bch63Point = [bch57Point[0], 120.63];
+      const bch64Point = [bch57Point[0], 120.78];
+      const bch65Point = [bch57Point[0], 120.98];
+      const bch66Point = [bch57Point[0], 121.2];
+      const bch67Point = [bch57Point[0], 121.35];
+      const bch68iPoint = [bch57Point[0], 121.43];
+      const bch68Point = [bch57Point[0], 121.51];
+      const bch69Point = [bch57Point[0], 121.6];
+      const bch70Point = [bch57Point[0], 121.85];
+      const bch71iPoint = [-4.97, 121.95];
+      const bch71Point = [-4.9, bch71iPoint[1]];
+      const bch72iPoint = [-4.85, bch71iPoint[1]];
+      const bch72Point = [-4.8, bch71iPoint[1]];
+      const bch73Point = [-4.69, bch71iPoint[1]];
+      const bch74Point = [-4.53, bch71iPoint[1]];
+      const bch75Point = [-4.41, bch71iPoint[1]];
+      const bks1Point = [-5.73, bch55Point[1]];
+      const bks2Point = [-5.81, bch55Point[1]];
+      const bks3Point = [-5.93, bch55Point[1]];
+      const bks4Point = [-6.1, 119.67];
+      const bsk5Point = [bks4Point[0], 119.9];
+      const bsk6Point = [bks4Point[0], 120.2];
+      const bsk7Point = [bks4Point[0], 120.53];
+      const bbo1Point = [bks2Point[0], 119.36];
+      const bbo2Point = [bks2Point[0], 119.67];
+      const bbo3Point = [bks2Point[0], 119.9];
+      const bbo4Point = [bks2Point[0], 120.2];
+      const bbr1Point = [bch56Point[0], 119.53];
+      const bbr2Point = [bch56Point[0], 119.74];
+      const bbr3Point = [bch56Point[0], 119.97];
+      const bbr4Point = [bch56Point[0], 120.31];
+      const bkk1Point = [-4.95,bch56Point[1]];
+      const bkk2Point = [-4.85,bch56Point[1]];
+      const bkk3Point = [-4.70,bch56Point[1]];
+      const bkk4iPoint = [-4.55,bch56Point[1]];
+      const bkk4Point = [-4.51,119.53];
+      const bkk5Point = [bkk4Point[0], 119.74];
+      const bum1Point = [bkk2Point[0], 119.74];
+      const bum2Point = [bkk2Point[0], 119.97];
+      const bum3Point = [bkk2Point[0], 120.31];
+      const bum4Point = [bkk2Point[0], 120.53];
+      const bbb1Point = [-5.45, bch66Point[1]];
+      const bbb2Point = [-5.66, bch66Point[1]];
+      const bbb3Point = [-5.81, bch66Point[1]];
+      const bbn1Point = [-5.55, bch69Point[1]];
+      const bbn2Point = [-5.89, bch69Point[1]];
+      const bpr1iPoint = [-5.35, bch70Point[1]];
+      const bpr1Point = [-5.45, bch70Point[1]];
+      const bpr2Point = [-5.66, bch70Point[1]];
+      const bpr3Point = [-5.75, bch70Point[1]];
+      const bpr4Point = [-6, bch70Point[1]];
+
+      // Petak B.Ch 55
+      const lineBch55 = [bch54Point, bch55Point];
+      generateBangunanPembagi('B.Ch 55 (BC.V-I)', 'topcenter', lineBch55, 0);
+
+      const lineBks1 = [bch55Point, bks1Point];
+      generateBangunanPembagiDanSadap('B.Ks 1', 'topright', lineBks1, 0);
+
+      const lineKs1ki = [bks1Point, [bks1Point[0], 119.1]];
+      generateBoxPetak('174b9cc9-756e-4d22-9418-813256976c62', 'Ks. 1 Ki', lineKs1ki, 'right');
+
+      const lineBks2 = [bks1Point, bks2Point];
+      generateBangunanPembagi('B.Ks 2', 'topright', lineBks2, 0);
+
+      const lineBks3 = [bks2Point, bks3Point];
+      generateBangunanPembagiDanSadap('B.Ks 3', 'topright', lineBks3, 0);
+
+      const lineKs3ki = [bks3Point, [bks3Point[0], 119.1]];
+      generateBoxPetak('d7fa4905-2d39-4f4e-a120-59df6a11a0fc', 'Ks. 3 Ki', lineKs3ki, 'right');
+
+      const lineBks4 = [bks3Point,[-6.1,119.05], bks4Point];
+      generateBangunanPembagiDanSadap('B.Ks 4', 'topright', lineBks4, 0);
+
+      const lineKs4ki = [bks4Point, [-6.05, bks4Point[1]]];
+      generateBoxPetak('beb780ab-64c9-4940-b2e9-b23893bb6c06', 'Ks. 4 Ki', lineKs4ki, 'top');
+      
+      const lineKs4ka = [bks4Point, [-6.15, bks4Point[1]]];
+      generateBoxPetak('e9f3dff0-9019-4674-a734-e1245f4bea27', 'Ks. 4 Ka', lineKs4ka, 'bottom');
+
+      const lineBsk5 = [bks4Point, bsk5Point];
+      generateBangunanSadap('B.Sk 5', 'topright', lineBsk5, 0);
+
+      const lineKs5ki = [bsk5Point, [-6.05, bsk5Point[1]]];
+      generateBoxPetak('1e87f60b-6137-45d9-8bbe-43531f72376f', 'Ks. 5 Ki', lineKs5ki, 'top');
+
+      const lineBsk6 = [bsk5Point, bsk6Point];
+      generateBangunanSadap('B.Sk 6', 'topright', lineBsk6, 0);
+
+      const lineKs6ki = [bsk6Point, [-6.05, bsk6Point[1]]];
+      generateBoxPetak('0d084f38-fc83-467f-b2e1-d71778f2d296', 'Ks. 6 Ki', lineKs6ki, 'top');
+
+      const lineBsk7 = [bsk6Point, bsk7Point];
+      generateBangunanSadap('B.Sk 7', 'topright', lineBsk7, 0);
+
+      const lineKs7ki = [bsk7Point, [-6.05, bsk7Point[1]]];
+      generateBoxPetak('d9a33d14-748e-4795-a410-f866af15deb8', 'Ks. 7 Ki', lineKs7ki, 'top');
+
+      const linebbo1 = [bks2Point, bbo1Point];
+      generateBangunanSadap('B.Bo 1', 'topleft', linebbo1, 0);
+
+      const linebo1ka = [bbo1Point, [-5.87, bbo1Point[1]]];
+      generateBoxPetak('a4009200-64a9-46f1-9fe3-679a5fd3d50c', 'Bo. 1 Ka', linebo1ka, 'bottom');
+
+      const linebbo2 = [bbo1Point, bbo2Point];
+      generateBangunanSadap('B.Bo 2', 'topleft', linebbo2, 0);
+
+      const linebo2ki = [bbo2Point, [-5.77, bbo2Point[1]]];
+      generateBoxPetak('92bf40db-22ba-41be-a888-2d789cfb26b4', 'Bo. 2 Ki', linebo2ki, 'top');
+
+      const linebo2ka = [bbo2Point, [-5.87, bbo2Point[1]]];
+      generateBoxPetak('79a18ba2-a098-4946-80e7-d249f14539b4', 'Bo. 2 Ka', linebo2ka, 'bottom');
+
+      const linebbo3 = [bbo2Point, bbo3Point];
+      generateBangunanSadap('B.Bo 3', 'topleft', linebbo3, 0);
+
+      const lineBo3ka = [bbo3Point, [-5.87, bbo3Point[1]]];
+      generateBoxPetak('18357d94-6805-4f16-a67d-af8b342fec78', 'Bo. 3 Ka', lineBo3ka, 'bottom');
+
+      const linebbo4 = [bbo3Point, bbo4Point];
+      generateBangunanSadap('B.Bo 4', 'topleft', linebbo4, 0);
+
+      const lineBo4ki = [bbo4Point, [-5.77, bbo4Point[1]]];
+      generateBoxPetak('636d57b9-569d-427d-bc70-69fa41b31a89', 'Bo. 4 Ki', lineBo4ki, 'top');
+
+      const lineBo4ka = [bbo4Point, [-5.87, bbo4Point[1]]];
+      generateBoxPetak('ebc95ed2-fe73-4b4f-8327-1f6cd71a370b', 'Bo. 4 Ka', lineBo4ka, 'bottom');
+
+      // Petak B.Ch 56
+      const lineBch56 = [bch55Point,[-5.65, 119.2], bch56Point];
+      generateBangunanPembagi('B.Ch 56 (BC.V-II)', 'topleft', lineBch56, 0);
+
+      const lineBbr1 = [bch56Point, bbr1Point];
+      generateBangunanSadap('B.Br 1', 'topright', lineBbr1, 0);
+
+      const lineBr1ki = [bbr1Point, [-5.45, bbr1Point[1]]];
+      generateBoxPetak('c8870912-6570-4785-91a0-02be0a19df94', 'Br. 1 Ki', lineBr1ki, 'top');
+
+      const lineBr1ka = [bbr1Point, [-5.55, bbr1Point[1]]];
+      generateBoxPetak('6fd3edab-9f4d-4763-aff9-cc3d94b1ebde', 'Br. 1 Ka', lineBr1ka, 'bottom');
+
+      const lineBbr2 = [bbr1Point, bbr2Point];
+      generateBangunanSadap('B.Br 2', 'topright', lineBbr2, 0);
+
+      const lineBr2ki = [bbr2Point, [-5.45, bbr2Point[1]]];
+      generateBoxPetak('4d1d34b2-1627-412d-8390-1a4984eeefbe', 'Br. 2 Ki', lineBr2ki, 'top');
+
+      const lineBr2ka = [bbr2Point, [-5.55, bbr2Point[1]]];
+      generateBoxPetak('f507cebc-5890-439c-a433-6c367cb84dcb', 'Br. 2 Ka', lineBr2ka, 'bottom');
+
+      const lineBbr3 = [bbr2Point, bbr3Point];
+      generateBangunanSadap('B.Br 3', 'topright', lineBbr3, 0);
+      
+      const lineBr3ki = [bbr3Point, [-5.45, bbr3Point[1]]];
+      generateBoxPetak('567956a9-69cf-4540-b613-8eae57eccee0', 'Br. 3 Ki', lineBr3ki, 'top');
+
+      const lineBbr4 = [bbr3Point, bbr4Point];
+      generateBangunanSadap('B.Br 4', 'topright', lineBbr4, 0);
+
+      const lineBr4ki = [bbr4Point, [-5.45, bbr4Point[1]]];
+      generateBoxPetak('84050b0a-747d-41ee-9054-9e5b03d3c969', 'Br. 4 Ki', lineBr4ki, 'top');
+
+      const lineBr4ka = [bbr4Point, [-5.55, bbr4Point[1]]];
+      generateBoxPetak('c78356f9-5c3a-4f6b-8580-fb9d5711e6a9', 'Br. 4 Ka', lineBr4ka, 'bottom');
+
+      const lineBr4te = [bbr4Point, [bbr4Point[0], 120.4]];
+      generateBoxPetak('257b8ca7-1d42-4942-b6b5-b41d5b80bf72', 'Br. 4 Te', lineBr4te, 'right');
+
+      // Petak B.Ch 57
+      const lineBch57 = [bch56Point, bch57Point];
+      generateBangunanPembagi('B.Ch 57 (BC.V-III)', 'topcenter', lineBch57, 0);
+      
+      const lineBkk1 = [bch57Point, bkk1Point];
+      generateBangunanSadap('B.Kk 1', 'centerleft', lineBkk1, 0);
+
+      const lineKk1ka = [bkk1Point, [bkk1Point[0],119.25 ]];
+      generateBoxPetak('f94b5dc49-5ce9-4933-ae8c-b4672a47d5e5', 'Kk. 1 Ka', lineKk1ka, 'right');
+
+      const lineBkk2 = [bkk1Point, bkk2Point];
+      generateBangunanPembagi('B.Kk 2', 'centerleft', lineBkk2, 0);
+
+      const lineBum1 = [bkk2Point, bum1Point];
+      generateBangunanSadap('B.Um 1', 'topleft', lineBum1, 0);
+
+      const lineUm1ki = [bum1Point, [-4.8,bum1Point[1] ]];
+      generateBoxPetak('bd6969eb-1c2a-4c59-b4fd-e8d7e95fa1d6', 'Um. 1 Ki', lineUm1ki, 'top');
+
+      const lineUm1ka = [bum1Point, [-4.9,bum1Point[1] ]];
+      generateBoxPetak('8316cbd2-3c8d-458e-8007-e24fde144a21', 'Um. 1 Ka', lineUm1ka, 'bottom');
+
+      const lineBum2 = [bum1Point, bum2Point];
+      generateBangunanSadap('B.Um 2', 'topleft', lineBum2, 0);
+
+      const lineUm2ki = [bum2Point, [-4.8,bum2Point[1] ]];
+      generateBoxPetak('79e2f439-0078-4846-b34b-8216661e6c13', 'Um. 2 Ki', lineUm2ki, 'top');
+
+      const lineUm2ka = [bum2Point, [-4.9,bum2Point[1] ]];
+      generateBoxPetak('7a76405c-795b-4209-a61a-9f753b82c04b', 'Um. 2 Ka', lineUm2ka, 'bottom');
+
+      const lineBum3 = [bum2Point, bum3Point];
+      generateBangunanSadap('B.Um 3', 'topleft', lineBum3, 0);
+
+      const lineUm3ki = [bum3Point, [-4.8,bum3Point[1] ]];
+      generateBoxPetak('8a60304f-fb4f-48a7-9ca7-8c7c0d3f5f99', 'Um. 3 Ki', lineUm3ki, 'top');
+
+      const lineUm3ka = [bum3Point, [-4.9,bum3Point[1] ]];
+      generateBoxPetak('d5d3d759-8c47-4b80-b37b-c71e567e188f', 'Um. 3 Ka', lineUm3ka, 'bottom');
+
+      const lineBum4 = [bum3Point, bum4Point];
+      generateBangunanSadap('B.Um 4', 'topleft', lineBum4, 0);
+
+      const lineUm4ki = [bum4Point, [-4.8,bum4Point[1] ]];
+      generateBoxPetak('2510f409-4b2e-4a5a-be91-d47b097e36ff', 'Um. 4 Ki', lineUm4ki, 'top');
+
+      const lineUm4ka = [bum4Point, [-4.9,bum4Point[1] ]];
+      generateBoxPetak('19950ae5-eca1-4973-b6b5-b01c2881b274', 'Um. 4 Ka', lineUm4ka, 'bottom');
+
+      const lineBkk3 = [bkk2Point, bkk3Point];
+      generateBangunanSadap('B.Kk 3', 'centerleft', lineBkk3, 0);
+
+      const linekk3ka = [bkk3Point, [bkk3Point[0],119.25 ]];
+      generateBoxPetak('245d151c-6c25-41f6-80e3-7146e26f5061', 'Kk. 3 Ka', linekk3ka, 'right');
+
+      const lineBkk4i = [bkk3Point, bkk4iPoint];
+      generateBangunanSadap("B.Kk 4'", 'centerleft', lineBkk4i, 0);
+      
+      const lineKk4iki = [bkk4iPoint, [bkk4iPoint[0], 119.25]];
+      generateBoxPetak('', "Kk. 4' Ki", lineKk4iki, 'right');
+      
+      const lineBkk4 = [bkk4iPoint,[-4.51,119.2], bkk4Point];
+      generateBangunanSadap('B.Kk 4', 'topleft', lineBkk4, 0);
+      
+      const lineKk4ka = [bkk4Point, [-4.55, bkk4Point[1]]];
+      generateBoxPetak('8dcdbeac-8825-489b-b36b-b88b4dc9b719', 'Kk. 4 Ka', lineKk4ka, 'bottom');
+
+      const lineBkk5 = [bkk4Point, bkk5Point];
+      generateBangunanSadap('B.Kk 5', 'topcenter', lineBkk5, 0);
+
+      const lineKk5ka = [bkk5Point, [-4.55, bkk5Point[1]]];
+      generateBoxPetak('f206325f-458f-410c-9c69-e14fd4593fa9', 'Kk. 5 Ka', lineKk5ka, 'bottom');
+
+      const lineKk5te = [bkk5Point, [bkk5Point[0], 119.85]];
+      generateBoxPetak('060581ea-4232-4d48-b9f6-2b15b970c932', 'Kk. 5 Te', lineKk5te, 'right');
+
+      // Petak B.Ch 58
+      const lineBch58 = [bch57Point, bch58Point];
+      generateBangunanPembagiDanSadap('B.Ch 58 (BC.V-IV)', 'topcenter', lineBch58, 0);
+
+      const lineCh58ki = [bch58Point, [-5.1, bch58Point[1]]];
+      generateBoxPetak('a616665e-ef63-4873-ba4e-b94532a59333', 'Ch 58 Ki', lineCh58ki, 'top');
+
+      const lineCh58ka = [bch58Point, [-5.2, bch58Point[1]]];
+      generateBoxPetak('d21d3b99-f267-49a9-b9ee-ac327bf4b517', 'Ch 58 Ka', lineCh58ka, 'bottom');
+
+      // Petak B.Ch 59
+      const lineBch59 = [bch58Point, bch59Point];
+      generateBangunanPembagiDanSadap('B.Ch 59 (BC.V-V)', 'topcenter', lineBch59, 0);
+
+      const lineCh59ki = [bch59Point, [-5.1, bch59Point[1]]];
+      generateBoxPetak('238aa4e1-107c-4b3c-b04a-2cc68ddc36e4', 'Ch 59 Ki', lineCh59ki, 'top');
+
+      const lineCh59ka = [bch59Point, [-5.2, bch59Point[1]]];
+      generateBoxPetak('ca11a709-0936-4014-bbf2-cb583c4171d7', 'Ch 59 Ka', lineCh59ka, 'bottom');
+
+      // Petak B.Ch 60
+      const lineBch60 = [bch59Point, bch60Point];
+      generateBangunanPembagiDanSadap('B.Ch 60', 'topcenter', lineBch60, 0);
+
+      const lineCh60ki = [bch60Point, [-5.1, bch60Point[1]]];
+      generateBoxPetak('276b6dc6-0595-41c9-b2da-d4747436bd6c', 'Ch 60 Ki', lineCh60ki, 'top');
+
+      const lineCh60ka = [bch60Point, [-5.2, bch60Point[1]]];
+      generateBoxPetak('1f93e31d-4317-4a56-9427-32f8c28000d7', 'Ch 60 Ka', lineCh60ka, 'bottom');
+
+      // Petak B.Ch 61'
+      const lineBch61i = [bch60Point, bch61iPoint];
+      generateBangunanPembagiDanSadap("B.Ch 61'", 'topcenter', lineBch61i, 0);
+
+      const lineCh61iki = [bch61iPoint, [-5.1, bch61iPoint[1]]];
+      generateBoxPetak('', "Ch 61' Ki", lineCh61iki, 'top');
+
+      const lineCh61ika = [bch61iPoint, [-5.2, bch61iPoint[1]]];
+      generateBoxPetak('', "Ch 61' Ka", lineCh61ika, 'bottom');
+
+      // Petak B.Ch 61''
+      const lineBch61ii = [bch61iPoint, bch61iiPoint];
+      generateBangunanPembagiDanSadap("B.Ch 61''", 'topcenter', lineBch61ii, 0);
+
+      const lineCh61iika = [bch61iiPoint, [-5.24, 120.2]];
+      generateBoxPetak('', "Ch 61'' Ki", lineCh61iika, 'right');
+
+      // Petak B.Ch 61
+      const lineBch61 = [bch61iiPoint, bch61Point];
+      generateBangunanPembagiDanSadap('B.Ch 61', 'topcenter', lineBch61, 0);
+
+      const lineCh61ki = [bch61Point, [-5.1, bch61Point[1]]];
+      generateBoxPetak('929447ae-2fd8-4355-be18-cc1b81e2d778', 'Ch 61 Ki', lineCh61ki, 'top');
+
+      // Petak B.Ch 62
+      const lineBch62 = [bch61Point, bch62Point];
+      generateBangunanPembagiDanSadap('B.Ch 62', 'topcenter', lineBch62, 0);
+
+      const lineCh62ki = [bch62Point, [-5.1, bch62Point[1]]];
+      generateBoxPetak('f588b44d-92b2-4c52-92d9-c97f301140a7', 'Ch 62 Ki', lineCh62ki, 'top');
+
+      // Petak B.Ch 63
+      const lineBch63 = [bch62Point, bch63Point];
+      generateBangunanPembagiDanSadap('B.Ch 63', 'topcenter', lineBch63, 0);
+
+      const lineCh63ki = [bch63Point, [-5.1, bch63Point[1]]];
+      generateBoxPetak('943f8e56-2bc1-49de-bb74-4dd1b5bdc91d', 'Ch 63 Ki', lineCh63ki, 'top');
+
+      // Petak B.Ch 64
+      const lineBch64 = [bch63Point, bch64Point];
+      generateBangunanPembagiDanSadap('B.Ch 64', 'topcenter', lineBch64, 0);
+
+      const lineCh64ka = [bch64Point, [-5.2, bch64Point[1]]];
+      generateBoxPetak('036297af-227f-4a07-a61d-f44aa855d768', 'Ch 64 Ka', lineCh64ka, 'bottom');
+
+      // Petak B.Ch 65
+      const lineBch65 = [bch64Point, bch65Point];
+      generateBangunanPembagiDanSadap('B.Ch 65 (BC.V-X)', 'topcenter', lineBch65, 0);
+
+      const lineCh65ka = [bch65Point, [-5.2, bch65Point[1]]];
+      generateBoxPetak('bac89ff6-db38-470b-b84c-3339bee70840', 'Ch 65 Ka', lineCh65ka, 'bottom');
+
+      // Petak B.Ch 66
+      const lineBch66 = [bch65Point, bch66Point];
+      generateBangunanPembagi('B.Ch 66 (BC.V-XI)', 'centerleft', lineBch66, 270);
+
+      const lineBbb1 = [bch66Point, bbb1Point];
+      generateBangunanSadap('B.Bb 1', 'topleft', lineBbb1, 0);
+
+      const lineBb1ka = [bbb1Point, [bbb1Point[0],121.15 ]];
+      generateBoxPetak('7fe4ca05-906b-4350-94d3-57d1286d5a17', 'B.B 1 Ka', lineBb1ka, 'left');
+
+      const lineBb1ki = [bbb1Point, [bbb1Point[0],121.25 ]];
+      generateBoxPetak('b032b13c-cdcd-410b-bc6c-eb9a137ac292', 'B.B 1 Ki', lineBb1ki, 'right');
+
+      const lineBbb2 = [bbb1Point, bbb2Point];
+      generateBangunanSadap('B.Bb 2', 'topleft', lineBbb2, 0);
+
+      const lineBb2ka = [bbb2Point, [bbb2Point[0],121.15 ]];
+      generateBoxPetak('eee660ea-7665-4e22-801e-b4876701ec8d', 'B.B 2 Ka', lineBb2ka, 'left');
+
+      const lineBb2ki = [bbb2Point, [bbb2Point[0],121.25 ]];
+      generateBoxPetak('33576b16-60a0-4153-8d2a-5f3f587e9231', 'B.B 2 Ki', lineBb2ki, 'right');
+
+      const lineBbb3 = [bbb2Point, bbb3Point];
+      generateBangunanSadap('B.Bb 3', 'topright', lineBbb3, 0);
+
+      const lineBb3ka = [bbb3Point, [bbb3Point[0],121.15 ]];
+      generateBoxPetak('', 'B.B 3 Ka', lineBb3ka, 'left');
+
+      const lineBb3te = [bbb3Point, [-5.85, bbb3Point[1]]];
+      generateBoxPetak('d5cb771a-7b3f-450f-b59b-2fdfe8f1fa21', 'B.B 3 Te', lineBb3te, 'bottom');
+      
+      // Petak B.Ch 67
+      const lineBch67 = [bch66Point, bch67Point];
+      generateBangunanPembagiDanSadap('B.Ch 67', 'topcenter', lineBch67, 270);
+
+      const lineCh67ka = [bch67Point, [-5.3, bch67Point[1]]];
+      generateBoxPetak('e6689908-21f8-45a7-9c44-42f7919492ec', 'Ch 67 Ka', lineCh67ka, 'bottom');
+
+      // Petak B.Ch 68'
+      const lineBch68i = [bch67Point, bch68iPoint];
+      generateBangunanPembagiDanSadap("B.Ch 68'", 'topright', lineBch68i, 270);
+      
+      const lineCh68ika = [bch68iPoint, [-5.2, bch68iPoint[1]]];
+      generateBoxPetak('', "Ch 68' Ka", lineCh68ika, 'bottom');
+
+      // Petak B.Ch 68
+      const lineBch68 = [bch68iPoint, bch68Point];
+      generateBangunanPembagiDanSadap('B.Ch 68', 'topcenter', lineBch68, 270);
+
+      const lineCh68ki = [bch68Point, [-5.05, bch68Point[1]]];
+      generateBoxPetak('c5b7b3e4-6c', 'Ch 68 Ki', lineCh68ki, 'right');
+
+      // Petak B.Ch 69
+      const lineBch69 = [bch68Point, bch69Point];
+      generateBangunanPembagi('B.Ch 69', 'bottomright', lineBch69, 0);
+
+      const lineBbn1 = [bch69Point, bbn1Point];
+      generateBangunanSadap('B.Bn 1', 'topleft', lineBbn1, 0);
+
+      const lineBn1ka = [bbn1Point, [bbn1Point[0],121.55 ]];
+      generateBoxPetak('f08cbe68-693b-4b9c-8a43-3711c2a8ab8b', 'B.Bn 1 Ka', lineBn1ka, 'left');
+
+      const lineBn1ki = [bbn1Point, [bbn1Point[0],121.65 ]];
+      generateBoxPetak('debc2472-78e4-4a5a-9a51-f9da99370ce5', 'B.Bn 1 Ki', lineBn1ki, 'right');
+
+      const lineBbn2 = [bbn1Point, bbn2Point];
+      generateBangunanSadap('B.Bn 2', 'topleft', lineBbn2, 0);
+
+      const lineBn2ki = [bbn2Point, [bbn2Point[0],121.65 ]];
+      generateBoxPetak('8c6217ae-4b1d-40dc-90e0-4813530f8842', 'B.Bn 2 Ki', lineBn2ki, 'right');
+
+      // Petak B.Ch 70
+      const lineBch70 = [bch69Point, bch70Point];
+      generateBangunanPembagi('B.Ch 70', 'topright', lineBch70, 0);
+
+      const lineCh70ki = [bch70Point, [-5.05, bch70Point[1]]];
+      generateBoxPetak('', 'Ch 70 Ki', lineCh70ki, 'left');
+
+      const lineBpr1i = [bch70Point, bpr1iPoint];
+      generateBangunanSadap("B.Pr 1'", 'topleft', lineBpr1i, 0);
+
+      const lineBpr1iki = [bpr1iPoint, [bpr1iPoint[0],121.9]];
+      generateBoxPetak('', "Pr. 1' Ki", lineBpr1iki, 'right');
+
+      const lineBpr1 = [bpr1iPoint, bpr1Point];
+      generateBangunanSadap('B.Pr 1', 'topleft', lineBpr1, 0);
+
+      const lineBpr1ka = [bpr1Point, [bpr1Point[0],121.8]];
+      generateBoxPetak('2c006d22-36d7-4d9a-aaa1-85ebb962e510', 'Pr. 1 Ka', lineBpr1ka, 'left');
+
+      const lineBpr2 = [bpr1Point, bpr2Point];
+      generateBangunanSadap('B.Pr 2', 'topleft', lineBpr2, 0);
+
+      const lineBpr2ki = [bpr2Point, [bpr2Point[0],121.9]];
+      generateBoxPetak('7261e694-28d1-47de-875f-5c1dcd21d858', 'Pr. 2 Ki', lineBpr2ki, 'right');
+
+      const lineBpr2ka = [bpr2Point, [bpr2Point[0],121.8]];
+      generateBoxPetak('abe3717e-fd6f-4135-b81c-ec7b2b5e2e52', 'Pr. 2 Ka', lineBpr2ka, 'left');
+
+      const lineBpr3 = [bpr2Point, bpr3Point];
+      generateBangunanSadap('B.Pr 3', 'topleft', lineBpr3, 0);
+
+      const lineBpr3ki = [bpr3Point, [bpr3Point[0],121.9]];
+      generateBoxPetak('ee6e4136-fa7b-47cc-a82b-15a4596e22cb', 'Pr. 3 Ki', lineBpr3ki, 'right');
+
+      const lineBpr3ka = [bpr3Point, [bpr3Point[0],121.8]];
+      generateBoxPetak('bb2a0b5d-05e0-4b8b-9c28-b5b3209cbccc', 'Pr. 3 Ka', lineBpr3ka, 'left');
+
+      const lineBpr4 = [bpr3Point, bpr4Point];  
+      generateBangunanSadap('B.Pr 4', 'topleft', lineBpr4, 0);
+
+      const lineBpr4ki = [bpr4Point, [bpr4Point[0],121.9]];
+      generateBoxPetak('e2151e1a-2fc5-4372-ae1c-c0c151181e7a', 'Pr. 4 Ki', lineBpr4ki, 'right');
+
+      const lineBpr4ka = [bpr4Point, [bpr4Point[0],121.8]];
+      generateBoxPetak('430c5b78-1a49-479b-be71-52a45bdfcd3e', 'Pr. 4 Ka', lineBpr4ka, 'left');
+
+      const lineBpr4tg = [bpr4Point, [-6.1,bpr4Point[1]]];
+      generateBoxPetak('6dc9a5a1-2814-4acd-bc14-a8e8dfee5cc7', 'Pr. 4 Tg', lineBpr4tg, 'bottom');
+     
+      // Petak B.Ch 71'
+      const lineBch71i = [bch70Point,[-5.15, 121.95],bch71iPoint];
+      generateBangunanSadap("B.Ch 71'", 'centerright', lineBch71i, 0);
+
+      const lineCh7iki = [bch71iPoint, [bch71iPoint[0],121.75]];
+      generateBoxPetak('', "Ch 71' Ki", lineCh7iki, 'left');
+
+      // Petak B.Ch 71
+      const lineBch71 = [bch71iPoint, bch71Point];
+      generateBangunanSadap('B.Ch 71 (BC.V-XIV)', 'centerright', lineBch71, 0);
+
+      const lineCh71ki = [bch71Point, [bch71Point[0],121.9 ]];
+      generateBoxPetak('e38d55ae-45e3-4583-ad0b-e2192d0289b5', 'Ch 71 Ki', lineCh71ki, 'left');
+
+      // Petak B.Ch 72'
+      const lineBch72i = [bch71Point, bch72iPoint];
+      generateBangunanSadap("B.Ch 72'", 'centerright', lineBch72i, 0);
+
+      const lineCh72ika = [bch72iPoint,[bch72iPoint[0], 121.75]];
+      generateBoxPetak('', "Ch 72' Ka", lineCh72ika, 'left');
+
+      // Petak B.Ch 72
+      const lineBch72 = [bch72iPoint, bch72Point];
+      generateBangunanSadap('B.Ch 72 (BC.V-XVI)', 'centerright', lineBch72, 0);
+
+      const lineCh72ki = [bch72Point, [bch72Point[0],121.9 ]];
+      generateBoxPetak('289c04ba-25d9-41f9-ae96-01cd6fc8e803', 'Ch 72 Ki', lineCh72ki, 'left');
+
+      // Petak B.Ch 73
+      const lineBch73 = [bch72Point, bch73Point];
+      generateBangunanSadap('B.Ch 73 (BC.V-XV)', 'centerright', lineBch73, 0);
+
+      const lineCh73ki = [bch73Point, [bch73Point[0],121.9 ]];
+      generateBoxPetak('467469a2-970c-403c-a013-0a99e92a76d2', 'Ch 73 Ki', lineCh73ki, 'left');
+
+      // Petak B.Ch 74
+      const lineBch74 = [bch73Point, bch74Point];
+      generateBangunanSadap('B.Ch 74 (BC.V-XVII)', 'centerleft', lineBch74, 0);
+
+      const lineCh74ka = [bch74Point, [bch74Point[0],122 ]];
+      generateBoxPetak('bd0ea090-39d6-4704-9f08-21c0cb42b7e5', 'Ch 74 Ka', lineCh74ka, 'right');
+
+      // Petak B.Ch 75
+      const lineBch75 = [bch74Point, bch75Point];
+      generateBangunanSadap('B.Ch 75 (BC.V-XVIII)', 'topleft', lineBch75, 0);
+
+      const lineCh75ki = [bch75Point, [bch75Point[0],121.9]];
+      generateBoxPetak('709bef28-5bf8-4c29-b6e9-2c744a023535', 'Ch 75 Ki', lineCh75ki, 'left');
+
+      const lineCh75ka = [bch75Point, [bch75Point[0],122]];
+      generateBoxPetak('9ff88b3c-33df-4b28-b35c-f1ed1d050841', 'Ch 75 Ka', lineCh75ka, 'right');
+
+      // Generate Text
+      generateTextSaluranSekunder('SAL.SEKUNDER KRAMASARI', [-6.07, 119.67], 0)
+      generateTextSaluranSekunder('SAL.SEKUNDER BOJONG', [-5.85, 119.67], 0)
+      generateTextSaluranSekunder('SAL.SEKUNDER BRINGKENG', [-5.55, 119.74], 0)
+      generateTextSaluranSekunder('SAL.SEKUNDER UJUNG MANIK', [-4.9, 119.97], 0)
+      generateTextSaluranSekunder('SAL.SEKUNDER BABAKAN', [-5.5,121.23], 270)
+      generateTextSaluranSekunder('SAL.SEKUNDER BINANGUN', [-5.55,121.63], 270)
+      generateTextSaluranSekunder('SAL.SEKUNDER PARID', [-5.45,121.88], 270)
+      generateTextSaluranSekunder('SAL.INDUK CIHAUR', [-5.15,121.98], 270)
+      generateTextSaluranPrimer('SALURAN INDUK CIHAUR', [-5.2, 120.35], 0)
+      
     }
     return {
         //main function to initiate the module
