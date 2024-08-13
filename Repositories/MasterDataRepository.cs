@@ -17,6 +17,8 @@ namespace IrigasiManganti.Repositories
         Task<IEnumerable<dynamic>> GetDataDebitBendung(VMDateRange range);
         Task<IEnumerable<dynamic>> GetDataDebitIrigasi(VMDateRange range);
         Task<(IReadOnlyList<dynamic>, int)> GetDataPetak(JqueryDataTableRequest request);
+        Task<(IReadOnlyList<dynamic>, int)> GetDataForecast(JqueryDataTableRequest request);
+        Task<(IReadOnlyList<dynamic>, int)> GetDataRekomendasi(JqueryDataTableRequest request, string date);
         Task<(IReadOnlyList<dynamic>, int)> GetDataKebutuhan(JqueryDataTableRequestKebutuhan request);
         Task<(int code, string message)> DeletePetak(Guid id);
         MasterPetak? GetDataPetakById(Guid id);
@@ -145,6 +147,72 @@ namespace IrigasiManganti.Repositories
             }
         }
 
+        public async Task<(IReadOnlyList<dynamic>, int)> GetDataForecast(JqueryDataTableRequest request) {
+            try {
+                using var connection = new NpgsqlConnection(_connectionString);
+                List<dynamic> result = new List<dynamic>();
+
+                var query = $@"SELECT 
+                    tanggal,
+                    id,
+                    ketersediaan_avg AS ""ketersediaanAvg"",
+                    ketersediaan_min AS ""ketersediaanMin"",
+                    ketersediaan_max AS ""ketersediaanMax"",
+                    updated_at AS ""updatedAt""
+                FROM
+                    debit_bendung
+                ORDER BY 
+                    tanggal";
+
+                var parameters = new DynamicParameters();
+                var whereConditions = new List<string>();
+
+                if (!string.IsNullOrEmpty(request.SearchValue))
+                {
+                    if (request.SearchValue.Contains('\''))
+                    {
+                        request.SearchValue = request.SearchValue.Replace("'", "''");
+                    }
+
+                    if (request.SearchValue.Contains('['))
+                    {
+                        request.SearchValue = request.SearchValue.Replace("[", "''");
+                    }
+
+                    whereConditions.Add(@"
+                    (LOWER(tanggal) LIKE @SearchValue OR
+                    LOWER(ketersediaan_min) LIKE @SearchValue OR
+                    LOWER(ketersediaan_max) LIKE @SearchValue OR
+                    LOWER(ketersediaan_avg) LIKE @SearchValue OR
+                    LOWER(updated_at) LIKE @SearchValue");
+                    parameters.Add("@SearchValue", "%" + request.SearchValue.ToLower() + "%");
+                }
+
+                var whereClause = whereConditions.Count > 0 ? "WHERE " + string.Join(" AND ", whereConditions) : "";
+
+                query += whereClause;
+
+                int total = 0;
+                var sql_count = $"SELECT COUNT(*) FROM ({query}) as total";
+                total = connection.ExecuteScalar<int>(sql_count, parameters);
+
+                query += @" 
+                OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY;";
+                parameters.Add("@Skip", request.Skip);
+                parameters.Add("@PageSize", request.PageSize);
+
+                result = (await connection.QueryAsync<dynamic>(query, parameters)).ToList();
+
+                return (result, total);
+            } catch (Npgsql.NpgsqlException ex) {
+                Log.Error(ex, "Sql Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
+                throw;
+            } catch (System.Exception ex) {
+                Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
+                throw;
+            }
+        }
+
         public async Task<(IReadOnlyList<dynamic>, int)> GetDataPetak(JqueryDataTableRequest request) {
             try {
                 using var connection = new NpgsqlConnection(_connectionString);
@@ -221,7 +289,77 @@ namespace IrigasiManganti.Repositories
             }
         }
 
+        public async Task<(IReadOnlyList<dynamic>, int)> GetDataRekomendasi(JqueryDataTableRequest request, string date) {
+            try {
+                using var connection = new NpgsqlConnection(_connectionString);
+                List<dynamic> result = new List<dynamic>();
 
+                var query = $@"SELECT 
+                        p.id,
+                        P.nama_petak AS ""namaPetak"",
+                        P.luas,
+                        di.tanggal,
+                        di.debit_rekomendasi AS ""debitRekomendasi"",
+                        p.location,
+                        di.updated_at AS ""updatedAt""
+                    FROM
+                        petak
+                        AS p LEFT JOIN debit_irigasi AS di ON p.id = di.petak_id";
+
+                var parameters = new DynamicParameters();
+                var whereConditions = new List<string>();
+
+                if (!string.IsNullOrEmpty(date)) {
+                    whereConditions.Add("di.tanggal = @Date::date");
+                    parameters.Add("@Date", DateTime.Parse(date));
+                }
+
+
+                if (!string.IsNullOrEmpty(request.SearchValue))
+                {
+                    if (request.SearchValue.Contains('\''))
+                    {
+                        request.SearchValue = request.SearchValue.Replace("'", "''");
+                    }
+
+                    if (request.SearchValue.Contains('['))
+                    {
+                        request.SearchValue = request.SearchValue.Replace("[", "''");
+                    }
+
+                    whereConditions.Add(@"
+                    (LOWER(p.nama_petak) LIKE @SearchValue OR
+                    LOWER(p.luas) LIKE @SearchValue OR
+                    LOWER(di.debit_rekomendasi) LIKE @SearchValue OR
+                    LOWER(location) LIKE @SearchValue OR
+                    LOWER(di.tanggal) LIKE @SearchValue)");
+                    parameters.Add("@SearchValue", "%" + request.SearchValue.ToLower() + "%");
+                }
+
+               if (whereConditions.Count > 0) {
+                    query += " WHERE " + string.Join(" AND ", whereConditions);
+                }
+
+                // Get the total count before applying pagination
+                int total = connection.ExecuteScalar<int>($"SELECT COUNT(*) FROM ({query}) as total", parameters);
+
+                // Apply pagination
+                query += @" OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY;";
+                parameters.Add("@Skip", request.Skip);
+                parameters.Add("@PageSize", request.PageSize);
+
+                // Execute the final query and get the result
+                result = (await connection.QueryAsync<dynamic>(query, parameters)).ToList();
+
+                return (result, total);
+            } catch (Npgsql.NpgsqlException ex) {
+                Log.Error(ex, "Sql Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
+                throw;
+            } catch (System.Exception ex) {
+                Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
+                throw;
+            }
+        }
 
         public async Task<(int code, string message)> DeletePetak(Guid id)
         {
