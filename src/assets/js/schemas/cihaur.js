@@ -82,7 +82,7 @@ var SkemaSidareja = (function () {
     };
     var initMap = function () {
         map.attributionControl.setPrefix(false);
-        map.attributionControl.addAttribution('DI. Manganti Versi: R4 (Update 16 Juli 2024)');
+        map.attributionControl.addAttribution('DI. Manganti Skema Cihaur Versi: R4 (Update 16 Juli 2024) | App Versi 2.1 (Update 13 Agustus 2024)');
 
         var legendControl = L.control({ position: 'topright' });
 
