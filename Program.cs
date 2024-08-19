@@ -189,7 +189,7 @@ namespace IrigasiManganti
             // app.UseMiddleware<Middlewares.SubdomainMiddleware>();
 
             app.UseHangfireServer();
-            RecurringJob.AddOrUpdate<IKebutuhanJob>(service => service.InsertDataKebutuhanFromSmopi(), Cron.Weekly);
+            // RecurringJob.AddOrUpdate<IKebutuhanJob>(service => service.InsertDataKebutuhanFromSmopi(), Cron.Weekly);
 
             app.UseStaticFiles();
 

@@ -12,6 +12,7 @@ using System.Security.Claims;
 using IrigasiManganti.Jobs;
 
 namespace IrigasiManganti.Controllers {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class MasterController : BaseController {
         private readonly IUnitOfWorkRepository _unitOfWorkRepository;
         private readonly IUnitOfWorkService _service;
@@ -25,7 +26,7 @@ namespace IrigasiManganti.Controllers {
             this._job = job;
         }
 
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+       
         public IActionResult Petak() {
             ClaimsPrincipal claimUser = HttpContext.User;
             Console.WriteLine(claimUser?.Identity?.IsAuthenticated);

@@ -5,9 +5,10 @@
 @using Microsoft.AspNetCore.Http
 @using System.Security.Claims
 
-@{ 
+@{
+    var x = ClaimIdentity.Name;
     var currentController = ViewContext.RouteData.Values["controller"].ToString();
-    var currentAction = ViewContext.RouteData.Values["action"].ToString();
+    var currentAction = ViewContext.RouteData.Values["action"].ToString(); 
 }
 
 <!DOCTYPE html>
@@ -398,8 +399,8 @@
                     </li>
                 </ul>
                 <ul class="list-unstyled topnav-menu float-end mb-0">
-                    @* @if (!string.IsNullOrEmpty(ClaimIdentity.Name)) *@
-                    @if(User.Identity.IsAuthenticated)
+                    @if (!string.IsNullOrEmpty(ClaimIdentity.Name))
+                    @* @if(User.Identity.IsAuthenticated) *@
                     {
                         <li class="dropdown notification-list topbar-dropdown">
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light"

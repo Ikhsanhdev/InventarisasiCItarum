@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace IrigasiManganti.Controllers
 {
-    // [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+    [AllowAnonymous]
     public class HomeController : BaseController
     {
         private readonly IUnitOfWorkRepository _unitOfWorkRepository;
