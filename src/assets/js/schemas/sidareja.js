@@ -178,7 +178,7 @@ var SkemaSidareja = (function () {
 
     var initBs1 = function () {
       const linePts1Ki = [[-7.325, 108.77], [-7.325, 108.81]];
-      generateBoxPetak('fca11354-774f-4924-8dc6-c88bcd5f2de6', 'Pts. 1 Ki', linePts1Ki, 'right');
+      generateBoxPetak('fca11354-774f-4924-8dc6-c88bcd5f2de6', 'Pts. 1 Ki', linePts1Ki, 'right', 'golongan-a');
 
       const lineBs1 = [
         [-7.235, 108.77],
@@ -194,7 +194,7 @@ var SkemaSidareja = (function () {
 
       // Set Bks. 2
       const linePtKs2Ki = [bks2Point, [-7.475, bks2Point[1]]];
-      generateBoxPetak('a26be22c-f1e0-4400-af78-82b3b93cb1bf', 'Pt. Ks. 2-Ki', linePtKs2Ki, 'top');
+      generateBoxPetak('a26be22c-f1e0-4400-af78-82b3b93cb1bf', 'Pt. Ks. 2-Ki', linePtKs2Ki, 'top', 'golongan-a');
       
       const lineBks2 = [
         bs2Point, 
@@ -204,7 +204,7 @@ var SkemaSidareja = (function () {
 
       // Set BKs. 1
       const linePtKs1Ki = [bks1Point, [-7.475, bks1Point[1]]];
-      generateBoxPetak('3ca505a2-0038-45a7-aa38-e2f43205d84d', 'Pt. Ks. 1-Ki', linePtKs1Ki, 'top');
+      generateBoxPetak('3ca505a2-0038-45a7-aa38-e2f43205d84d', 'Pt. Ks. 1-Ki', linePtKs1Ki, 'top', 'golongan-a');
 
       const lineBks1 = [
         bs2Point, 
@@ -232,10 +232,10 @@ var SkemaSidareja = (function () {
 
       // Set BRm. 5
       const linePtsRm5Ki = [brm5Point, [-7.65, brm5Point[1]]];
-      generateBoxPetak('9420e89d-7dac-4532-ae6c-2c780837e57b', 'Pts. Rm. 5-Ki', linePtsRm5Ki, 'top');
+      generateBoxPetak('9420e89d-7dac-4532-ae6c-2c780837e57b', 'Pts. Rm. 5-Ki', linePtsRm5Ki, 'top', 'golongan-a');
 
       const linePtsRm5Kn = [brm5Point, [-7.73, brm5Point[1]]];
-      generateBoxPetak('89c2cd98-caea-42d4-af0b-2ba7bd55c667', 'Pts. Rm. 5-Kn', linePtsRm5Kn, 'bottom');
+      generateBoxPetak('89c2cd98-caea-42d4-af0b-2ba7bd55c667', 'Pts. Rm. 5-Kn', linePtsRm5Kn, 'bottom', 'golongan-a');
        
       const lineBrm5 = [
         bs3Point, 
@@ -245,7 +245,7 @@ var SkemaSidareja = (function () {
 
       // Set BRm. 4
       const linePtsRm4Ki = [brm4Point, [-7.65, brm4Point[1]]];
-      generateBoxPetak('af93bac3-682a-4c93-a997-91979f0ae3a0', 'Pts. Rm. 4-Ki', linePtsRm4Ki, 'top');
+      generateBoxPetak('af93bac3-682a-4c93-a997-91979f0ae3a0', 'Pts. Rm. 4-Ki', linePtsRm4Ki, 'top', 'golongan-a');
       
       const lineBrm4 = [
         bs3Point, 
@@ -255,7 +255,7 @@ var SkemaSidareja = (function () {
 
       // Set BRm. 3
       const linePtsRm3Ki = [brm3Point, [-7.65, brm3Point[1]]];
-      generateBoxPetak('509a16fd-9b7c-475f-89a0-24386d38709f', 'Pts. Rm. 3-Ki', linePtsRm3Ki, 'top');
+      generateBoxPetak('509a16fd-9b7c-475f-89a0-24386d38709f', 'Pts. Rm. 3-Ki', linePtsRm3Ki, 'top', 'golongan-a');
       
       const lineBrm3 = [
         bs3Point, 
@@ -265,7 +265,7 @@ var SkemaSidareja = (function () {
 
       // Set BRm. 2
       const linePtsRm2Kn = [brm2Point, [-7.72, brm2Point[1]]];
-      generateBoxPetak('7cfa3b50-14b2-4724-a582-fddfb27ed8bc', 'Pts. Rm. 2-Kn', linePtsRm2Kn, 'bottom');
+      generateBoxPetak('7cfa3b50-14b2-4724-a582-fddfb27ed8bc', 'Pts. Rm. 2-Kn', linePtsRm2Kn, 'bottom', 'golongan-a');
       
       const lineBrm2 = [
         bs3Point, 
@@ -275,10 +275,10 @@ var SkemaSidareja = (function () {
 
       // Set BRm. 1
       const linePtsRm1Ki = [brm1Point, [-7.65, brm1Point[1]]];
-      generateBoxPetak('8c2c67ac-756f-4de2-b3c2-f0b9e21cd6e5', 'Pts. Rm. 1-Ki', linePtsRm1Ki, 'top');
+      generateBoxPetak('8c2c67ac-756f-4de2-b3c2-f0b9e21cd6e5', 'Pts. Rm. 1-Ki', linePtsRm1Ki, 'top', 'golongan-a');
 
       const linePtsRm1Kn = [brm1Point, [-7.72, brm1Point[1]]];
-      generateBoxPetak('1518f3d6-5f9e-4ae7-b734-8ece837bcdc1', 'Pts. Rm. 1-Kn', linePtsRm1Kn, 'bottom');
+      generateBoxPetak('1518f3d6-5f9e-4ae7-b734-8ece837bcdc1', 'Pts. Rm. 1-Kn', linePtsRm1Kn, 'bottom', 'golongan-a');
 
       const lineBrm1 = [
         bs3Point, 
@@ -300,7 +300,7 @@ var SkemaSidareja = (function () {
       const bs4Point = [-7.86, 108.77];
 
       const linePts4Ki = [bs4Point, [bs4Point[0], 108.81]];
-      generateBoxPetak('0d219996-918d-4549-9a4a-0a6820e9e40d', 'Pts. IV Ki', linePts4Ki, 'right');
+      generateBoxPetak('0d219996-918d-4549-9a4a-0a6820e9e40d', 'Pts. IV Ki', linePts4Ki, 'right', 'golongan-a');
 
       const lineBs4 = [
         [-7.675, 108.77],
@@ -322,10 +322,10 @@ var SkemaSidareja = (function () {
 
       // Set BKd. 8
       const linePtKd8Ki = [bkd8Point, [-8, bkd8Point[1]]];
-      generateBoxPetak('19f7b89b-09ec-4538-a27d-f522792d6b54', 'Pt. Kd. 8-Ki', linePtKd8Ki, 'top');
+      generateBoxPetak('19f7b89b-09ec-4538-a27d-f522792d6b54', 'Pt. Kd. 8-Ki', linePtKd8Ki, 'top', 'golongan-a');
 
       const linePtKd8Kn = [bkd8Point, [-8.1, bkd8Point[1]]];
-      generateBoxPetak('bf22c9b5-1310-45f2-8c55-b1c729660edf', 'Pt. Kd. 8-Kn', linePtKd8Kn, 'bottom');
+      generateBoxPetak('bf22c9b5-1310-45f2-8c55-b1c729660edf', 'Pt. Kd. 8-Kn', linePtKd8Kn, 'bottom', 'golongan-a');
 
       const lineBkd8 = [
         bs5Point, 
@@ -335,7 +335,7 @@ var SkemaSidareja = (function () {
 
       // Set BKd. 7
       const linePtKd7Kn = [bkd7Point, [-8.1, bkd7Point[1]]];
-      generateBoxPetak('bb284931-2b5a-48ad-87e5-75a048c42c48', 'Pt. Kd. 7-Kn', linePtKd7Kn, 'bottom');
+      generateBoxPetak('bb284931-2b5a-48ad-87e5-75a048c42c48', 'Pt. Kd. 7-Kn', linePtKd7Kn, 'bottom', 'golongan-a');
 
       const lineBkd7 = [
         bs5Point, 
@@ -345,7 +345,7 @@ var SkemaSidareja = (function () {
 
       // Set BKd. 6
       const linePtKd6Ki = [bkd6Point, [-8, bkd6Point[1]]];
-      generateBoxPetak('37ae32d1-80ca-4197-8ac5-69b13653f261', 'Pt. Kd. 6-Ki', linePtKd6Ki, 'top');
+      generateBoxPetak('37ae32d1-80ca-4197-8ac5-69b13653f261', 'Pt. Kd. 6-Ki', linePtKd6Ki, 'top', 'golongan-a');
 
       const lineBkd6 = [
         bs5Point, 
@@ -355,7 +355,7 @@ var SkemaSidareja = (function () {
 
       // Set BKd. 5
       const linePtKd5Ki = [bkd5Point, [-8, bkd5Point[1]]];
-      generateBoxPetak('87d948a4-46d7-4c2f-92b1-eae58b8e8d24', 'Pt. Kd. 5-Ki', linePtKd5Ki, 'top');
+      generateBoxPetak('87d948a4-46d7-4c2f-92b1-eae58b8e8d24', 'Pt. Kd. 5-Ki', linePtKd5Ki, 'top', 'golongan-a');
 
       const lineBkd5 = [
         bs5Point, 
@@ -365,7 +365,7 @@ var SkemaSidareja = (function () {
 
       // Set BKd. 4
       const linePtKd4Ki = [bkd4Point, [-8, bkd4Point[1]]];
-      generateBoxPetak('5b8b2241-d1df-42e1-9409-a444f42a329e', 'Pt. Kd. 4-Ki', linePtKd4Ki, 'top');
+      generateBoxPetak('5b8b2241-d1df-42e1-9409-a444f42a329e', 'Pt. Kd. 4-Ki', linePtKd4Ki, 'top', 'golongan-a');
 
       const lineBkd4 = [
         bs5Point, 
@@ -375,7 +375,7 @@ var SkemaSidareja = (function () {
 
       // Set BKd. 3
       const linePtKd3Ki = [bkd3Point, [-8, bkd3Point[1]]];
-      generateBoxPetak('c4690341-532f-43a6-9dd0-9a9d90e4f996', 'Pt. Kd. 3-Ki', linePtKd3Ki, 'top');
+      generateBoxPetak('c4690341-532f-43a6-9dd0-9a9d90e4f996', 'Pt. Kd. 3-Ki', linePtKd3Ki, 'top', 'golongan-a');
 
       const lineBkd3 = [
         bs5Point, 
@@ -385,10 +385,10 @@ var SkemaSidareja = (function () {
 
       // Set BKd. 2
       const linePtKd2Ki = [bkd2Point, [-8, bkd2Point[1]]];
-      generateBoxPetak('d2ea57f2-ac28-4aea-9626-619e46804ea1', 'Pt. Kd. 2-Ki', linePtKd2Ki, 'top');
+      generateBoxPetak('d2ea57f2-ac28-4aea-9626-619e46804ea1', 'Pt. Kd. 2-Ki', linePtKd2Ki, 'top', 'golongan-a');
 
       const linePtKd2Kn = [bkd2Point, [-8.1, bkd2Point[1]]];
-      generateBoxPetak('2a91cbf6-acd3-40f0-9c14-00856b14aba6', 'Pt. Kd. 2-Kn', linePtKd2Kn, 'bottom');
+      generateBoxPetak('2a91cbf6-acd3-40f0-9c14-00856b14aba6', 'Pt. Kd. 2-Kn', linePtKd2Kn, 'bottom', 'golongan-a');
 
       const lineBkd2 = [
         bs5Point, 
@@ -398,7 +398,7 @@ var SkemaSidareja = (function () {
 
       // Set BKd. 1
       const linePtKd1Kn = [bkd1Point, [-8.1, bkd1Point[1]]];
-      generateBoxPetak('c5dc7b64-2019-4c6d-97c8-ccc4a54a130b', 'Pt. Kd. 1-Kn', linePtKd1Kn, 'bottom');
+      generateBoxPetak('c5dc7b64-2019-4c6d-97c8-ccc4a54a130b', 'Pt. Kd. 1-Kn', linePtKd1Kn, 'bottom', 'golongan-a');
 
       const lineBkd1 = [
         bs5Point, 
@@ -456,7 +456,7 @@ var SkemaSidareja = (function () {
       // Set BCk. 10
 
       const linePtCk18Kn = [bckkn18Point, [bckkn18Point[0], bckkn18Point[1] - 0.06]];
-      generateBoxPetak('abf3088b-38b8-47a7-957e-b8a8c176d9d7', 'Pt. CK. 18-Kn', linePtCk18Kn, 'left');
+      generateBoxPetak('abf3088b-38b8-47a7-957e-b8a8c176d9d7', 'Pt. CK. 18-Kn', linePtCk18Kn, 'left', 'golongan-b');
 
       const lineBckKn18 = [
         bck10Point, 
@@ -465,10 +465,10 @@ var SkemaSidareja = (function () {
       generateBangunanSadap('BCk. Kn18', 'centerright', lineBckKn18, 0);
 
       const linePtCk17Kr = [bckkr17Point, [bckkr17Point[0], bckkr17Point[1] + 0.06]];
-      generateBoxPetak('c8e17113-3795-4562-bf19-e9365ed22acc', 'Pt. CK. 17-Kr', linePtCk17Kr, 'right');
+      generateBoxPetak('c8e17113-3795-4562-bf19-e9365ed22acc', 'Pt. CK. 17-Kr', linePtCk17Kr, 'right', 'golongan-b');
 
       const linePtCk17Kn = [bckkn17Point, [bckkn17Point[0], bckkn17Point[1] - 0.06]];
-      generateBoxPetak('288c23b6-bf60-4319-9d61-298b65b26521', 'Pt. CK. 17-Kn', linePtCk17Kn, 'left');
+      generateBoxPetak('288c23b6-bf60-4319-9d61-298b65b26521', 'Pt. CK. 17-Kn', linePtCk17Kn, 'left', 'golongan-b');
 
       const lineBckKn17 = [
         bck10Point, 
@@ -477,7 +477,7 @@ var SkemaSidareja = (function () {
       generateBangunanSadap('BCk. Kn17', 'topright', lineBckKn17, 0);
 
       const linePtCk16Kn = [bckkn16Point, [bckkn16Point[0], bckkn16Point[1] - 0.06]];
-      generateBoxPetak('7c88b4e5-99af-4703-b223-10f5032e65a1', 'Pt. CK. 16-Kn', linePtCk16Kn, 'left');
+      generateBoxPetak('7c88b4e5-99af-4703-b223-10f5032e65a1', 'Pt. CK. 16-Kn', linePtCk16Kn, 'left', 'golongan-b');
 
       const lineBckKn16 = [
         bck10Point, 
@@ -486,10 +486,10 @@ var SkemaSidareja = (function () {
       generateBangunanSadap('BCk. Kn16', 'centerright', lineBckKn16, 0);
 
       const linePtCk15Kn = [bckkn15Point, [bckkn15Point[0], bckkn15Point[1] - 0.06]];
-      generateBoxPetak('64f09dad-3f32-4439-90fb-09f3e3c2cef3', 'Pt. CK. 15-Kn', linePtCk15Kn, 'left');
+      generateBoxPetak('64f09dad-3f32-4439-90fb-09f3e3c2cef3', 'Pt. CK. 15-Kn', linePtCk15Kn, 'left', 'golongan-b');
 
       const linePtCk15Kr = [bckkn15Point, [bckkn15Point[0], bckkn15Point[1] + 0.1]];
-      generateBoxPetak('6738f990-c821-4f1b-9a1d-a8b7dbcbf00f', 'Pt. CK. 15-Kr', linePtCk15Kr, 'right');
+      generateBoxPetak('6738f990-c821-4f1b-9a1d-a8b7dbcbf00f', 'Pt. CK. 15-Kr', linePtCk15Kr, 'right', 'golongan-b');
 
       const lineBckKn15 = [
         bck10Point, 
@@ -498,7 +498,7 @@ var SkemaSidareja = (function () {
       generateBangunanSadap('BCk. Kn15', 'topright', lineBckKn15, 0);
 
       const linePtCk14Kr = [bckkn14Point, [bckkn14Point[0], bckkn14Point[1] + 0.1]];
-      generateBoxPetak('5fb2294d-1f39-4cd7-8a46-9272f5cb70cb', 'Pt. CK. 14-Kr', linePtCk14Kr, 'right');
+      generateBoxPetak('5fb2294d-1f39-4cd7-8a46-9272f5cb70cb', 'Pt. CK. 14-Kr', linePtCk14Kr, 'right', 'golongan-b');
 
       const lineBckKn14 = [
         bck10Point, 
@@ -507,7 +507,7 @@ var SkemaSidareja = (function () {
       generateBangunanSadap('BCk. Kn14', 'centerleft', lineBckKn14, 0);
 
       const linePtCk13Kn = [bckkn13Point, [bckkn13Point[0], bckkn13Point[1] - 0.04]];
-      generateBoxPetak('2720ee3e-519b-47cc-8559-3c50dd860f90', 'Pt. CK. 13-Kn', linePtCk13Kn, 'left');
+      generateBoxPetak('2720ee3e-519b-47cc-8559-3c50dd860f90', 'Pt. CK. 13-Kn', linePtCk13Kn, 'left', 'golongan-b');
 
       const lineBckKn13 = [
         bck10Point, 
@@ -516,7 +516,7 @@ var SkemaSidareja = (function () {
       generateBangunanSadap('BCk. Kn13', 'centerright', lineBckKn13, 0);
 
       const linePtCk12Kr = [bckkn12Point, [bckkn12Point[0], bckkn12Point[1] + 0.1]];
-      generateBoxPetak('dddcf36e-809a-4ef0-b1af-1a463f8cb2ac', 'Pt. CK. 12-Kr', linePtCk12Kr, 'right');
+      generateBoxPetak('dddcf36e-809a-4ef0-b1af-1a463f8cb2ac', 'Pt. CK. 12-Kr', linePtCk12Kr, 'right', 'golongan-b');
 
       const lineBckKn12 = [
         bck10Point, 
@@ -525,7 +525,7 @@ var SkemaSidareja = (function () {
       generateBangunanSadap('BCk. Kn12', 'centerleft', lineBckKn12, 0);
 
       const linePtCk11Kr = [bckkn1Point, [bckkn1Point[0], bckkn1Point[1] + 0.1]];
-      generateBoxPetak('3d6328fe-45c3-4d59-ad14-90adf6c2cc6d', 'Pt. CK. 11-Kr', linePtCk11Kr, 'right');
+      generateBoxPetak('3d6328fe-45c3-4d59-ad14-90adf6c2cc6d', 'Pt. CK. 11-Kr', linePtCk11Kr, 'right', 'golongan-b');
 
       const lineBckKn1 = [
         bck10Point, 
@@ -534,7 +534,7 @@ var SkemaSidareja = (function () {
       generateBangunanSadap('BCk. Kn1', 'centerleft', lineBckKn1, 0);
 
       const linePtCkKi2Kn = [bckki2Point, [bckki2Point[0] - 0.04, bckki2Point[1]]];
-      generateBoxPetak('88aff689-aabc-4a7d-8f6b-d691cafa4b73', 'Pt. CK.Ki 2-Kn', linePtCkKi2Kn, 'bottom');
+      generateBoxPetak('88aff689-aabc-4a7d-8f6b-d691cafa4b73', 'Pt. CK.Ki 2-Kn', linePtCkKi2Kn, 'bottom', 'golongan-b');
 
       const lineBckKi2 = [
         bck10Point, 
@@ -543,7 +543,7 @@ var SkemaSidareja = (function () {
       generateBangunanSadap('BCkKi. 2', 'topcenter', lineBckKi2, 90);
 
       const linePtCkKi1Kn = [bckki1Point, [bckki1Point[0] - 0.04, bckki1Point[1]]];
-      generateBoxPetak('bfe0a3e4-a1ad-4241-a5cf-746098673441', 'Pt. CK.Ki 1-Kn', linePtCkKi1Kn, 'bottom');
+      generateBoxPetak('bfe0a3e4-a1ad-4241-a5cf-746098673441', 'Pt. CK.Ki 1-Kn', linePtCkKi1Kn, 'bottom', 'golongan-b');
 
       const lineBckKi1 = [
         bck10Point, 
@@ -561,7 +561,7 @@ var SkemaSidareja = (function () {
 
       // Set BDt. 3
       const linePtDt3 = [bdt3Point, [bdt3Point[0] - 0.04, bdt3Point[1]]];
-      generateBoxPetak('4822f056-c75e-4822-9120-b434b3d98bca', 'Pt. Dt. 3', linePtDt3, 'bottom');
+      generateBoxPetak('4822f056-c75e-4822-9120-b434b3d98bca', 'Pt. Dt. 3', linePtDt3, 'bottom', 'golongan-b');
       
       const lineBdt3 = [
         bck9Point, 
@@ -571,7 +571,7 @@ var SkemaSidareja = (function () {
 
       // Set BDt. 2
       const linePtDt2Kn = [bdt2Point, [bdt2Point[0], bdt2Point[1] - 0.06]];
-      generateBoxPetak('08ea3e28-fadc-46bb-85ca-0e361dd9bf38', 'Pt. Dt. 2-Kn', linePtDt2Kn, 'left');
+      generateBoxPetak('08ea3e28-fadc-46bb-85ca-0e361dd9bf38', 'Pt. Dt. 2-Kn', linePtDt2Kn, 'left', 'golongan-b');
       
       const lineBdt2 = [
         bck9Point, 
@@ -581,10 +581,10 @@ var SkemaSidareja = (function () {
 
       // Set BDt. 1
       const linePtDt1Kr = [bdt1Point, [bdt1Point[0], bdt1Point[1] + 0.06]];
-      generateBoxPetak('f979e41e-c313-4f25-826e-d54ace194e74', 'Pt. Dt. 1-Kr', linePtDt1Kr, 'right');
+      generateBoxPetak('f979e41e-c313-4f25-826e-d54ace194e74', 'Pt. Dt. 1-Kr', linePtDt1Kr, 'right', 'golongan-b');
 
       const linePtDt1Kn = [bdt1Point, [bdt1Point[0], bdt1Point[1] - 0.06]];
-      generateBoxPetak('6ad63e56-5180-41c6-b81c-e1482e83c836', 'Pt. Dt. 1-Kn', linePtDt1Kn, 'left');
+      generateBoxPetak('6ad63e56-5180-41c6-b81c-e1482e83c836', 'Pt. Dt. 1-Kn', linePtDt1Kn, 'left', 'golongan-b');
       
       const lineBdt1 = [
         bck9Point, 
@@ -600,7 +600,7 @@ var SkemaSidareja = (function () {
 
       // Set BCk. 8
       const linePtCk8Kn = [bck8Point, [-8.42, bck8Point[1]]];
-      generateBoxPetak('0f715ffe-696b-4c85-8ef2-6017048ad341', 'Pt. Ck. 8-Kn', linePtCk8Kn, 'bottom');
+      generateBoxPetak('0f715ffe-696b-4c85-8ef2-6017048ad341', 'Pt. Ck. 8-Kn', linePtCk8Kn, 'bottom', 'golongan-b');
 
       const lineBck8 = [
         bs6Point, 
@@ -610,10 +610,10 @@ var SkemaSidareja = (function () {
 
       // Set BTr. 6
       const linePtTr6 = [btr6Point, [btr6Point[0] - 0.06, btr6Point[1]]];
-      generateBoxPetak('f199f0d7-6f13-46bf-85f8-8d1f83d4fb65', 'Pt. Tr. 6 cik', linePtTr6, 'bottom');
+      generateBoxPetak('f199f0d7-6f13-46bf-85f8-8d1f83d4fb65', 'Pt. Tr. 6 cik', linePtTr6, 'bottom', 'golongan-b');
 
       const linePtTr6Kr = [btr6Point, [btr6Point[0], btr6Point[1] + 0.06]];
-      generateBoxPetak('564531c7-761f-479f-b94d-d9e85affee3a', 'Pt. Tr. 6-Kr', linePtTr6Kr, 'right');
+      generateBoxPetak('564531c7-761f-479f-b94d-d9e85affee3a', 'Pt. Tr. 6-Kr', linePtTr6Kr, 'right', 'golongan-b');
       
       const lineBtr6 = [
         bck7Point, 
@@ -623,7 +623,7 @@ var SkemaSidareja = (function () {
 
       // Set BTr. 5
       const linePtTr5Kr = [btr5Point, [btr5Point[0], btr5Point[1] + 0.06]];
-      generateBoxPetak('7595e215-b0bd-491b-9ce6-945cac35931c', 'Pt. Tr. 5-Kr', linePtTr5Kr, 'right');
+      generateBoxPetak('7595e215-b0bd-491b-9ce6-945cac35931c', 'Pt. Tr. 5-Kr', linePtTr5Kr, 'right', 'golongan-b');
       
       const lineBtr5 = [
         bck7Point, 
@@ -633,7 +633,7 @@ var SkemaSidareja = (function () {
 
       // Set BTr. 4
       const linePtTr4Kr = [btr4Point, [btr4Point[0], btr4Point[1] + 0.06]];
-      generateBoxPetak('5c41e1ea-9dfb-4727-ba3f-fc35b27226a1', 'Pt. Tr. 4-Kr', linePtTr4Kr, 'right');
+      generateBoxPetak('5c41e1ea-9dfb-4727-ba3f-fc35b27226a1', 'Pt. Tr. 4-Kr', linePtTr4Kr, 'right', 'golongan-b');
       
       const lineBtr4 = [
         bck7Point, 
@@ -643,7 +643,7 @@ var SkemaSidareja = (function () {
 
       // Set BTr. 3
       const linePtTr3Kn = [btr3Point, [btr3Point[0], btr3Point[1] - 0.06]];
-      generateBoxPetak('f96a51b0-6fcc-4ca4-af2e-2de41b41bd75', 'Pt. Tr. 3-Kn', linePtTr3Kn, 'left');
+      generateBoxPetak('f96a51b0-6fcc-4ca4-af2e-2de41b41bd75', 'Pt. Tr. 3-Kn', linePtTr3Kn, 'left', 'golongan-b');
       
       const lineBtr3 = [
         bck7Point, 
@@ -653,7 +653,7 @@ var SkemaSidareja = (function () {
 
       // Set BTr. 2
       const linePtTr2Kn = [btr2Point, [btr2Point[0], btr2Point[1] - 0.06]];
-      generateBoxPetak('678b079a-46d7-4cdb-92b2-2df8d5a5a0e2', 'Pt. Tr. 2-Kn', linePtTr2Kn, 'left');
+      generateBoxPetak('678b079a-46d7-4cdb-92b2-2df8d5a5a0e2', 'Pt. Tr. 2-Kn', linePtTr2Kn, 'left', 'golongan-b');
       
       const lineBtr2 = [
         bck7Point, 
@@ -663,7 +663,7 @@ var SkemaSidareja = (function () {
 
       // Set BTr. 1
       const linePtTr1Kn = [btr1Point, [btr1Point[0] - 0.15, btr1Point[1] + 0.15]];
-      generateBoxPetak('dec728c0-64f2-4516-bbd4-79c023c331f3', 'Pt. Tr. 1-Kn', linePtTr1Kn, 'bottom');
+      generateBoxPetak('dec728c0-64f2-4516-bbd4-79c023c331f3', 'Pt. Tr. 1-Kn', linePtTr1Kn, 'bottom', 'golongan-b');
       
       const lineBtr1 = [
         btr1Point, 
@@ -680,7 +680,7 @@ var SkemaSidareja = (function () {
 
       // Set BCk. 6
       const linePtCk6Kn = [bck6Point, [-8.42, bck6Point[1]]];
-      generateBoxPetak('60eb2f2f-512a-4715-a75a-fd81596062f0', 'Pt. Ck. 6-Kn', linePtCk6Kn, 'bottom');
+      generateBoxPetak('60eb2f2f-512a-4715-a75a-fd81596062f0', 'Pt. Ck. 6-Kn', linePtCk6Kn, 'bottom', 'golongan-b');
 
       const lineBck6 = [
         bs6Point, 
@@ -690,7 +690,7 @@ var SkemaSidareja = (function () {
 
       // Set BCk. 5
       const linePtCk5Kn = [bck5Point, [-8.42, bck5Point[1]]];
-      generateBoxPetak('cb1a52bb-e373-4e06-b8ef-3a8571ef1163', 'Pt. Ck. 5-Kn', linePtCk5Kn, 'bottom');
+      generateBoxPetak('cb1a52bb-e373-4e06-b8ef-3a8571ef1163', 'Pt. Ck. 5-Kn', linePtCk5Kn, 'bottom', 'golongan-b');
 
       const lineBck5 = [
         bs6Point, 
@@ -700,7 +700,7 @@ var SkemaSidareja = (function () {
 
       // Set BCk. 4
       const linePtCk4Kn = [bck4Point, [-8.45, bck4Point[1]]];
-      generateBoxPetak('8257c58d-23e4-4e69-96a8-5e752edee4a8', 'Pt. Ck. 4-Kn', linePtCk4Kn, 'bottom');
+      generateBoxPetak('8257c58d-23e4-4e69-96a8-5e752edee4a8', 'Pt. Ck. 4-Kn', linePtCk4Kn, 'bottom', 'golongan-b');
 
       const lineBck4 = [
         bs6Point, 
@@ -710,7 +710,7 @@ var SkemaSidareja = (function () {
 
       // Set BCk. 3
       const linePtCk3Kn = [bck3Point, [-8.42, bck3Point[1]]];
-      generateBoxPetak('a32dd81f-4736-4393-94cb-ddd69f14ac4d', 'Pt. Ck. 3-Kn', linePtCk3Kn, 'bottom');
+      generateBoxPetak('a32dd81f-4736-4393-94cb-ddd69f14ac4d', 'Pt. Ck. 3-Kn', linePtCk3Kn, 'bottom', 'golongan-b');
 
       const lineBck3 = [
         bs6Point, 
@@ -720,7 +720,7 @@ var SkemaSidareja = (function () {
 
       // Set BLd. 3
       const linePtLd3 = [bld3Point, [bld3Point[0] - 0.015, bld3Point[1] + 0.018]];
-      generateBoxPetak('e4bc311d-72a5-4f05-b2c6-7a1924b0b971', 'Pt. Ld. 3', linePtLd3, 'bottom');
+      generateBoxPetak('e4bc311d-72a5-4f05-b2c6-7a1924b0b971', 'Pt. Ld. 3', linePtLd3, 'bottom', 'golongan-b');
       
       const lineBld3 = [
         bld2Point, 
@@ -730,10 +730,10 @@ var SkemaSidareja = (function () {
 
       // Set BLd. 2
       const linePtLd2Ki = [bld2Point, [bld2Point[0] + 0.02, bld2Point[1] + 0.06]];
-      generateBoxPetak('91abd34b-19d6-4851-b59d-7cf73f363a21', 'Pt. Ld. 2-Ki', linePtLd2Ki, 'right');
+      generateBoxPetak('91abd34b-19d6-4851-b59d-7cf73f363a21', 'Pt. Ld. 2-Ki', linePtLd2Ki, 'right', 'golongan-b');
 
       const linePtLd2Kn = [bld2Point, [bld2Point[0] - 0.01, bld2Point[1] - 0.1]];
-      generateBoxPetak('7c91a5b8-d19e-4539-954d-5a909a76f276', 'Pt. Ld. 2-Kn', linePtLd2Kn, 'left');
+      generateBoxPetak('7c91a5b8-d19e-4539-954d-5a909a76f276', 'Pt. Ld. 2-Kn', linePtLd2Kn, 'left', 'golongan-b');
       
       const lineBld2 = [
         bld1Point, 
@@ -743,10 +743,10 @@ var SkemaSidareja = (function () {
 
       // Set BLd. 1
       const linePtLd1Ki = [bld1Point, [bld1Point[0] + 0.01, bld1Point[1] + 0.08]];
-      generateBoxPetak('96721e56-a46a-41af-8492-2141bbd5785b', 'Pt. Ld. 1-Ki', linePtLd1Ki, 'right');
+      generateBoxPetak('96721e56-a46a-41af-8492-2141bbd5785b', 'Pt. Ld. 1-Ki', linePtLd1Ki, 'right', 'golongan-b');
 
       const linePtLd1Kn = [bld1Point, [bld1Point[0] - 0.01, bld1Point[1] - 0.1]];
-      generateBoxPetak('8d4898ca-f935-4fa2-a579-e7128160dda4', 'Pt. Ld. 1-Kn', linePtLd1Kn, 'left');
+      generateBoxPetak('8d4898ca-f935-4fa2-a579-e7128160dda4', 'Pt. Ld. 1-Kn', linePtLd1Kn, 'left', 'golongan-b');
       
       const lineBld1 = [
         bck2Point, 
@@ -764,10 +764,10 @@ var SkemaSidareja = (function () {
 
       // Set BCk. 1
       const linePtCk1Ki = [bck1Point, [-8.32, bck1Point[1]]];
-      generateBoxPetak('c75657c4-1e68-4328-a18b-17a395d1e8e9', 'Pt. Ck. 1-Ki', linePtCk1Ki, 'top');
+      generateBoxPetak('c75657c4-1e68-4328-a18b-17a395d1e8e9', 'Pt. Ck. 1-Ki', linePtCk1Ki, 'top', 'golongan-b');
 
       const linePtCk1Kn = [bck1Point, [-8.42, bck1Point[1]]];
-      generateBoxPetak('adcf560e-d7bc-48e1-8334-e85fb741faad', 'Pt. Ck. 1-Kn', linePtCk1Kn, 'bottom');
+      generateBoxPetak('adcf560e-d7bc-48e1-8334-e85fb741faad', 'Pt. Ck. 1-Kn', linePtCk1Kn, 'bottom', 'golongan-b');
 
       const lineBck1 = [
         bs6Point, 
@@ -788,6 +788,1003 @@ var SkemaSidareja = (function () {
       // generateTextSaluranSekunder('SS. CIKALAPA', [-7.9, 109.3], 0);
     }
 
+    var initBs7 = function() {
+      const bs7Point = [-8.75, 108.72];
+      const linePtSm4 = [bs7Point, [bs7Point[0], 108.81]];
+      generateBoxPetak('ece08111-0685-4435-8963-4860a4d0c356', 'Pt.Sm-4', linePtSm4, 'right', 'golongan-b');
+
+      const lineBs7 = [
+        [-8.38, 108.72],
+        bs7Point
+      ];
+      generateBangunanPembagiDanSadap('BS.VII', lineBs7);
+    }
+
+    var initBs8 = function() {
+      const bs8Point = [-9.00, 108.72];
+      const bsd1Point = [bs8Point[0], 108.85];
+      const bsd2Point = [bs8Point[0], 109.08];
+
+      const lineBsd1Ki = [bsd1Point, [-8.94, bsd1Point[1]]];
+      generateBoxPetak('0739446b-88d9-457e-a08c-03c11c926689', 'B.Sd 1-Ki', lineBsd1Ki, 'top', 'golongan-b');
+
+      const lineBsd1Ka = [bsd1Point, [-9.05, bsd1Point[1]]];
+      generateBoxPetak('200845cd-a500-4c12-9590-ba9c05e03b63', 'B.Sd 1-Ka', lineBsd1Ka, 'bottom', 'golongan-b');
+
+      const lineBsd2 = [bsd1Point, [-9.00, 109.1]];
+      generateBoxPetak('0b8e2745-fb8f-40a3-956b-fb7109707cd2', 'B.Sd 2', lineBsd2, 'right', 'golongan-b');
+
+      const lineBsd1 = [
+        bs8Point,
+        bsd1Point
+      ];
+      generateBangunanSadap('BSd. 1', 'bottomright', lineBsd1, 90);
+
+      const lineBsd2bagi = [
+        bs8Point,
+        bsd2Point
+      ];
+      generateBangunanSadap('BSd. 2', 'bottomright', lineBsd2bagi, 90);
+
+      const lineBs8 = [
+        [-8.75, 108.72],
+        bs8Point
+      ];
+      generateBangunanPembagi('BS.VIII', lineBs8);
+      generateTextSaluranSekunder('SS. SIDODADI', [-8.95, 109.1], 0);
+    }
+
+    var initBs9 = function() {
+      const bs9Point = [-9.35, 108.72];
+      const bsh1Point = [bs9Point[0], 108.85];
+      const bsh2Point = [bs9Point[0], 109.08];
+
+      const lineBsh1Ki = [bsh1Point, [-9.29, bsh1Point[1]]];
+      generateBoxPetak('2035c600-85a6-4e95-9e7c-576b4060435e', 'B.Sh 1-Ki', lineBsh1Ki, 'top', 'golongan-b');
+
+      const lineBsh1Ka = [bsh1Point, [-9.41, bsh1Point[1]]];
+      generateBoxPetak('5716d697-3b8f-411e-a22b-b6e1822215e1', 'B.Sh 1-Ka', lineBsh1Ka, 'bottom', 'golongan-b');
+
+      const lineBsh2 = [bsh1Point, [-9.35, 109.1]];
+      generateBoxPetak('85866435-e4b6-4850-a895-4c9838e7d88d', 'B.Sh 2', lineBsh2, 'right', 'golongan-b');
+    
+      const lineBsh1 = [
+        bs9Point,
+        bsh1Point
+      ];
+      generateBangunanSadap('BSh. 1', 'bottomright', lineBsh1, 90);
+
+      const lineBsh2bagi = [
+        bs9Point,
+        bsh2Point
+      ];
+      generateBangunanSadap('BSh. 2', 'bottomright', lineBsh2bagi, 90);
+
+      const lineBs9 = [
+        [-9.00, 108.72],
+        bs9Point
+      ];
+      generateBangunanPembagiDanSadap('BS.IX', lineBs9);
+      generateTextSaluranSekunder('SS. SIDAHURIP', [-9.3, 109.1], 0);
+    }
+
+    var initBs10 = function() {
+      const bs10Point = [-9.7, 108.72];
+      const bkdn1Point = [bs10Point[0], 108.83];
+      const bkdn2Point = [bs10Point[0], 109.06];
+      const bkdn3Point = [bs10Point[0], 109.28];
+      const bkdn4Point = [bs10Point[0], 109.45];
+      const bkdn5Point = [bs10Point[0], 109.55];
+      const bkdn6Point = [bs10Point[0], 109.66];
+      const bkdn7Point = [bs10Point[0], 109.88];
+      const bkdn8Point = [bs10Point[0], 110.00];
+      const bkdn9Point = [-10.00, bkdn8Point[1]];
+      const bkdn10Point = [-10.10, bkdn8Point[1]];
+      const bkdn11Point = [-10.3, bkdn8Point[1]];
+      const bbp1Point = [-9.9, bkdn6Point[1]];
+      const bbp2Point = [-10.1, bkdn6Point[1]];
+      const bbp3Point = [-10.2, bkdn6Point[1]];
+      const bbp4Point = [-10.3, bkdn6Point[1]];
+      const bbp5Point = [-10.5, bkdn6Point[1]];
+      const bbp6Point = [-10.6, bkdn6Point[1]];
+
+      const lineBkdn1ki = [bkdn1Point, [-9.64, bkdn1Point[1]]];
+      generateBoxPetak('add86818-623c-45db-9836-3ef692b61005', 'B.Kdn 1-ki', lineBkdn1ki, 'top', 'golongan-b');
+      const lineBkdn1 = [
+        bs10Point,
+        bkdn1Point
+      ];
+      generateBangunanSadap('BKdn. 1', 'bottomright', lineBkdn1, 90);
+
+      const lineBkdn2ka = [bkdn2Point, [-9.76, bkdn2Point[1]]];
+      generateBoxPetak('8726bc87-468f-4724-8396-1a68dd56df00', 'B.Kdn 2-ka', lineBkdn2ka, 'bottom', 'golongan-b');
+
+      const lineBkdn2ki = [bkdn2Point, [-9.64, bkdn2Point[1]]];
+      generateBoxPetak('5f4e5cd2-e4e3-45e1-8a94-287367e391b9', 'B.Kdn 2-ki', lineBkdn2ki, 'top', 'golongan-b');
+      const lineBkdn2 = [
+        bs10Point,
+        bkdn2Point
+      ];
+      generateBangunanSadap('BKdn. 2', 'bottomright', lineBkdn2, 90);
+
+      const lineBkdn3ki = [bkdn3Point, [-9.64, bkdn3Point[1]]];
+      generateBoxPetak('41655fc9-3e85-4d3f-95d9-38fb363d7e4f', 'B.Kdn 3-ki', lineBkdn3ki, 'top', 'golongan-b');
+
+      const lineBkdn3 = [
+        bs10Point,
+        bkdn3Point
+      ];
+      generateBangunanSadap('BKdn. 3', 'bottomright', lineBkdn3, 90);
+
+      const lineBkdn4ka = [bkdn4Point, [-9.76, bkdn4Point[1]]];
+      generateBoxPetak('71cfbcd0-0e6b-46ed-9175-011d0f96001a', 'B.Kdn 4-ka', lineBkdn4ka, 'bottom', 'golongan-b');
+      const lineBkdn4 = [
+        bs10Point,
+        bkdn4Point
+      ];
+      generateBangunanSadap('BKdn. 4', 'topright', lineBkdn4, 90);
+
+      const lineBkdn5ki = [bkdn5Point, [-9.64, bkdn5Point[1]]];
+      generateBoxPetak('92ef18fa-6bd3-4d69-a2d9-b4f99b55bc45', 'B.Kdn 5-ki', lineBkdn5ki, 'top', 'golongan-b');
+      const lineBkdn5 = [
+        bs10Point,
+        bkdn5Point
+      ];
+      generateBangunanSadap('BKdn. 5', 'bottomright', lineBkdn5, 90);
+
+      const lineBkdn6 = [
+        bs10Point,
+        bkdn6Point
+      ];
+      generateBangunanSadapDanPembagi('BKdn. 6', 'topcenter', lineBkdn6, 90);
+
+      const lineBkdn7ka = [bkdn7Point, [-9.76, bkdn7Point[1]]];
+      generateBoxPetak('6f91cc3d-2acb-4295-97b8-e57e107dc7b8', 'B.Kdn 7-ka', lineBkdn7ka, 'bottom', 'golongan-b');
+      const lineBkdn7 = [
+        bs10Point,
+        bkdn7Point
+      ];
+      generateBangunanSadap('BKdn. 7', 'topcenter', lineBkdn7, 90);
+
+      const lineBkdn8ki = [bkdn8Point, [-9.7, 110.05]];
+      generateBoxPetak('7cede638-11ea-4b59-92b5-66e2770a7da6', 'B.Kdn 8-ki', lineBkdn8ki, 'right', 'golongan-b');
+      const lineBkdn8 = [
+        bs10Point,
+        bkdn8Point
+      ];
+      generateBangunanSadap('BKdn. 8', 'topcenter', lineBkdn8, 90);
+
+      const lineBkdn9ki = [bkdn9Point, [bkdn9Point[0], 110.1]];
+      generateBoxPetak('dd6d9111-79db-441f-aa4c-64062af9271e', 'B.Kdn 9-ki', lineBkdn9ki, 'right', 'golongan-b');
+      const lineBkdn9ka = [bkdn9Point, [bkdn9Point[0], 109.95]];
+      generateBoxPetak('af028ceb-1836-4911-a8b2-48a69449ad42', 'B.Kdn 9-ka', lineBkdn9ka, 'left', 'golongan-b');
+      const lineBkdn9 = [
+        bkdn8Point,
+        bkdn9Point
+      ];
+      generateBangunanSadap('BKdn. 9', 'topleft', lineBkdn9, 0);
+
+      const lineBkdn10ki = [bkdn10Point, [bkdn10Point[0], 110.1]];
+      generateBoxPetak('92515563-ab2f-48ac-b9f9-b00e169c4927', 'B.Kdn 10-ki', lineBkdn10ki, 'right', 'golongan-b');
+      const lineBkdn10 = [
+        bkdn8Point,
+        bkdn10Point
+      ];
+      generateBangunanSadap('BKdn. 10', 'topleft', lineBkdn10, 0);
+
+      const lineBkdn11ki = [bkdn11Point, [-10.40, 110.05]];
+      generateBoxPetak('1be187d8-d385-4bba-9b7e-50e1f3fbdddd', 'B.Kdn 11-ki', lineBkdn11ki, 'right', 'golongan-b');
+      const lineBkdn11ka = [bkdn11Point, [-10.40, 109.95]];
+      generateBoxPetak('7284d61a-95ab-4e2f-9f39-7fa6632f5c58', 'B.Kdn 11-ka', lineBkdn11ka, 'left', 'golongan-b');
+      const lineBkdn11 = [
+        bkdn8Point,
+        bkdn11Point
+      ];
+      generateBangunanSadap('BKdn. 11', 'topleft', lineBkdn11, 0);
+
+      const lineBbp1ki = [bbp1Point, [bbp1Point[0], 109.70]];
+      generateBoxPetak('7dd68ad0-c78c-438a-9b63-fc5a00989f4d', 'B.Bp 1 ki', lineBbp1ki, 'right', 'golongan-b');
+      const lineBbp1 = [
+        bkdn6Point,
+        bbp1Point
+      ];
+      generateBangunanSadap('BBp. 1', 'topleft', lineBbp1, 0);
+
+      const lineBbp2ki = [bbp2Point, [bbp2Point[0], 109.70]];
+      generateBoxPetak('57728550-c169-4254-a0ab-acd84b9f02e1', 'B.Bp 2 ki', lineBbp2ki, 'right', 'golongan-b');
+      const lineBbp2 = [
+        bkdn6Point,
+        bbp2Point
+      ];
+      generateBangunanSadap('BBp. 2', 'topleft', lineBbp2, 0);
+
+      const lineBbp3ki = [bbp3Point, [bbp3Point[0], 109.70]];
+      generateBoxPetak('c95c6982-ca57-4aa2-9ae3-2fb986860567', 'B.Bp 3 ki', lineBbp3ki, 'right', 'golongan-b');
+      const lineBbp3 = [
+        bkdn6Point,
+        bbp3Point
+      ];
+      generateBangunanSadap('BBp. 3', 'topleft', lineBbp3, 0);
+
+      const lineBbp4ki = [bbp4Point, [bbp4Point[0], 109.70]];
+      generateBoxPetak('68c76f77-5f0e-46b8-9df7-e57cbc83cde4', 'B.Bp 4 ki', lineBbp4ki, 'right', 'golongan-b');
+      const lineBbp4 = [
+        bkdn6Point,
+        bbp4Point
+      ];
+      generateBangunanSadap('BBp. 4', 'topleft', lineBbp4, 0);
+
+      const lineBbp5ki = [bbp5Point, [bbp5Point[0], 109.70]];
+      generateBoxPetak('39b71541-c6c0-4401-a84e-5c59727d9c57', 'B.Bp 5 ki', lineBbp5ki, 'right', 'golongan-b');
+      const lineBbp5 = [
+        bkdn6Point,
+        bbp5Point
+      ];
+      generateBangunanSadap('BBp. 5', 'topleft', lineBbp5, 0);
+
+      const lineBbp6te = [bbp6Point, [-10.63, bbp6Point[1]]];
+      generateBoxPetak('349d1cdd-b192-4757-9145-529930fdcda8', 'B.Bp 6', lineBbp6te, 'bottom', 'golongan-b');
+      const lineBbp6 = [
+        bkdn6Point,
+        bbp6Point
+      ];
+      generateBangunanSadap('BBp. 6', 'topleft', lineBbp6, 0);
+
+      const lineBs10 = [
+        [-9.35, 108.72],
+        bs10Point
+      ];
+      generateBangunanPembagi('BS.X', lineBs10);
+      generateTextSaluranSekunder('SS. KEDUNG-DAON', [-9.55, 109.1], 0);
+      generateTextSaluranSekunder('SS. BULU PAYUNG', [-10.00, 109.6], 90);
+      generateTextSaluranSekunder('SS. KN. KEPLEK', [-10.00, 110.3], 90);
+    }
+
+    var initBs11 = function() {
+      const bs11Point = [-10.85, 108.72];
+      const bcw1Point = [bs11Point[0], 108.85];
+      const bcw2Point = [bs11Point[0], 108.95];
+      const bcw3Pointk = [bs11Point[0], 109.05];
+      const bcw3Pointkk = [bs11Point[0], 109.1];
+      const bcw3Point = [bs11Point[0], 109.2];
+      const bcw4Point = [bs11Point[0], 109.35];
+      const bcw5Point = [bs11Point[0], 109.5];
+      const bcw6Pointk = [bs11Point[0], 109.65];
+      const bcw6Point = [bs11Point[0], 109.7];
+      const bcw7Point = [bs11Point[0], 109.82];
+      const bcw8Pointk = [bs11Point[0], 109.85];
+      const bcw8Point = [bs11Point[0], 109.95];
+      const bcw9Pointk = [bs11Point[0], 110];
+      const bcw9Point = [bs11Point[0], 110.05];
+      const bcw10Pointk = [bs11Point[0], 110.17];
+      const bcw10Pointkk = [bs11Point[0], 110.3];
+      const bcw10Point = [bs11Point[0], 110.42];
+      const bkm2Point = [-11.00, bcw10Point[1]];
+      const bkk2Point = [-10.67, bcw7Point[1]];
+      const bkg2Point = [-10.95, bcw8Point[1]];
+      const bcw11Point = [bs11Point[0], 110.55];
+      const bcw12Point = [bs11Point[0], 110.71];
+      const bcw13Point = [bs11Point[0], 110.8];
+      const bcw14Point = [bs11Point[0], 110.9];
+      const bcw15Point = [bs11Point[0], 111.00];
+
+      const lineBcw1ki = [bcw1Point, [-10.7, bcw1Point[1]]];
+      generateBoxPetak('dba1820e-c513-4003-9068-8e29e9f2fbda', 'B.Cw 1-ki', lineBcw1ki, 'top', 'golongan-b');
+      const lineBcw1 = [
+        bs11Point,
+        bcw1Point
+      ];
+      generateBangunanSadap('BCw. 1', 'bottomleft', lineBcw1, 90);
+
+      const lineBcw2ki = [bcw2Point, [-10.8, bcw2Point[1]]];
+      generateBoxPetak('c17a56df-eaec-4fd8-b719-f9889419fb72', 'B.Cw 2-ki', lineBcw2ki, 'top', 'golongan-b');
+      const lineBcw2 = [
+        bs11Point,
+        bcw2Point
+      ];
+      generateBangunanSadap('BCw. 2', 'bottomleft', lineBcw2, 90);
+
+      const lineBcw3kka = [bcw3Pointk, [-10.9, bcw3Pointk[1]]];
+      generateBoxPetak('', `B.Cw 3' ka`, lineBcw3kka, 'bottom', 'golongan-b');
+      const lineBcw3k = [
+        bs11Point,
+        bcw3Pointk
+      ];
+      generateBangunanSadap(`BCw. 3'`, 'bottomleft', lineBcw3k, 90);
+
+      const lineBcw3kki = [bcw3Pointkk, [-10.72, bcw3Pointkk[1]]];
+      generateBoxPetak('', `B.Cw 3' ki`, lineBcw3kki, 'top', 'golongan-b');
+      const lineBcw3kk = [
+        bs11Point,
+        bcw3Pointkk
+      ];
+      generateBangunanSadap(`BCw. 3"`, 'bottomleft', lineBcw3kk, 90);
+
+      const lineBcw3ka = [bcw3Point, [-10.9, bcw3Point[1]]];
+      generateBoxPetak('6d2a8c41-4fb9-428d-9723-ca3e5b281ac3', 'B.Cw 3-ka', lineBcw3ka, 'bottom', 'golongan-b');
+      const lineBcw3 = [
+        bs11Point,
+        bcw3Point
+      ];
+      generateBangunanSadap('BCw. 3', 'topleft', lineBcw3, 90);
+
+      const lineBcw4ka = [bcw4Point, [-10.98, bcw4Point[1]]];
+      generateBoxPetak('a4cea82a-cb5e-4ee9-9f0f-0124d93b1fc8', 'B.Cw 4-ka', lineBcw4ka, 'bottom', 'golongan-b');
+      const lineBcw4 = [
+        bs11Point,
+        bcw4Point
+      ];
+      generateBangunanSadap('BCw. 4', 'topleft', lineBcw4, 90);
+
+      const lineBcw5ka = [bcw5Point, [-10.9, bcw5Point[1]]];
+      generateBoxPetak('f8372f33-de1a-4e93-8a1c-0e312728b3f8', 'B.Cw 5-ka', lineBcw5ka, 'bottom', 'golongan-b');
+      const lineBcw5 = [
+        bs11Point,
+        bcw5Point
+      ];
+      generateBangunanSadap('BCw. 5', 'topleft', lineBcw5, 90);
+
+      const lineBcw6kki = [bcw6Pointk, [-10.8, 109.6]];
+      generateBoxPetak('', `B.Cw 6' ki`, lineBcw6kki, 'top', 'golongan-b');
+      const lineBcw6k = [
+        bs11Point,
+        bcw6Pointk
+      ];
+      generateBangunanSadap(`BCw. 6'`, 'bottomleft', lineBcw6k, 90);
+
+      const lineBcw6ka = [bcw6Point, [-10.9, bcw6Point[1]]];
+      generateBoxPetak('f50d98fd-e816-4856-b0c6-3e2de50c0f9d', 'B.Cw 6-ka', lineBcw6ka, 'bottom', 'golongan-b');
+      const lineBcw6 = [
+        bs11Point,
+        bcw6Point
+      ];
+      generateBangunanSadap('BCw. 6', 'topleft', lineBcw6, 90);
+
+      const lineBkk2ka = [bkk2Point, [-10.62, bkk2Point[1]]];
+      generateBoxPetak('b52da949-2723-45a8-9e5e-4ae94f05d47d', 'B.Kk 2-ka', lineBkk2ka, 'top', 'golongan-b');
+      const lineBcw7 = [
+        bs11Point,
+        bcw7Point
+      ];
+      generateBangunanSadapDanPembagi('BCw. 7', 'bottomcenter', lineBcw7, 90);
+
+      const lineBkk2 = [
+        bcw7Point,
+        bkk2Point
+      ];
+      generateBangunanSadap('BKk. 2', 'topright', lineBkk2, 0);
+
+      const lineBkk1ka = [bcw8Pointk, [-10.7, 109.93]];
+      generateBoxPetak('43fd6e1f-755e-4959-91fc-3acb471a32cd', 'B.Kk 1-ka', lineBkk1ka, 'top', 'golongan-b');
+      const lineBcw8k = [
+        bs11Point,
+        bcw8Pointk
+      ];
+      generateBangunanSadap(`BCw. 8'`, 'bottomright', lineBcw8k, 90);
+
+      const lineBkg2ka = [bkg2Point, [-11.1, 109.85]];
+      generateBoxPetak('0c684c28-3cc9-44b1-a236-5b05cd8f2125', 'B.Kg 2-ka', lineBkg2ka, 'left', 'golongan-b');
+      const lineBkg2ki = [bkg2Point, [-11.1, 110.05]];
+      generateBoxPetak('', 'B.Kg 2-ki', lineBkg2ki, 'right', 'golongan-b');
+      const lineBkg2 = [
+        bcw8Point,
+        bkg2Point
+      ];
+      generateBangunanSadap(`BKg. 2`, 'topleft', lineBkg2, 90);
+
+      const lineBcw8 = [
+        bs11Point,
+        bcw8Point
+      ];
+      generateBangunanSadapDanPembagi('BCw. 8', 'bottomcenter', lineBcw8, 90);
+
+      const lineBcw9ki = [bcw9Point, [-10.8, bcw9Point[1]]];
+      generateBoxPetak('0e69e52b-bde0-45b5-9a37-cd5538ecf27a', 'B.Cw 9-ki', lineBcw9ki, 'top', 'golongan-b');
+      const lineBcw9 = [
+        bs11Point,
+        bcw9Point
+      ];
+      generateBangunanSadap(`BCw. 9`, 'topright', lineBcw9, 0);
+
+      const lineBkg1ka = [bcw9Pointk, [-10.98, 110.1]];
+      generateBoxPetak('3f273bff-3786-4c50-854e-cedf7d888576', 'B.Cw 9-ka', lineBkg1ka, 'bottom', 'golongan-b');
+      const lineBcw9k = [
+        bs11Point,
+        bcw9Pointk
+      ];
+      generateBangunanSadap(`BCw. 9'`, 'bottomleft', lineBcw9k, 0);
+      
+      const lineBcw10kki = [bcw10Pointk, [-10.7, bcw10Pointk[1]]];
+      generateBoxPetak('', `B.Cw 10'-ki`, lineBcw10kki, 'top', 'golongan-b');
+      const lineBcw10kka = [bcw10Pointk, [-10.9, bcw10Pointk[1]]];
+      generateBoxPetak('', `B.Cw 10'-ka`, lineBcw10kka, 'bottom', 'golongan-b');
+      const lineBcw10k = [
+        bs11Point,
+        bcw10Pointk
+      ];
+      generateBangunanSadap(`BCw. 10'`, 'topright', lineBcw10k, 90);
+
+      const lineBkm1ka = [bcw10Pointkk, [-10.9, bcw10Pointkk[1]]];
+      generateBoxPetak('b8ce4ec4-6f77-43db-ab1b-eba34a44adec', `B.Km 1-ka`, lineBkm1ka, 'bottom', 'golongan-b');
+      const lineBcw10kk = [
+        bs11Point,
+        bcw10Pointkk
+      ];
+      generateBangunanSadap(`BCw. 10"`, 'topright', lineBcw10kk, 90);
+
+      const lineBcw10 = [
+        bs11Point,
+        bcw10Point
+      ];
+      generateBangunanSadapDanPembagi('BCw. 10', 'topcenter', lineBcw10, 90);
+
+      const lineBkm2ka = [bkm2Point, [-11.07, 110.38]];
+      generateBoxPetak('0e508f33-d1a8-4828-974f-4e9a22f2060a', `B.Km 2-ka`, lineBkm2ka, 'left', 'golongan-b');
+      const lineBkm2ki = [bkm2Point, [-11.07, 110.46]];
+      generateBoxPetak('', `B.Km 2-ki`, lineBkm2ki, 'right', 'golongan-b');
+      const lineBkm2 = [
+        bcw10Point,
+        bkm2Point
+      ];
+      generateBangunanSadap(`BKm. 2`, 'topleft', lineBkm2, 0);
+
+      const lineBcw11ka = [bcw11Point, [-10.9, bcw11Point[1]]];
+      generateBoxPetak('48e0db01-2e55-40ac-aeb8-9b122064b29f', `B.Cw 11-ka`, lineBcw11ka, 'bottom', 'golongan-b');
+      const lineBcw11ki = [bcw11Point, [-10.8, bcw11Point[1]]];
+      generateBoxPetak('290ece2b-8d45-4591-9e0b-cec93100b303', `B.Cw 11-ki`, lineBcw11ki, 'top', 'golongan-b');
+      const lineBcw11 = [
+        bs11Point,
+        bcw11Point
+      ];
+      generateBangunanSadap(`BCw. 11`, 'topleft', lineBcw11, 90);
+
+      const lineBcw12ki = [bcw12Point, [-10.8, bcw12Point[1]]];
+      generateBoxPetak('4fd60d4f-a224-42e2-b709-4df6a5d914c1', `B.Cw 12-ki`, lineBcw12ki, 'top', 'golongan-b');
+      const lineBcw12 = [
+        bs11Point,
+        bcw12Point
+      ];
+      generateBangunanSadap(`BCw. 12`, 'bottomleft', lineBcw12, 90);
+
+      const lineBcw13ka = [bcw13Point, [-10.9, bcw13Point[1]]];
+      generateBoxPetak('', `B.Cw 13-ka`, lineBcw13ka, 'bottom', 'golongan-b');
+      const lineBcw13 = [
+        bs11Point,
+        bcw13Point
+      ];
+      generateBangunanSadap(`BCw. 13`, 'topleft', lineBcw13, 90);
+
+      const lineBcw14ki = [bcw14Point, [-10.8, bcw14Point[1]]];
+      generateBoxPetak('', `B.Cw 14-ki`, lineBcw14ki, 'top', 'golongan-b');
+      const lineBcw14 = [
+        bs11Point,
+        bcw14Point
+      ];
+      generateBangunanSadap(`BCw. 14`, 'bottomleft', lineBcw14, 90);
+
+      const lineBcw15ki = [bcw15Point, [-10.8, bcw15Point[1]]];
+      generateBoxPetak('', `B.Cw 15-ki`, lineBcw15ki, 'top', 'golongan-b');
+      const lineBcw15 = [
+        bs11Point,
+        bcw15Point
+      ];
+      generateBangunanSadap(`BCw. 15`, 'bottomleft', lineBcw15, 90);
+
+      const lineBs11 = [
+        [-9.7, 108.72],
+        bs11Point
+      ];
+      generateBangunanPembagi('BS.XI', lineBs11);
+      generateTextSaluranSekunder('SS. CINYAWANG', [-10.7, 109.3], 0);
+      generateTextSaluranSekunder('SS. KN. GUNDU', [-10.95, 110.03], 0);
+      generateTextSaluranSekunder('SS. KN. MAPAG', [-11.03, 110.6], 0);
+    }
+
+    var initBn1 = function() {
+      const bn1Point = [-11, 108.72];
+      
+      const lineBn1ki = [bn1Point, [bn1Point[0], 108.77]];
+      generateBoxPetak('b7ee49fa-22e8-46f8-9195-92d112caa655', `B.N 1-ki`, lineBn1ki, 'right', 'golongan-c');
+      const lineBn1 = [
+        [-10.85, 108.72],
+        bn1Point
+      ];
+      generateBangunanPembagiDanSadap('BN.1', lineBn1);
+      generateTextSaluranSekunder('SS. PATIMUAN', [-11.02, 109], 0);
+    }
+
+    var initBn2 = function() {
+      const bn2Point = [-11.3, 108.72];
+      const bpn1Point = [bn2Point[0], 108.85];
+      const bpn2Point = [bn2Point[0], 109.03];
+      const bpn3Point = [bn2Point[0], 109.2];
+      const bpn4Point = [bn2Point[0], 109.3];
+      const bpn5Point = [bn2Point[0], 109.4];
+      const bpn6Point = [bn2Point[0], 109.7];
+      const bpn6Pointk = [bn2Point[0], 109.75];
+      const bpn7Point = [bn2Point[0], 109.9];
+      const bpn72Point = [-11.52, bpn6Point[1]];
+      const bpn8Point = [bn2Point[0], 110.1];
+      const bpn82Point = [-11.72, bpn6Point[1]];
+      const bpn9Point = [bn2Point[0], 110.3];
+      const bpn92Point = [-11.85, bpn6Point[1]];
+      const bpn10Point = [bn2Point[0], 110.45];
+
+      const lineBpn1ki = [bpn1Point, [-11.25, bpn1Point[1]]];
+      generateBoxPetak('0f8ab630-5c90-449e-adb0-a818963128eb', `B.Pn 1-ki`, lineBpn1ki, 'top', 'golongan-c');
+      const lineBpn1ka = [bpn1Point, [-11.35, bpn1Point[1]]];
+      generateBoxPetak('6fef4c96-87d7-4b77-bf49-99890b2c181b', `B.Pn 1-ka`, lineBpn1ka, 'bottom', 'golongan-c');
+      const lineBpn1 = [
+        bn2Point,
+        bpn1Point
+      ];
+      generateBangunanSadap(`BPn. 1`, 'bottomleft', lineBpn1, 90);
+
+      const lineBpn2ki = [bpn2Point, [-11.25, bpn2Point[1]]];
+      generateBoxPetak('1b52b80f-c5e2-4a50-a78d-6317c0b8c184', `B.Pn 2-ki`, lineBpn2ki, 'top', 'golongan-c');
+      const lineBpn2ka = [bpn2Point, [-11.35, bpn2Point[1]]];
+      generateBoxPetak('441de1df-e8eb-4b16-b274-326859852f85', `B.Pn 2-ka`, lineBpn2ka, 'bottom', 'golongan-c');
+      const lineBpn2 = [
+        bn2Point,
+        bpn2Point
+      ];
+      generateBangunanSadap(`BPn. 2`, 'bottomleft', lineBpn2, 90);
+
+      const lineBpn3ki = [bpn3Point, [-11.25, bpn3Point[1]]];
+      generateBoxPetak('66c1d9b1-ff11-4188-9f81-af5f71be722c', `B.Pn 3-ki`, lineBpn3ki, 'top', 'golongan-c');
+      const lineBpn3 = [
+        bn2Point,
+        bpn3Point
+      ];
+      generateBangunanSadap(`BPn. 3`, 'bottomleft', lineBpn3, 90);
+
+      const lineBpn4ka = [bpn4Point, [-11.35, bpn4Point[1]]];
+      generateBoxPetak('658ac7cd-a2bb-4b86-9402-b2ca01f91de8', `B.Pn 4-ka`, lineBpn4ka, 'bottom', 'golongan-c');
+      const lineBpn4 = [
+        bn2Point,
+        bpn4Point
+      ];
+      generateBangunanSadap(`BPn. 4`, 'bottomleft', lineBpn4, 90);
+
+      const lineBpn5ki = [bpn5Point, [-11.25, 109.45]];
+      generateBoxPetak('fc3cc3b9-8ac8-4e7a-91fb-79f9fac68dd5', `B.Pn 5-ki`, lineBpn5ki, 'top', 'golongan-c');
+      const lineBpn5ka = [bpn5Point, [-11.35, 109.46]];
+      generateBoxPetak('2d95bf4d-473c-4c65-9e8d-54a7f07086d1', `B.Pn 5-ka`, lineBpn5ka, 'bottom', 'golongan-c');
+      const lineBpn5 = [
+        bn2Point,
+        bpn5Point
+      ];
+      generateBangunanSadap(`BPn. 5`, 'bottomleft', lineBpn5, 90);
+
+      const lineBpn6 = [
+        bn2Point,
+        bpn6Point
+      ];
+      generateBangunanSadapDanPembagi('BPn. 6', 'topcenter', lineBpn6, 0);
+
+      const lineBpn6ki = [bpn6Pointk, [-11.25, 109.8]];
+      generateBoxPetak('1c627828-1015-4423-b770-fb87c423080f', `B.Pn I 6-ki`, lineBpn6ki, 'top', 'golongan-c');
+      const lineBpn6ka = [bpn6Pointk, [-11.35, 109.8]];
+      generateBoxPetak('3bcf8654-34a2-4fad-a2fa-e4b85516cc1d', `B.Pn I 6-ka`, lineBpn6ka, 'bottom', 'golongan-c');
+      const lineBpn6k = [
+        bn2Point,
+        bpn6Pointk
+      ];
+      generateBangunanSadap(``, 'bottomleft', lineBpn6k, 90);
+
+      const lineBpn71ki = [bpn7Point, [-11.25, 109.97]];
+      generateBoxPetak('df66bfeb-b99d-4b1a-8436-ea4128092de8', `B.Pn I 7-ki`, lineBpn71ki, 'top', 'golongan-c');
+      const lineBpn71ka = [bpn7Point, [-11.35, 109.97]];
+      generateBoxPetak('cd1a1c25-6a95-4795-8fc8-76b08afcfedb', `B.Pn I 7-ka`, lineBpn71ka, 'bottom', 'golongan-c');
+      const lineBpn7 = [
+        bn2Point,
+        bpn7Point
+      ];
+      generateBangunanSadap(`BPn I. 7`, 'bottomleft', lineBpn7, 0);
+
+      const lineBpn8ki = [bpn8Point, [-11.27, 110.15]];
+      generateBoxPetak('8c2c621e-e3a2-418d-ae0d-beed5454cebd', `B.Pn I 8-ki`, lineBpn8ki, 'top', 'golongan-c');
+      const lineBpn8ka = [bpn8Point, [-11.33, 110.15]];
+      generateBoxPetak('d3026eea-1ee5-4a70-a28d-cc20b3cdffeb', `B.Pn I 8-ka`, lineBpn8ka, 'bottom', 'golongan-c');
+      const lineBpn8 = [
+        bn2Point,
+        bpn8Point
+      ];
+      generateBangunanSadap(`BPn I. 8`, 'bottomleft', lineBpn8, 90);
+
+      const lineBpn9ki = [bpn9Point, [-11.24, 110.35]];
+      generateBoxPetak('1a3c679c-3fd2-4c25-b785-de0e2d5fc203', `B.Pn I 9-ki`, lineBpn9ki, 'top', 'golongan-c');
+      const lineBpn9ka = [bpn9Point, [-11.36, 110.35]];
+      generateBoxPetak('ddd3d9e6-274f-4122-905b-c1ac07ca08e7', `B.Pn I 9-ka`, lineBpn9ka, 'bottom', 'golongan-c');
+      const lineBpn9 = [
+        bn2Point,
+        bpn9Point
+      ];
+      generateBangunanSadap(`BPn I. 9`, 'bottomleft', lineBpn9, 90);
+
+      const lineBpn10ki = [bpn10Point, [-11.28, 110.53]];
+      generateBoxPetak('62fd18aa-4547-4d40-8159-f1df59d5ad9b', `B.Pn I 10-ki`, lineBpn10ki, 'top', 'golongan-c');
+      const lineBpn10ka = [bpn10Point, [-11.32, 110.53]];
+      generateBoxPetak('6991726c-55cd-4757-8c5e-0741862548bf', `B.Pn I 10-ka`, lineBpn10ka, 'bottom', 'golongan-c');
+      const lineBpn10 = [
+        bn2Point,
+        bpn10Point
+      ];
+      generateBangunanSadap(`BPn I. 10`, 'bottomleft', lineBpn10, 90);
+
+      const lineBpn72ki = [bpn72Point, [bpn72Point[0], 109.75]];
+      generateBoxPetak('3162c7e1-45fc-4e41-a376-95f7f36823c8', `B.Pn II 7-ki`, lineBpn72ki, 'right', 'golongan-c');
+      const lineBpn72ka = [bpn72Point, [bpn72Point[0], 109.65]];
+      generateBoxPetak('482582b0-fd1a-4b82-b39c-bcb17d1fbf13', `B.Pn II 7-ka`, lineBpn72ka, 'left', 'golongan-c');
+      const lineBpn72 = [
+        bpn6Point,
+        bpn72Point
+      ];
+      generateBangunanSadap(`BPn II. 7`, 'topright', lineBpn72, 0);
+
+      const lineBpn82ki = [bpn82Point, [bpn82Point[0], 109.75]];
+      generateBoxPetak('d13695e6-77de-4f9a-93f9-4c2e0c4be917', `B.Pn II 8-ki`, lineBpn82ki, 'right', 'golongan-c');
+      const lineBpn82ka = [bpn82Point, [bpn82Point[0], 109.65]];
+      generateBoxPetak('1aa2453a-1d11-495b-ab7f-6e6ba0813f8e', `B.Pn II 8-ka`, lineBpn82ka, 'left', 'golongan-c');
+      const lineBpn82 = [
+        bpn72Point,
+        bpn82Point
+      ];
+      generateBangunanSadap(`BPn II. 8`, 'topright', lineBpn82, 0);
+
+      const lineBpn92ki = [bpn92Point, [bpn92Point[0], 109.75]];
+      generateBoxPetak('9b1d5a85-d705-409a-8807-2c0f223d4905', `B.Pn II 9-ki`, lineBpn92ki, 'right', 'golongan-c');
+      const lineBpn92ka = [bpn92Point, [bpn92Point[0], 109.65]];
+      generateBoxPetak('0781c0fc-61f5-47fd-a0f0-8e7f16b52baa', `B.Pn II 9-ka`, lineBpn92ka, 'left', 'golongan-c');
+      const lineBpn92 = [
+        bpn82Point,
+        bpn92Point
+      ];
+      generateBangunanSadap(`BPn II. 9`, 'bottomcenter', lineBpn92, 0);
+
+      const lineBn2 = [
+        [-11, 108.72],
+        bn2Point
+      ];
+      generateBangunanPembagi('BN.2', lineBn2);
+      generateTextSaluranSekunder('SS. PATIMUAN I', [-11.15, 110], 0);
+      generateTextSaluranSekunder('SS. PATIMUAN II', [-11.95, 109.75], 0);
+    }
+
+    var initBn3 = function() {
+      const bn3Point = [-11.63, 108.72];
+      const bpd1Point = [bn3Point[0], 108.77];
+      const bpd2Point = [bn3Point[0], 108.89];
+      const bpd3Point = [bn3Point[0], 109];
+      const bpd4Point = [bn3Point[0], 109.16];
+      const bpd5Point = [bn3Point[0], 109.25];
+      const bpd6Point = [bn3Point[0], 109.35];
+      const bpd7Point = [bn3Point[0], 109.408];
+      const bksm1Point = [-11.85, bpd2Point[1]];
+      const bksm2Point = [-12, 109];
+      const bksm3Point = [-12.2, 109.15];
+      const bksm4Point = [-12.35, 109.26];
+      const bksm5Point = [-12.5, 109.37];
+      const bksm6Point = [-12.58, 109.43];
+
+      const lineBka3ka = [bn3Point, [bn3Point[0], 108.65]];
+      generateBoxPetak('cd2edcab-362d-4d8b-9fe1-e597559e9258', `B.Ka II 3-ka`, lineBka3ka, 'left', 'golongan-c');
+
+      const lineBpd1ka = [bpd1Point, [-11.68, bpd1Point[1]]];
+      generateBoxPetak('140173f0-0dc0-48ab-a1d9-6337c7be4a01', `B.Pd 1-ka`, lineBpd1ka, 'bottom', 'golongan-c');
+      const lineBpd1 = [
+        bn3Point,
+        bpd1Point
+      ];
+      generateBangunanSadap(`BPd. 1`, 'topcenter', lineBpd1, 0);
+
+      const lineBpd2 = [
+        bn3Point,
+        bpd2Point
+      ];
+      generateBangunanSadapDanPembagi('BPd. 2', 'topcenter', lineBpd2, 0);
+
+      const lineBpd3ki = [bpd3Point, [-11.58, bpd3Point[1]]];
+      generateBoxPetak('688a712b-a37b-4545-85bd-e150e400b63d', `B.Pd 3-ki`, lineBpd3ki, 'top', 'golongan-c');
+      const lineBpd3ka = [bpd3Point, [-11.68, bpd3Point[1]]];
+      generateBoxPetak('6f2daea4-7f73-4a52-a8b2-a3657dca7087', `B.Pd 3-ka`, lineBpd3ka, 'bottom', 'golongan-c');
+      const lineBpd3 = [
+        bn3Point,
+        bpd3Point
+      ];
+      generateBangunanSadap(`BPd. 3`, 'topleft', lineBpd3, 90);
+
+      const lineBpd4ki = [bpd4Point, [-11.51, bpd4Point[1]]];
+      generateBoxPetak('94578959-fe94-42f3-9141-c41705095e3b', `B.Pd 4-ki`, lineBpd4ki, 'top', 'golongan-c');
+      const lineBpd4 = [
+        bn3Point,
+        bpd4Point
+      ];
+      generateBangunanSadap(`BPd. 4`, 'topleft', lineBpd4, 90);
+
+      const lineBpd5ki = [bpd5Point, [-11.6, bpd5Point[1]]];
+      generateBoxPetak('67419be5-d2d1-4cc4-a5ce-e4690e7d5229', `B.Pd 5-ki`, lineBpd5ki, 'top', 'golongan-c');
+      const lineBpd5ka = [bpd5Point, [-11.75, bpd5Point[1]]];
+      generateBoxPetak('a8a397ae-4786-4067-bd09-223107185320', `B.Pd 5-ka`, lineBpd5ka, 'bottom', 'golongan-c');
+      const lineBpd5 = [
+        bn3Point,
+        bpd5Point
+      ];
+      generateBangunanSadap(`BPd. 5`, 'bottomleft', lineBpd5, 90);
+
+      const lineBpd6ka = [bpd6Point, [-11.66, bpd6Point[1]]];
+      generateBoxPetak('b0b57408-c26d-4990-a7aa-cfe1209aa396', `B.Pd 6-ka`, lineBpd6ka, 'bottom', 'golongan-c');
+      const lineBpd6 = [
+        bn3Point,
+        bpd6Point
+      ];
+      generateBangunanSadap(`BPd. 6`, 'topleft', lineBpd6, 90);
+
+      const lineBpd7ki = [bpd7Point, [-11.57, bpd7Point[1]]];
+      generateBoxPetak('5880619c-0b64-441a-a121-c30c17eb9f6d', `B.Pd 7-ki`, lineBpd7ki, 'top', 'golongan-c');
+      const lineBpd7te = [bpd1Point, [bpd7Point[0], 109.47]];
+      generateBoxPetak('a2e1c7a1-d9e1-4de6-b17f-a7d0d65bc3de', `B.Pd 7-te`, lineBpd7te, 'right', 'golongan-c');
+      const lineBpd7 = [
+        bn3Point,
+        bpd7Point
+      ];
+      generateBangunanSadap(`BPd. 7`, 'topleft', lineBpd7, 90);
+
+      const lineBksm1ki = [bksm1Point, [bksm1Point[0], 108.94]];
+      generateBoxPetak('1292e8e3-aa5d-4afe-bc0e-f3c9c44af27b', `B.Ksm 1-ki`, lineBksm1ki, 'right', 'golongan-c');
+      const lineBksm1ka = [bksm1Point, [-11.9, 108.87]];
+      generateBoxPetak('f3b1655f-f8fe-46e6-93e3-b4c0f9613b9a', `B.Ksm 1-ka`, lineBksm1ka, 'left', 'golongan-c');
+      const lineBksm1 = [
+        bpd2Point,
+        bksm1Point
+      ];
+      generateBangunanSadap(`BKsm. 1`, 'topleft', lineBksm1, 0);
+
+      const lineBksm2ki = [bksm2Point, [-11.94, 109.1]];
+      generateBoxPetak('0bd462d4-08cf-4804-bb00-0faae94daed6', `B.Ksm 2-ki`, lineBksm2ki, 'right', 'golongan-c');
+      const lineBksm2 = [
+        bksm1Point,
+        bksm2Point
+      ];
+      generateBangunanSadap(`BKsm. 2`, 'topleft', lineBksm2, 0);
+
+      const lineBksm3ki = [bksm3Point, [-12.14, 109.25]];
+      generateBoxPetak('00e4591e-774d-43e9-ac97-026595b15c86', `B.Ksm 3-ki`, lineBksm3ki, 'right', 'golongan-c');
+      const lineBksm3 = [
+        bksm2Point,
+        bksm3Point
+      ];
+      generateBangunanSadap(`BKsm. 3`, 'topleft', lineBksm3, 0);
+
+      const lineBksm4ka = [bksm4Point, [bksm4Point[0], 109.19]];
+      generateBoxPetak('90a1769b-8138-46fa-bccb-a4feef17be80', `B.Ksm 4-ka`, lineBksm4ka, 'left', 'golongan-c');
+      const lineBksm4 = [
+        bksm3Point,
+        bksm4Point
+      ];
+      generateBangunanSadap(`BKsm. 4`, 'topleft', lineBksm4, 0);
+
+      const lineBksm5ki = [bksm5Point, [-12.44, 109.47]];
+      generateBoxPetak('f1ed0e8e-2661-4133-94ea-2cac0d309300', `B.Ksm 5-ki`, lineBksm5ki, 'right', 'golongan-c');
+      const lineBksm5 = [
+        bksm4Point,
+        bksm5Point
+      ];
+      generateBangunanSadap(`BKsm. 5`, 'topleft', lineBksm5, 0);
+
+      const lineBksm6ka = [bksm6Point, [-12.61, bksm6Point[1]]];
+      generateBoxPetak('c353908b-c9c3-441d-bd90-dc6115652409', `B.Ksm 6-ka`, lineBksm6ka, 'bottom', 'golongan-c');
+      const lineBksm6 = [
+        bksm5Point,
+        bksm6Point
+      ];
+      generateBangunanSadap(`BKsm. 6`, 'topleft', lineBksm6, 0);
+
+      const lineBn3 = [
+        [-11.3, 108.72],
+        bn3Point
+      ];
+      generateBangunanPembagi('BN.3', lineBn3);
+      generateTextSaluranSekunder('SS. PURWODADI', [-11.68, 109.1], 0);
+      generateTextSaluranSekunder('SS. KEDUNGSALAM', [-12.3, 109.3], 0);
+    }
+
+    var initBn4 = function() {
+      const bn4Point = [-12.1, 108.72];
+
+      const lineBn4p = [bn4Point, [bn4Point[0], 108.77]];
+      generateBoxPetak('e0dec75f-93bd-4cfa-8bea-0ec06e939481', `B.N 4`, lineBn4p, 'right', 'golongan-c');
+      const lineBn4 = [
+        [-11.63, 108.72],
+        bn4Point
+      ];
+      generateBangunanPembagiDanSadap('BN.4', lineBn4);
+    }
+
+    var initBn5 = function() {
+      const bn5Point = [-12.2, 108.72];
+
+      const lineBn5p = [bn5Point, [bn5Point[0], 108.62]];
+      generateBoxPetak('eaf64caf-cf50-405a-8a81-bac37e9322b6', `B.N 5`, lineBn5p, 'left', 'golongan-c');
+      const lineBn5 = [
+        [-12.1, 108.72],
+        bn5Point
+      ];
+      generateBangunanPembagiDanSadap('BN.5', lineBn5);
+    }
+
+    var initBn6 = function() {
+      const bn6Point = [-12.3, 108.72];
+
+      const lineBn6p = [bn6Point, [bn6Point[0], 108.77]];
+      generateBoxPetak('61472e41-ce43-49b5-be16-40d79458a20d', `B.N 6`, lineBn6p, 'right', 'golongan-c');
+      const lineBn6 = [
+        [-12.2, 108.72],
+        bn6Point
+      ];
+      generateBangunanPembagiDanSadap('BN.6', lineBn6);
+    }
+
+    var initBn7 = function() {
+      const bn7Point = [-12.6, 108.72];
+      const bsm1Point = [bn7Point[0], 108.82];
+      const bsm2Point = [bn7Point[0], 108.98];
+      const bsm3Point = [bn7Point[0], 109.07];
+      const bsm4Point = [bn7Point[0], 109.17];
+
+      const lineBsm1ki = [bsm1Point, [-12.55, bsm1Point[1]]];
+      generateBoxPetak('4bc34dd9-78f8-4a6c-8138-73e5bf8e663b', `B.Sm 1 ki`, lineBsm1ki, 'top', 'golongan-c');
+      const lineBsm1 = [
+        bn7Point,
+        bsm1Point
+      ];
+      generateBangunanSadap(`BSm 1`, 'bottomleft', lineBsm1, 90);
+
+      const lineBsm2ki = [bsm2Point, [-12.55, bsm2Point[1]]];
+      generateBoxPetak('d220051d-14dd-4f7c-9f89-92ed356eb1b3', `B.Sm 2 ki`, lineBsm2ki, 'top', 'golongan-c');
+      const lineBsm2 = [
+        bn7Point,
+        bsm2Point
+      ];
+      generateBangunanSadap(`BSm 2`, 'bottomleft', lineBsm2, 90);
+
+      const lineBsm3ka = [bsm3Point, [-12.65, bsm3Point[1]]];
+      generateBoxPetak('a83662bd-a7bd-4d45-8ad4-87049dd01ddc', `B.Sm 3 ka`, lineBsm3ka, 'bottom', 'golongan-c');
+      const lineBsm3 = [
+        bn7Point,
+        bsm3Point
+      ];
+      generateBangunanSadap(`BSm 3`, 'bottomleft', lineBsm3, 90);
+
+      const lineBsm4te = [bsm4Point, [bsm4Point[0], 109.19]];
+      generateBoxPetak('ce09f17c-61de-41ae-ac57-c46733bf482f', `B.Sm 4`, lineBsm4te, 'right', 'golongan-c');
+      const lineBsm4 = [
+        bn7Point,
+        bsm4Point
+      ];
+      generateBangunanSadap(`BSm 4`, 'bottomleft', lineBsm4, 90);
+
+      const lineBn7 = [
+        [-12.3, 108.72],
+        bn7Point
+      ];
+      generateBangunanPembagi('BN.7', lineBn7);
+      generateTextSaluranSekunder('SS. SIDO MUKTI', [-12.55, 109.2], 0);
+    }
+
+    var initBn8 = function() {
+      const bn8Point = [-12.8, 108.72];
+
+      const lineBn8p = [bn8Point, [bn8Point[0], 108.77]];
+      generateBoxPetak('52d7ea9d-ef03-4975-8ad1-cf810a7e5a5f', `B.N 8`, lineBn8p, 'right', 'golongan-c');
+
+      const lineBn8 = [
+        [-12.6, 108.72],
+        bn8Point
+      ];
+      generateBangunanPembagiDanSadap('BN.8', lineBn8);
+    }
+
+    var initBn9 = function() {
+      const bn9Point = [-12.95, 108.72];
+      const bka1Point = [bn9Point[0], 108.82];
+      const bka2Point = [bn9Point[0], 109];
+      const bka3Point = [-13.04, 109.2];
+
+      const lineBka1ki = [bka1Point, [-12.92, bka1Point[1]]];
+      generateBoxPetak('76859afe-30ec-45e2-adb1-2786af0b7505', `B.Ka 1 ki`, lineBka1ki, 'top', 'golongan-c');
+      const lineBka1ka = [bka1Point, [-13, bka1Point[1]]];
+      generateBoxPetak('adadb8a0-1339-4b82-a7b8-6ab3fb99aea6', `B.Ka 1 ka`, lineBka1ka, 'bottom', 'golongan-c');
+      const lineBka1 = [
+        bn9Point,
+        bka1Point
+      ];
+      generateBangunanSadap(`BKa 1`, 'bottomleft', lineBka1, 90);
+
+      const lineBka2ka = [bka2Point, [-13, bka2Point[1]]];
+      generateBoxPetak('49e879e3-b403-45b2-bc41-cd65e25b9c50', `B.Ka 2 ka`, lineBka2ka, 'bottom', 'golongan-c');
+      const lineBka2 = [
+        bn9Point,
+        bka2Point
+      ];
+      generateBangunanSadap(`BKa 2`, 'bottomleft', lineBka2, 90);
+
+      const lineBka3ka = [bka3Point, [bka3Point[0], 109.25]];
+      generateBoxPetak('df20309b-ffe2-48b3-9382-77ee5a1f4005', `B.Ka 3 ka`, lineBka3ka, 'right', 'golongan-c');
+      const lineBka3 = [
+        bka2Point,
+        bka3Point
+      ];
+      generateBangunanSadap(`BKa 3`, 'topright', lineBka3, 0);
+
+      const lineBn9 = [
+        [-12.8, 108.72],
+        bn9Point
+      ];
+      generateBangunanPembagi('BN.9', lineBn9);
+      generateTextSaluranSekunder('SS. KALEN ANYAR', [-12.9, 109.2], 0);
+    }
+
+    var initBn10 = function() {
+      const bn10Point = [-13.15, 108.72];
+
+      const lineBn10p = [bn10Point, [bn10Point[0], 108.77]];
+      generateBoxPetak('ea562e0f-5747-4b54-8dab-6b558f877334', `B.N 10`, lineBn10p, 'right', 'golongan-c');
+      const lineBn10 = [
+        [-12.95, 108.72],
+        bn10Point
+      ];
+      generateBangunanPembagiDanSadap('BN.10', lineBn10);
+    }
+
+    var initBn11 = function() {
+      const bn11Point = [-13.25, 108.72];
+
+      const lineBn11p = [bn11Point, [bn11Point[0], 108.77]];
+      generateBoxPetak('3d9234e3-dd02-4409-bce8-4cf2662216d8', `B.N 11`, lineBn11p, 'right', 'golongan-c');
+      const lineBn11 = [
+        [-13.15, 108.72],
+        bn11Point
+      ];
+      generateBangunanPembagiDanSadap('BN.11', lineBn11);
+    }
+
+    var initBn12 = function() {
+      const bn12Point = [-13.35, 108.72];
+
+      const lineBn12p = [bn12Point, [bn12Point[0], 108.77]];
+      generateBoxPetak('83219454-d55f-4ff0-afe0-e5f8f4ebe0f8', `B.N 12`, lineBn12p, 'right', 'golongan-c');
+      const lineBn12 = [
+        [-13.25, 108.72],
+        bn12Point
+      ];
+      generateBangunanPembagiDanSadap('BN.12', lineBn12);
+    }
+
+    var initBn13 = function() {
+      const bn13Point = [-13.45, 108.72];
+
+      const lineBn13p = [bn13Point, [bn13Point[0], 108.77]];
+      generateBoxPetak('72190406-d3eb-4c70-ae3e-2650d480e6b7', `B.N 13`, lineBn13p, 'right', 'golongan-c');
+      const lineBn13 = [
+        [-13.35, 108.72],
+        bn13Point
+      ];
+      generateBangunanPembagiDanSadap('BN.13', lineBn13);
+    }
+
+    var initBn14 = function() {
+      const bn14Point = [-13.55, 108.72];
+
+      const lineBn14p = [bn14Point, [-13.57, bn14Point[1]]];
+      generateBoxPetak('b9a7db14-80a1-4b66-a9c0-03f126fdba58', `B.N 14`, lineBn14p, 'bottom', 'golongan-c');
+      const lineBn14 = [
+        [-13.45, 108.72],
+        bn14Point
+      ];
+      generateBangunanPembagiDanSadap('BN.14', lineBn14);
+    }
+
     return {
         //main function to initiate the module
         init: function () {
@@ -795,6 +1792,25 @@ var SkemaSidareja = (function () {
             initMap();
 
             // Generate Skema
+            initBn14();
+            initBn13();
+            initBn12();
+            initBn11();
+            initBn10();
+            initBn9();
+            initBn8();
+            initBn7();
+            initBn6();
+            initBn5();
+            initBn4();
+            initBn3();
+            initBn2();
+            initBn1();
+            initBs11();
+            initBs10();
+            initBs9();
+            initBs8();
+            initBs7();
             initBs6();
             initBs5();
             initBs4();
@@ -998,7 +2014,7 @@ function generateBoxPetak(petakId, petakName, lineCoords, position, golongan) {
   const linePetak = L.polyline(lineCoords, { color: 'black', weight: 1 }).addTo(map);
 
   const tooltipContent = `
-    <div class="box-petak golongan-a" id="${petakId}-petak">
+    <div class="box-petak ${golongan}" id="${petakId}-petak">
         <table id="petak-${petakId}">
           <thead>
             <tr>

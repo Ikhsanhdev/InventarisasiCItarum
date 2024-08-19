@@ -50,14 +50,7 @@ namespace IrigasiManganti.Controllers
                 {
                     var userClaims = new List<Claim>()
                     {
-                        // new Claim("Username", result.Response.Username),
-                        // new Claim("UserId", result.Response.Id.ToString()),
-                        // new Claim("Name", result.Response.Name),
-                        // new Claim("IPAddress", HttpContext.Connection.RemoteIpAddress?.ToString() ?? ""),
-                        // new Claim("Email", result.Response.Email ?? ""),
-                        // new Claim("LoginDate", DateTime.Now.ToString("yyyy-MM-dd H:mm:ss"))
-                        // new Claim(ClaimTypes.Name, user.Username),
-                        new Claim(ClaimTypes.Name, "Takuan Name"),
+                        new Claim(ClaimTypes.Name, user.Username),
                         new Claim("UserId", user.Id.ToString()),
                         new Claim("Name", user.Name),
                         new Claim("IPAddress", HttpContext.Connection.RemoteIpAddress?.ToString() ?? ""),
@@ -65,18 +58,17 @@ namespace IrigasiManganti.Controllers
                         new Claim("LoginDate", DateTime.Now.ToString("yyyy-MM-dd H:mm:ss"))
                     };
 
-                    // CookieOptions options = new CookieOptions();
-                    // options.Expires = DateTime.Now.AddHours(5);
-
-                    // var grandmaIdentity = new ClaimsIdentity(userClaims, "IrigasiMangantiCookiesAuth");
                     var grandmaIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var userPrincipal = new ClaimsPrincipal(new[] { grandmaIdentity });
-                    Console.WriteLine("after use pricipal");
-                    // await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal);  
-                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal);  
-                    Console.WriteLine("after await");
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal);
+
+                    // Logging for debugging
+                    Console.WriteLine("User authenticated: " + user.Username);
+                    Console.WriteLine("Claims: " + string.Join(", ", userClaims.Select(c => c.Type + ": " + c.Value)));
                 }
-            }  catch (InvalidOperationException invOpEx)
+            }
+            catch (InvalidOperationException invOpEx)
             {
                 Console.WriteLine("InvalidOperationException: " + invOpEx.Message);
                 Log.Error(invOpEx, "Invalid Operation Exception: {@ExceptionDetails}", new { invOpEx.Message, invOpEx.StackTrace });
@@ -94,7 +86,6 @@ namespace IrigasiManganti.Controllers
             return Json(result);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
@@ -107,7 +98,8 @@ namespace IrigasiManganti.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        public IActionResult AccessDenied(){
+        public IActionResult AccessDenied()
+        {
             return View();
         }
     }

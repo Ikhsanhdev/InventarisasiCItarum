@@ -19,7 +19,7 @@
             line-height: 1em;
             position: relative;
             top: 1.5rem;
-            left: 1.5rem;
+            left: 1.4rem;
         }
 
         .muted {
@@ -102,6 +102,7 @@
 
         #header-prediksi-debit {
             animation: blink 1s infinite;
+            color: white;
         }
 
         body[data-layout-mode=horizontal] .content-page {
@@ -355,8 +356,11 @@
             </div> *@
             <div class="col-12 col-md-12">
                 <div class="card">
+                    <div class="card-header" style="background: #1976D2;">
+                        @* <h4 class="header-title mb-3" id="header-prediksi-debit">Prediksi Debit Air di Bendung Manganti</h4> *@
+                        <h4 class="card-title mb-0 text-white" id="header-prediksi-debit"> Prediksi Debit Air di Bendung Manganti</h4>
+                    </div>
                     <div class="card-body">
-                        <h4 class="header-title mb-3" id="header-prediksi-debit">Prediksi Debit Air di Bendung Manganti</h4>
                         <div class="btn-group mb-3 me-2 chart-buttons">
                             <a href="#" id="chart-line" class="btn btn-info active" aria-current="page">Grafik Garis</a>
                             <a href="#" id="chart-bar" class="btn btn-info">Grafik Batang</a>
@@ -378,8 +382,8 @@
                                 <tr>
                                     @* <th  class="text-center" scope="col" rowspan="2">No.</th> *@
                                     <th  class="text-center" scope="col" rowspan="2">Tanggal</th>
-                                    <th  class="text-center" scope="col" colspan="3">Ketersediaan (lt/dt)</th>
-                                    <th  class="text-center" scope="col" rowspan="2">Kebutuhan (lt/dt)</th>
+                                    <th  class="text-center" scope="col" colspan="3">Ketersediaan Prediksi (liter/detik)</th>
+                                    <th  class="text-center" scope="col" rowspan="2">Kebutuhan (liter/detik)</th>
                                     <th  class="text-center" scope="col" rowspan="2">Persentase (%)</th>
                                 </tr>
                                 <tr>
@@ -465,8 +469,8 @@
             const percent = ketersediaanAvgToday && kebutuhanToday ? (ketersediaanAvgToday / kebutuhanToday) * 100 : 0;
 
             document.getElementById('das-presentase').textContent = percent.toFixed(2) + '%';
-            document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2) + ' lt/dt';
-            document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2) + ' lt/dt';
+            document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2) + ' liter/detik';
+            document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2) + ' liter/detik';
 
             console.log(avgData);
             
@@ -536,10 +540,10 @@
                             const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
 
                             return `<b>${day}, ${formattedDate}</b><br/>
-                                    Kebutuhan: ${kebutuhanPoint.y.toFixed(2)} lt/dt<br/>
-                                    Min: ${ketersediaanPoint.point.low.toFixed(2)} lt/dt<br/>
-                                    Max: ${ketersediaanPoint.point.high.toFixed(2)} lt/dt<br/>
-                                    Rerata: ${avgPoint.y.toFixed(2)} lt/dt`;
+                                    Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br/>
+                                    Min: ${ketersediaanPoint.point.low.toFixed(2)} liter/detik<br/>
+                                    Max: ${ketersediaanPoint.point.high.toFixed(2)} liter/detik<br/>
+                                    Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
                         }
                     },
                     series: [
@@ -556,7 +560,7 @@
                                 enabled: false
                             },
                             tooltip: {
-                                valueSuffix: ' lt/dt',
+                                valueSuffix: ' liter/detik',
                                 valueDecimals: 2,
                             }
                         },
@@ -571,7 +575,7 @@
                                 lineColor: Highcharts.getOptions().colors[0]
                             },
                             tooltip: {
-                                valueSuffix: ' lt/dt',
+                                valueSuffix: ' liter/detik',
                                 valueDecimals: 2,
                             }
                         },
@@ -581,7 +585,7 @@
                             color: '#404040',
                             data: kebutuhanData,
                             tooltip: {
-                                valueSuffix: ' lt/dt',
+                                valueSuffix: ' liter/detik',
                                 valueDecimals: 2,
                             }
                         }
@@ -652,10 +656,10 @@
                             const minPoint = this.points.find(point => point.series.name === 'Min');
 
                             return `<b>${day}, ${formattedDate}</b><br/>
-                                Kebutuhan: ${kebutuhanPoint.y.toFixed(2)} lt/dt<br>
-                                Min: ${minPoint.y.toFixed(2)} lt/dt<br>
-                                Max: ${maxPoint.y.toFixed(2)} lt/dt<br>
-                                Rerata: ${avgPoint.y.toFixed(2)} lt/dt`;
+                                Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br>
+                                Min: ${minPoint.y.toFixed(2)} liter/detik<br>
+                                Max: ${maxPoint.y.toFixed(2)} liter/detik<br>
+                                Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
                         }
                     },
                     plotOptions: {
@@ -670,7 +674,7 @@
                         color: '#16608E',
                         data: maxData,
                         tooltip: {
-                            valueSuffix: ' lt/dt',
+                            valueSuffix: ' liter/detik',
                             valueDecimals: 2,
                         },
                         pointPadding: 0.2,
@@ -680,7 +684,7 @@
                         color: Highcharts.getOptions().colors[0],
                         data: avgData,
                         tooltip: {
-                            valueSuffix: ' lt/dt',
+                            valueSuffix: ' liter/detik',
                             valueDecimals: 2,
                         },
                         pointPadding: 0.3,
@@ -690,7 +694,7 @@
                         color: '#83ccfb',
                         data: minData,
                         tooltip: {
-                            valueSuffix: ' lt/dt',
+                            valueSuffix: ' liter/detik',
                             valueDecimals: 2,
                         },
                         pointPadding: 0.4,
@@ -700,7 +704,7 @@
                         color: '#404040',
                         data: kebutuhanData,
                         tooltip: {
-                            valueSuffix: ' lt/dt',
+                            valueSuffix: ' liter/detik',
                             valueDecimals: 2,
                         },
                         pointPadding: 0.3,

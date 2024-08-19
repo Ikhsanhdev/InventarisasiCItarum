@@ -8,7 +8,11 @@
 @{
     var x = ClaimIdentity.Name;
     var currentController = ViewContext.RouteData.Values["controller"].ToString();
-    var currentAction = ViewContext.RouteData.Values["action"].ToString(); 
+    var currentAction = ViewContext.RouteData.Values["action"].ToString();
+    var nameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value ?? "Guest";
+    var nameParts = nameClaim.Split('.');
+    var avatarText = nameParts.Length > 1 ? $"{nameParts[0][0]}{nameParts[nameParts.Length - 1][0]}" : $"{nameClaim[0]}";
+    Console.WriteLine(ClaimIdentity.Name);
 }
 
 <!DOCTYPE html>
@@ -37,6 +41,10 @@
 
     @RenderSection("Styles", required: false)
     <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/6.6.96/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.css">
 
     <!-- Head js -->
     <script src="~/js/head.min.js"></script>
@@ -55,8 +63,7 @@
         }
 
         .navbar-custom .topnav-menu .nav-link {
-            @* font-family: 'Poppins', sans-serif; *@
-            color: #fff;
+        @*font-family:'Poppins',sans-serif;*@color: #fff;
             font-weight: 400;
             font-size: 0.8rem;
             letter-spacing: 1px;
@@ -204,16 +211,14 @@
         }
 
         #show_date {
-            @* font-family: 'Poppins', sans-serif; *@
-            color: #fff;
+        @*font-family:'Poppins',sans-serif;*@color: #fff;
             font-weight: 400;
             font-size: 0.9rem;
             letter-spacing: 1px;
         }
 
         #logo-desc {
-            @* font-family: 'Poppins', sans-serif; *@
-            font-weight: 500;
+        @*font-family:'Poppins',sans-serif;*@font-weight: 500;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
@@ -368,8 +373,10 @@
 
                 <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
                     <li>
-                        <a href="/" class="nav-link nav-link-menu waves-effect waves-light m-0 @(currentController == "Home" && currentAction == "Index" ? "active" : "")" aria-haspopup="false"
-                            aria-expanded="false"><span class="nav-menu">BENDUNG MANGANTI</span></a>
+                        <a href="/"
+                            class="nav-link nav-link-menu waves-effect waves-light m-0 @(currentController == "Home" && currentAction == "Index" ? "active" : "")"
+                            aria-haspopup="false" aria-expanded="false"><span class="nav-menu">BENDUNG
+                                MANGANTI</span></a>
                     </li>
                     <li class="dropdown notification-list topbar-dropdown">
                         <a class="nav-link nav-link-menu dropdown-toggle nav-user me-0 waves-effect waves-light @(currentController == "Schema" ? "active" : "")"
@@ -383,7 +390,7 @@
                             <a href="/Schema/Sidareja" class="dropdown-item notify-item">
                                 <span>Saluran Induk Sidareja</span>
                             </a>
-                            
+
                             <a href="/Schema/Cihaur" class="dropdown-item notify-item">
                                 <span>Saluran Induk Cihaur</span>
                             </a>
@@ -394,42 +401,47 @@
                         </div>
                     </li>
                     <li>
-                        <a href="/Home/Map" class="nav-link nav-link-menu waves-effect waves-light m-0 @(currentController == "Home" && currentAction == "Map" ? "active" : "")" aria-haspopup="false"
-                            aria-expanded="false"><span class="nav-menu">PETA TELEMETRI</span></a>
+                        <a href="/Home/Map"
+                            class="nav-link nav-link-menu waves-effect waves-light m-0 me-0 @(currentController == "Home" && currentAction == "Map" ? "active" : "")"
+                            aria-haspopup="false" aria-expanded="false"><span class="nav-menu">PETA TELEMETRI</span></a>
+                    </li>
+                    <li class="dropdown notification-list topbar-dropdown">
+                        <a class="nav-link nav-link-menu dropdown-toggle nav-user me-0 waves-effect waves-light @(currentController == "Schema" ? "active" : "")"
+                            data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                            aria-expanded="false">
+                            <span class="nav-menu">
+                                DOWNLOAD <i class="mdi mdi-chevron-down"></i>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
+                            <a href="/Home/ModelForecast" class="dropdown-item notify-item">
+                                <span>Model Forecast</span>
+                            </a>
+
+                            <a href="/Home/ModelAi" class="dropdown-item notify-item">
+                                <span>Model AI</span>
+                            </a>
+
+                        </div>
                     </li>
                 </ul>
                 <ul class="list-unstyled topnav-menu float-end mb-0">
-                    @if (!string.IsNullOrEmpty(ClaimIdentity.Name))
-                    @* @if(User.Identity.IsAuthenticated) *@
+                    @* @if (!string.IsNullOrEmpty(ClaimIdentity.Name)) *@
+                    @if (User.Identity.IsAuthenticated)
                     {
                         <li class="dropdown notification-list topbar-dropdown">
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light"
                                 data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                                 aria-expanded="false">
                                 <div id='element-avatar'>
-                                    @{
-                                        var result = "";
-                                        var name = ClaimIdentity.Name;
-                                        var arrName = name.Split(".");
-                                        if (arrName.Length > 1)
-                                        {
-                                            result = $"{arrName[0][0]}{arrName[arrName.Length - 1][0]}";
-                                        }
-                                        else
-                                        {
-                                            result = $"{name[0]}";
-                                        }
-                                        <span class="e-avatar e-avatar-xlarge e-avatar-circle rose">@result.ToUpper()</span>
-                                    }
-
-                                    <span class="spanforname">@ClaimIdentity.Name <i
-                                            class="fas fa-chevron-down ms-1"></i></span>
+                                    <span class="e-avatar e-avatar-xlarge e-avatar-circle rose">@avatarText.ToUpper()</span>
+                                    <span class="spanforname">@nameClaim <i class="fas fa-chevron-down ms-1"></i></span>
                                 </div>
                                 <span class="pro-user-name ms-1">
                                     Administrator <i class="mdi mdi-chevron-down"></i>
                                 </span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
+                            <div class="dropdown-menu dropdown-menu-end profile-dropdown">
                                 <!-- item-->
                                 <a href="/Station" class="dropdown-item notify-item">
                                     <i class="fe-log-in"></i>
@@ -451,10 +463,8 @@
                                     <span>Logout</span>
                                     <form id="logout-form" action="@Url.Action("Logout","Account")" method="POST"
                                         style="display: none;">
-
                                     </form>
                                 </a>
-
                             </div>
                         </li>
                     }
@@ -465,6 +475,7 @@
                                 aria-expanded="false">LOGIN <i class="mdi mdi-login"></i></a>
                         </li>
                     }
+
 
                     <li class="d-none d-xl-block">
                         <a class="nav-link waves-effect waves-light m-0" aria-haspopup="false" aria-expanded="false"
@@ -524,6 +535,7 @@
 
     <script src="~/lib/axios/axios.min.js"></script>
     <script src="~/js/global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
 
     <script>
 

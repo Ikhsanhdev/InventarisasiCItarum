@@ -43,6 +43,9 @@ namespace IrigasiManganti
                 options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.ExpireTimeSpan = TimeSpan.FromHours(6);
+                // options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Ensure cookies are only sent over HTTPS
+                options.Cookie.SameSite = SameSiteMode.Lax;
             });
 
             builder.Services.AddAuthorization();

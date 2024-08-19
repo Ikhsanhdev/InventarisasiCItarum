@@ -41,10 +41,13 @@
             margin-right: 0.4rem;
         }
 
+        .container-map{
+            height: 80vh;
+            width: 100%;
+        }
         #map {
-            height: 550px;
+          height: 100%;
             border-radius: 5px;
-            position: relative;
             outline: none;
             z-index: 1 !important;
             background: white;
@@ -134,6 +137,14 @@
 
         .golongan-a th, .golongan-a td {
             border: 1.5px solid #1abc9c;
+        }
+
+        .golongan-b th, .golongan-b td {
+            border: 1.5px solid blue;
+        }
+
+        .golongan-c th, .golongan-c td {
+            border: 1.5px solid #F509F2;
         }
 
         .leaflet-tooltip-left {
@@ -231,6 +242,19 @@
             background-color: rgba(255, 255, 255, 0.2);
             border: 0px solid black;
         }
+        .border-box {
+            border : 1px solid gray;
+            font-family: 'Manrope', sans-serif;
+            padding-left: 5px;
+            padding-right: 5px;
+            font-size: 9px;
+        }
+        .panah-aliran {
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+            margin: 0;
+        }
     </style>
 }
 
@@ -258,7 +282,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body container-map">
                         <div class="w-100" id="map"></div>
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->
