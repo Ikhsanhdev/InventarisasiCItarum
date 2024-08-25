@@ -99,13 +99,6 @@ namespace IrigasiManganti
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API DI. Manganti", Version = "v1" });
 
-                // Include only controllers in the 'Controllers.Api' namespace
-                // c.DocInclusionPredicate((docName, apiDesc) =>
-                // {
-                //     if (!apiDesc.TryGetMethodInfo(out var methodInfo)) return false;
-                //     var controllerNamespace = methodInfo.DeclaringType.Namespace;
-                //     return controllerNamespace != null && controllerNamespace.StartsWith("IrigasiManganti.Controllers.Api");
-                // });
                 // Add Basic Authentication
                 var securityScheme = new OpenApiSecurityScheme
                 {
@@ -137,7 +130,7 @@ namespace IrigasiManganti
                     }
                     return new[] { "Default" };
                 });
-                
+
                 // Filter untuk hanya menyertakan controller dari folder Controllers/Api
                 c.DocInclusionPredicate((docName, apiDesc) =>
                 {
@@ -186,7 +179,7 @@ namespace IrigasiManganti
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "API DI. Manganti");
-                
+
             });
 
             // app.UseMiddleware<Middlewares.SubdomainMiddleware>();
@@ -201,6 +194,7 @@ namespace IrigasiManganti
             app.UseAuthentication();
 
             app.UseAuthorization();
+
 
             app.MapControllerRoute(
                 name: "default",

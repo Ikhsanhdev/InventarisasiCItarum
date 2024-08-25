@@ -6,9 +6,10 @@
 @section styles {
     <link href="~/lib/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
     <link href="~/lib/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-    
+
     <style>
-        .fa-clipboard:before, .fa-check:before {
+        .fa-clipboard:before,
+        .fa-check:before {
             line-height: 1em;
             position: relative;
             top: 1.5rem;
@@ -27,10 +28,14 @@
         }
 
         .prediksi-img {
-            width: 1500px; /* Make the image take the full width of its container */
-            height: 212px; /* Maintain the aspect ratio */
-            object-fit: cover; /* Optionally, crop the image to fit the container */
-            border-radius: 5px; /* Optionally, add rounded corners */
+            width: 1500px;
+            /* Make the image take the full width of its container */
+            height: 212px;
+            /* Maintain the aspect ratio */
+            object-fit: cover;
+            /* Optionally, crop the image to fit the container */
+            border-radius: 5px;
+            /* Optionally, add rounded corners */
         }
 
         .box-legend {
@@ -92,9 +97,11 @@
             0% {
                 opacity: 0;
             }
+
             50% {
                 opacity: 1;
             }
+
             100% {
                 opacity: 0;
             }
@@ -117,27 +124,59 @@
             color: #404040;
         }
 
-        table.dataTable.table-sm>thead>tr>th:not(.sorting_disabled):before, table.dataTable.table-sm>thead>tr>th:not(.sorting_disabled):after {
-            @* margin-bottom: 1px; *@
-            right: 8px;
-            @* line-height: 4px; *@
+        table.dataTable.table-sm>thead>tr>th:not(.sorting_disabled):before,
+        table.dataTable.table-sm>thead>tr>th:not(.sorting_disabled):after {
+        @*margin-bottom:1px;*@right: 8px;
+        @*line-height:4px;*@
         }
 
-        table.dataTable thead>tr>th.sorting:before, table.dataTable thead>tr>th.sorting:after, table.dataTable thead>tr>th.sorting_asc:before, table.dataTable thead>tr>th.sorting_asc:after, table.dataTable thead>tr>th.sorting_desc:before, table.dataTable thead>tr>th.sorting_desc:after, table.dataTable thead>tr>th.sorting_asc_disabled:before, table.dataTable thead>tr>th.sorting_asc_disabled:after, table.dataTable thead>tr>th.sorting_desc_disabled:before, table.dataTable thead>tr>th.sorting_desc_disabled:after, table.dataTable thead>tr>td.sorting:before, table.dataTable thead>tr>td.sorting:after, table.dataTable thead>tr>td.sorting_asc:before, table.dataTable thead>tr>td.sorting_asc:after, table.dataTable thead>tr>td.sorting_desc:before, table.dataTable thead>tr>td.sorting_desc:after, table.dataTable thead>tr>td.sorting_asc_disabled:before, table.dataTable thead>tr>td.sorting_asc_disabled:after, table.dataTable thead>tr>td.sorting_desc_disabled:before, table.dataTable thead>tr>td.sorting_desc_disabled:after {
+        table.dataTable thead>tr>th.sorting:before,
+        table.dataTable thead>tr>th.sorting:after,
+        table.dataTable thead>tr>th.sorting_asc:before,
+        table.dataTable thead>tr>th.sorting_asc:after,
+        table.dataTable thead>tr>th.sorting_desc:before,
+        table.dataTable thead>tr>th.sorting_desc:after,
+        table.dataTable thead>tr>th.sorting_asc_disabled:before,
+        table.dataTable thead>tr>th.sorting_asc_disabled:after,
+        table.dataTable thead>tr>th.sorting_desc_disabled:before,
+        table.dataTable thead>tr>th.sorting_desc_disabled:after,
+        table.dataTable thead>tr>td.sorting:before,
+        table.dataTable thead>tr>td.sorting:after,
+        table.dataTable thead>tr>td.sorting_asc:before,
+        table.dataTable thead>tr>td.sorting_asc:after,
+        table.dataTable thead>tr>td.sorting_desc:before,
+        table.dataTable thead>tr>td.sorting_desc:after,
+        table.dataTable thead>tr>td.sorting_asc_disabled:before,
+        table.dataTable thead>tr>td.sorting_asc_disabled:after,
+        table.dataTable thead>tr>td.sorting_desc_disabled:before,
+        table.dataTable thead>tr>td.sorting_desc_disabled:after {
             font-size: .6em;
         }
 
-        table.dataTable thead>tr>th.sorting:before, table.dataTable thead>tr>th.sorting_asc:before, table.dataTable thead>tr>th.sorting_desc:before, table.dataTable thead>tr>th.sorting_asc_disabled:before, table.dataTable thead>tr>th.sorting_desc_disabled:before, table.dataTable thead>tr>td.sorting:before, table.dataTable thead>tr>td.sorting_asc:before, table.dataTable thead>tr>td.sorting_desc:before, table.dataTable thead>tr>td.sorting_asc_disabled:before, table.dataTable thead>tr>td.sorting_desc_disabled:before {
-            @* bottom: 50%; *@
-            @* content: "▾";
-            content: "▾" / "";
-            rotate: 180deg; *@
+        table.dataTable thead>tr>th.sorting:before,
+        table.dataTable thead>tr>th.sorting_asc:before,
+        table.dataTable thead>tr>th.sorting_desc:before,
+        table.dataTable thead>tr>th.sorting_asc_disabled:before,
+        table.dataTable thead>tr>th.sorting_desc_disabled:before,
+        table.dataTable thead>tr>td.sorting:before,
+        table.dataTable thead>tr>td.sorting_asc:before,
+        table.dataTable thead>tr>td.sorting_desc:before,
+        table.dataTable thead>tr>td.sorting_asc_disabled:before,
+        table.dataTable thead>tr>td.sorting_desc_disabled:before {
+        @*bottom:50%;*@@*content:"▾";content:"▾"/"";rotate:180deg;*@
         }
 
-        table.dataTable thead>tr>th.sorting:after, table.dataTable thead>tr>th.sorting_asc:after, table.dataTable thead>tr>th.sorting_desc:after, table.dataTable thead>tr>th.sorting_asc_disabled:after, table.dataTable thead>tr>th.sorting_desc_disabled:after, table.dataTable thead>tr>td.sorting:after, table.dataTable thead>tr>td.sorting_asc:after, table.dataTable thead>tr>td.sorting_desc:after, table.dataTable thead>tr>td.sorting_asc_disabled:after, table.dataTable thead>tr>td.sorting_desc_disabled:after {
-            @* top: 50%; *@
-            @* content: "▾";
-            content: "▾" / ""; *@
+        table.dataTable thead>tr>th.sorting:after,
+        table.dataTable thead>tr>th.sorting_asc:after,
+        table.dataTable thead>tr>th.sorting_desc:after,
+        table.dataTable thead>tr>th.sorting_asc_disabled:after,
+        table.dataTable thead>tr>th.sorting_desc_disabled:after,
+        table.dataTable thead>tr>td.sorting:after,
+        table.dataTable thead>tr>td.sorting_asc:after,
+        table.dataTable thead>tr>td.sorting_desc:after,
+        table.dataTable thead>tr>td.sorting_asc_disabled:after,
+        table.dataTable thead>tr>td.sorting_desc_disabled:after {
+        @*top:50%;*@@*content:"▾";content:"▾"/"";*@
         }
     </style>
 }
@@ -164,7 +203,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="text-end">
-                                    <h3 class="text-dark mt-1"><span data-plugin="counterup" id="das-ketersediaan"></span></h3>
+                                    <h3 class="text-dark mt-1"><span data-plugin="counterup"
+                                            id="das-ketersediaan"></span></h3>
                                     <p class="text-muted mb-1 text-truncate">Ketersediaan (Hari Ini)</p>
                                 </div>
                             </div>
@@ -184,7 +224,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="text-end">
-                                    <h3 class="text-dark mt-1"><span data-plugin="counterup" id="das-kebutuhan"></span></h3>
+                                    <h3 class="text-dark mt-1"><span data-plugin="counterup" id="das-kebutuhan"></span>
+                                    </h3>
                                     <p class="text-muted mb-1 text-truncate">Kebutuhan (Hari Ini)</p>
                                 </div>
                             </div>
@@ -204,7 +245,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="text-end">
-                                    <h3 class="text-dark mt-1"><span data-plugin="counterup" id="das-presentase"></span></h3>
+                                    <h3 class="text-dark mt-1"><span data-plugin="counterup" id="das-presentase"></span>
+                                    </h3>
                                     <p class="text-muted mb-1 text-truncate">Persentase (Hari Ini)</p>
                                 </div>
                             </div>
@@ -215,150 +257,154 @@
         </div>
 
         @* <div class="row">
-            <div class="col-6 col-md-6">
-                <div class="card card-debit">
-                    <div class="card-body">
-                        <h4 class="header-title mb-2">Bendung Manganti</h4><br>
-                        <center><img src="~/assets/img/map.jpg" alt="" class="prediksi-img"></center>
-                    </div>
-                     <!-- end card-body -->
-                </div> <!-- end card-->
-            </div>
+        <div class="col-6 col-md-6">
+        <div class="card card-debit">
+        <div class="card-body">
+        <h4 class="header-title mb-2">Bendung Manganti</h4><br>
+        <center><img src="~/assets/img/map.jpg" alt="" class="prediksi-img"></center>
+        </div>
+        <!-- end card-body -->
+        </div> <!-- end card-->
+        </div>
 
-            <div class=" col-6 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="header-title mb-2">Debit Air Rata Rata per Wilayah Kerja</h4>
-                        <div class="table-responsive">
-                            <table class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100" id="table-reading-awlr">
-                                <thead class="bg-blue text-white">
-                                    <tr>
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">Bangunan Di</th>
-                                        <th class="text-center">Petak Tertier</th>
-                                        <th class="text-center">Jumlah Debit</th>
-                                        <th class="text-center">Rata Rata Debit</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-center">
-                                    <tr>
-                                        <td>4</td>
-                                        <td>BCIm 18 Kn</td>
-                                        <td>60</td>
-                                        <td>801</td>
-                                        <td>53,40</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>BCIm 19 Kn</td>
-                                        <td>40</td>
-                                        <td>669</td>
-                                        <td>44,60</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>B.Suplesi.2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td>BCIm 20a Kn</td>
-                                        <td>35</td>
-                                        <td>1.467</td>
-                                        <td>97,80</td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                        <td>BCIm 20 Kn</td>
-                                        <td>43</td>
-                                        <td>655</td>
-                                        <td>43,67</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class=" col-6 col-md-6">
+        <div class="card">
+        <div class="card-body">
+        <h4 class="header-title mb-2">Debit Air Rata Rata per Wilayah Kerja</h4>
+        <div class="table-responsive">
+        <table class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100"
+        id="table-reading-awlr">
+        <thead class="bg-blue text-white">
+        <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">Bangunan Di</th>
+        <th class="text-center">Petak Tertier</th>
+        <th class="text-center">Jumlah Debit</th>
+        <th class="text-center">Rata Rata Debit</th>
+        </tr>
+        </thead>
+        <tbody class="text-center">
+        <tr>
+        <td>4</td>
+        <td>BCIm 18 Kn</td>
+        <td>60</td>
+        <td>801</td>
+        <td>53,40</td>
+        </tr>
+        <tr>
+        <td>5</td>
+        <td>BCIm 19 Kn</td>
+        <td>40</td>
+        <td>669</td>
+        <td>44,60</td>
+        </tr>
+        <tr>
+        <td>6</td>
+        <td>B.Suplesi.2</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td>7</td>
+        <td>BCIm 20a Kn</td>
+        <td>35</td>
+        <td>1.467</td>
+        <td>97,80</td>
+        </tr>
+        <tr>
+        <td>8</td>
+        <td>BCIm 20 Kn</td>
+        <td>43</td>
+        <td>655</td>
+        <td>43,67</td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+        </div>
+        </div>
         </div> *@
 
         <div class="row">
             @* <div class=" col-6 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="header-title mb-2">Realisasi Debit per Wilayah Juru</h4>
-                        <div class="table-responsive">
-                            <table class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100" id="table-reading-awlr">
-                                <thead class="bg-blue text-white">
-                                    <tr>
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">Wilayah Kerja</th>
-                                        <th class="text-center">Luas Sawah</th>
-                                        <th class="text-center">Debit Rata Rata</th>
-                                        <th class="text-center">Debit Akhir</th>
-                                        <th class="text-center">Usulan Luas</th>
-                                        <th class="text-center">Keb Air Pintu Tertier</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-center">
-                                    <tr>
-                                        <td>4</td>
-                                        <td>BCIm Kr 3</td>
-                                        <td>44</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>44</td>
-                                        <td>38,28</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>BCIm Kr 4</td>
-                                        <td>41</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>41</td>
-                                        <td>35,67</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>BCIm Kr 5</td>
-                                        <td>5</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>5</td>
-                                        <td>4,35</td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td>BCIm Kn 6</td>
-                                        <td>64</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>64</td>
-                                        <td>55,68</td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                        <td>BCIm Kr 7</td>
-                                        <td>62</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>62</td>
-                                        <td>53,94</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            <div class="card">
+            <div class="card-body">
+            <h4 class="header-title mb-2">Realisasi Debit per Wilayah Juru</h4>
+            <div class="table-responsive">
+            <table class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100"
+            id="table-reading-awlr">
+            <thead class="bg-blue text-white">
+            <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">Wilayah Kerja</th>
+            <th class="text-center">Luas Sawah</th>
+            <th class="text-center">Debit Rata Rata</th>
+            <th class="text-center">Debit Akhir</th>
+            <th class="text-center">Usulan Luas</th>
+            <th class="text-center">Keb Air Pintu Tertier</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+            <td>4</td>
+            <td>BCIm Kr 3</td>
+            <td>44</td>
+            <td>0</td>
+            <td>0</td>
+            <td>44</td>
+            <td>38,28</td>
+            </tr>
+            <tr>
+            <td>5</td>
+            <td>BCIm Kr 4</td>
+            <td>41</td>
+            <td>0</td>
+            <td>0</td>
+            <td>41</td>
+            <td>35,67</td>
+            </tr>
+            <tr>
+            <td>6</td>
+            <td>BCIm Kr 5</td>
+            <td>5</td>
+            <td>0</td>
+            <td>0</td>
+            <td>5</td>
+            <td>4,35</td>
+            </tr>
+            <tr>
+            <td>7</td>
+            <td>BCIm Kn 6</td>
+            <td>64</td>
+            <td>0</td>
+            <td>0</td>
+            <td>64</td>
+            <td>55,68</td>
+            </tr>
+            <tr>
+            <td>8</td>
+            <td>BCIm Kr 7</td>
+            <td>62</td>
+            <td>0</td>
+            <td>0</td>
+            <td>62</td>
+            <td>53,94</td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            </div>
             </div> *@
             <div class="col-12 col-md-12">
                 <div class="card">
                     <div class="card-header" style="background: #1976D2;">
-                        @* <h4 class="header-title mb-3" id="header-prediksi-debit">Prediksi Debit Air di Bendung Manganti</h4> *@
-                        <h4 class="card-title mb-0 text-white" id="header-prediksi-debit"> Prediksi Debit Air di Bendung Manganti</h4>
+                        @* <h4 class="header-title mb-3" id="header-prediksi-debit">Prediksi Debit Air di Bendung
+                        Manganti</h4> *@
+                        <h4 class="card-title mb-0 text-white" id="header-prediksi-debit"> Prediksi Debit Air di Bendung
+                            Manganti</h4>
                     </div>
                     <div class="card-body">
                         <div class="btn-group mb-3 me-2 chart-buttons">
@@ -377,14 +423,16 @@
                             <p class="highcharts-description"></p>
                         </figure>
                         <br>
-                        <table class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100" id="table-debit-bendung">
+                        <table class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100"
+                            id="table-debit-bendung">
                             <thead class="bg-blue text-white">
                                 <tr>
-                                    @* <th  class="text-center" scope="col" rowspan="2">No.</th> *@
-                                    <th  class="text-center" scope="col" rowspan="2">Tanggal</th>
-                                    <th  class="text-center" scope="col" colspan="3">Ketersediaan Prediksi (liter/detik)</th>
-                                    <th  class="text-center" scope="col" rowspan="2">Kebutuhan (liter/detik)</th>
-                                    <th  class="text-center" scope="col" rowspan="2">Persentase (%)</th>
+                                    @* <th class="text-center" scope="col" rowspan="2">No.</th> *@
+                                    <th class="text-center" scope="col" rowspan="2">Tanggal</th>
+                                    <th class="text-center" scope="col" colspan="3">Ketersediaan Prediksi (liter/detik)
+                                    </th>
+                                    <th class="text-center" scope="col" rowspan="2">Kebutuhan (liter/detik)</th>
+                                    <th class="text-center" scope="col" rowspan="2">Persentase (%)</th>
                                 </tr>
                                 <tr>
                                     <th class="text-center">Minimal</th>
@@ -411,12 +459,14 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" integrity="sha512-ZwR1/gSZM3ai6vCdI+LVF1zSq/5HznD3ZSTk7kajkaj4D292NLuduDCO1c/NT8Id+jE58KYLKT7hXnbtryGmMg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"
+        integrity="sha512-ZwR1/gSZM3ai6vCdI+LVF1zSq/5HznD3ZSTk7kajkaj4D292NLuduDCO1c/NT8Id+jE58KYLKT7hXnbtryGmMg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
-} 
+}
 
 @section additionalScripts {
     <script>
@@ -439,7 +489,7 @@
             let ketersediaanAvgToday = 0;
             let presentaseToday = 0;
 
-            rows.each(function(row) {
+            rows.each(function (row) {
                 const date = new Date(row.tanggal);
                 const timestamp = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
                 const ketersediaanMin = parseFloat(row.ketersediaan_min);
@@ -473,19 +523,19 @@
             document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2) + ' liter/detik';
 
             console.log(avgData);
-            
+
             createChart(ketersediaanData, avgData, kebutuhanData, minData, maxData);
         }
 
         function createChart(ketersediaanData, avgData, kebutuhanData, minData, maxData) {
             const maxValues = [
-                ...ketersediaanData.map(data => data[1]), 
-                ...avgData.map(data => data[1]), 
-                ...kebutuhanData.map(data => data[1]) 
+                ...ketersediaanData.map(data => data[1]),
+                ...avgData.map(data => data[1]),
+                ...kebutuhanData.map(data => data[1])
             ];
             const maxYAxisValue = Math.max(...maxValues);
 
-            if(chartType == 'spline') {
+            if (chartType == 'spline') {
                 chart = Highcharts.chart('container', {
                     title: {
                         text: '',
@@ -540,10 +590,10 @@
                             const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
 
                             return `<b>${day}, ${formattedDate}</b><br/>
-                                    Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br/>
-                                    Min: ${ketersediaanPoint.point.low.toFixed(2)} liter/detik<br/>
-                                    Max: ${ketersediaanPoint.point.high.toFixed(2)} liter/detik<br/>
-                                    Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
+                                                            Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br/>
+                                                            Min: ${ketersediaanPoint.point.low.toFixed(2)} liter/detik<br/>
+                                                            Max: ${ketersediaanPoint.point.high.toFixed(2)} liter/detik<br/>
+                                                            Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
                         }
                     },
                     series: [
@@ -605,7 +655,7 @@
                         }]
                     }
                 });
-            } else if(chartType == 'column') {
+            } else if (chartType == 'column') {
                 chart = Highcharts.chart('container', {
                     chart: {
                         type: 'column'
@@ -656,10 +706,10 @@
                             const minPoint = this.points.find(point => point.series.name === 'Min');
 
                             return `<b>${day}, ${formattedDate}</b><br/>
-                                Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br>
-                                Min: ${minPoint.y.toFixed(2)} liter/detik<br>
-                                Max: ${maxPoint.y.toFixed(2)} liter/detik<br>
-                                Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
+                                                        Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br>
+                                                        Min: ${minPoint.y.toFixed(2)} liter/detik<br>
+                                                        Max: ${maxPoint.y.toFixed(2)} liter/detik<br>
+                                                        Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
                         }
                     },
                     plotOptions: {
@@ -679,7 +729,7 @@
                         },
                         pointPadding: 0.2,
                         pointPlacement: -0.2
-                    },{
+                    }, {
                         name: 'Ketersediaan',
                         color: Highcharts.getOptions().colors[0],
                         data: avgData,
@@ -699,7 +749,7 @@
                         },
                         pointPadding: 0.4,
                         pointPlacement: -0.2
-                    },{
+                    }, {
                         name: 'Kebutuhan',
                         color: '#404040',
                         data: kebutuhanData,
@@ -750,55 +800,66 @@
                 },
                 columns: [
                     //{ data: null, defaultContent: '' }, // Placeholder for row number
-                    { 
+                    {
                         data: "tanggal",
                         name: "tanggal",
                         render: function (data) {
-                            if(data != null) {
+                            if (data != null) {
                                 return `${moment(data).locale('id').format("D MMMM YYYY")}`;
                             }
 
                             return '-';
                         }
                     },
-                    { 
+                    {
                         data: "ketersediaan_min",
                         name: "ketersediaan_min",
                         render: function (data) {
                             return data ? `<span class="ketersediaan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
                         }
                     },
-                    { 
+                    {
                         data: "ketersediaan_max",
                         name: "ketersediaan_max",
                         render: function (data) {
                             return data ? `<span class="ketersediaan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
                         }
                     },
-                    { 
+                    {
                         data: "ketersediaan_avg",
                         name: "ketersediaan_avg",
                         render: function (data) {
                             return data ? `<span class="ketersediaan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
                         }
                     },
-                    { 
+                    {
                         data: "kebutuhan",
                         name: "kebutuhan",
-                        render: function (data) {
+                        render: function (data, type, row) {
+
+                            const inRange = isDateInRange(moment(row.tanggal).format("YYYY-MM-DD"));
+                            if (inRange) {
+                                return "0";
+                            }
+
+
                             return data ? `<span class="kebutuhan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
                         }
                     },
-                    { 
+                    {
                         data: null,
                         render: function (data, type, row) {
+                            const inRange = isDateInRange(moment(row.tanggal).format("YYYY-MM-DD"));
+                            if (inRange) {
+                                return `<span class="text-warning fw-semibold">0%</span>`;;
+                            }
                             const percent_avg_kebutuhan = row.ketersediaan_avg && row.kebutuhan ? (row.ketersediaan_avg / row.kebutuhan) * 100 : 0;
                             const status_percent = percent_avg_kebutuhan >= 100 ? 'text-success' : 'text-warning';
                             return `<span class="${status_percent} fw-semibold">${percent_avg_kebutuhan.toFixed(2)}%</span>`;
                         }
                     }
                 ],
-                drawCallback: function() {
+                drawCallback: function () {
                     createChartFromDataTable();
                 }
             });
@@ -845,6 +906,19 @@
                 chart.destroy();
                 createChartFromDataTable();
             }
-        });  
+        });
+
+        function isDateInRange(dateToCheck) {
+            // Tanggal batas awal dan akhir
+            const startDate = new Date('2024-08-24');
+            const endDate = new Date('2024-09-05');
+
+            // Menghilangkan waktu dari tanggal yang akan dicek
+            const date = new Date(dateToCheck);
+            date.setHours(0, 0, 0, 0);
+
+            // Membandingkan apakah tanggal berada dalam rentang
+            return date >= startDate && date <= endDate;
+        }
     </script>
 }

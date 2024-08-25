@@ -2083,6 +2083,19 @@ function enableElements() {
     inputField.classList.remove('disabled');
 }
 
+ function isDateInRange(dateToCheck) {
+            // Tanggal batas awal dan akhir
+      const startDate = new Date('2024-08-24');
+      const endDate = new Date('2024-09-05');
+
+      // Menghilangkan waktu dari tanggal yang akan dicek
+      const date = new Date(dateToCheck);
+      date.setHours(0, 0, 0, 0);
+
+      // Membandingkan apakah tanggal berada dalam rentang
+      return date >= startDate && date <= endDate;
+  }
+
 function getSchemaData(tanggal) {
   disableElements();
   // $('.box-petak tbody').html(`<tr><td class="text-center" colspan="2"><img src="/images/loading.gif" /></td></tr>`);
@@ -2101,7 +2114,13 @@ function getSchemaData(tanggal) {
         }
 
         if (data.debit_kebutuhan != null) {
-          debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} lt/dt`;
+          const isInrange = isDateInRange(tanggal);
+          if (isInrange) {
+            debit_kebutuhan = `QK= 0 lt/dt`;
+          } else {
+            debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} lt/dt`;
+          }
+          
         }
 
         if (data.debit_aktual != null) {

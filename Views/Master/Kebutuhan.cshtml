@@ -34,7 +34,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body text-end">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <p>Klik <a target="_blank" href="http://smopi.info/index.php?r=Api/kebAir">di sini</a> untuk
+                            melihat data SMOPI
+                        </p>
                         <button id="btn-sync-smopi" type="button" class="btn btn-success  waves-effect waves-light">
                             Sinkronsisasi Data SMOPI
                         </button>
@@ -46,7 +49,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                
+
                     <ul class="nav nav-tabs nav-bordered nav-justified">
                         <li class="nav-item">
                             <a href="#home-b2" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
@@ -83,7 +86,7 @@
                                         <div class="row ">
                                             <div class="col-7 col-xl-7">
                                                 <input type="text" id="month-year" name="month-year"
-                                                    class="form-control"     placeholder="Pilih bulan-tahun"
+                                                    class="form-control" placeholder="Pilih bulan-tahun"
                                                     autocomplete="false">
                                             </div>
                                             <div class="col-5 col-xl-5">
@@ -95,7 +98,7 @@
                                             </div>
                                             <input type="hidden" id="year">
                                             <input type="hidden" id="month">
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -110,12 +113,14 @@
                                         <tr>
                                             <th>Tanggal</th>
                                             <th>Periode</th>
-                                            <th>Ketersedian Minimal <small class="text-light">(lt/d)</small></th>
-                                            <th>Ketersedian Maksimal <small class="text-light">(lt/d)</small></th>
-                                            <th>Ketersedian Rata-Rata <small class="text-light">(lt/d)</small></th>
-                                            <th>Kebutuhan <small class="text-light">(lt/d)</small></th>
+                                            <th>Ketersedian Minimal <small class="text-light">(liter/detik)</small></th>
+                                            <th>Ketersedian Maksimal <small class="text-light">(liter/detik)</small>
+                                            </th>
+                                            <th>Ketersedian Rata-Rata <small class="text-light">(liter/detik)</small>
+                                            </th>
+                                            <th>Kebutuhan <small class="text-light">(liter/detik)</small></th>
                                             <th>Update terakhir</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -129,12 +134,12 @@
                                     id="table-smopi">
                                     <thead class="bg-blue text-white">
                                         <tr>
-                                            
+
                                             <th>Nama Rentang</th>
                                             <th>Tahun</th>
                                             <th>Bulan</th>
                                             <th>Periode</th>
-                                            <th>Kebutuhan Air (lt/d)</th>
+                                            <th>Kebutuhan Air (liter/detik)</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -148,9 +153,9 @@
     </div>
     <!-- end row -->
 
-        
 
-    </div> <!-- container -->
+
+</div> <!-- container -->
 
 </div> <!-- content -->
 
