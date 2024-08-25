@@ -476,6 +476,15 @@
         var currentRange = '7d'; // Default range
         var chartType = 'spline'
 
+        function isMillisInRange(millis) {
+            // Tanggal batas awal dan akhir
+            const startDate = new Date('2024-08-25').getTime();
+            const endDate = new Date('2024-09-05').getTime();
+
+            // Memeriksa apakah millis berada dalam rentang tanggal
+            return millis >= startDate && millis <= endDate;
+        }
+
         function createChartFromDataTable() {
             const today = new Date();
             const ketersediaanData = [];
@@ -522,8 +531,6 @@
             document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2) + ' liter/detik';
             document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2) + ' liter/detik';
 
-            console.log(avgData);
-
             createChart(ketersediaanData, avgData, kebutuhanData, minData, maxData);
         }
 
@@ -534,6 +541,17 @@
                 ...kebutuhanData.map(data => data[1])
             ];
             const maxYAxisValue = Math.max(...maxValues);
+
+            console.log(kebutuhanData)
+
+            kebutuhanData = kebutuhanData.map(e => {
+                const isInRange = isMillisInRange(e[0]);
+                if (isInRange) {
+                    e[1] = 0;
+                }
+                return e;
+            });
+
 
             if (chartType == 'spline') {
                 chart = Highcharts.chart('container', {
@@ -590,10 +608,10 @@
                             const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
 
                             return `<b>${day}, ${formattedDate}</b><br/>
-                                                            Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br/>
-                                                            Min: ${ketersediaanPoint.point.low.toFixed(2)} liter/detik<br/>
-                                                            Max: ${ketersediaanPoint.point.high.toFixed(2)} liter/detik<br/>
-                                                            Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
+                                                                                                            Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br/>
+                                                                                                            Min: ${ketersediaanPoint.point.low.toFixed(2)} liter/detik<br/>
+                                                                                                            Max: ${ketersediaanPoint.point.high.toFixed(2)} liter/detik<br/>
+                                                                                                            Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
                         }
                     },
                     series: [
@@ -706,10 +724,10 @@
                             const minPoint = this.points.find(point => point.series.name === 'Min');
 
                             return `<b>${day}, ${formattedDate}</b><br/>
-                                                        Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br>
-                                                        Min: ${minPoint.y.toFixed(2)} liter/detik<br>
-                                                        Max: ${maxPoint.y.toFixed(2)} liter/detik<br>
-                                                        Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
+                                                                                                        Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br>
+                                                                                                        Min: ${minPoint.y.toFixed(2)} liter/detik<br>
+                                                                                                        Max: ${maxPoint.y.toFixed(2)} liter/detik<br>
+                                                                                                        Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
                         }
                     },
                     plotOptions: {
