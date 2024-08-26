@@ -22,9 +22,9 @@ deploy to production:
         sudo git pull origin $CI_COMMIT_REF_NAME
         sudo dotnet clean
         sudo dotnet build
-        sudo systemctl stop irigasi-manganti
+        sudo systemctl stop dimanganti
         sudo dotnet publish -c Release -o /var/www/publish/irigasi-manganti
-        sudo systemctl start irigasi-manganti
+        sudo systemctl start dimanganti
         exit 0
       EOF
       )
