@@ -8,16 +8,16 @@ namespace IrigasiManganti.Services
 {
     public interface ICsvService
     {
-        DataTable ReadCsvToDataTable(IFormFile file);
+        DataTable ReadCsvToDataTable(IFormFile file, string delimiter = ";");
     }
     public class CsvService : ICsvService
     {
-        public DataTable ReadCsvToDataTable(IFormFile file)
+        public DataTable ReadCsvToDataTable(IFormFile file, string delimiter = ";")
         {
             try
             {
                 using (var reader = new StreamReader(file.OpenReadStream()))
-                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ",", Encoding = Encoding.UTF8 }))
+                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ";", Encoding = Encoding.UTF8 }))
                 {
 
                     var records = csv.GetRecords<dynamic>().ToList();

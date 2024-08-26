@@ -17,7 +17,7 @@ using Serilog;
 
 namespace IrigasiManganti.Controllers.Api
 {
-    [ApiExplorerSettings(IgnoreApi = true)]
+    [ApiExplorerSettings(IgnoreApi = false)]
     [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     [ApiController]
     public class KetersediaanApiController : ControllerBase
@@ -54,7 +54,7 @@ namespace IrigasiManganti.Controllers.Api
                     return BadRequest(result);
                 }
 
-                var table = _service.Csvs.ReadCsvToDataTable(file);
+                var table = _service.Csvs.ReadCsvToDataTable(file, ",");
                 var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "ketersediaan");
                 string filePath = FileHelper.SaveFile(file, directory);
 
