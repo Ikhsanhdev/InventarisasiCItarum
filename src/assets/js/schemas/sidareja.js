@@ -176,7 +176,7 @@ var SkemaSidareja = (function () {
           offset: [10, 1]
       }).openTooltip();
 
-      const lineBoxAliranMasuk = [lineCoords[1],[-7.32, 108.72]];
+      const lineBoxAliranMasuk = [lineCoords[1],[-7.32, 108.71]];
       generateBox("9595 Ha","13.611 m3/s","193.70 m",lineBoxAliranMasuk,'top')
   
     }
@@ -190,6 +190,9 @@ var SkemaSidareja = (function () {
         [-7.325, 108.77]
       ];
       generateBangunanPembagiDanSadap('BS. I', lineBs1);
+
+      const lineBoxBs1 = [[-7.435, 108.71], [-7.435, 108.71]];
+      generateBox("9079 Ha","13.544 m3/s","1002.56 m",lineBoxBs1,'top')
     }
 
     var initBs2 = function () {
@@ -207,6 +210,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BKs. 2', 'bottomcenter', lineBks2, 90);
 
+      const lineBoxPtKs2Ki = [[-7.57, 109.001], [-7.57, 109.001]];
+      generateBox("57 Ha","0.083 m3/s","429.87 m",lineBoxPtKs2Ki,'top')
+
       // Set BKs. 1
       const linePtKs1Ki = [bks1Point, [-7.475, bks1Point[1]]];
       generateBoxPetak('3ca505a2-0038-45a7-aa38-e2f43205d84d', 'Pt. Ks. 1-Ki', linePtKs1Ki, 'top', 'golongan-a');
@@ -217,6 +223,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BKs. 1', 'bottomcenter', lineBks1, 90);
 
+      const lineBoxPtKs1Ki = [[-7.57, 108.85], [-7.57, 108.85]];
+      generateBox("96 Ha","0.140 m3/s","340.20 m",lineBoxPtKs1Ki,'top')
+
       // Set BS. II
       const lineBs2 = [
         [-7.325, 108.77],
@@ -225,6 +234,9 @@ var SkemaSidareja = (function () {
       generateBangunanPembagi('BS. II', lineBs2);
 
       generateTextSaluranSekunder('SS. KARANG SARI', [-7.4, 108.92], 0)
+
+      const lineBoxBs2 = [[-7.615, 108.71], [-7.615, 108.71]];
+      generateBox("8983 Ha","13.401 m3/s","1479.73 m",lineBoxBs2,'top')
     }
 
     var initBs3 = function () {
@@ -258,6 +270,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BRm. 4', 'bottomcenter', lineBrm4, 90);
 
+      const lineBoxPtsRm4Ki = [[-7.72, 109.42], [-7.72, 109.42]];
+      generateBox("56 Ha","0.082 m3/s","1008.09 m",lineBoxPtsRm4Ki,'top')
+
       // Set BRm. 3
       const linePtsRm3Ki = [brm3Point, [-7.65, brm3Point[1]]];
       generateBoxPetak('509a16fd-9b7c-475f-89a0-24386d38709f', 'Pts. Rm. 3-Ki', linePtsRm3Ki, 'top', 'golongan-a');
@@ -268,6 +283,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BRm. 3', 'bottomcenter', lineBrm3, 90);
 
+      const lineBoxPtsRm3Ki = [[-7.72, 109.25], [-7.72, 109.25]];
+      generateBox("122 Ha","0.178 m3/s","1263.50 m",lineBoxPtsRm3Ki,'top')
+
       // Set BRm. 2
       const linePtsRm2Kn = [brm2Point, [-7.72, brm2Point[1]]];
       generateBoxPetak('7cfa3b50-14b2-4724-a582-fddfb27ed8bc', 'Pts. Rm. 2-Kn', linePtsRm2Kn, 'bottom', 'golongan-a');
@@ -277,6 +295,9 @@ var SkemaSidareja = (function () {
         brm2Point
       ];
       generateBangunanSadap('BRm. 2', 'bottomright', lineBrm2, 90);
+
+      const lineBoxPtsRm2Kn = [[-7.72, 109.1], [-7.72, 109.1]];
+      generateBox("165 Ha","0.241 m3/s","608 m",lineBoxPtsRm2Kn,'top')
 
       // Set BRm. 1
       const linePtsRm1Ki = [brm1Point, [-7.65, brm1Point[1]]];
@@ -291,6 +312,12 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BRm. 1', 'bottomright', lineBrm1, 90);
 
+      const lineBoxPtsRm1Kn = [[-7.66, 108.80], [-7.66, 108.80]];
+      generateBox("325 Ha","0.475 m3/s","260 m",lineBoxPtsRm1Kn,'top')
+
+      const lineBoxPtsRm1Ki = [[-7.66, 108.95], [-7.66, 108.95]];
+      generateBox("217 Ha","0.317 m3/s","487.50 m",lineBoxPtsRm1Ki,'top')
+
       // Set BS. III
       const lineBs3 = [
         [-7.325, 108.77],
@@ -299,6 +326,9 @@ var SkemaSidareja = (function () {
       generateBangunanPembagi('BS. III', lineBs3);
 
       generateTextSaluranSekunder('SS. REJA MULYA', [-7.57, 109.2], 0);
+
+      const lineBoxBs3 = [[-7.795, 108.71], [-7.795, 108.71]];
+      generateBox("8658 Ha","12.916 m3/s","2417.45 m",lineBoxBs3,'top')
     }
 
     var initBs4 = function () {
@@ -312,6 +342,9 @@ var SkemaSidareja = (function () {
         bs4Point
       ];
       generateBangunanPembagiDanSadap('BS. IV', lineBs4);
+
+      const lineBoxBs4 = [[-7.98, 108.71], [-7.98, 108.71]];
+      generateBox("8562 Ha","12.773 m3/s","689.41 m",lineBoxBs4,'top')
     }
 
     var initBs5 = function () {
@@ -348,6 +381,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BKd. 7', 'bottomright', lineBkd7, 90);
 
+      const lineBoxPtKd7Kn = [[-8.04, 109.99], [-8.04, 109.99]];
+      generateBox("119 Ha","0.174 m3/s","501.56 m",lineBoxPtKd7Kn,'top')
+
       // Set BKd. 6
       const linePtKd6Ki = [bkd6Point, [-8, bkd6Point[1]]];
       generateBoxPetak('37ae32d1-80ca-4197-8ac5-69b13653f261', 'Pt. Kd. 6-Ki', linePtKd6Ki, 'top', 'golongan-a');
@@ -357,6 +393,9 @@ var SkemaSidareja = (function () {
         bkd6Point
       ];
       generateBangunanSadap('BKd. 6', 'bottomcenter', lineBkd6, 90);
+
+      const lineBoxPtKd6Ki = [[-8.10, 109.82], [-8.10, 109.82]];
+      generateBox("207 Ha","0.303 m3/s","957.60 m",lineBoxPtKd6Ki,'top')
 
       // Set BKd. 5
       const linePtKd5Ki = [bkd5Point, [-8, bkd5Point[1]]];
@@ -368,6 +407,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BKd. 5', 'bottomcenter', lineBkd5, 90);
 
+      const lineBoxPtKd5Ki = [[-8.10, 109.67], [-8.10, 109.67]];
+      generateBox("248 Ha","0.363 m3/s","1253.10 m",lineBoxPtKd5Ki,'top')
+
       // Set BKd. 4
       const linePtKd4Ki = [bkd4Point, [-8, bkd4Point[1]]];
       generateBoxPetak('5b8b2241-d1df-42e1-9409-a444f42a329e', 'Pt. Kd. 4-Ki', linePtKd4Ki, 'top', 'golongan-a');
@@ -378,6 +420,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BKd. 4', 'bottomcenter', lineBkd4, 90);
 
+      const lineBoxPtKd4Ki = [[-8.10, 109.49], [-8.10, 109.49]];
+      generateBox("332 Ha","0.485 m3/s","1359 m",lineBoxPtKd4Ki,'top')
+
       // Set BKd. 3
       const linePtKd3Ki = [bkd3Point, [-8, bkd3Point[1]]];
       generateBoxPetak('c4690341-532f-43a6-9dd0-9a9d90e4f996', 'Pt. Kd. 3-Ki', linePtKd3Ki, 'top', 'golongan-a');
@@ -387,6 +432,9 @@ var SkemaSidareja = (function () {
         bkd3Point
       ];
       generateBangunanSadap('BKd. 3', 'bottomcenter', lineBkd3, 90);
+
+      const lineBoxPtKd3Ki = [[-8.10, 109.29], [-8.10, 109.29]];
+      generateBox("416 Ha","0.611 m3/s","1220.40 m",lineBoxPtKd3Ki,'top')
 
       // Set BKd. 2
       const linePtKd2Ki = [bkd2Point, [-8, bkd2Point[1]]];
@@ -401,6 +449,12 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BKd. 2', 'topleft', lineBkd2, 90);
 
+      const lineBoxPtKd2Ki = [[-8.04, 108.93], [-8.04, 108.93]];
+      generateBox("626 Ha","0.915 m3/s","1291.20 m",lineBoxPtKd2Ki,'top')
+
+      const lineBoxPtKd2Kn = [[-8.10, 109.13], [-8.10, 109.13]];
+      generateBox("516 Ha","0.754 m3/s","1073.40 m",lineBoxPtKd2Kn,'top')
+
       // Set BKd. 1
       const linePtKd1Kn = [bkd1Point, [-8.1, bkd1Point[1]]];
       generateBoxPetak('c5dc7b64-2019-4c6d-97c8-ccc4a54a130b', 'Pt. Kd. 1-Kn', linePtKd1Kn, 'bottom', 'golongan-a');
@@ -411,6 +465,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BKd. 1', 'topcenter', lineBkd1, 90);
 
+      const lineBoxPtKd1Kn = [[-8.04, 108.82], [-8.04, 108.82]];
+      generateBox("684 Ha","1000 m3/s","227.10 m",lineBoxPtKd1Kn,'top')
+
       // Set BS. V
       const lineBs5 = [
         [-7.855, 108.77],
@@ -419,6 +476,9 @@ var SkemaSidareja = (function () {
       generateBangunanPembagi('BS. V', lineBs5);
 
       generateTextSaluranSekunder('SS. KEDUNG DADAP', [-7.9, 109.3], 0);
+
+      const lineBoxBs5 = [[-8.15, 108.71], [-8.15, 108.71]];
+      generateBox("7878 Ha","11.753 m3/s","1615.05 m",lineBoxBs5,'top')
     }
 
     var initBs6 = function () {
@@ -458,8 +518,7 @@ var SkemaSidareja = (function () {
       const bckkr17Point = [bck10Point[0] - 0.96, bck10Point[1]];
       const bckkn18Point = [bck10Point[0] - 1.08, bck10Point[1]];
 
-      // Set BCk. 10
-
+      // Set BCkKn. 18
       const linePtCk18Kn = [bckkn18Point, [bckkn18Point[0], bckkn18Point[1] - 0.06]];
       generateBoxPetak('abf3088b-38b8-47a7-957e-b8a8c176d9d7', 'Pt. CK. 18-Kn', linePtCk18Kn, 'left', 'golongan-b');
 
@@ -469,6 +528,7 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BCk. Kn18', 'centerright', lineBckKn18, 0);
 
+      // Set BCkkrKn. 17
       const linePtCk17Kr = [bckkr17Point, [bckkr17Point[0], bckkr17Point[1] + 0.06]];
       generateBoxPetak('c8e17113-3795-4562-bf19-e9365ed22acc', 'Pt. CK. 17-Kr', linePtCk17Kr, 'right', 'golongan-b');
 
@@ -481,6 +541,10 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BCk. Kn17', 'topright', lineBckKn17, 0);
 
+      const lineBoxBckKn17 = [[-9.42, 110.59], [-9.42, 110.59]];
+      generateBox("93 Ha","0.136 m3/s","529 m",lineBoxBckKn17,'top')
+
+      // Set BCkKn. 16
       const linePtCk16Kn = [bckkn16Point, [bckkn16Point[0], bckkn16Point[1] - 0.06]];
       generateBoxPetak('7c88b4e5-99af-4703-b223-10f5032e65a1', 'Pt. CK. 16-Kn', linePtCk16Kn, 'left', 'golongan-b');
 
@@ -490,6 +554,10 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BCk. Kn16', 'centerright', lineBckKn16, 0);
 
+      const lineBoxBckKn16 = [[-9.3, 110.59], [-9.3, 110.59]];
+      generateBox("167 Ha","0.244 m3/s","389.50 m",lineBoxBckKn16,'top')
+
+      // Set BCkKnkr. 15
       const linePtCk15Kn = [bckkn15Point, [bckkn15Point[0], bckkn15Point[1] - 0.06]];
       generateBoxPetak('64f09dad-3f32-4439-90fb-09f3e3c2cef3', 'Pt. CK. 15-Kn', linePtCk15Kn, 'left', 'golongan-b');
 
@@ -502,6 +570,13 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BCk. Kn15', 'topright', lineBckKn15, 0);
 
+      const lineBoxBckKn15 = [[-9.04, 110.59], [-9.04, 110.59]];
+      generateBox("313 Ha","0.458 m3/s","351 m",lineBoxBckKn15,'top')
+
+      const lineBoxBckKr15 = [[-9.18, 110.59], [-9.18, 110.59]];
+      generateBox("245 Ha","0.358 m3/s","527 m",lineBoxBckKr15,'top')
+
+      // Set BCkkrKn. 14
       const linePtCk14Kr = [bckkn14Point, [bckkn14Point[0], bckkn14Point[1] + 0.1]];
       generateBoxPetak('5fb2294d-1f39-4cd7-8a46-9272f5cb70cb', 'Pt. CK. 14-Kr', linePtCk14Kr, 'right', 'golongan-b');
 
@@ -511,6 +586,10 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BCk. Kn14', 'centerleft', lineBckKn14, 0);
 
+      const lineBoxBckKn14 = [[-8.93, 110.59], [-8.93, 110.59]];
+      generateBox("348 Ha","0.509 m3/s","1199 m",lineBoxBckKn14,'top')
+
+      // Set BCkKn. 13
       const linePtCk13Kn = [bckkn13Point, [bckkn13Point[0], bckkn13Point[1] - 0.04]];
       generateBoxPetak('2720ee3e-519b-47cc-8559-3c50dd860f90', 'Pt. CK. 13-Kn', linePtCk13Kn, 'left', 'golongan-b');
 
@@ -520,6 +599,10 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BCk. Kn13', 'centerright', lineBckKn13, 0);
 
+      const lineBoxBckKn13 = [[-8.78, 110.59], [-8.78, 110.59]];
+      generateBox("391 Ha","0.572 m3/s","727 m",lineBoxBckKn13,'top')
+
+      // Set BCkKn. 12
       const linePtCk12Kr = [bckkn12Point, [bckkn12Point[0], bckkn12Point[1] + 0.1]];
       generateBoxPetak('dddcf36e-809a-4ef0-b1af-1a463f8cb2ac', 'Pt. CK. 12-Kr', linePtCk12Kr, 'right', 'golongan-b');
 
@@ -529,15 +612,24 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BCk. Kn12', 'centerleft', lineBckKn12, 0);
 
+      const lineBoxBckKn12 = [[-8.66, 110.59], [-8.66, 110.59]];
+      generateBox("475 Ha","0.694 m3/s","1108.50 m",lineBoxBckKn12,'top')
+
+      // Set BCkKr. 11
       const linePtCk11Kr = [bckkn1Point, [bckkn1Point[0], bckkn1Point[1] + 0.1]];
       generateBoxPetak('3d6328fe-45c3-4d59-ad14-90adf6c2cc6d', 'Pt. CK. 11-Kr', linePtCk11Kr, 'right', 'golongan-b');
 
+      const lineBoxPtCk11Kr = [[-8.5, 110.59], [-8.5, 110.59]];
+      generateBox("506 Ha","0.740 m3/s","1191.50 m",lineBoxPtCk11Kr,'top')
+
+      // Set BCkKn. 1
       const lineBckKn1 = [
         bck10Point, 
         bckkn1Point, 
       ];
       generateBangunanSadap('BCk. Kn1', 'centerleft', lineBckKn1, 0);
 
+      // Set BCkKi. 2
       const linePtCkKi2Kn = [bckki2Point, [bckki2Point[0] - 0.04, bckki2Point[1]]];
       generateBoxPetak('88aff689-aabc-4a7d-8f6b-d691cafa4b73', 'Pt. CK.Ki 2-Kn', linePtCkKi2Kn, 'bottom', 'golongan-b');
 
@@ -547,6 +639,7 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BCkKi. 2', 'topcenter', lineBckKi2, 90);
 
+      // Set BCkKi. 1
       const linePtCkKi1Kn = [bckki1Point, [bckki1Point[0] - 0.04, bckki1Point[1]]];
       generateBoxPetak('bfe0a3e4-a1ad-4241-a5cf-746098673441', 'Pt. CK.Ki 1-Kn', linePtCkKi1Kn, 'bottom', 'golongan-b');
 
@@ -556,13 +649,18 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BCkKi. 1', 'topcenter', lineBckKi1, 90);
 
+      const lineBoxBckKi1 = [[-8.37, 110.88], [-8.37, 110.88]];
+      generateBox("32 Ha","0.047 m3/s","822.43 m",lineBoxBckKi1,'top')
+
+      // Set BCk. 10
       const lineBck10 = [
         bs6Point, 
         bck10Point
       ];
       generateBangunanSadapDanPembagi('BCk. 10', 'topcenter', lineBck10, 90);
 
-      // Set BCk. 9
+      const lineBoxBck10 = [[-8.37, 110.73], [-8.37, 110.73]];
+      generateBox("113 Ha","0.165 m3/s","457.80 m",lineBoxBck10,'top')
 
       // Set BDt. 3
       const linePtDt3 = [bdt3Point, [bdt3Point[0] - 0.04, bdt3Point[1]]];
@@ -584,6 +682,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BDt. 2', 'topleft', lineBdt2, 0);
 
+      const lineBoxPtDt2Kn = [[-8.79, 110.3], [-8.79, 110.3]];
+      generateBox("67 Ha","0.098 m3/s","621.63 m",lineBoxPtDt2Kn,'top')
+
       // Set BDt. 1
       const linePtDt1Kr = [bdt1Point, [bdt1Point[0], bdt1Point[1] + 0.06]];
       generateBoxPetak('f979e41e-c313-4f25-826e-d54ace194e74', 'Pt. Dt. 1-Kr', linePtDt1Kr, 'right', 'golongan-b');
@@ -597,11 +698,21 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BDt. 1', 'topleft', lineBdt1, 0);
 
+      const lineBoxPtDt1Kr = [[-8.47, 110.3], [-8.47, 110.3]];
+      generateBox("182 Ha","0.266 m3/s","356.40 m",lineBoxPtDt1Kr,'top')
+
+      const lineBoxPtDt1Kn = [[-8.66, 110.3], [-8.66, 110.3]];
+      generateBox("111 Ha","0.162 m3/s","363.30 m",lineBoxPtDt1Kn,'top')
+
+      // Set BCK. 9
       const lineBck9 = [
         bs6Point, 
         bck9Point
       ];
       generateBangunanSadapDanPembagi('BCk. 9', 'topcenter', lineBck9, 90);
+
+      const lineBoxBck9 = [[-8.37, 110.5], [-8.37, 110.5]];
+      generateBox("619 Ha","0.905 m3/s","665.50 m",lineBoxBck9,'top')
 
       // Set BCk. 8
       const linePtCk8Kn = [bck8Point, [-8.42, bck8Point[1]]];
@@ -612,6 +723,9 @@ var SkemaSidareja = (function () {
         bck8Point
       ];
       generateBangunanSadap('BCk. 8', 'topcenter', lineBck8, 90);
+
+      const lineBoxBck8 = [[-8.37, 110.25], [-8.37, 110.25]];
+      generateBox("801 Ha","1.171 m3/s","1511.50 m",lineBoxBck8,'top')
 
       // Set BTr. 6
       const linePtTr6 = [btr6Point, [btr6Point[0] - 0.06, btr6Point[1]]];
@@ -636,6 +750,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BTr. 5', 'topright', lineBtr5, 0);
 
+      const lineBoxPtTr5Kr = [[-9.08, 109.94], [-9.08, 109.94]];
+      generateBox("146 Ha","0.213 m3/s","1296.52 m",lineBoxPtTr5Kr,'top')
+
       // Set BTr. 4
       const linePtTr4Kr = [btr4Point, [btr4Point[0], btr4Point[1] + 0.06]];
       generateBoxPetak('5c41e1ea-9dfb-4727-ba3f-fc35b27226a1', 'Pt. Tr. 4-Kr', linePtTr4Kr, 'right', 'golongan-b');
@@ -645,6 +762,9 @@ var SkemaSidareja = (function () {
         btr4Point, 
       ];
       generateBangunanSadap('BTr. 4', 'topright', lineBtr4, 0);
+
+      const lineBoxPtTr4Kr = [[-8.94, 109.94], [-8.94, 109.94]];
+      generateBox("221 Ha","0.323 m3/s","515 m",lineBoxPtTr4Kr,'top')
 
       // Set BTr. 3
       const linePtTr3Kn = [btr3Point, [btr3Point[0], btr3Point[1] - 0.06]];
@@ -656,6 +776,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BTr. 3', 'centerright', lineBtr3, 0);
 
+      const lineBoxPtTr3Kn = [[-8.78, 109.94], [-8.78, 109.94]];
+      generateBox("256 Ha","0.374 m3/s","539 m",lineBoxPtTr3Kn,'top')
+
       // Set BTr. 2
       const linePtTr2Kn = [btr2Point, [btr2Point[0], btr2Point[1] - 0.06]];
       generateBoxPetak('678b079a-46d7-4cdb-92b2-2df8d5a5a0e2', 'Pt. Tr. 2-Kn', linePtTr2Kn, 'left', 'golongan-b');
@@ -665,6 +788,9 @@ var SkemaSidareja = (function () {
         btr2Point, 
       ];
       generateBangunanSadap('BTr. 2', 'centerright', lineBtr2, 0);
+
+      const lineBoxPtTr2Kn = [[-8.67, 109.94], [-8.67, 109.94]];
+      generateBox("354 Ha","0.517 m3/s","591 m",lineBoxPtTr2Kn,'top')
 
       // Set BTr. 1
       const linePtTr1Kn = [btr1Point, [btr1Point[0] - 0.15, btr1Point[1] + 0.15]];
@@ -676,12 +802,21 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadapDanPembagi('BTr. 1', 'bottomright', lineBtr1, 90);
 
+      const lineBoxPtTr1Kn = [[-8.45, 109.98], [-8.45, 109.98]];
+      generateBox("476 Ha","0.696 m3/s","201.50 m",lineBoxPtTr1Kn,'top')
+
+      const lineeBoxPtTr1Kn = [[-8.55, 109.94], [-8.55, 109.94]];
+      generateBox("432 Ha","0.632 m3/s","348 m",lineeBoxPtTr1Kn,'top')
+
       // Set BCk. 7
       const lineBck7 = [
         bs6Point, 
         bck7Point
       ];
       generateBangunanSadapDanPembagi('BCk. 7', 'topcenter', lineBck7, 90);
+
+      const lineBoxBck7 = [[-8.37, 109.98], [-8.37, 109.98]];
+      generateBox("870 Ha","1.272 m3/s","766.50 m",lineBoxBck7,'top')
 
       // Set BCk. 6
       const linePtCk6Kn = [bck6Point, [-8.42, bck6Point[1]]];
@@ -693,6 +828,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BCk. 6', 'topcenter', lineBck6, 90);
 
+      const lineBoxPtCk6Kn = [[-8.37, 109.83], [-8.37, 109.83]];
+      generateBox("1365 Ha","1.996 m3/s","547 m",lineBoxPtCk6Kn,'top')
+
       // Set BCk. 5
       const linePtCk5Kn = [bck5Point, [-8.42, bck5Point[1]]];
       generateBoxPetak('cb1a52bb-e373-4e06-b8ef-3a8571ef1163', 'Pt. Ck. 5-Kn', linePtCk5Kn, 'bottom', 'golongan-b');
@@ -702,6 +840,9 @@ var SkemaSidareja = (function () {
         bck5Point
       ];
       generateBangunanSadap('BCk. 5', 'topcenter', lineBck5, 90);
+
+      const lineBoxPtCk5Kn = [[-8.37, 109.7], [-8.37, 109.7]];
+      generateBox("1451 Ha","2.121 m3/s","863.50 m",lineBoxPtCk5Kn,'top')
 
       // Set BCk. 4
       const linePtCk4Kn = [bck4Point, [-8.45, bck4Point[1]]];
@@ -713,6 +854,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BCk. 4', 'topcenter', lineBck4, 90);
 
+      const lineBoxPtCk4Kn = [[-8.37, 109.5], [-8.37, 109.5]];
+      generateBox("1501 Ha","2.194 m3/s","1110 m",lineBoxPtCk4Kn,'top')
+
       // Set BCk. 3
       const linePtCk3Kn = [bck3Point, [-8.42, bck3Point[1]]];
       generateBoxPetak('a32dd81f-4736-4393-94cb-ddd69f14ac4d', 'Pt. Ck. 3-Kn', linePtCk3Kn, 'bottom', 'golongan-b');
@@ -722,6 +866,9 @@ var SkemaSidareja = (function () {
         bck3Point
       ];
       generateBangunanSadap('BCk. 3', 'topcenter', lineBck3, 90);
+
+      const lineBoxPtCk3Kn = [[-8.37, 109.3], [-8.37, 109.3]];
+      generateBox("1566 Ha","2.319 m3/s","747 m",lineBoxPtCk3Kn,'top')
 
       // Set BLd. 3
       const linePtLd3 = [bld3Point, [bld3Point[0] - 0.015, bld3Point[1] + 0.018]];
@@ -746,6 +893,9 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BLd. 2', 'bottomleft', lineBld2, 330);
 
+      const lineBoxtLd2Ki = [[-8.92, 109.4], [-8.92, 109.4]];
+      generateBox("60 Ha","0.088 m3/s","644.81 m",lineBoxtLd2Ki,'top')
+
       // Set BLd. 1
       const linePtLd1Ki = [bld1Point, [bld1Point[0] + 0.01, bld1Point[1] + 0.08]];
       generateBoxPetak('96721e56-a46a-41af-8492-2141bbd5785b', 'Pt. Ld. 1-Ki', linePtLd1Ki, 'right', 'golongan-b');
@@ -760,12 +910,21 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BLd. 1', 'bottomleft', lineBld1, 330);
 
+      const lineBoxPtLd1Ki = [[-8.56, 109.15], [-8.56, 109.15]];
+      generateBox("211 Ha","0.308 m3/s","634.20 m",lineBoxPtLd1Ki,'top')
+
+      const lineBoxPtLd1Kn = [[-8.725, 109.15], [-8.725, 109.15]];
+      generateBox("135 Ha","0.197 m3/s","927.20 m",lineBoxPtLd1Kn,'top')
+
       // Set BCk. 2
       const lineBck2 = [
         bs6Point, 
         bck2Point
       ];
       generateBangunanSadapDanPembagi('BCk. 2', 'topcenter', lineBck2, 90);
+
+      const lineBoxBck2 = [[-8.37, 109.15], [-8.37, 109.15]];
+      generateBox("1611 Ha","2.355 m3/s","340 m",lineBoxBck2,'top')
 
       // Set BCk. 1
       const linePtCk1Ki = [bck1Point, [-8.32, bck1Point[1]]];
@@ -780,6 +939,12 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanSadap('BCk. 1', 'topright', lineBck1, 90);
 
+      const lineBoxPtCk1Ki = [[-8.37, 108.78], [-8.37, 108.78]];
+      generateBox("1994 Ha","2.915 m3/s","277.50 m",lineBoxPtCk1Ki,'top')
+
+      const lineBoxPtCk1Kn = [[-8.37, 108.98], [-8.37, 108.98]];
+      generateBox("1822 Ha","2.664 m3/s","1288.50 m",lineBoxPtCk1Kn,'top')
+
       // Set BS. VI
       const lineBs6 = [
         [-8.05, 108.77],
@@ -791,6 +956,9 @@ var SkemaSidareja = (function () {
       generateBangunanPembagi('BS. VI', lineBs6);
 
       // generateTextSaluranSekunder('SS. CIKALAPA', [-7.9, 109.3], 0);
+
+      const lineBoxBs6 = [[-8.6, 108.78], [-8.6, 108.78]];
+      generateBox("5884 Ha","8.778 m3/s","1159.05 m",lineBoxBs6,'top')
     }
 
     var initBs7 = function() {
@@ -803,6 +971,9 @@ var SkemaSidareja = (function () {
         bs7Point
       ];
       generateBangunanPembagiDanSadap('BS.VII', lineBs7);
+
+      const lineBoxBs7 = [[-8.86, 108.78], [-8.86, 108.78]];
+      generateBox("5834 Ha","8.703 m3/s","924.75 m",lineBoxBs7,'top')
     }
 
     var initBs8 = function() {
@@ -837,6 +1008,16 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanPembagi('BS.VIII', lineBs8);
       generateTextSaluranSekunder('SS. SIDODADI', [-8.95, 109.1], 0);
+      
+      //Kotak line
+      const lineBoxBsd1Ki = [[-8.99, 108.78], [-8.99, 108.78]];
+      generateBox("190 Ha","0.278 m3/s","682.50 m",lineBoxBsd1Ki,'top')
+
+      const lineBoxBsd1Ka = [[-9.06, 108.98], [-9.06, 108.98]];
+      generateBox("74 Ha","0.108 m3/s","1584.60 m",lineBoxBsd1Ka,'top')
+
+      const lineBoxBs8 = [[-9.2, 108.78], [-9.2, 108.78]];
+      generateBox("5644 Ha","8.420 m3/s","1417.81 m",lineBoxBs8,'top')
     }
 
     var initBs9 = function() {
@@ -871,6 +1052,16 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanPembagiDanSadap('BS.IX', lineBs9);
       generateTextSaluranSekunder('SS. SIDAHURIP', [-9.3, 109.1], 0);
+      
+      //Kotak line
+      const lineBoxBsh1Ki = [[-9.34, 108.78], [-9.34, 108.78]];
+      generateBox("183 Ha","0.268 m3/s","266.19 m",lineBoxBsh1Ki,'top')
+
+      const lineBoxBsh1Kn = [[-9.34, 108.98], [-9.34, 108.98]];
+      generateBox("62 Ha","0.091 m3/s","1753.38 m",lineBoxBsh1Kn,'top')
+
+      const lineBoxBs9 = [[-9.55, 108.78], [-9.55, 108.78]];
+      generateBox("5461 Ha","8.147 m3/s","1298.62 m",lineBoxBs9,'top')
     }
 
     var initBs10 = function() {
