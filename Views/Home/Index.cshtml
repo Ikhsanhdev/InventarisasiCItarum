@@ -523,13 +523,20 @@
                         kebutuhanToday = kebutuhan; // Set today's kebutuhan value
                     }
                 }
+
+                let percent = ketersediaanAvgToday && kebutuhanToday ? (ketersediaanAvgToday / kebutuhanToday) * 100 : 0;
+
+                const range = isDateInRange(moment(row.tanggal).format("YYYY-MM-DD"));
+                if (range) {
+                    kebutuhanToday = 0;
+                    percent = 0;
+                }
+
+                document.getElementById('das-presentase').textContent = percent.toFixed(2) + '%';
+                document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2) + ' liter/detik';
             });
 
-            const percent = ketersediaanAvgToday && kebutuhanToday ? (ketersediaanAvgToday / kebutuhanToday) * 100 : 0;
-
-            document.getElementById('das-presentase').textContent = percent.toFixed(2) + '%';
             document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2) + ' liter/detik';
-            document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2) + ' liter/detik';
 
             createChart(ketersediaanData, avgData, kebutuhanData, minData, maxData);
         }
@@ -856,6 +863,7 @@
                         render: function (data, type, row) {
 
                             const inRange = isDateInRange(moment(row.tanggal).format("YYYY-MM-DD"));
+                            console.log(inRange);
                             if (inRange) {
                                 return "0";
                             }
