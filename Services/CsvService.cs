@@ -17,9 +17,9 @@ namespace IrigasiManganti.Services
             try
             {
                 using (var reader = new StreamReader(file.OpenReadStream()))
-                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ";", Encoding = Encoding.UTF8 }))
+                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ",", Encoding = Encoding.UTF8 }))
                 {
-                    
+
                     var records = csv.GetRecords<dynamic>().ToList();
                     if (records.Any())
                     {
@@ -58,10 +58,11 @@ namespace IrigasiManganti.Services
             }
         }
 
-        private string generateColumnName(string columnName){
+        private string generateColumnName(string columnName)
+        {
             if (string.IsNullOrEmpty(columnName)) return "";
             string result = "";
-            List<string> columnKetersediaan = new List<string>(){"min","max","avg","mean","average","minimal","maximal","minimum","maksimun","rerata","rata-rata","tanggal","date"};
+            List<string> columnKetersediaan = new List<string>() { "min", "max", "avg", "mean", "average", "minimal", "maximal", "minimum", "maksimun", "rerata", "rata-rata", "tanggal", "date" };
 
             int index = columnKetersediaan.IndexOf(columnName.ToLower());
             if (index == -1) return columnName.ToLower();
