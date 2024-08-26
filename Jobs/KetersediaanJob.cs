@@ -44,15 +44,15 @@ namespace IrigasiManganti.Jobs
                     double? min = new();
                     double? max = new();
                     double? avg = new();
-                    
+
                     foreach (DataColumn col in table.Columns)
                     {
                         var colName = col.ColumnName;
                         var value = item[col] ?? "";
                         if (colName == "tanggal")
                         {
-                            if(value == null) break;
-                            if(value.ToString() == "") break;
+                            if (value == null) break;
+                            if (value.ToString() == "") break;
                             // List<string> formats = new List<string>() { "dd-MMM-yy", "M/d/yyyy", "MM-dd-yyyy", "MM/dd/yyyy, yyyy-MM-dd" };
                             // // Contoh data dari .csv
                             // bool isParsed = false;
@@ -93,7 +93,7 @@ namespace IrigasiManganti.Jobs
                         }
                         else
                         {
-                            var column = new List<string>() { "min","max","mean"};
+                            var column = new List<string>() { "min", "max", "avg" };
                             if (!column.Contains(colName)) continue;
 
                             double? dataValue = null;
