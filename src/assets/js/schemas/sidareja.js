@@ -36,6 +36,7 @@ var circleBgBlack = {
 var bangunanPembagiList = [];
 var bangunanSadapList = [];
 var boxPetakList = [];
+var box = [];
 
 var SkemaSidareja = (function () {
     var initInput = function () {
@@ -1295,6 +1296,10 @@ var SkemaSidareja = (function () {
       ];
       generateBangunanPembagiDanSadap('BN.1', lineBn1);
       generateTextSaluranSekunder('SS. PATIMUAN', [-11.02, 109], 0);
+
+      const lineBoxBn1 = [bn1Point,[bn1Point[0]-0.07, bn1Point[1]-0.05]];
+      generateBox("3246 Ha","4.746/s","1932.34 m",lineBoxBn1,"top");
+
     }
 
     var initBn2 = function() {
