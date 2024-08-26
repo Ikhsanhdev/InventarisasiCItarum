@@ -174,8 +174,12 @@ var SkemaSidareja = (function () {
           className: 'transparent-tooltip',
           offset: [10, 1]
       }).openTooltip();
-    }
 
+      const lineBoxAliranMasuk = [lineCoords[1],[-7.32, 108.72]];
+      generateBox("9595 Ha","13.611 m3/s","193.70 m",lineBoxAliranMasuk,'top')
+  
+    }
+   
     var initBs1 = function () {
       const linePts1Ki = [[-7.325, 108.77], [-7.325, 108.81]];
       generateBoxPetak('fca11354-774f-4924-8dc6-c88bcd5f2de6', 'Pts. 1 Ki', linePts1Ki, 'right', 'golongan-a');
@@ -2007,6 +2011,43 @@ function generateBangunanSadapDanPembagi(title, titlePosition, lineCoords, textD
   }).openTooltip();
 
   bangunanSadapList.push(point);
+}
+
+
+function generateBox(a,q,l, lineCoords,position) {
+
+  const linePetak = L.polyline(lineCoords, { color: 'gray', weight: 1,opacity :0 }).addTo(map);
+
+  const tooltipContent = `
+    <div class="border-box">
+        <table>
+          <tbody>
+            <tr>
+                <td>
+                  <span class="text-dark">A = ${a}</span>
+                  </br>
+                  <span class="text-dark">Q = ${q}</span>
+                  </br>
+                  <span class="text-dark">L = ${l}</span>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  `;
+
+  // Bind tooltip to the polyline
+  const endPoint = linePetak.getLatLngs()[1];
+
+  // Bind tooltip to the polyline end point
+  linePetak.bindTooltip(tooltipContent, {
+    permanent: true,
+    direction: position,
+    className: 'transparent-tooltip',
+    offset: [0, 0] // Adjust the offset to position the tooltip correctly at the end of the polyline
+  }).openTooltip(endPoint);
+
+  box.push(linePetak);
 }
 
 function generateBoxPetak(petakId, petakName, lineCoords, position, golongan) {
