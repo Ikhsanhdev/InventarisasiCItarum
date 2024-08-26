@@ -33,7 +33,7 @@ namespace IrigasiManganti.Controllers.Api
         }
 
         [HttpPost("/v1/ketersediaan/upload")]
-        public async  Task<IActionResult> UploadFile(IFormFile file)
+        public async Task<IActionResult> UploadFile(IFormFile file)
         {
             var result = new ApiResponse();
             try
@@ -63,7 +63,7 @@ namespace IrigasiManganti.Controllers.Api
                 await _job.SaveKetersediaanJob(table, filePath, null);
                 result.MetaData.Code = 200;
                 result.MetaData.Message = "OK";
-                
+
                 return Ok(result);
             }
             catch (System.Exception ex)
