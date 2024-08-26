@@ -154,6 +154,7 @@ var dataPetak = (function() {
             serverSide: true,
             dom: "tipr",
             order: [[2, "asc"]],
+            pageLength : 20,
             ajax: {
                 url: "/Master/GetDataKetersediaan",
                 type: "POST",
@@ -301,6 +302,8 @@ window.createEditPetak = (input, evt) => {
         afterLoadingButton($(input), contentBtn);
     });
 };
+
+
 
 window.savePetak = (form, evt) => {
     evt.preventDefault();

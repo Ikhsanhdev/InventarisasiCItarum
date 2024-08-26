@@ -13,7 +13,7 @@ using IrigasiManganti.Jobs;
 
 namespace IrigasiManganti.Controllers
 {
-    // [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+    [AllowAnonymous]
     public class HomeController : BaseController
     {
         private readonly IUnitOfWorkRepository _unitOfWorkRepository;
@@ -28,25 +28,47 @@ namespace IrigasiManganti.Controllers
             return View();
         }
 
-        public IActionResult DetailTabulasi(string irg) {
-            if(irg == "cihaur") {
+        public IActionResult ModelForecast()
+        {
+            return View("ModelForecast");
+        }
+
+        public IActionResult ModelAi()
+        {
+            return View("ModelAi");
+        }
+
+        public IActionResult DetailTabulasi(string irg)
+        {
+            if (irg == "cihaur")
+            {
                 return View("~/Views/Home/CihaurTab.cshtml");
-            } else if(irg == "sidareja") {
+            }
+            else if (irg == "sidareja")
+            {
                 return View("~/Views/Home/SidarejaTab.cshtml");
-            } else if(irg == "lakbok") {
+            }
+            else if (irg == "lakbok")
+            {
                 return View("~/Views/Home/LakbokTab.cshtml");
-            } else {
+            }
+            else
+            {
                 return View("Error");
             }
         }
 
-        public IActionResult Map() {
+        public IActionResult Map()
+        {
             return View();
         }
 
-        public async Task<IActionResult> GetDataKetersediaan() {
-            try {
-                var ModelRequest = new JqueryDataTableRequest {
+        public async Task<IActionResult> GetDataKetersediaan()
+        {
+            try
+            {
+                var ModelRequest = new JqueryDataTableRequest
+                {
                     Draw = Request.Form["draw"].FirstOrDefault() ?? "",
                     Start = Request.Form["start"].FirstOrDefault() ?? "",
                     Length = Request.Form["length"].FirstOrDefault() ?? "",
@@ -56,10 +78,13 @@ namespace IrigasiManganti.Controllers
                 };
 
                 // Check if page size is set to show all
-                if (ModelRequest.Length == "-1") {
+                if (ModelRequest.Length == "-1")
+                {
                     // Set page size to a large number or adjust your data retrieval logic accordingly
                     ModelRequest.PageSize = int.MaxValue;
-                } else {
+                }
+                else
+                {
                     ModelRequest.PageSize = ModelRequest.Length != null ? Convert.ToInt32(ModelRequest.Length) : 0;
                 }
 
@@ -68,7 +93,9 @@ namespace IrigasiManganti.Controllers
                 var (users, recordsTotal) = await _unitOfWorkRepository.forecastKetersediaan.GetDataKetersediaan(ModelRequest);
                 var jsonData = new { draw = ModelRequest.Draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = users };
                 return Json(jsonData);
-            } catch(Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace });
                 throw;
             }

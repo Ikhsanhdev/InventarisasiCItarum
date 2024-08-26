@@ -98,7 +98,8 @@ namespace IrigasiManganti.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        public IActionResult AccessDenied(){
+        public IActionResult AccessDenied()
+        {
             return View();
         }
     }

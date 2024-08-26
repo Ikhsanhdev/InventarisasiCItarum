@@ -12,8 +12,11 @@ using System.Security.Claims;
 using IrigasiManganti.Jobs;
 using DataTables.AspNetCore.Mvc.Binder;
 
-namespace IrigasiManganti.Controllers {
-    public class MasterController : BaseController {
+namespace IrigasiManganti.Controllers
+{
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+    public class MasterController : BaseController
+    {
         private readonly IUnitOfWorkRepository _unitOfWorkRepository;
         private readonly IUnitOfWorkService _service;
         private readonly IKebutuhanJob _job;
@@ -27,17 +30,20 @@ namespace IrigasiManganti.Controllers {
         }
 
         // [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
-        public IActionResult Petak() {
+        public IActionResult Petak()
+        {
             ClaimsPrincipal claimUser = HttpContext.User;
             Console.WriteLine(claimUser?.Identity?.IsAuthenticated);
             return View();
         }
 
-        public IActionResult Rekomendasi() {
+        public IActionResult Rekomendasi()
+        {
             return View();
         }
 
-        public IActionResult Forecast() {
+        public IActionResult Forecast()
+        {
             return View();
         }
 
@@ -46,7 +52,8 @@ namespace IrigasiManganti.Controllers {
             return View();
         }
 
-        public async Task<JsonResult> GetDataSmopi(){
+        public async Task<JsonResult> GetDataSmopi()
+        {
 
             var data = await _service.Kebutuhan.GetDataFromApiSmopi();
             return Json(data);
@@ -58,18 +65,20 @@ namespace IrigasiManganti.Controllers {
             try
             {
                 await _job.InsertDataKebutuhanFromSmopi();
-                return Json(new { isSuccess = true, message = "Sinkronisasi Data SMOPI Berhasil"});
+                return Json(new { isSuccess = true, message = "Sinkronisasi Data SMOPI Berhasil" });
             }
             catch (System.Exception)
             {
                 return Json(new { isSuccess = false, message = "Sinkronisasi Data SMOPI Gagal" });
             }
-           
-            
+
+
         }
 
-        public async Task<IActionResult> GetDataRekomendasi(string date) {
-            var ModelRequest = new JqueryDataTableRequest {
+        public async Task<IActionResult> GetDataRekomendasi(string date)
+        {
+            var ModelRequest = new JqueryDataTableRequest
+            {
                 Draw = Request.Form["draw"].FirstOrDefault() ?? "",
                 Start = Request.Form["start"].FirstOrDefault() ?? "",
                 Length = Request.Form["length"].FirstOrDefault() ?? "",
@@ -78,26 +87,34 @@ namespace IrigasiManganti.Controllers {
                 SearchValue = Request.Form["search[value]"].FirstOrDefault() ?? ""
             };
 
-            try {
-                if(ModelRequest.Length == "-1") {
+            try
+            {
+                if (ModelRequest.Length == "-1")
+                {
                     ModelRequest.PageSize = int.MaxValue;
-                } else {
+                }
+                else
+                {
                     ModelRequest.PageSize = ModelRequest.PageSize != null ? Convert.ToInt32(ModelRequest.Length) : 0;
                 }
 
                 ModelRequest.Skip = ModelRequest.Start != null ? Convert.ToInt32(ModelRequest.Start) : 0;
 
                 var (rekomendasi, recordsTotal) = await _unitOfWorkRepository.MasterDataRepositories.GetDataRekomendasi(ModelRequest, date);
-                var jsonData = new {draw = ModelRequest.Draw, recordsFiltered = recordsTotal, recordsTotal, data = rekomendasi};
+                var jsonData = new { draw = ModelRequest.Draw, recordsFiltered = recordsTotal, recordsTotal, data = rekomendasi };
                 return Json(jsonData);
-            } catch(Exception ex) {
-                Log.Error(ex, "General Exception: {@ExceptionDetails}", new {ex.Message, ex.StackTrace, DatatableRequest = ModelRequest});
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, DatatableRequest = ModelRequest });
                 throw;
             }
         }
 
-        public async Task<IActionResult> GetDataForecast() {
-            var ModelRequest = new JqueryDataTableRequest {
+        public async Task<IActionResult> GetDataForecast()
+        {
+            var ModelRequest = new JqueryDataTableRequest
+            {
                 Draw = Request.Form["draw"].FirstOrDefault() ?? "",
                 Start = Request.Form["start"].FirstOrDefault() ?? "",
                 Length = Request.Form["length"].FirstOrDefault() ?? "",
@@ -106,7 +123,8 @@ namespace IrigasiManganti.Controllers {
                 SearchValue = Request.Form["search[value]"].FirstOrDefault() ?? ""
             };
 
-            try {
+            try
+            {
                 if (ModelRequest.Length == "-1")
                 {
                     // Set page size to a large number or adjust your data retrieval logic accordingly
@@ -122,14 +140,18 @@ namespace IrigasiManganti.Controllers {
                 var (forecast, recordsTotal) = await _unitOfWorkRepository.MasterDataRepositories.GetDataForecast(ModelRequest);
                 var jsonData = new { draw = ModelRequest.Draw, recordsFiltered = recordsTotal, recordsTotal, data = forecast };
                 return Json(jsonData);
-            } catch(Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, DatatableRequest = ModelRequest });
                 throw;
             }
         }
 
-        public async Task<IActionResult> GetDataPetak() {
-            var ModelRequest = new JqueryDataTableRequest {
+        public async Task<IActionResult> GetDataPetak()
+        {
+            var ModelRequest = new JqueryDataTableRequest
+            {
                 Draw = Request.Form["draw"].FirstOrDefault() ?? "",
                 Start = Request.Form["start"].FirstOrDefault() ?? "",
                 Length = Request.Form["length"].FirstOrDefault() ?? "",
@@ -138,7 +160,8 @@ namespace IrigasiManganti.Controllers {
                 SearchValue = Request.Form["search[value]"].FirstOrDefault() ?? ""
             };
 
-            try {
+            try
+            {
                 if (ModelRequest.Length == "-1")
                 {
                     // Set page size to a large number or adjust your data retrieval logic accordingly
@@ -154,7 +177,9 @@ namespace IrigasiManganti.Controllers {
                 var (petak, recordsTotal) = await _unitOfWorkRepository.MasterDataRepositories.GetDataPetak(ModelRequest);
                 var jsonData = new { draw = ModelRequest.Draw, recordsFiltered = recordsTotal, recordsTotal, data = petak };
                 return Json(jsonData);
-            } catch(Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, DatatableRequest = ModelRequest });
                 throw;
             }
@@ -162,7 +187,7 @@ namespace IrigasiManganti.Controllers {
 
         public async Task<IActionResult> GetDataKetersediaan()
         {
-            
+
             var ModelRequest = new JqueryDataTableRequestKebutuhan
             {
                 Draw = Request.Form["draw"].FirstOrDefault() ?? "",
@@ -173,7 +198,7 @@ namespace IrigasiManganti.Controllers {
                 SearchValue = Request.Form["search[value]"].FirstOrDefault() ?? "",
                 Year = Convert.ToInt32(Request.Form["year"].FirstOrDefault() == "" ? DateTime.Now.Year.ToString() : Request.Form["year"].FirstOrDefault()),
                 Month = Convert.ToInt32(Request.Form["month"].FirstOrDefault() == "" ? DateTime.Now.Month.ToString() : Request.Form["month"].FirstOrDefault()),
-                Periode = Convert.ToInt32(Request.Form["periode"].FirstOrDefault() == "" ? (DateTime.Now.Day < 16 ? "1" : "2")  : Request.Form["periode"].FirstOrDefault())
+                Periode = Convert.ToInt32(Request.Form["periode"].FirstOrDefault() == "" ? (DateTime.Now.Day < 16 ? "1" : "2") : Request.Form["periode"].FirstOrDefault())
             };
 
             try
