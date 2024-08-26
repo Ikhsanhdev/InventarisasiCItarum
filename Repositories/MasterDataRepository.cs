@@ -13,7 +13,8 @@ using Serilog;
 
 namespace IrigasiManganti.Repositories
 {
-    public interface IMasterDataRepository{
+    public interface IMasterDataRepository
+    {
         Task<IEnumerable<dynamic>> GetDataDebitBendung(VMDateRange range);
         Task<IEnumerable<dynamic>> GetDataDebitIrigasi(VMDateRange range);
         Task<(IReadOnlyList<dynamic>, int)> GetDataPetak(JqueryDataTableRequest request);
@@ -43,14 +44,18 @@ namespace IrigasiManganti.Repositories
             return _context.MasterPetaks.Where(x => x.Id == id).FirstOrDefault();
         }
 
-        public async Task<(int, string)> SavePetak(MasterPetak model) {
+        public async Task<(int, string)> SavePetak(MasterPetak model)
+        {
             int code = 500;
             string message = "";
-            try {
-                if (model.Id == Guid.Empty) {
+            try
+            {
+                if (model.Id == Guid.Empty)
+                {
                     bool isExist = _context.MasterPetaks.Where(x => x.Id == model.Id).Any();
 
-                    if (isExist) {
+                    if (isExist)
+                    {
                         message = "Data sudah ada";
                         return (code, message);
                     }
@@ -61,10 +66,13 @@ namespace IrigasiManganti.Repositories
 
                     code = 200;
                     message = "Data berhasil ditambahkan";
-                } else {
+                }
+                else
+                {
                     var data = GetDataPetakById(model.Id);
 
-                    if (data != null) {
+                    if (data != null)
+                    {
                         data.NamaPetak = model.NamaPetak;
                         data.JenisBangunan = model.JenisBangunan;
                         data.Luas = model.Luas;
@@ -74,16 +82,22 @@ namespace IrigasiManganti.Repositories
 
                         code = 200;
                         message = "Data berhasil diperbaharui";
-                    } else {
+                    }
+                    else
+                    {
                         code = 404;
                         message = "Data user tidak ditemukan";
                     }
                 }
-            } catch (NpgsqlException ex) {
+            }
+            catch (NpgsqlException ex)
+            {
                 Log.Error(ex, "PostgreSQL Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace });
                 code = 500;
                 message = ex.Message;
-            } catch (System.Exception ex) {
+            }
+            catch (System.Exception ex)
+            {
                 Log.Error(ex, "PostgreSQL Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace });
                 throw;
             }
@@ -93,7 +107,7 @@ namespace IrigasiManganti.Repositories
 
         public async Task<IEnumerable<dynamic>> GetDataDebitBendung(VMDateRange range)
         {
-            
+
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 try
@@ -108,6 +122,23 @@ namespace IrigasiManganti.Repositories
                                 FROM debit_bendung
                                 WHERE tanggal >= @Start::date AND tanggal <= @End::date
                                 ORDER BY tanggal";
+
+                    query = @"
+                        SELECT 
+                            id,
+                            TO_CHAR(tanggal, 'YYYY-MM-DD') as tanggal,
+                            ketersediaan_min,
+                            ketersediaan_max,
+                            ketersediaan_avg,
+                            CASE 
+                                WHEN tanggal >= '2024-08-25' AND tanggal <= '2024-09-05' THEN 0 
+                                ELSE kebutuhan 
+                            END AS kebutuhan
+                        FROM debit_bendung
+                        WHERE tanggal >= @Start::date AND tanggal <= @End::date
+                        ORDER BY tanggal;
+
+                    ";
 
                     if (range.end < range.start) range.end = range.start;
 
@@ -141,14 +172,16 @@ namespace IrigasiManganti.Repositories
                 }
                 finally
                 {
-                    
+
                 }
 
             }
         }
 
-        public async Task<(IReadOnlyList<dynamic>, int)> GetDataForecast(JqueryDataTableRequest request) {
-            try {
+        public async Task<(IReadOnlyList<dynamic>, int)> GetDataForecast(JqueryDataTableRequest request)
+        {
+            try
+            {
                 using var connection = new NpgsqlConnection(_connectionString);
                 List<dynamic> result = new List<dynamic>();
 
@@ -204,17 +237,23 @@ namespace IrigasiManganti.Repositories
                 result = (await connection.QueryAsync<dynamic>(query, parameters)).ToList();
 
                 return (result, total);
-            } catch (Npgsql.NpgsqlException ex) {
+            }
+            catch (Npgsql.NpgsqlException ex)
+            {
                 Log.Error(ex, "Sql Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
                 throw;
-            } catch (System.Exception ex) {
+            }
+            catch (System.Exception ex)
+            {
                 Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
                 throw;
             }
         }
 
-        public async Task<(IReadOnlyList<dynamic>, int)> GetDataPetak(JqueryDataTableRequest request) {
-            try {
+        public async Task<(IReadOnlyList<dynamic>, int)> GetDataPetak(JqueryDataTableRequest request)
+        {
+            try
+            {
                 using var connection = new NpgsqlConnection(_connectionString);
                 List<dynamic> result = new List<dynamic>();
 
@@ -280,17 +319,23 @@ namespace IrigasiManganti.Repositories
                 result = (await connection.QueryAsync<dynamic>(query, parameters)).ToList();
 
                 return (result, total);
-            } catch (Npgsql.NpgsqlException ex) {
+            }
+            catch (Npgsql.NpgsqlException ex)
+            {
                 Log.Error(ex, "Sql Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
                 throw;
-            } catch (System.Exception ex) {
+            }
+            catch (System.Exception ex)
+            {
                 Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
                 throw;
             }
         }
 
-        public async Task<(IReadOnlyList<dynamic>, int)> GetDataRekomendasi(JqueryDataTableRequest request, string date) {
-            try {
+        public async Task<(IReadOnlyList<dynamic>, int)> GetDataRekomendasi(JqueryDataTableRequest request, string date)
+        {
+            try
+            {
                 using var connection = new NpgsqlConnection(_connectionString);
                 List<dynamic> result = new List<dynamic>();
 
@@ -309,7 +354,8 @@ namespace IrigasiManganti.Repositories
                 var parameters = new DynamicParameters();
                 var whereConditions = new List<string>();
 
-                if (!string.IsNullOrEmpty(date)) {
+                if (!string.IsNullOrEmpty(date))
+                {
                     whereConditions.Add("di.tanggal = @Date::date");
                     parameters.Add("@Date", DateTime.Parse(date));
                 }
@@ -336,7 +382,8 @@ namespace IrigasiManganti.Repositories
                     parameters.Add("@SearchValue", "%" + request.SearchValue.ToLower() + "%");
                 }
 
-               if (whereConditions.Count > 0) {
+                if (whereConditions.Count > 0)
+                {
                     query += " WHERE " + string.Join(" AND ", whereConditions);
                 }
 
@@ -352,10 +399,14 @@ namespace IrigasiManganti.Repositories
                 result = (await connection.QueryAsync<dynamic>(query, parameters)).ToList();
 
                 return (result, total);
-            } catch (Npgsql.NpgsqlException ex) {
+            }
+            catch (Npgsql.NpgsqlException ex)
+            {
                 Log.Error(ex, "Sql Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
                 throw;
-            } catch (System.Exception ex) {
+            }
+            catch (System.Exception ex)
+            {
                 Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
                 throw;
             }
@@ -398,6 +449,31 @@ namespace IrigasiManganti.Repositories
                                 WHERE tanggal >= @Start::date AND tanggal <= @End::date
                                 ORDER BY di.tanggal";
 
+                    query = @"
+                        SELECT
+                            p.id,
+                            TO_CHAR(di.tanggal, 'YYYY-MM-DD') as tanggal,
+                            p.nama_petak,
+                            p.jenis_bangunan,
+                            p.luas,
+                            CASE 
+                                WHEN di.tanggal >= '2024-08-25' AND di.tanggal <= '2024-09-05' THEN 0 
+                                ELSE p.debit_kebutuhan 
+                            END AS debit_kebutuhan,
+                            di.debit_aktual,
+                            CASE 
+                                WHEN di.tanggal >= '2024-08-25' AND di.tanggal <= '2024-09-05' THEN 0 
+                                ELSE di.debit_rekomendasi 
+                            END AS debit_rekomendasi,
+                            TO_CHAR(di.updated_at, 'YYYY-MM-DD HH:mm:ss') as updated_at
+                        FROM
+                            debit_irigasi AS di
+                            JOIN petak AS p ON di.petak_id = p.id
+                        WHERE di.tanggal >= @Start::date AND di.tanggal <= @End::date
+                        ORDER BY di.tanggal;
+
+                    ";
+
                     if (range.end < range.start) range.end = range.start;
 
                     if (!range.start.HasValue && !range.end.HasValue)
@@ -412,7 +488,7 @@ namespace IrigasiManganti.Repositories
                         End = range.end
                     };
 
-                    var data = await connection.QueryAsync<dynamic>(query, parameters, commandTimeout : 60);
+                    var data = await connection.QueryAsync<dynamic>(query, parameters, commandTimeout: 60);
                     return data;
                 }
                 catch (Npgsql.NpgsqlException ex)
@@ -429,7 +505,7 @@ namespace IrigasiManganti.Repositories
                 }
                 finally
                 {
-                    
+
                 }
             }
         }
