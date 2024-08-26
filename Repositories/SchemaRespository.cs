@@ -43,24 +43,6 @@ namespace IrigasiManganti.Repositories
                     LEFT JOIN debit_irigasi di ON p.id = di.petak_id
                     WHERE di.tanggal = @Tanggal::date
                 ";
-
-                query = @"
-                SELECT 
-                        p.*, 
-                        di.tanggal, 
-                        di.debit_aktual,
-                        CASE 
-                            WHEN di.tanggal BETWEEN '2024-08-25' AND '2024-09-05' THEN 0 
-                            ELSE di.debit_rekomendasi 
-                        END AS debit_rekomendasi
-                    FROM 
-                        petak p
-                    LEFT JOIN 
-                        debit_irigasi di ON p.id = di.petak_id
-                    WHERE 
-                        di.tanggal = @Tanggal::date;
-
-                ";
                 var results = await _db.QueryAsync<dynamic>(query, new { Tanggal = tanggal });
                 return results;
             }

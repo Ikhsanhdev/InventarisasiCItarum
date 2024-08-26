@@ -2595,12 +2595,6 @@ function getSchemaData(tanggal) {
         }
 
         if (data.debit_kebutuhan != null) {
-          // const isInrange = isDateInRange(tanggal);
-          // if (isInrange) {
-          //   debit_kebutuhan = `QK= 0 lt/dt`;
-          // } else {
-          //   debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} lt/dt`;
-          // }
           debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} lt/dt`;
         }
 

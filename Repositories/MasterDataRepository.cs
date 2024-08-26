@@ -123,23 +123,6 @@ namespace IrigasiManganti.Repositories
                                 WHERE tanggal >= @Start::date AND tanggal <= @End::date
                                 ORDER BY tanggal";
 
-                    query = @"
-                        SELECT 
-                            id,
-                            TO_CHAR(tanggal, 'YYYY-MM-DD') as tanggal,
-                            ketersediaan_min,
-                            ketersediaan_max,
-                            ketersediaan_avg,
-                            CASE 
-                                WHEN tanggal >= '2024-08-25' AND tanggal <= '2024-09-05' THEN 0 
-                                ELSE kebutuhan 
-                            END AS kebutuhan
-                        FROM debit_bendung
-                        WHERE tanggal >= @Start::date AND tanggal <= @End::date
-                        ORDER BY tanggal;
-
-                    ";
-
                     if (range.end < range.start) range.end = range.start;
 
                     if (!range.start.HasValue && !range.end.HasValue)
@@ -449,30 +432,7 @@ namespace IrigasiManganti.Repositories
                                 WHERE tanggal >= @Start::date AND tanggal <= @End::date
                                 ORDER BY di.tanggal";
 
-                    query = @"
-                        SELECT
-                            p.id,
-                            TO_CHAR(di.tanggal, 'YYYY-MM-DD') as tanggal,
-                            p.nama_petak,
-                            p.jenis_bangunan,
-                            p.luas,
-                            CASE 
-                                WHEN di.tanggal >= '2024-08-25' AND di.tanggal <= '2024-09-05' THEN 0 
-                                ELSE p.debit_kebutuhan 
-                            END AS debit_kebutuhan,
-                            di.debit_aktual,
-                            CASE 
-                                WHEN di.tanggal >= '2024-08-25' AND di.tanggal <= '2024-09-05' THEN 0 
-                                ELSE di.debit_rekomendasi 
-                            END AS debit_rekomendasi,
-                            TO_CHAR(di.updated_at, 'YYYY-MM-DD HH:mm:ss') as updated_at
-                        FROM
-                            debit_irigasi AS di
-                            JOIN petak AS p ON di.petak_id = p.id
-                        WHERE di.tanggal >= @Start::date AND di.tanggal <= @End::date
-                        ORDER BY di.tanggal;
 
-                    ";
 
                     if (range.end < range.start) range.end = range.start;
 
