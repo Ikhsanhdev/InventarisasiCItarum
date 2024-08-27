@@ -13,12 +13,12 @@ namespace IrigasiManganti.Controllers.Api
 {
     [ApiController]
     [Authorize(AuthenticationSchemes = "BasicAuthentication")]
-    
+
     public class MasterDataApiController : ControllerBase
     {
         private readonly IUnitOfWorkRepository _repository;
         private readonly IKebutuhanJob _job;
-       
+
 
         public MasterDataApiController(IUnitOfWorkRepository repository, IKebutuhanJob job)
         {
@@ -28,8 +28,9 @@ namespace IrigasiManganti.Controllers.Api
 
         [HttpGet]
         [Route("/v1/debit-bendung")]
-        
-        public async Task<IActionResult> GetDebitBendungan([FromQuery] VMDateRange query){
+
+        public async Task<IActionResult> GetDebitBendungan([FromQuery] VMDateRange query)
+        {
 
             var result = new ApiResponse();
             try
@@ -47,7 +48,7 @@ namespace IrigasiManganti.Controllers.Api
                 return BadRequest(result);
             }
 
-           
+
         }
 
         [HttpGet]
@@ -56,6 +57,17 @@ namespace IrigasiManganti.Controllers.Api
         {
 
             var result = new ApiResponse();
+
+            var locations = new string[] { "sidareja", "cihaur", "laksel" };
+
+            if (!locations.Contains(query.location.ToLower()))
+            {
+
+                result.MetaData.Code = 400;
+                result.MetaData.Message = "Saluran induk tidak terdaftar";
+
+                return BadRequest(result);
+            }
             try
             {
                 var data = await _repository.MasterDataRepositories.GetDataDebitIrigasi(query);

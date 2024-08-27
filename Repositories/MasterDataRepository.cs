@@ -434,6 +434,7 @@ namespace IrigasiManganti.Repositories
                 {
                     var query = @"SELECT
                                     p.id,
+                                    p.location,
                                     TO_CHAR(di.tanggal, 'YYYY-MM-DD') as tanggal,
                                     p.nama_petak,
                                     p.jenis_bangunan,
@@ -445,13 +446,15 @@ namespace IrigasiManganti.Repositories
                                     
                                 FROM
                                     debit_irigasi AS di
-                                    JOIN petak AS P ON di.petak_id = P.ID
-                                WHERE tanggal >= @Start::date AND tanggal <= @End::date
+                                    JOIN petak AS p ON di.petak_id = p.id
+                                WHERE LOWER(p.location) = @Location AND 
+                                tanggal >= @Start::date AND tanggal <= @End::date
                                 ORDER BY di.tanggal";
 
                     query = @"
                             SELECT
                                 p.id,
+                                p.location,
                                 TO_CHAR(di.tanggal, 'YYYY-MM-DD') as tanggal,
                                 p.nama_petak,
                                 p.jenis_bangunan,
@@ -470,6 +473,7 @@ namespace IrigasiManganti.Repositories
                                 debit_irigasi AS di
                                 JOIN petak AS p ON di.petak_id = p.id
                             WHERE 
+                                LOWER(p.location) = @Location AND
                                 di.tanggal >= @Start::date AND di.tanggal <= @End::date
                             ORDER BY 
                                 di.tanggal;
@@ -485,6 +489,7 @@ namespace IrigasiManganti.Repositories
 
                     var parameters = new
                     {
+                        Location = range.location.ToLower(),
                         Start = range.start,
                         End = range.end
                     };
