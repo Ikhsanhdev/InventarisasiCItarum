@@ -17,7 +17,7 @@ namespace IrigasiManganti.Services
             try
             {
                 using (var reader = new StreamReader(file.OpenReadStream()))
-                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = delimiter, Encoding = Encoding.UTF8 }))
+                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ";", Encoding = Encoding.UTF8 }))
                 {
 
                     var records = csv.GetRecords<dynamic>().ToList();
