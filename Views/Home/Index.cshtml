@@ -560,7 +560,7 @@
             }); *@
 
 
-                        if (chartType == 'spline') {
+                            if (chartType == 'spline') {
                 chart = Highcharts.chart('container', {
                     title: {
                         text: '',
@@ -615,10 +615,10 @@
                             const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
 
                             return `<b>${day}, ${formattedDate}</b><br/>
-                                                                                                            Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br/>
-                                                                                                            Min: ${ketersediaanPoint.point.low.toFixed(2)} liter/detik<br/>
-                                                                                                            Max: ${ketersediaanPoint.point.high.toFixed(2)} liter/detik<br/>
-                                                                                                            Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
+                                                                                                                Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br/>
+                                                                                                                Min: ${ketersediaanPoint.point.low.toFixed(2)} liter/detik<br/>
+                                                                                                                Max: ${ketersediaanPoint.point.high.toFixed(2)} liter/detik<br/>
+                                                                                                                Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
                         }
                     },
                     series: [
@@ -731,10 +731,10 @@
                             const minPoint = this.points.find(point => point.series.name === 'Min');
 
                             return `<b>${day}, ${formattedDate}</b><br/>
-                                                                                                                    Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br>
-                                                                                                                    Min: ${minPoint.y.toFixed(2)} liter/detik<br>
-                                                                                                                    Max: ${maxPoint.y.toFixed(2)} liter/detik<br>
-                                                                                                                    Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
+                                                                                                                        Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br>
+                                                                                                                        Min: ${minPoint.y.toFixed(2)} liter/detik<br>
+                                                                                                                        Max: ${maxPoint.y.toFixed(2)} liter/detik<br>
+                                                                                                                        Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
                         }
                     },
                     plotOptions: {
@@ -869,7 +869,7 @@
                             } *@
 
 
-                            return data ? `<span class="kebutuhan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
+                                return data ? `<span class="kebutuhan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
                         }
                     },
                     {
@@ -877,9 +877,9 @@
                         render: function (data, type, row) {
         @* const inRange = isDateInRange(moment(row.tanggal).format("YYYY-MM-DD"));
                             if (inRange) {
-                                return `<span class="text-warning fw-semibold">0%</span>`;;
-                            }
-                            const percent_avg_kebutuhan = row.ketersediaan_avg && row.kebutuhan ? (row.ketersediaan_avg / row.kebutuhan) * 100 : 0;
+                            return `<span class="text-warning fw-semibold">0%</span>`;;
+                            } *@
+                                const percent_avg_kebutuhan = row.ketersediaan_avg && row.kebutuhan ? (row.ketersediaan_avg / row.kebutuhan) * 100 : 0;
                             const status_percent = percent_avg_kebutuhan >= 100 ? 'text-success' : 'text-warning';
                             return `<span class="${status_percent} fw-semibold">${percent_avg_kebutuhan.toFixed(2)}%</span>`;
                         }
