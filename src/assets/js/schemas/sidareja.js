@@ -2595,7 +2595,12 @@ function getSchemaData(tanggal) {
         }
 
         if (data.debit_kebutuhan != null) {
-          debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} lt/dt`;
+          if (isDateInRange(tanggal)) {
+            debit_kebutuhan = `QK= 0 lt/dt`;
+          } else {
+            debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} lt/dt`;
+          }
+          
         }
 
         if (data.debit_aktual != null) {
@@ -2603,7 +2608,12 @@ function getSchemaData(tanggal) {
         }
 
         if (data.debit_rekomendasi != null) {
-          debit_rekomendasi = `QR= ${formatNumber(data.debit_rekomendasi)} lt/dt`;
+          if (isDateInRange(tanggal)) {
+            debit_rekomendasi = `QR= 0 lt/dt`;
+          } else {
+            debit_rekomendasi = `QR= ${formatNumber(data.debit_rekomendasi)} lt/dt`;
+          }
+          
         }
 
         $(`#${data.id}-petak`).html(`

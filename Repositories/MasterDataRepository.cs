@@ -432,7 +432,31 @@ namespace IrigasiManganti.Repositories
                                 WHERE tanggal >= @Start::date AND tanggal <= @End::date
                                 ORDER BY di.tanggal";
 
-
+                    query = @"
+                            SELECT
+                                p.id,
+                                TO_CHAR(di.tanggal, 'YYYY-MM-DD') as tanggal,
+                                p.nama_petak,
+                                p.jenis_bangunan,
+                                p.luas,
+                                CASE 
+                                    WHEN di.tanggal >= '2024-08-25' AND di.tanggal <= '2024-09-05' THEN 0
+                                    ELSE p.debit_kebutuhan
+                                END as debit_kebutuhan,
+                                di.debit_aktual,
+                                CASE 
+                                    WHEN di.tanggal >= '2024-08-25' AND di.tanggal <= '2024-09-05' THEN 0
+                                    ELSE di.debit_rekomendasi
+                                END as debit_rekomendasi,
+                                TO_CHAR(di.updated_at, 'YYYY-MM-DD HH:mm:ss') as updated_at
+                            FROM
+                                debit_irigasi AS di
+                                JOIN petak AS p ON di.petak_id = p.id
+                            WHERE 
+                                di.tanggal >= @Start::date AND di.tanggal <= @End::date
+                            ORDER BY 
+                                di.tanggal;
+                            ";
 
                     if (range.end < range.start) range.end = range.start;
 
