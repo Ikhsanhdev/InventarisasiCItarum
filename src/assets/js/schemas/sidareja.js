@@ -5,8 +5,8 @@ const whiteBasemap = L.tileLayer('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA
 const map = L.map('map', {
     // attributionControl: false,
     // center: [-7.444992423191618, 109.47077209463006],
-    // center: [-8.7, 110.4],
-    center: [-9.7, 108.72],
+    center: [-8.7, 110.4],
+    // center: [-9.7, 108.72],
     zoom: 10,
     maxZoom: 13,
     minZoom: 10,
