@@ -59,7 +59,7 @@ namespace IrigasiManganti.Controllers
       return View();
     }
 
-    public IActionResult Lakbok() {
+    public IActionResult Laksel() {
       return View();
     }
   }
