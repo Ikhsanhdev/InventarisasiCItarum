@@ -692,7 +692,7 @@ function enableElements() {
 function getSchemaData(tanggal) {
   disableElements();
   $('.box-petak tbody').html(`<tr><td class="text-center" colspan="2"><img src="/images/loading.gif" /></td></tr>`);
-  getData(`/Schema/GetSchemaDataByDate/${tanggal}`).then(res => {
+  getData(`/Schema/GetSchemaDataLakselByDate/${tanggal}`).then(res => {
     let result = res.data
     if (result.metaData.code == 200) {
       var luas = 'A= <strong>-</strong>';
@@ -720,24 +720,24 @@ function getSchemaData(tanggal) {
           luas = `A= ${formatNumber(data.luas)} Ha`;
         }
 
-        if(data.debit_kebutuhan != null) {
-         if (isDateInRange(tanggal)) {
-            debit_kebutuhan = `QK= 0 lt/dt`;
-          } else {
-            debit_kebutuhan = `QK= ${formatNumber(data.debit_kebutuhan)} lt/dt`;
-          }
+        if(data.debitKebutuhan != null) {
+          // if (isDateInRange(tanggal)) {
+          //   debit_kebutuhan = `QK= 0 lt/dt`;
+          // } else {
+            debit_kebutuhan = `QK= ${formatNumber(data.debitKebutuhan)} lt/dt`;
+          // }
         }
 
-        if(data.debit_aktual != null) {
+        if(data.debitAktual != null) {
           debit_aktual = `QA= ${formatNumber(data.debit_aktual)} lt/dt`;
         }
 
-        if(data.debit_rekomendasi != null) {
-          if (isDateInRange(tanggal)) {
-            debit_rekomendasi = `QR= 0 lt/dt`;
-          } else {
-            debit_rekomendasi = `QR= ${formatNumber(data.debit_rekomendasi)} lt/dt`;
-          }
+        if(data.debitRekomendasi != null) {
+          // if (isDateInRange(tanggal)) {
+          //   debit_rekomendasi = `QR= 0 lt/dt`;
+          // } else {
+            debit_rekomendasi = `QR= ${formatNumber(data.debitRekomendasi)} lt/dt`;
+          //}
         }
 
         $(`#petak-${data.id} tbody`).html(`
