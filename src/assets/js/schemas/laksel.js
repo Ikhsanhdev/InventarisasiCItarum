@@ -81,7 +81,7 @@ var SkemaLaksel = (function () {
     };
     var initMap = function () {
         map.attributionControl.setPrefix(false);
-        map.attributionControl.addAttribution('DI. Manganti Skema Cihaur Versi: R4 (Update 16 Juli 2024) | App Versi 2.1 (Update 13 Agustus 2024)');
+        map.attributionControl.addAttribution('DI. Manganti Skema Laksel Versi: R4 (Update 16 Juli 2024) | App Versi 2.1 (Update 13 Agustus 2024)');
 
         var legendControl = L.control({ position: 'topright' });
 
@@ -147,92 +147,117 @@ var SkemaLaksel = (function () {
       const bch0Point = [-8.6, 106.65];
       const bmt0Point = [-8.6, 106.65];
       const bnmg1Point = [bmt0Point[0]-0.2, bmt0Point[1]];
-      const bmng2Point = [bnmg1Point[0]-0.2, bnmg1Point[1]];
-      const bmng3Point = [bmng2Point[0]-0.2, bmng2Point[1]];
-      const bmng4Point = [bmng3Point[0]-0.2, bmng3Point[1]+0.05];
-      const bmng5Point = [bmng4Point[0]-0.08, bmng4Point[1]+0.2];
-      const bmng5iPoint = [bmng5Point[0]-0.03, bmng5Point[1]+0.2];
+      const bmt2Point = [bnmg1Point[0]-0.15,bnmg1Point[1]]
 
+      const bmng2Point = [bmt2Point[0]-0.2, bmt2Point[1]];
+      const bmng3Point = [bmng2Point[0]-0.2, bmng2Point[1]];
+
+      const bmt4Point = [bmng2Point[0]-0.1,bmng2Point[1]]
+     
+      const bmng4Point = [bmt4Point[0]-0.22, bmt4Point[1]+0.08];
+     
+      const bmt7Point = [bmng4Point[0]-0.04,bmng4Point[1]+0.06]
+      
+      const bmng5Point = [bmng4Point[0]-0.08, bmng4Point[1]+0.15];
+      
+      const bmt9Point = [bmng5Point[0]-0.02,bmng5Point[1]+0.1]
+      const bmng5iPoint = [bmng5Point[0]-0.03, bmng5Point[1]+0.2];
+      const bbl0Pint = [bmng5iPoint[0], bmng5iPoint[1]];
+      
+      
       const bbh1Point = [bmng4Point[0]-0.1, bmng4Point[1]-0.08];
       const bbh2Point = [bbh1Point[0]-0.1, bbh1Point[1]-0.08];
       const bbh3Point = [bbh2Point[0]-0.1, bbh2Point[1]-0.08];
       const bbh4Point = [bbh3Point[0]-0.1, bbh3Point[1]-0.08];
 
-      const sry3Point = [bnmg1Point[0], bnmg1Point[1]-0.2];
-      
-
-      // // Petak B.CH 1
-    
-      // const lineBch1ka = [bch1Point,[-8.4, 106.7]];
-      // generateBoxPetak('53df7c95-0263-45ec-9197-40826c9826f4', 'Ch 1 Ka', lineBch1ka, 'right','golongan-a');
-
-      // const lineBoxBch1 = [bch1Point ,[-8.35,106.71]];
-      // generateBox("11.548,05 Ha","22.276 m3/s","770,04  m", lineBoxBch1,'top' )
-
-      // // Petak B.Ch 0
-      // AliranMasuk([bch0Point[0]+0.1,bch0Point[1]-0.06],270);
-      // AliranMasuk([bch0Point[0]-0.03,bch0Point[1]+0.05],0);
-
-      // const lineBch0 = [bch1Point,bch0Point];
-      // generateBangunanPembagi('B.Ch 0 (BC.I-0)','topright',lineBch0); 
-      
-      // const lineBoxBch0 = [bch0Point ,[-8.555,106.71]];
-      // generateBox("11.902  Ha","22.315m3/s"," 275,89 m", lineBoxBch0,'top' )
-      
+      const sry3Point = [bnmg1Point[0], bnmg1Point[1]-0.25];
+       
       generateTextSaluranSekunder('SAL. SIDARAHAYU', [sry3Point[0]+0.04,sry3Point[1]+0.1], 0);
-      generateTextSaluranSekunder('SAL. BANTARHUNI', [bbh2Point[0]+0.04,bbh2Point[1]-0.05], 315);
       
-      generateTextSaluranPrimer('SAL. PRIMER MANGANTI', [bmng2Point[0]+0.04,bmng2Point[1]+0.1], 90);
-      generateTextSaluranPrimer('BENDUNGAN MANGANNTI', [bmt0Point[0]+0.1,bmt0Point[1]-0.05], 0);
+      generateTextSaluranPrimer('SAL. PRIMER MANGANTI', [bmng2Point[0]+0.2,bmng2Point[1]+0.1], 90);
+      generateTextSaluranPrimer('BENDUNGAN MANGANTI', [bmt0Point[0]+0.15,bmt0Point[1]-0.05], 0);
+      
+      // Sungai Citanduy
+      generateLineCustom([[bmt0Point[0]+0.12, bmt0Point[1]-0.2],[bmt0Point[0]+0.12, 106.8]]);
+      
       generateTextSaluranPrimer('S.CITANDU', [bmt0Point[0]+0.05,bmt0Point[1]-0.05], 0);
-      AliranMasuk([bch0Point[0]+0.08,bch0Point[1]-0.18],0);
+      AliranMasuk([bch0Point[0]+0.075,bch0Point[1]-0.2],0);
+      
+      generateLineCustom([[bmt0Point[0], bmt0Point[1]-0.2],[-8.6, 106.8]]);
+
+
+      // Sungai Ciseel
+      generateLineCustom([[bmng4Point[0], bmng4Point[1]-0.1],[bmng4Point[0]+0.12, bmng4Point[1]+0.02]]);
+      
+      generateTextSaluranPrimer('S.CISEEL', [bmng4Point[0]-0.05,bmt0Point[1]-0.02], 313);
+      
+      AliranMasuk([bmng4Point[0]+0.06,bmng4Point[1]-0.03],345);
+      
+      generateLineCustom([[bmng4Point[0]-0.08, bmng4Point[1]-0.08],[bmng4Point[0]+0.05, bmng4Point[1]+0.05]]);
 
       const linebmt0Point = [bmt0Point,[-8.6, 106.65]];
       generateBangunanPembagi('BMT.0','topright',linebmt0Point);
 
       const lineBnmg1Point = [bmt0Point,bnmg1Point];
-      generateBangunanPembagi('BMNG.1','topright',lineBnmg1Point);
+      generateBangunanPembagi('BMT.1','topright',lineBnmg1Point);
 
       const lineSry3Point = [bnmg1Point,sry3Point];
-      generateBangunanPembagi('SRY.3','topright',lineSry3Point);
+      generateBangunanPembagi('B.SRY.3','topright',lineSry3Point);
 
       const lineBoxBsa1 = [sry3Point,[sry3Point[0]+0.08, sry3Point[1]+0.08]];
       generateBox("4.540.00 Ha","7.515 m3/s","3.502  m", lineBoxBsa1,'top' )
 
       const lineBsa1Ka = [sry3Point,[sry3Point[0]-0.08, sry3Point[1]]];
-      generateBoxPetak('', 'Sry 3 Ka', lineBsa1Ka, 'bottom','');
+      generateBoxPetak('a66bcaee-b888-4876-ae62-fc113eb51942', 'BSA.1.Ka', lineBsa1Ka, 'bottom','');
+
+      const lineBmt2Point = [bnmg1Point,bmt2Point];
+      generateBangunanPembagiDanSadap('BMT.2','topright',lineBmt2Point);
+
+      const lineBmt2ka = [bmt2Point,[bmt2Point[0], bmt2Point[1]-0.02]];
+      generateBoxPetak('6622f2b4-52b3-4038-9245-94542093be49', 'MT.22 Ka', lineBmt2ka, 'left','');
 
       const lineBmng2Point = [bnmg1Point,bmng2Point];
-      generateBangunanPembagi('BMNG.2B','topright',lineBmng2Point);
+      generateBangunanPembagiDanSadap('BMT.3','topright',lineBmng2Point);
+
+      const lineBmt3Ka = [bmng2Point,[bmng2Point[0], bmng2Point[1]-0.02]];
+      generateBoxPetak('1e52ea36-f585-4c9f-a26d-21e632eb9bfd', 'MT.33 Ka', lineBmt3Ka, 'left','');
+
+      const lineBmt4Point = [bmng2Point,bmt4Point];
+      generateBangunanPembagiDanSadap('BMT.4','topright',lineBmt4Point);
+
+      const lineBmt4ka = [bmt4Point,[bmt4Point[0], bmt4Point[1]-0.02]];
+      generateBoxPetak('1853a814-f7ae-4397-b9c7-c7a0de356e58', 'MT.4 Ki', lineBmt4ka, 'left','');
 
       const lineBmng3Point = [bmng2Point,bmng3Point];
-      generateBangunanPembagi('BMNG.3B','topright',lineBmng3Point);
+      generateBangunanPembagiDanSadap('BMT.5','topright',lineBmng3Point);
+
+      const lineBmt5Ka = [bmng3Point,[bmng3Point[0], bmng3Point[1]-0.02]];
+      generateBoxPetak('f980295c-6296-43f4-8df4-48608a662407', 'MT.5 Ka', lineBmt5Ka, 'left','');
 
       const lineBmng4Point = [bmng3Point,bmng4Point];
-      generateBangunanPembagi('BMNG.4','topright',lineBmng4Point);
+      generateBangunanPembagi('BMT.6','topright',lineBmng4Point);
 
-      const lineBbh1Point = [bmng4Point,bbh1Point];
-      generateBangunanPembagi('BBH.1','topright',lineBbh1Point);
+      const lineBmt7Point = [bmng4Point,bmt7Point];
+      generateBangunanPembagiDanSadap('BMT.7','topright',lineBmt7Point);
 
-    const lineBhh1ka = [bbh1Point,[bbh1Point[0]-0.08, bbh1Point[1]+0.08]];
-      generateBoxPetak('', 'Bbh 1 Ka', lineBhh1ka, 'right','');
+      const lineBmt7ka = [bmt7Point,[bmt7Point[0]+0.18, bmt7Point[1]]];
+      generateBoxPetak('082a87f4-4a79-475a-8c87-c40f88bba7f3', 'MT.7 Ki', lineBmt7ka, 'top','');
 
-      const lineBbh2Point = [bbh1Point,bbh2Point];
-      generateBangunanPembagi('BBH.2','topright',lineBbh2Point);
+      const lineBmng5Point = [bmt7Point,bmng5Point];
+      generateBangunanPembagiDanSadap('BMT.8','topright',lineBmng5Point);
 
-      const lineBbh3Point = [bbh2Point,bbh3Point];
-      generateBangunanPembagi('BBH.3','topright',lineBbh3Point);
+      const lineBmt8ka = [bmng5Point,[bmng5Point[0]+0.14, bmng5Point[1]]];
+      generateBoxPetak('5e82325e-787d-42c7-950e-a5bc096a5d51', 'MT.8 Ki', lineBmt8ka, 'top','');
 
-      const lineBbh4Point = [bbh3Point,bbh4Point];
-      generateBangunanPembagi('BBH.4','topright',lineBbh4Point);
+      const lineBmt9Point = [bmng5Point,bmt9Point];
+      generateBangunanPembagiDanSadap('BMT.9','topright',lineBmt9Point);
 
-      const lineBmng5Point = [bmng4Point,bmng5Point];
-      generateBangunanPembagi('BMNG.5','topright',lineBmng5Point);
+      const lineBmt9ka = [bmt9Point,[bmt9Point[0]+0.06, bmt9Point[1]]];
+      generateBoxPetak('cdcbbbce-2cee-48b9-aeff-8a9844f003cc', 'MT.9 Ki', lineBmt9ka, 'top','');
 
-      const lineBmng5iPoint = [bmng5Point,bmng5iPoint];
-      generateBangunanPembagi('BMNG.5i','topright',lineBmng5iPoint);
-
-    }
+      const lineBbl0Pint = [bmt9Point,bbl0Pint];
+      generateBangunanPembagi('BBL.0','topright',lineBbl0Pint);
+      }
      
     return {
         //main function to initiate the module
@@ -382,6 +407,10 @@ function generateBangunanPembagi(title, titlePosition, lineCoords) {
   }).openTooltip();
 
   bangunanPembagiList.push(point);
+}
+
+function generateLineCustom(lineCoords) {
+  L.polyline(lineCoords, { color: 'black', weight: 1 }).addTo(map);
 }
 
 function generateBangunanPembagiDanSadap(title, titlePosition, lineCoords) {
