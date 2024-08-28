@@ -201,14 +201,14 @@ var SkemaLaksel = (function () {
       const lineBnmg1Point = [bmt0Point,bnmg1Point];
       generateBangunanPembagi('BMT.1','topright',lineBnmg1Point);
 
-      const lineSry3Point = [bnmg1Point,sry3Point];
-      generateBangunanPembagi('B.SRY.3','topright',lineSry3Point);
+      // const lineSry3Point = [bnmg1Point,sry3Point];
+      // generateBangunanPembagi('B.SRY.3','topright',lineSry3Point);
+      
+      //       const lineBsa1Ka = [sry3Point,[sry3Point[0]-0.08, sry3Point[1]]];
+      //       generateBoxPetak('a66bcaee-b888-4876-ae62-fc113eb51942', 'BSA.1.Ka', lineBsa1Ka, 'bottom','');
 
       const lineBoxBsa1 = [sry3Point,[sry3Point[0]+0.08, sry3Point[1]+0.08]];
       generateBox("4.540.00 Ha","7.515 m3/s","3.502  m", lineBoxBsa1,'top' )
-
-      const lineBsa1Ka = [sry3Point,[sry3Point[0]-0.08, sry3Point[1]]];
-      generateBoxPetak('a66bcaee-b888-4876-ae62-fc113eb51942', 'BSA.1.Ka', lineBsa1Ka, 'bottom','');
 
       const lineBmt2Point = [bnmg1Point,bmt2Point];
       generateBangunanPembagiDanSadap('BMT.2','topright',lineBmt2Point);
