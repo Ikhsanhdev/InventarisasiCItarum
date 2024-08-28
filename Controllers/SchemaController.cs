@@ -43,6 +43,25 @@ namespace IrigasiManganti.Controllers
       return Json(result);
     }
 
+    [Route("/Schema/GetSchemaDataLakselByDate/{tanggal}")]
+    public async Task<JsonResult> GetSchemaDataLakselByDate(string tanggal) {
+      var result = new ApiResponse();
+      try
+      {
+          result.MetaData.Code = 200;
+          result.MetaData.Message = "OK";
+          result.Response = await _unitOfWorkRepository.Schemas.GetSchemaDataLakselByDateAsync(tanggal);
+      }
+      catch (Exception ex)
+      {
+          result.MetaData.Code = 500;
+          result.MetaData.Message = "Sorry, something went wrong. Please try again later or contact administrator.";
+          Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace });
+      }
+
+      return Json(result);
+    }
+
     public IActionResult Sidareja() {
       return View();
     }
