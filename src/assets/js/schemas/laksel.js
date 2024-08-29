@@ -425,7 +425,7 @@ var SkemaLaksel = (function () {
         generateBangunanPembagi('BMNG 1','topright',lineBmng1Point);
 
         const lineMng1ka = [bmng1Point,[bmng1Point[0], bmng1Point[1]-0.05]];
-        generateBoxPetak('', 'MNG 1', lineMng1ka, 'left','');
+        generateBoxPetak('bda27da3-c66c-4051-b2d0-100b513b4374', 'MNG 1', lineMng1ka, 'left','');
 
         const lineBmn2iiPoint = [bmng1Point,bmng2iiPoint];
         generateBangunanPembagi('BMNG 2"','topright',lineBmn2iiPoint);
@@ -449,11 +449,11 @@ var SkemaLaksel = (function () {
         generateBangunanPembagi('BMNG 3a','topright',lineBmn3aPoint);
 
         const lineMng3aka = [bmng3aPoint,[bmng3aPoint[0]+0.05, bmng3aPoint[1]+0.05]];
-        generateBoxPetak('', 'MNG 3a', lineMng3aka, 'right','');
+        generateBoxPetak('7b664fc0-fbaf-423c-aae5-583640ffde26', 'MNG 3a', lineMng3aka, 'right','');
 
         
         const lineMng3ka = [bmng3aPoint,[bmng3aPoint[0]+0.15, bmng3aPoint[1]+0.05]];
-        generateBoxPetak('', 'MNG 3', lineMng3ka, 'right','');
+        generateBoxPetak('34d262de-60f8-48e2-9235-2d21e18a1d30', 'MNG 3', lineMng3ka, 'right','');
 
         // S, CISEEL
         generateLineCustom([[bmng4Point[0]+0.02, bmng4Point[1]-0.15],[bmng4Point[0]+0.17, bmng4Point[1]+0.02]]);
@@ -500,7 +500,7 @@ var SkemaLaksel = (function () {
         generateBoxPetak('50721652-6fd7-4b80-a0c4-d842ca514b23', 'MNG 6 Ki', lineMn6ki, 'top','');
 
         const lineMn6ka = [bmng6Point,[bmng6Point[0]-0.05, bmng6Point[1]]];
-        generateBoxPetak('', 'MNG 6 Ka', lineMn6ka, 'bottom','');
+        generateBoxPetak('7f566682-0059-4df1-aef5-759a3e82001e', 'MNG 6 Ka', lineMn6ka, 'bottom','');
 
         const lineBbl0Point = [bmng6Point,bbl0Point];
         generateBangunanPembagi('BBL.0','topright',lineBbl0Point);
@@ -983,7 +983,7 @@ function getSchemaData(tanggal) {
       
       $.each(result.response, function (key, data) {
         if(data.luas != null) {
-          luas = `A= ${formatNumber(data.luas)} Ha`;
+          luas = `A= ${data.luas} Ha`;
         }
 
         if(data.debitKebutuhan != null) {
