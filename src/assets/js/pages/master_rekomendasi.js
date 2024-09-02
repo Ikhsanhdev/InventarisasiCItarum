@@ -38,19 +38,27 @@ var dataRekomendasi = (function() {
             },
             columns: [
                 { data: null },
-                { data: "tanggal", name: "Tanggal" },
-                { data: "namaPetak", name: "NamaPetak" },
-                { data: "luas", name: "Luas" },
-                { data: "debitRekomendasi", name: "DebitRekomendasi" },
-                { data: "location", name: "Location" },
-                { data: "updatedAt", name: "UpdatedAt" },
-                // {
-                //   className: "text-nowrap",
-                //   render: function (data, type, row) {
-                //     return `<button type="button" class="btn btn-xs btn-success me-1 rounded-2" data-id="${row.id}" onclick="createEditPetak(this, event)"><i class="mdi mdi-square-edit-outline me-1"></i>Edit</button>
-                //                     <button type="button" class="btn btn-xs btn-danger rounded-2" data-id="${row.id}" onclick="deletePetak(this, event)"><i class="mdi mdi-delete me-1"></i>Delete</button>`;
-                //   },
-                // },
+                {
+                    data: "tanggal",
+                    name: "Tanggal",
+                    className: "text-center",
+                    render: function (data) {
+                        var date = formatDate(data, 'tanggal');
+                        return date;
+                    }
+                },
+                { data: "namaPetak", name: "NamaPetak", className: "text-center" },
+                { data: "luas", name: "Luas", className: "text-center"},
+                { data: "debitRekomendasi", name: "DebitRekomendasi", className: "text-center" },
+                { data: "location", name: "Location", className: "text-center" },
+                {
+                    data: "updatedAt",
+                    name: "UpdatedAt",
+                    render: function (data) {
+                        var date = formatDate(data, 'update');
+                        return date;
+                    }
+                },
             ],
             columnDefs: [
                 {
@@ -129,3 +137,27 @@ var dataRekomendasi = (function() {
 jQuery(document).ready(function () {
     dataRekomendasi.init();
 });
+
+function formatDate(dateString, type) {
+    const months = [
+        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
+
+    // Parse the input date string
+    const date = new Date(dateString);
+
+    // Extract day, month, year, hour, and minute
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    const hour = String(date.getHours()).padStart(2, '0');
+    const minute = String(date.getMinutes()).padStart(2, '0');
+
+    // Format the date as "dd MMMM yyyy HH:mm"
+    if (type === 'tanggal') {
+        return `${day} ${month} ${year}`;
+    } else if (type === 'update') {
+        return `${day} ${month} ${year} ${hour}:${minute}`;
+    }
+}
