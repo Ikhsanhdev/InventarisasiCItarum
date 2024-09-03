@@ -425,6 +425,27 @@
                         </div>
                     </li>
                     <li class="dropdown notification-list topbar-dropdown">
+                        <a class="nav-link nav-link-menu dropdown-toggle nav-user me-0 waves-effect waves-light @(currentController == "Master" ? "active" : "")"
+                            data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                            aria-expanded="false">
+                            <span class="nav-menu">
+                                MASTER <i class="mdi mdi-chevron-down"></i>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
+                            <a href="/Master/Petak" class="dropdown-item notify-item">
+                                <span>Petak</span>
+                            </a>
+
+                            <a href="/Master/Forecast" class="dropdown-item notify-item">
+                                <span>Forecast</span>
+                            </a>
+                            <a href="/Master/Rekomendasi" class="dropdown-item notify-item">
+                                <span>Rekomendasi</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="dropdown notification-list topbar-dropdown">
                         <a class="nav-link nav-link-menu dropdown-toggle nav-user me-0 waves-effect waves-light @(currentController == "DebitBendung" ? "active" : "")"
                             data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                             aria-expanded="false">
