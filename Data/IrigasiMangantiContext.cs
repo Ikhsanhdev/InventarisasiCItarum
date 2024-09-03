@@ -119,6 +119,8 @@ public partial class IrigasiMangantiContext : DbContext
     public virtual DbSet<ForecastKetersediaan> ForecastKetersediaans { get; set; }
     public virtual DbSet<Skema> Skemas { get; set; }
     public virtual DbSet<MasterPetak> MasterPetaks { get; set; }
+    public virtual DbSet<DebitPengambilan> DebitPengambilans { get; set; }
+    public virtual DbSet<DebitHulu> DebitHulus { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Name=ConnectionStrings:DefaultConnection");
@@ -1560,6 +1562,30 @@ public partial class IrigasiMangantiContext : DbContext
             // entity.Property(e => e.BangunanId).HasColumnName("bangunan_id");
             entity.Property(e => e.DebitKebutuhan).HasColumnType("double precision").HasColumnName("debit_kebutuhan");
             entity.Property(e => e.Location).HasColumnName("location");
+        });
+
+        modelBuilder.Entity<DebitPengambilan>(entity => {
+            entity.ToTable("debit_pengambilan");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+
+            entity.Property(e => e.Tanggal).HasColumnType("timestamp(0) without time zone").HasColumnName("tanggal");
+            entity.Property(e => e.Satuan).HasColumnName("satuan");
+            entity.Property(e => e.Nilai).HasColumnType("double precision").HasColumnName("nilai");
+            // entity.Property(e => e.Nilai).HasColumnName("nilai");
+            entity.Property(e => e.Update).HasColumnType("timestamp(0) without time zone").HasColumnName("update");
+        });
+
+        modelBuilder.Entity<DebitHulu>(entity => {
+            entity.ToTable("debit_hulu");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+
+            entity.Property(e => e.Tanggal).HasColumnType("timestamp(0) without time zone").HasColumnName("tanggal");
+            entity.Property(e => e.Satuan).HasColumnName("satuan");
+            entity.Property(e => e.Nilai).HasColumnType("double precision").HasColumnName("nilai");
+            // entity.Property(e => e.Nilai).HasColumnName("nilai");
+            entity.Property(e => e.Update).HasColumnType("timestamp(0) without time zone").HasColumnName("update");
         });
 
         modelBuilder.HasSequence("brand_code_seq");
