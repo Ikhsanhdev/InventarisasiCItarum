@@ -8,6 +8,7 @@ using IrigasiManganti.Data;
 using IrigasiManganti.Models;
 using System.Collections;
 using IrigasiManganti.Models.Datatables;
+using IrigasiManganti.ViewModels;
 
 namespace IrigasiManganti.Repositories
 {
@@ -26,6 +27,8 @@ namespace IrigasiManganti.Repositories
         DebitHulu? GetDataHuluById(Guid id);
         Task<(int, string)> UpdatePengambilan(DebitPengambilan model);
         Task<(int, string)> UpdateHulu(DebitHulu model);
+        Task<IEnumerable<dynamic>> GetDebitPengambilan(VMDateRangeDebit range);
+        Task<IEnumerable<dynamic>> GetDebitHulu(VMDateRangeDebit range);
     }
     public class DebitBendungRepository : IDebitBendungRepository
     {
@@ -550,6 +553,112 @@ namespace IrigasiManganti.Repositories
             await _context.SaveChangesAsync();
 
             return (200, "Debit deleted successfully");
+        }
+
+        public async Task<IEnumerable<dynamic>> GetDebitPengambilan(VMDateRangeDebit range)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                try
+                {
+                    var query = @"SELECT 
+                            id,
+                            tanggal::date AS tgl,
+                            nilai,
+                            satuan,
+                            update 
+                        FROM 
+                            debit_pengambilan 
+                        WHERE 
+                            to_char(tanggal, 'YYYY-MM-DD') BETWEEN @Start AND @End ORDER BY tanggal DESC";
+
+                    if (range.end < range.start) range.end = range.start;
+
+                    if (!range.start.HasValue && !range.end.HasValue)
+                    {
+                        range.start = DateOnly.FromDateTime(DateTime.Now);
+                        range.end = DateOnly.FromDateTime(DateTime.Now.AddMonths(1));
+                    }
+
+                    var parameters = new
+                    {
+                        Start = range.start,
+                        End = range.end
+                    };
+
+                    var data = await connection.QueryAsync<dynamic>(query, parameters, commandTimeout: 60);
+                    return data;
+                }
+                catch (Npgsql.NpgsqlException ex)
+                {
+
+                    Log.Error(ex, "Sql Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table debit_irigasi" });
+                    throw;
+                }
+                catch (System.Exception ex)
+                {
+
+                    Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table debit_irigasi" });
+                    throw;
+                }
+                finally
+                {
+
+                }
+            }
+        }
+
+        public async Task<IEnumerable<dynamic>> GetDebitHulu(VMDateRangeDebit range)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                try
+                {
+                    var query = @"SELECT 
+                            id,
+                            tanggal::date AS tgl,
+                            nilai,
+                            satuan,
+                            update 
+                        FROM 
+                            debit_hulu
+                        WHERE 
+                            to_char(tanggal, 'YYYY-MM-DD') BETWEEN @Start AND @End ORDER BY tanggal DESC";
+
+                    if (range.end < range.start) range.end = range.start;
+
+                    if (!range.start.HasValue && !range.end.HasValue)
+                    {
+                        range.start = DateOnly.FromDateTime(DateTime.Now);
+                        range.end = DateOnly.FromDateTime(DateTime.Now.AddMonths(1));
+                    }
+
+                    var parameters = new
+                    {
+                        Start = range.start,
+                        End = range.end
+                    };
+
+                    var data = await connection.QueryAsync<dynamic>(query, parameters, commandTimeout: 60);
+                    return data;
+                }
+                catch (Npgsql.NpgsqlException ex)
+                {
+
+                    Log.Error(ex, "Sql Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table debit_irigasi" });
+                    throw;
+                }
+                catch (System.Exception ex)
+                {
+
+                    Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table debit_irigasi" });
+                    throw;
+                }
+                finally
+                {
+
+                }
+            }
         }
     }
 }

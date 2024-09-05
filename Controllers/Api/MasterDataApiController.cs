@@ -82,7 +82,42 @@ namespace IrigasiManganti.Controllers.Api
                 result.MetaData.Message = ex.Message;
                 return BadRequest(result);
             }
+        }
 
+        [HttpGet]
+        [Route("v1/debit-pengambilan")]
+        public async Task<IActionResult> GetDebitPengambilan([FromQuery] VMDateRangeDebit query) {
+            var result = new ApiResponse();
+
+            try {
+                var data = await _repository.DebitBendungs.GetDebitPengambilan(query);
+                result.MetaData.Code = 200;
+                result.MetaData.Message = "Ok";
+                result.Response = data;
+                return Ok(result);
+            } catch(Exception ex) {
+                result.MetaData.Code = 500;
+                result.MetaData.Message = ex.Message;
+                return BadRequest(result);
+            }
+        }
+
+        [HttpGet]
+        [Route("v1/debit-hulu")]
+        public async Task<IActionResult> GetDebitHulu([FromQuery] VMDateRangeDebit query) {
+            var result = new ApiResponse();
+
+            try {
+                var data = await _repository.DebitBendungs.GetDebitHulu(query);
+                result.MetaData.Code = 200;
+                result.MetaData.Message = "Ok";
+                result.Response = data;
+                return Ok(result);
+            } catch(Exception ex) {
+                result.MetaData.Code = 500;
+                result.MetaData.Message = ex.Message;
+                return BadRequest(result);
+            }
         }
     }
 }
