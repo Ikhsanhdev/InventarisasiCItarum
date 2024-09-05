@@ -29,6 +29,8 @@ namespace IrigasiManganti.Repositories
         Task<(int, string)> UpdateHulu(DebitHulu model);
         Task<IEnumerable<dynamic>> GetDebitPengambilan(VMDateRangeDebit range);
         Task<IEnumerable<dynamic>> GetDebitHulu(VMDateRangeDebit range);
+        IEnumerable<DebitPengambilan> GetAllDebitPengambilan();
+        IEnumerable<DebitHulu> GetAllDebitHulu();
     }
     public class DebitBendungRepository : IDebitBendungRepository
     {
@@ -658,6 +660,48 @@ namespace IrigasiManganti.Repositories
                 {
 
                 }
+            }
+        }
+
+        public IEnumerable<DebitPengambilan> GetAllDebitPengambilan()
+        {
+            try
+            {
+                using var connection = new NpgsqlConnection(_connectionString);
+                string query = @"SELECT * FROM debit_pengambilan ORDER BY tanggal DESC";
+                var result = connection.Query<DebitPengambilan>(query);
+                return result;
+            }
+            catch (NpgsqlException ex)
+            {
+                Log.Error(ex, "PostgreSQL Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace});
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace});
+                throw;
+            }
+        }
+
+        public IEnumerable<DebitHulu> GetAllDebitHulu()
+        {
+            try
+            {
+                using var connection = new NpgsqlConnection(_connectionString);
+                string query = @"SELECT * FROM debit_hulu ORDER BY tanggal DESC";
+                var result = connection.Query<DebitHulu>(query);
+                return result;
+            }
+            catch (NpgsqlException ex)
+            {
+                Log.Error(ex, "PostgreSQL Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace});
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace});
+                throw;
             }
         }
     }
