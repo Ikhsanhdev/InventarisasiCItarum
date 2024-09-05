@@ -7,6 +7,7 @@ using IrigasiManganti.Models.Datatables;
 using IrigasiManganti.Helpers;
 using Serilog;
 using IrigasiManganti.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace IrigasiManganti.Controllers
 {
@@ -25,10 +26,12 @@ namespace IrigasiManganti.Controllers
       return View();
     }
 
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public IActionResult Pengambilan() {
         return View();
     }
 
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public IActionResult Hulu() {
         return View();
     }
