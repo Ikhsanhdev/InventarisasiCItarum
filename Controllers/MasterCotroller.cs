@@ -52,6 +52,11 @@ namespace IrigasiManganti.Controllers
             return View();
         }
 
+        public IActionResult Smopi()
+        {
+            return View();
+        }
+
         public async Task<JsonResult> GetDataSmopi()
         {
 
