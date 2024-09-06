@@ -15,6 +15,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using IrigasiManganti.Jobs;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using IrigasiManganti.Controllers;
 
 namespace IrigasiManganti
 {
@@ -27,6 +28,8 @@ namespace IrigasiManganti
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+            builder.Services.AddControllers();
+            builder.Services.AddHttpClient<ApiController>();
 
             builder.Services.AddControllersWithViews().AddNewtonsoftJson(opt =>
             {
@@ -194,7 +197,7 @@ namespace IrigasiManganti
             app.UseAuthentication();
 
             app.UseAuthorization();
-
+            app.MapControllers();
 
             app.MapControllerRoute(
                 name: "default",

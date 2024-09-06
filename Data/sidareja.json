@@ -1,0 +1,256 @@
+[
+    {
+        "id_di": "147",
+        "nama_di": "D.I. Manganti",
+        "saluran": [
+            {
+                "id_saluran": "1305",
+                "nama_saluran": "Saluran Primer Sidareja",
+                "panjang": "14152",
+                "lebar": "14",
+                "tinggi": "5",
+                "bangunanutama": [
+                    {
+                        "id_bangunan": "17066",
+                        "nama_bangunan": "BS. I",
+                        "jenisbangunan": "Bangunan Sadap",
+                        "luas": "53",
+                        "petak": {
+                            "id_petak": "17066",
+                            "namapetak": "BS. I",
+                            "jenisbangunan": "Bangunan Sadap",
+                            "luas": "53",
+                            "tmt": [
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2023",
+                                    "bulan": "10",
+                                    "periode": "2",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "0"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2023",
+                                    "bulan": "11",
+                                    "periode": "1",
+                                    "faktork": "1",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "0"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2023",
+                                    "bulan": "11",
+                                    "periode": "2",
+                                    "faktork": "1",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "79"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2023",
+                                    "bulan": "12",
+                                    "periode": "1",
+                                    "faktork": "0.71",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "79"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2023",
+                                    "bulan": "12",
+                                    "periode": "2",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "63"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "1",
+                                    "periode": "1",
+                                    "faktork": "0.01",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "46"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "1",
+                                    "periode": "2",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "46"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "2",
+                                    "periode": "1",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "0"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "2",
+                                    "periode": "2",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "46"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "3",
+                                    "periode": "1",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "46"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "3",
+                                    "periode": "2",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "23"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "4",
+                                    "periode": "1",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "0"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "4",
+                                    "periode": "2",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "79"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "5",
+                                    "periode": "1",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "79"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "5",
+                                    "periode": "2",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "0"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "6",
+                                    "periode": "1",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "46.11"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "6",
+                                    "periode": "2",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "0"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "7",
+                                    "periode": "1",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "46.11"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "7",
+                                    "periode": "2",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "46.11"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "8",
+                                    "periode": "1",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "46.11"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "8",
+                                    "periode": "2",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "46.11"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "9",
+                                    "periode": "1",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": "53",
+                                    "kebutuhan_air": "0"
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "9",
+                                    "periode": "2",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": 0,
+                                    "kebutuhan_air": 0
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "10",
+                                    "periode": "1",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": 0,
+                                    "kebutuhan_air": 0
+                                },
+                                {
+                                    "namatmt": "TMT D.I. Manganti 2023 / 2024",
+                                    "tahun": "2024",
+                                    "bulan": "10",
+                                    "periode": "2",
+                                    "faktork": "Belum Dibuat",
+                                    "keadaan_tanam": 0,
+                                    "kebutuhan_air": 0
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+]

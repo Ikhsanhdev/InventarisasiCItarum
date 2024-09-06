@@ -24,6 +24,7 @@ namespace IrigasiManganti.Repositories
         Task<(int code, string message)> DeletePetak(Guid id);
         MasterPetak? GetDataPetakById(Guid id);
         Task<(int, string)> SavePetak(MasterPetak model);
+        Task InsertSmopiAsync(VMPetak petak);
     }
     public class MasterDataRepository : IMasterDataRepository
     {
@@ -604,6 +605,21 @@ namespace IrigasiManganti.Repositories
                 Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, Desc = "Error while get data to table petak" });
                 throw;
             }
+        }
+
+        public async Task InsertSmopiAsync(VMPetak petak)
+        {
+            using var connection = new NpgsqlConnection(_connectionString);
+            // var sql = @"
+            //     INSERT INTO petak_smopi (nama_petak, jenis_bangunan, luas, kebutuhan, location, tanggal)
+            //     VALUES (@nama_petak, @jenis_bangunan, @luas, @kebutuhan, @location, @tanggal)";
+
+            var sql = @"
+                INSERT INTO petak_smopi (nama_petak, jenis_bangunan, luas, location, kebutuhan, updated_at)
+                VALUES (@nama_petak, @jenis_bangunan, @luas, @lokasi, @kebutuhan, @updated_at)";
+
+            // Use Dapper to execute the query
+            await connection.ExecuteAsync(sql, petak);
         }
     }
 }
