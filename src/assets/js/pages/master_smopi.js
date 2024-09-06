@@ -16,7 +16,7 @@ var dataSmopi = (function() {
 
     var filterDataByDate = function(date) {
         if (dataTableSmopi) {
-            dataTableSmopi.ajax.url("/Master/GetDataRekomendasi?date=" + date).load();
+            dataTableSmopi.ajax.url("/Master/GetDataSmopi?date=" + date).load();
         } else {
             console.error("dataTableSmopi is not initialized.");
         }
@@ -29,7 +29,7 @@ var dataSmopi = (function() {
             dom: "tipr",
             order: [[2, "asc"]],
             ajax: {
-                url: "/Master/GetDataRekomendasi",
+                url: "/Master/GetDataSmopi",
                 type: "POST",
                 dataType: "JSON",
                 data: function(d) {

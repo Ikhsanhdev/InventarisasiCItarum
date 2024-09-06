@@ -53,10 +53,20 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="d-flex flex-wrap align-items-center float-end">
+                                    <div class="text-lg-end" style="margin-right: 20px;">
+                                        <div class="input-group">
+                                            <button class="input-group-text text-white btn-prev-next" id="btn-prev">
+                                                <i class="mdi mdi-chevron-left font-16"></i>
+                                            </button>
+                                            <input type="text" class="form-control text-center" placeholder="" id="filter-date" readonly="readonly">
+                                            <button class="input-group-text text-white btn-prev-next" id="btn-next">
+                                                <i class="mdi mdi-chevron-right font-16"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                     <form class="search-bar form-inline me-3">
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder="Search..."
-                                                id="search-petak-table">
+                                            <input type="text" class="form-control" placeholder="Search..." id="search-petak-table">
                                             <span class="mdi mdi-magnify"></span>
                                         </div>
                                     </form>
@@ -69,7 +79,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="table-responsive">
                             <table class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100" id="table-petak">
                                 <thead class="bg-blue text-white">
