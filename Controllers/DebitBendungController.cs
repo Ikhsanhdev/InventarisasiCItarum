@@ -271,26 +271,26 @@ namespace IrigasiManganti.Controllers
         return Json(new { code = code, message = message });
     }
 
-    public async Task<IActionResult> DownloadDebitPengambilan() {
+    public async Task<IActionResult> DownloadDebitPengambilanHulu() {
         IEnumerable<DebitPengambilan> data = _unitOfWorkRepository.DebitBendungs.GetAllDebitPengambilan();
 
         var wba = await _service.Csvs.GenerateAllDebitPengambilan(data);
         using (var stream = new MemoryStream())
         {
-            string fileName = $"debit_pengambilan.xlsx";
+            string fileName = $"debit_pengambilan_hulu.xlsx";
             wba.SaveAs(stream);  // Assuming you're using ClosedXML which has SaveAs method for streams
             var content = stream.ToArray();
             return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
     }
 
-    public async Task<IActionResult> DownloadDebitHulu() {
+    public async Task<IActionResult> DownloadDebitBendungManganti() {
         IEnumerable<DebitHulu> data = _unitOfWorkRepository.DebitBendungs.GetAllDebitHulu();
 
         var wba = await _service.Csvs.GenerateAllDebitHulu(data);
         using (var stream = new MemoryStream())
         {
-            string fileName = $"debit_hulu.xlsx";
+            string fileName = $"debit_bendung_maganti.xlsx";
             wba.SaveAs(stream);  // Assuming you're using ClosedXML which has SaveAs method for streams
             var content = stream.ToArray();
             return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
