@@ -502,6 +502,9 @@ namespace IrigasiManganti.Repositories
                 {
                     data.Nilai = model.Nilai;
                     data.Satuan = model.Satuan;
+                    data.NilaiCihaur = model.NilaiCihaur;
+                    data.NilaiSidareja = model.NilaiSidareja;
+                    data.NilaiLakbok = model.NilaiLakbok;
                     _context.DebitHulus.Update(data);
                     _context.SaveChanges();
 
@@ -689,7 +692,7 @@ namespace IrigasiManganti.Repositories
             try
             {
                 using var connection = new NpgsqlConnection(_connectionString);
-                string query = @"SELECT * FROM debit_hulu ORDER BY tanggal DESC";
+                string query = @"SELECT nilai,tanggal ,satuan , update , nilai_sidareja AS NilaiSidareja, nilai_cihaur AS NilaiCihaur,nilai_lakbok AS NilaiLakbok FROM debit_hulu ORDER BY tanggal DESC";
                 var result = connection.Query<DebitHulu>(query);
                 return result;
             }

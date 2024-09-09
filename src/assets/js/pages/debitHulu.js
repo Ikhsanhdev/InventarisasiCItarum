@@ -4,6 +4,8 @@ var dataTableHulu;
 
 var dataHulu = (function() {
     var initInputHulu = function() {
+
+        $('#Nilai').val(0);
         $(".parsley-validation").parsley();
 
         $("#search-hulu-table").keyup(function () {
@@ -13,6 +15,7 @@ var dataHulu = (function() {
             dataTableHulu.page.len($(this).val()).draw();
         });
     };
+    
 
     var initDataTableHulu = function() {
         dataTableHulu = $('#table-hulu').DataTable({
@@ -43,6 +46,27 @@ var dataHulu = (function() {
                     }
                 },
                 {data: "satuan", name: "Satuan", className: "text-center"},
+                {
+                    data: "nilai_sidareja",
+                    name: "Nilai Sidareja",
+                    render: function (data) {
+                        return data ? `<span class="ketersediaan-color fw-semibold text-center d-block">${parseFloat(data).toFixed(2)}</span>` : '<span class="text-center d-block">-</span>';
+                    }
+                },
+                {
+                    data: "nilai_cihaur",
+                    name: "Nilai Cihaur",
+                    render: function (data) {
+                        return data ? `<span class="ketersediaan-color fw-semibold text-center d-block">${parseFloat(data).toFixed(2)}</span>` : '<span class="text-center d-block">-</span>';
+                    }
+                },
+                {
+                    data: "nilai_lakbok",
+                    name: "Nilai lakbok",
+                    render: function (data) {
+                        return data ? `<span class="ketersediaan-color fw-semibold text-center d-block">${parseFloat(data).toFixed(2)}</span>` : '<span class="text-center d-block">-</span>';
+                    }
+                },
                 {
                     data: "update",
                     name: "Update",
@@ -108,11 +132,23 @@ var dataHulu = (function() {
 jQuery(document).ready(function () {
     dataHulu.init();
 
+    $("#nilai_sidareja").on('input', function(){
+        calculate();
+        console.log('nilai_sidareja');
+    });
+
     $('#input-hulu').on('submit', function(e) {
         e.preventDefault();
         var $submitButton = $(this).find('button[type="submit"]');
         var originalButtonText = $submitButton.text();
 
+        var databody = $(this).serialize();
+        var formData = new FormData(this); // Use 'this' to refer to the form
+
+        // Debugging: Log the form data
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]); // Log each form data entry
+        }
         $submitButton.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
 
         $.ajax({
@@ -141,6 +177,8 @@ jQuery(document).ready(function () {
 window.createEditDebit = (input, evt) => {
     evt.preventDefault();
   
+    console.log(input);
+    
     var contentBtn = $(input).html();
   
     beforeLoadingButton($(input));
@@ -159,6 +197,7 @@ window.createEditDebit = (input, evt) => {
     });
 };
 
+
 window.updateHulu = (form, evt) => {
     console.log(form);
     evt.preventDefault();
@@ -171,10 +210,15 @@ window.updateHulu = (form, evt) => {
         beforeLoadingButton(btnSubmit);
 
         var formData = new FormData();
-        formData.append("Id", getValueById("Id"));
-        fformData.append("Nilai", getValueById("Nilai"));
-        formData.append("Satuan", getValueById("Satuan"));
-  
+        formData.append("Id", $(form).find("input[name='Id']").val());
+        formData.append("Nilai", $(form).find("input[name='Nilai']").val());
+        formData.append("Satuan", $(form).find("input[name='Satuan']").val());
+        formData.append("NilaiSidareja", $(form).find("input[name='NilaiSidareja']").val());
+        formData.append("NilaiCihaur", $(form).find("input[name='NilaiCihaur']").val());
+        formData.append("NilaiLakbok", $(form).find("input[name='NilaiLakbok']").val());
+
+        
+
         postData("/DebitBendung/UpdateHulu", formData)
             .then((res) => {
             let result = res.data;
@@ -257,6 +301,17 @@ function formatDate(dateString, type) {
     }
 }
 
-function getValueById(id) {
-    return document.getElementById(id)?.value || "";
+function calculate() {
+
+    let nilai_sidareja = 0;
+    let nilai_cihaur = 0;
+    let nilai_lakbok = 0;
+
+    nilai_sidareja = (document.getElementById('nilai_sidareja').value) ? document.getElementById('nilai_sidareja').value : 0;
+    nilai_cihaur = (document.getElementById('nilai_cihaur').value) ? document.getElementById('nilai_cihaur').value : 0;
+    nilai_lakbok = (document.getElementById('nilai_lakbok').value) ? document.getElementById('nilai_lakbok').value : 0;
+
+    var total =  + parseFloat(nilai_sidareja) + parseFloat(nilai_cihaur) + parseFloat(nilai_lakbok);
+    document.getElementById('Nilai').value = parseFloat(total).toFixed(2);
+    $('#Nilai').val(total);
 }

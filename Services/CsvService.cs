@@ -114,9 +114,12 @@ namespace IrigasiManganti.Services
                 worksheet.Cell(1, 1).Value = "Tanggal";         // Column A: Date
                 worksheet.Cell(1, 2).Value = "Nilai";       // Column B: Amount
                 worksheet.Cell(1, 3).Value = "Satuan";
-                worksheet.Cell(1, 4).Value = "UpdatedAt";
+                worksheet.Cell(1, 4).Value = "NilaiSidareja";       // Column B: Amount
+                worksheet.Cell(1, 5).Value = "NilaiCihaur";       // Column B: Amount
+                worksheet.Cell(1, 6).Value = "NilaiLakbok";       // Column B: Amount
+                worksheet.Cell(1, 7).Value = "UpdatedAt";
 
-                var headerRange = worksheet.Range("A1:D1");
+                var headerRange = worksheet.Range("A1:G1");
                 headerRange.Style.Font.Bold = true;
 
                 int row = 2;  // Start at the first row
@@ -126,7 +129,10 @@ namespace IrigasiManganti.Services
                     worksheet.Cell(row, 1).Value = item.Tanggal;  // Example: replace Property1 with your actual property names
                     worksheet.Cell(row, 2).Value = item.Nilai;
                     worksheet.Cell(row, 3).Value = item.Satuan;
-                    worksheet.Cell(row, 4).Value = item.Update;
+                    worksheet.Cell(row, 4).Value = item.NilaiSidareja;
+                    worksheet.Cell(row, 5).Value = item.NilaiCihaur;
+                    worksheet.Cell(row, 6).Value = item.NilaiLakbok;
+                    worksheet.Cell(row, 7).Value = item.Update;
                     row++;
                 }
 

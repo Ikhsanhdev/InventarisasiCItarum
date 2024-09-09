@@ -111,7 +111,7 @@ public partial class IrigasiMangantiContext : DbContext
 
     public virtual DbSet<Watershed> Watersheds { get; set; }
 
-    public virtual DbSet<WhatsAppNotification> WhatsAppNotifications { get; set; }
+    // public virtual DbSet<WhatsAppNotification> WhatsAppNotifications { get; set; }
 
     public virtual DbSet<WhatsAppRecipient> WhatsAppRecipients { get; set; }
 
@@ -1584,6 +1584,9 @@ public partial class IrigasiMangantiContext : DbContext
             entity.Property(e => e.Tanggal).HasColumnType("timestamp(0) without time zone").HasColumnName("tanggal");
             entity.Property(e => e.Satuan).HasColumnName("satuan");
             entity.Property(e => e.Nilai).HasColumnType("double precision").HasColumnName("nilai");
+            entity.Property(e => e.NilaiCihaur).HasColumnType("double precision").HasColumnName("nilai_cihaur");
+            entity.Property(e => e.NilaiSidareja).HasColumnType("double precision").HasColumnName("nilai_sidareja");
+            entity.Property(e => e.NilaiLakbok).HasColumnType("double precision").HasColumnName("nilai_lakbok");
             // entity.Property(e => e.Nilai).HasColumnName("nilai");
             entity.Property(e => e.Update).HasColumnType("timestamp(0) without time zone").HasColumnName("update");
         });

@@ -36,12 +36,34 @@
         <!-- Form for Input -->
         <form id="input-hulu">
             <div class="row">
-                <div class="col-4 col-md-4">
+             <div class="col-2 col-md-2">
                     <div class="mb-3">
-                        <label for="Nilai" class="form-label">Nilai <span class="text-danger">*</span></label>
-                        <input type="number" step="0.01" class="form-control" id="Nilai" name="Nilai" placeholder="Nilai" required="" autocomplete="off">
+                        <label for="Nilai" class="form-label">Nilai</label>
+                        <input type="number" step="0.01" class="form-control" id="Nilai" name="Nilai" placeholder="Nilai Manganti" required="" autocomplete="off"  readonly="true">
                     </div>
                 </div>
+                </div>
+            <div class="row">
+                <div class="col-4 col-md-4">
+                    <div class="mb-3">
+                        <label for="sidareja" class="form-label">Sidareja <span class="text-danger">*</span></label>
+                        <input type="number" step="0.01" onchange="calculate()" class="form-control" id="nilai_sidareja" name="NilaiSidareja" placeholder="Nilai Sidareja" required="" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-4 col-md-4">
+                    <div class="mb-3">
+                        <label for="cihaur" class="form-label">Cihaur <span class="text-danger">*</span></label>
+                        <input type="number" step="0.01"  onchange="calculate()" class="form-control" id="nilai_cihaur" name="NilaiCihaur" placeholder="Nilai Cihaur" required="" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-4 col-md-4">
+                    <div class="mb-3">
+                        <label for="lakbok" class="form-label">Lakbok <span class="text-danger">*</span></label>
+                        <input type="number" step="0.01"  onchange="calculate()" class="form-control" id="nilai_lakbok" name="NilaiLakbok" placeholder="Nilai Lakbok" required="" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-4 col-md-4">
                     <div class="mb-3">
                         <label for="Satuan" class="form-label">Satuan <span class="text-danger">*</span></label>
@@ -54,10 +76,10 @@
                         <input type="date" class="form-control" id="Tanggal" name="Tanggal" placeholder="Tanggal" required="" autocomplete="off">
                     </div>
                 </div>
+            </div>
                 <div class="col-4 col-md-4">
                     <button type="submit" class="btn btn-primary btn-input">Submit</button>
                 </div>
-            </div>
         </form>
         <!-- End Form -->
         <br><br>
@@ -110,6 +132,9 @@
                                         <th class="text-center">Tanggal</th>
                                         <th class="text-center">Nilai</th>
                                         <th class="text-center">Satuan</th>
+                                        <th class="text-center">Nilai Sidareja</th>
+                                        <th class="text-center">Nilai Cihaur</th>
+                                        <th class="text-center">Nilai Lakbox</th>
                                         <th class="text-center">UpdatedAt</th>
                                         <th class="text-center"></th>
                                     </tr>

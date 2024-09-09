@@ -5,7 +5,7 @@ namespace IrigasiManganti.Models;
 
 public partial class WhatsAppNotification
 {
-    public Guid RecipientId { get; set; }
+    public Guid Id { get; set; }
 
     public Guid StationId { get; set; }
 
