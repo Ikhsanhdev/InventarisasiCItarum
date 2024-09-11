@@ -16,20 +16,20 @@ var dataSmopi = (function() {
 
     var filterDataByDate = function(date) {
         if (dataTableSmopi) {
-            dataTableSmopi.ajax.url("/Master/GetDataSmopi?date=" + date).load();
+            dataTableSmopi.ajax.url("/Master/GetMasterDataSmopi?date=" + date).load();
         } else {
             console.error("dataTableSmopi is not initialized.");
         }
     };
 
     var initDataTable = function() {
-        dataTableSmopi = $("#table-ai").DataTable({
+        dataTableSmopi = $("#table-petak").DataTable({
             processing: true,
             serverSide: true,
             dom: "tipr",
             order: [[2, "asc"]],
             ajax: {
-                url: "/Master/GetDataSmopi",
+                url: "/Master/GetMasterDataSmopi",
                 type: "POST",
                 dataType: "JSON",
                 data: function(d) {
@@ -38,27 +38,10 @@ var dataSmopi = (function() {
             },
             columns: [
                 { data: null },
-                {
-                    data: "tanggal",
-                    name: "Tanggal",
-                    className: "text-center",
-                    render: function (data) {
-                        var date = formatDate(data, 'tanggal');
-                        return date;
-                    }
-                },
-                { data: "namaPetak", name: "NamaPetak", className: "text-center" },
-                { data: "luas", name: "Luas", className: "text-center"},
-                { data: "debitRekomendasi", name: "DebitRekomendasi", className: "text-center" },
-                { data: "location", name: "Location", className: "text-center" },
-                {
-                    data: "updatedAt",
-                    name: "UpdatedAt",
-                    render: function (data) {
-                        var date = formatDate(data, 'update');
-                        return date;
-                    }
-                },
+                { data: "nama_petak", name: "nama_petak", className: "text-center" },
+                { data: "jenis_bangunan", name: "jenis_bangunan", className: "text-center" },
+                { data: "luas", name: "luas", className: "text-center"},
+                { data: "kebutuhan", name: "kebutuhan", className: "text-center" },
             ],
             columnDefs: [
                 {
@@ -67,14 +50,7 @@ var dataSmopi = (function() {
                   orderable: false,
                   width: "9%",
                   className: "text-center",
-                },
-                {
-                  targets: -1,
-                  searchable: false,
-                  orderable: false,
-                  width: "18%",
-                  className: "text-center",
-                },
+                }
             ],
             language: {
                 paginate: {
