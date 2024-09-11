@@ -42,6 +42,9 @@ var dataSmopi = (function() {
                 { data: "jenis_bangunan", name: "jenis_bangunan", className: "text-center" },
                 { data: "luas", name: "luas", className: "text-center"},
                 { data: "kebutuhan", name: "kebutuhan", className: "text-center" },
+                { data: "periode", name: "periode", className: "text-center" },
+                { data: "bulan", name: "bulan", className: "text-center" },
+                { data: "tahun", name: "tahun", className: "text-center" },
             ],
             columnDefs: [
                 {

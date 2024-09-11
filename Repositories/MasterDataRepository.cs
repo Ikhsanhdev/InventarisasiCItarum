@@ -631,9 +631,10 @@ namespace IrigasiManganti.Repositories
                 List<dynamic> result = new List<dynamic>();
 
                 var query = $@"SELECT 
-                        nama_petak , jenis_bangunan ,luas ,kebutuhan 
+                        nama_petak , jenis_bangunan ,luas ,kebutuhan,periode,bulan,tahun
                                 FROM
-                        petak_smopi";
+                        petak_smopi
+                        ORDER BY bulan DESC, tahun DESC, periode DESC";
 
                 var parameters = new DynamicParameters();
                 var whereConditions = new List<string>();
@@ -659,9 +660,8 @@ namespace IrigasiManganti.Repositories
 
                     whereConditions.Add(@"
                     (LOWER(nama_petak) LIKE @SearchValue OR
-                    LOWER(luas) LIKE @SearchValue OR
-                    LOWER(location) LIKE @SearchValue OR
-                    LOWER(tanggal) LIKE @SearchValue)");
+                    LOWER(jenis_bangunan) LIKE @SearchValue OR
+                    LOWER(location) LIKE @SearchValue");
                     parameters.Add("@SearchValue", "%" + request.SearchValue.ToLower() + "%");
                 }
 
