@@ -143,14 +143,14 @@
                                     <div class="mb-3">
                                         <label for="kedalaman_bor" class="form-label">Kedalaman Pengeboran
                                             (m')</label>
-                                        <input type="number" asp-for="KedalamanBor" class="form-control" id="kedalaman_bor"
+                                        <input type="number" step=".01" asp-for="KedalamanBor" class="form-control" id="kedalaman_bor"
                                             placeholder="Masukkan Kedalaman (m)">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="debit" class="form-label">Debit Sumur (Lt/det)</label>
-                                        <input type="number" asp-for="DebitSumur" class="form-control" id="debit"
+                                        <input type="number" min="0" value="0" step="any" asp-for="DebitSumur" class="form-control" id="debit"
                                             placeholder="Masukkan Debit Sumur (Lt/det)">
                                     </div>
                                 </div>
