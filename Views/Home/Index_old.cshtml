@@ -1,0 +1,951 @@
+@{
+    Layout = "~/Views/Shared/_LayoutNavbarOnly.cshtml";
+    ViewData["Title"] = "Bendung Manganti";
+}
+
+@section styles {
+    <link href="~/lib/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        .fa-clipboard:before,
+        .fa-check:before {
+            line-height: 1em;
+            position: relative;
+            top: 1.5rem;
+            left: 1.6rem;
+        }
+
+        .fa-chart-pie:before {
+            line-height: 1em;
+            position: relative;
+            top: 1.5rem;
+            left: 1.4rem;
+        }
+
+        .muted {
+            color: #FFFF !important;
+        }
+
+        .prediksi-img {
+            width: 1500px;
+            /* Make the image take the full width of its container */
+            height: 212px;
+            /* Maintain the aspect ratio */
+            object-fit: cover;
+            /* Optionally, crop the image to fit the container */
+            border-radius: 5px;
+            /* Optionally, add rounded corners */
+        }
+
+        .box-legend {
+            display: inline-block;
+            width: 1.2rem;
+            height: 1.2rem;
+            border-radius: 2px;
+            margin-right: 0.4rem;
+        }
+
+        .prediksi-img {
+            max-width: 90% !important;
+        }
+
+        .highcharts-figure,
+        .highcharts-data-table table {
+            min-width: 360px;
+            max-width: 1600px;
+            margin: 1em auto;
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #ebebeb;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table td,
+        .highcharts-data-table th,
+        .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table thead tr,
+        .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+
+        @@keyframes blink {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        #header-prediksi-debit {
+            animation: blink 1s infinite;
+            color: white;
+        }
+
+        body[data-layout-mode=horizontal] .content-page {
+            padding: 5px 15px 65px 15px;
+        }
+
+        .ketersediaan-color {
+            color: #029af4;
+        }
+
+        .kebutuhan-color {
+            color: #404040;
+        }
+
+        table.dataTable.table-sm>thead>tr>th:not(.sorting_disabled):before,
+        table.dataTable.table-sm>thead>tr>th:not(.sorting_disabled):after {
+        @*margin-bottom:1px;*@right: 8px;
+        @*line-height:4px;*@
+        }
+
+        table.dataTable thead>tr>th.sorting:before,
+        table.dataTable thead>tr>th.sorting:after,
+        table.dataTable thead>tr>th.sorting_asc:before,
+        table.dataTable thead>tr>th.sorting_asc:after,
+        table.dataTable thead>tr>th.sorting_desc:before,
+        table.dataTable thead>tr>th.sorting_desc:after,
+        table.dataTable thead>tr>th.sorting_asc_disabled:before,
+        table.dataTable thead>tr>th.sorting_asc_disabled:after,
+        table.dataTable thead>tr>th.sorting_desc_disabled:before,
+        table.dataTable thead>tr>th.sorting_desc_disabled:after,
+        table.dataTable thead>tr>td.sorting:before,
+        table.dataTable thead>tr>td.sorting:after,
+        table.dataTable thead>tr>td.sorting_asc:before,
+        table.dataTable thead>tr>td.sorting_asc:after,
+        table.dataTable thead>tr>td.sorting_desc:before,
+        table.dataTable thead>tr>td.sorting_desc:after,
+        table.dataTable thead>tr>td.sorting_asc_disabled:before,
+        table.dataTable thead>tr>td.sorting_asc_disabled:after,
+        table.dataTable thead>tr>td.sorting_desc_disabled:before,
+        table.dataTable thead>tr>td.sorting_desc_disabled:after {
+            font-size: .6em;
+        }
+
+        table.dataTable thead>tr>th.sorting:before,
+        table.dataTable thead>tr>th.sorting_asc:before,
+        table.dataTable thead>tr>th.sorting_desc:before,
+        table.dataTable thead>tr>th.sorting_asc_disabled:before,
+        table.dataTable thead>tr>th.sorting_desc_disabled:before,
+        table.dataTable thead>tr>td.sorting:before,
+        table.dataTable thead>tr>td.sorting_asc:before,
+        table.dataTable thead>tr>td.sorting_desc:before,
+        table.dataTable thead>tr>td.sorting_asc_disabled:before,
+        table.dataTable thead>tr>td.sorting_desc_disabled:before {
+        @*bottom:50%;*@@*content:"▾";content:"▾"/"";rotate:180deg;*@
+        }
+
+        table.dataTable thead>tr>th.sorting:after,
+        table.dataTable thead>tr>th.sorting_asc:after,
+        table.dataTable thead>tr>th.sorting_desc:after,
+        table.dataTable thead>tr>th.sorting_asc_disabled:after,
+        table.dataTable thead>tr>th.sorting_desc_disabled:after,
+        table.dataTable thead>tr>td.sorting:after,
+        table.dataTable thead>tr>td.sorting_asc:after,
+        table.dataTable thead>tr>td.sorting_desc:after,
+        table.dataTable thead>tr>td.sorting_asc_disabled:after,
+        table.dataTable thead>tr>td.sorting_desc_disabled:after {
+        @*top:50%;*@@*content:"▾";content:"▾"/"";*@
+        }
+    </style>
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Daerah Irigasi : Manganti</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="widget-rounded-circle card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="avatar-lg rounded-circle bg-soft-blue border-blue border">
+                                    <i class="fas fa-check font-22 avatar-title text-blue"></i>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-end">
+                                    <h3 class="text-dark mt-1"><span data-plugin="counterup"
+                                            id="das-ketersediaan"></span></h3>
+                                    <p class="text-muted mb-1 text-truncate">Ketersediaan (Hari Ini)</p>
+                                </div>
+                            </div>
+                        </div> <!-- end row-->
+                    </div>
+                </div> <!-- end widget-rounded-circle-->
+            </div> <!-- end col-->
+
+            <div class="col-md-4">
+                <div class="widget-rounded-circle card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="avatar-lg rounded-circle bg-soft-success border-success border">
+                                    <i class="fas fa-clipboard font-24 avatar-title text-success"></i>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-end">
+                                    <h3 class="text-dark mt-1"><span data-plugin="counterup" id="das-kebutuhan"></span>
+                                    </h3>
+                                    <p class="text-muted mb-1 text-truncate">Kebutuhan (Hari Ini)</p>
+                                </div>
+                            </div>
+                        </div> <!-- end row-->
+                    </div>
+                </div> <!-- end widget-rounded-circle-->
+            </div> <!-- end col-->
+
+            <div class="col-md-4">
+                <div class="widget-rounded-circle card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="avatar-lg rounded-circle bg-soft-info border-info border">
+                                    <i class="fas fa-chart-pie font-24 avatar-title text-info"></i>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-end">
+                                    <h3 class="text-dark mt-1"><span data-plugin="counterup" id="das-presentase"></span>
+                                    </h3>
+                                    <p class="text-muted mb-1 text-truncate">Persentase (Hari Ini)</p>
+                                </div>
+                            </div>
+                        </div> <!-- end row-->
+                    </div>
+                </div> <!-- end widget-rounded-circle-->
+            </div> <!-- end col-->
+        </div>
+
+        @* <div class="row">
+        <div class="col-6 col-md-6">
+        <div class="card card-debit">
+        <div class="card-body">
+        <h4 class="header-title mb-2">Bendung Manganti</h4><br>
+        <center><img src="~/assets/img/map.jpg" alt="" class="prediksi-img"></center>
+        </div>
+        <!-- end card-body -->
+        </div> <!-- end card-->
+        </div>
+
+        <div class=" col-6 col-md-6">
+        <div class="card">
+        <div class="card-body">
+        <h4 class="header-title mb-2">Debit Air Rata Rata per Wilayah Kerja</h4>
+        <div class="table-responsive">
+        <table class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100"
+        id="table-reading-awlr">
+        <thead class="bg-blue text-white">
+        <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">Bangunan Di</th>
+        <th class="text-center">Petak Tertier</th>
+        <th class="text-center">Jumlah Debit</th>
+        <th class="text-center">Rata Rata Debit</th>
+        </tr>
+        </thead>
+        <tbody class="text-center">
+        <tr>
+        <td>4</td>
+        <td>BCIm 18 Kn</td>
+        <td>60</td>
+        <td>801</td>
+        <td>53,40</td>
+        </tr>
+        <tr>
+        <td>5</td>
+        <td>BCIm 19 Kn</td>
+        <td>40</td>
+        <td>669</td>
+        <td>44,60</td>
+        </tr>
+        <tr>
+        <td>6</td>
+        <td>B.Suplesi.2</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td>7</td>
+        <td>BCIm 20a Kn</td>
+        <td>35</td>
+        <td>1.467</td>
+        <td>97,80</td>
+        </tr>
+        <tr>
+        <td>8</td>
+        <td>BCIm 20 Kn</td>
+        <td>43</td>
+        <td>655</td>
+        <td>43,67</td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div> *@
+
+        <div class="row">
+            @* <div class=" col-6 col-md-6">
+            <div class="card">
+            <div class="card-body">
+            <h4 class="header-title mb-2">Realisasi Debit per Wilayah Juru</h4>
+            <div class="table-responsive">
+            <table class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100"
+            id="table-reading-awlr">
+            <thead class="bg-blue text-white">
+            <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">Wilayah Kerja</th>
+            <th class="text-center">Luas Sawah</th>
+            <th class="text-center">Debit Rata Rata</th>
+            <th class="text-center">Debit Akhir</th>
+            <th class="text-center">Usulan Luas</th>
+            <th class="text-center">Keb Air Pintu Tertier</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+            <td>4</td>
+            <td>BCIm Kr 3</td>
+            <td>44</td>
+            <td>0</td>
+            <td>0</td>
+            <td>44</td>
+            <td>38,28</td>
+            </tr>
+            <tr>
+            <td>5</td>
+            <td>BCIm Kr 4</td>
+            <td>41</td>
+            <td>0</td>
+            <td>0</td>
+            <td>41</td>
+            <td>35,67</td>
+            </tr>
+            <tr>
+            <td>6</td>
+            <td>BCIm Kr 5</td>
+            <td>5</td>
+            <td>0</td>
+            <td>0</td>
+            <td>5</td>
+            <td>4,35</td>
+            </tr>
+            <tr>
+            <td>7</td>
+            <td>BCIm Kn 6</td>
+            <td>64</td>
+            <td>0</td>
+            <td>0</td>
+            <td>64</td>
+            <td>55,68</td>
+            </tr>
+            <tr>
+            <td>8</td>
+            <td>BCIm Kr 7</td>
+            <td>62</td>
+            <td>0</td>
+            <td>0</td>
+            <td>62</td>
+            <td>53,94</td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            </div>
+            </div> *@
+            <div class="col-12 col-md-12">
+                <div class="card">
+                    <div class="card-header" style="background: #1976D2;">
+                        @* <h4 class="header-title mb-3" id="header-prediksi-debit">Prediksi Debit Air di Bendung
+                        Manganti</h4> *@
+                        <h4 class="card-title mb-0 text-white" id="header-prediksi-debit"> Prediksi Debit Air di Bendung
+                            Manganti</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="btn-group mb-3 me-2 chart-buttons">
+                            <a href="#" id="chart-line" class="btn btn-info active" aria-current="page">Grafik Garis</a>
+                            <a href="#" id="chart-bar" class="btn btn-info">Grafik Batang</a>
+                        </div>
+
+                        <div class="btn-group mb-3 range-buttons">
+                            <a href="#" id="range-7d" class="btn btn-blue active" aria-current="page">7 hari</a>
+                            <a href="#" id="range-15d" class="btn btn-blue">15 Hari</a>
+                            <a href="#" id="range-30d" class="btn btn-blue">30 Hari</a>
+                            <a href="/Home/ModelForecast"><h3 style="margin-left: 25px">KGE = 0,06</h3></a>
+                        </div>
+
+                        <figure class="highcharts-figure">
+                            <div id="container"></div>
+                            <p class="highcharts-description"></p>
+                        </figure>
+                        <br>
+                        <table class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100"
+                            id="table-debit-bendung">
+                            <thead class="bg-blue text-white">
+                                <tr>
+                                    @* <th class="text-center" scope="col" rowspan="2">No.</th> *@
+                                    <th class="text-center" scope="col" rowspan="2">Tanggal</th>
+                                    <th class="text-center" scope="col" colspan="3">Ketersediaan Prediksi (liter/detik)
+                                    </th>
+                                    <th class="text-center" scope="col" rowspan="2">Kebutuhan (liter/detik)</th>
+                                    <th class="text-center" scope="col" rowspan="2">Persentase (%)</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Minimal</th>
+                                    <th class="text-center">Maksimum</th>
+                                    <th class="text-center">Rerata</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/lib/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"
+        integrity="sha512-ZwR1/gSZM3ai6vCdI+LVF1zSq/5HznD3ZSTk7kajkaj4D292NLuduDCO1c/NT8Id+jE58KYLKT7hXnbtryGmMg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+}
+
+@section additionalScripts {
+    <script>
+        let chart;
+
+        var dtDebitBendung;
+        var currentRange = '7d'; // Default range
+        var chartType = 'spline'
+
+        function isMillisInRange(millis) {
+            // Tanggal batas awal dan akhir
+            const startDate = new Date('2024-08-25').getTime();
+            const endDate = new Date('2024-09-05').getTime();
+
+            // Memeriksa apakah millis berada dalam rentang tanggal
+            return millis >= startDate && millis <= endDate;
+        }
+
+        function createChartFromDataTable() {
+            const today = new Date();
+            const ketersediaanData = [];
+            const minData = [];
+            const maxData = [];
+            const avgData = [];
+            const kebutuhanData = [];
+            const rows = dtDebitBendung.rows().data();
+
+            let kebutuhanToday = 0;
+            let ketersediaanAvgToday = 0;
+            let presentaseToday = 0;
+
+            rows.each(function (row) {
+                const date = new Date(row.tanggal);
+                const timestamp = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+                const ketersediaanMin = parseFloat(row.ketersediaan_min);
+                const ketersediaanMax = parseFloat(row.ketersediaan_max);
+                const ketersediaanAvg = parseFloat(row.ketersediaan_avg);
+                const kebutuhan = parseFloat(row.kebutuhan);
+
+                if (!isNaN(ketersediaanMin) && !isNaN(ketersediaanMax)) {
+                    ketersediaanData.push([timestamp, ketersediaanMin, ketersediaanMax]);
+                    minData.push([timestamp, ketersediaanMin]);
+                    maxData.push([timestamp, ketersediaanMax]);
+                }
+                if (!isNaN(ketersediaanAvg)) {
+                    avgData.push([timestamp, ketersediaanAvg]);
+                    if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
+                        ketersediaanAvgToday = ketersediaanAvg; // Set today's kebutuhan value
+                    }
+                }
+                if (!isNaN(kebutuhan)) {
+                    kebutuhanData.push([timestamp, kebutuhan]);
+                    if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
+                        kebutuhanToday = kebutuhan; // Set today's kebutuhan value
+                    }
+                }
+
+                let percent = ketersediaanAvgToday && kebutuhanToday ? (ketersediaanAvgToday / kebutuhanToday) * 100 : 0;
+
+        @* const range = isDateInRange(moment(row.tanggal).format("YYYY-MM-DD"));
+                if (range) {
+                kebutuhanToday = 0;
+                percent = 0;
+                } *@
+
+                    document.getElementById('das-presentase').textContent = percent.toFixed(2) + '%';
+                document.getElementById('das-kebutuhan').textContent = kebutuhanToday.toFixed(2) + ' liter/detik';
+            });
+
+            document.getElementById('das-ketersediaan').textContent = ketersediaanAvgToday.toFixed(2) + ' liter/detik';
+
+            createChart(ketersediaanData, avgData, kebutuhanData, minData, maxData);
+        }
+
+        function createChart(ketersediaanData, avgData, kebutuhanData, minData, maxData) {
+            const maxValues = [
+                ...ketersediaanData.map(data => data[1]),
+                ...avgData.map(data => data[1]),
+                ...kebutuhanData.map(data => data[1])
+            ];
+            const maxYAxisValue = Math.max(...maxValues);
+
+        @* console.log(kebutuhanData)
+
+            kebutuhanData = kebutuhanData.map(e => {
+            const isInRange = isMillisInRange(e[0]);
+            if (isInRange) {
+            e[1] = 0;
+            }
+            return e;
+            }); *@
+
+
+                            if (chartType == 'spline') {
+                chart = Highcharts.chart('container', {
+                    title: {
+                        text: '',
+                        align: 'left'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Debit (lt/dt)'
+                        },
+                        min: 0,
+                        max: maxYAxisValue
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        labels: {
+                            format: '{value:%d %b %Y}',
+                            rotation: -45,
+                            align: 'right'
+                        },
+                        tickInterval: 24 * 3600 * 1000, // One day interval
+                        dateTimeLabelFormats: {
+                            day: '%d %b %Y'
+                        },
+                        accessibility: {
+                            rangeDescription: 'Range: Past 31 days'
+                        }
+                    },
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'top',
+                        y: 20
+                    },
+                    plotOptions: {
+                        series: {
+                            label: {
+                                connectorAllowed: false
+                            }
+                        }
+                    },
+                    tooltip: {
+                        shared: true,
+                        crosshairs: true,
+                        useHTML: true,
+                        formatter: function () {
+                            const date = new Date(this.x);
+                            const day = date.toLocaleDateString('id-ID', { weekday: 'long' });
+                            const formattedDate = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+                            const kebutuhanPoint = this.points.find(point => point.series.name === 'Kebutuhan');
+                            const avgPoint = this.points.find(point => point.series.name === 'Ketersediaan');
+                            const ketersediaanPoint = this.points.find(point => point.series.name === 'Ketersediaan');
+
+                            return `<b>${day}, ${formattedDate}</b><br/>
+                                                                                                                Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br/>
+                                                                                                                Min: ${ketersediaanPoint.point.low.toFixed(2)} liter/detik<br/>
+                                                                                                                Max: ${ketersediaanPoint.point.high.toFixed(2)} liter/detik<br/>
+                                                                                                                Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Ketersediaan',
+                            data: ketersediaanData,
+                            type: 'arearange',
+                            lineWidth: 0,
+                            linkedTo: ':previous',
+                            color: Highcharts.getOptions().colors[0],
+                            fillOpacity: 0.3,
+                            zIndex: 0,
+                            marker: {
+                                enabled: false
+                            },
+                            tooltip: {
+                                valueSuffix: ' liter/detik',
+                                valueDecimals: 2,
+                            }
+                        },
+                        {
+                            name: 'Ketersediaan',
+                            type: 'spline',
+                            data: avgData,
+                            zIndex: 1,
+                            marker: {
+                                fillColor: 'white',
+                                lineWidth: 2,
+                                lineColor: Highcharts.getOptions().colors[0]
+                            },
+                            tooltip: {
+                                valueSuffix: ' liter/detik',
+                                valueDecimals: 2,
+                            }
+                        },
+                        {
+                            name: 'Kebutuhan',
+                            type: 'spline',
+                            color: '#404040',
+                            data: kebutuhanData,
+                            tooltip: {
+                                valueSuffix: ' liter/detik',
+                                valueDecimals: 2,
+                            }
+                        }
+                    ],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 100
+                            },
+                            chartOptions: {
+                                legend: {
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom'
+                                }
+                            }
+                        }]
+                    }
+                });
+            } else if (chartType == 'column') {
+                chart = Highcharts.chart('container', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: '',
+                        align: 'left'
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        labels: {
+                            format: '{value:%d %b %Y}',
+                            rotation: -45,
+                            align: 'right'
+                        },
+                        tickInterval: 24 * 3600 * 1000, // One day interval
+                        dateTimeLabelFormats: {
+                            day: '%d %b %Y'
+                        },
+                        accessibility: {
+                            rangeDescription: 'Range: Past 31 days'
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Debit (lt/dt)'
+                        },
+                        min: 0,
+                        max: maxYAxisValue
+                    },
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'top',
+                        y: 20
+                    },
+                    tooltip: {
+                        shared: true,
+                        useHTML: true,
+                        formatter: function () {
+                            const date = new Date(this.x);
+                            const day = date.toLocaleDateString('id-ID', { weekday: 'long' });
+                            const formattedDate = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+                            const kebutuhanPoint = this.points.find(point => point.series.name === 'Kebutuhan');
+                            const avgPoint = this.points.find(point => point.series.name === 'Ketersediaan');
+                            const maxPoint = this.points.find(point => point.series.name === 'Max');
+                            const minPoint = this.points.find(point => point.series.name === 'Min');
+
+                            return `<b>${day}, ${formattedDate}</b><br/>
+                                                                                                                        Kebutuhan: ${kebutuhanPoint ? kebutuhanPoint.y.toFixed(2) : 'N/A'} liter/detik<br>
+                                                                                                                        Min: ${minPoint.y.toFixed(2)} liter/detik<br>
+                                                                                                                        Max: ${maxPoint.y.toFixed(2)} liter/detik<br>
+                                                                                                                        Rerata: ${avgPoint.y.toFixed(2)} liter/detik`;
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            grouping: false,
+                            shadow: false,
+                            borderWidth: 0
+                        }
+                    },
+                    series: [{
+                        name: 'Max',
+                        color: '#16608E',
+                        data: maxData,
+                        tooltip: {
+                            valueSuffix: ' liter/detik',
+                            valueDecimals: 2,
+                        },
+                        pointPadding: 0.2,
+                        pointPlacement: -0.2
+                    }, {
+                        name: 'Ketersediaan',
+                        color: Highcharts.getOptions().colors[0],
+                        data: avgData,
+                        tooltip: {
+                            valueSuffix: ' liter/detik',
+                            valueDecimals: 2,
+                        },
+                        pointPadding: 0.3,
+                        pointPlacement: -0.2
+                    }, {
+                        name: 'Min',
+                        color: '#83ccfb',
+                        data: minData,
+                        tooltip: {
+                            valueSuffix: ' liter/detik',
+                            valueDecimals: 2,
+                        },
+                        pointPadding: 0.4,
+                        pointPlacement: -0.2
+                    }, {
+                        name: 'Kebutuhan',
+                        color: '#404040',
+                        data: kebutuhanData,
+                        tooltip: {
+                            valueSuffix: ' liter/detik',
+                            valueDecimals: 2,
+                        },
+                        pointPadding: 0.3,
+                        pointPlacement: 0.2
+                    }],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 100
+                            },
+                            chartOptions: {
+                                legend: {
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom'
+                                }
+                            }
+                        }]
+                    }
+                });
+            }
+        }
+
+        function setRange(range) {
+            currentRange = range;
+            dtDebitBendung.ajax.reload();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            dtDebitBendung = $("#table-debit-bendung").DataTable({
+                processing: true,
+                serverSide: true,
+                dom: "tipr",
+                paging: false,
+                order: [],
+                ajax: {
+                    url: "/DebitBendung/GetDatatableByRangeDate",
+                    type: "POST",
+                    dataType: "JSON",
+                    data: function (data) {
+                        data.range_date = currentRange; // Use the current range
+                    }
+                },
+                columns: [
+                    //{ data: null, defaultContent: '' }, // Placeholder for row number
+                    {
+                        data: "tanggal",
+                        name: "tanggal",
+                        render: function (data) {
+                            if (data != null) {
+                                return `${moment(data).locale('id').format("D MMMM YYYY")}`;
+                            }
+
+                            return '-';
+                        }
+                    },
+                    {
+                        data: "ketersediaan_min",
+                        name: "ketersediaan_min",
+                        render: function (data) {
+                            return data ? `<span class="ketersediaan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
+                        }
+                    },
+                    {
+                        data: "ketersediaan_max",
+                        name: "ketersediaan_max",
+                        render: function (data) {
+                            return data ? `<span class="ketersediaan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
+                        }
+                    },
+                    {
+                        data: "ketersediaan_avg",
+                        name: "ketersediaan_avg",
+                        render: function (data) {
+                            return data ? `<span class="ketersediaan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
+                        }
+                    },
+                    {
+                        data: "kebutuhan",
+                        name: "kebutuhan",
+                        render: function (data, type, row) {
+
+        @* const inRange = isDateInRange(moment(row.tanggal).format("YYYY-MM-DD"));
+                            console.log(inRange);
+                            if (inRange) {
+                            return "0";
+                            } *@
+
+
+                                return data ? `<span class="kebutuhan-color fw-semibold">${parseFloat(data).toFixed(2)}</span>` : '-';
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+        @* const inRange = isDateInRange(moment(row.tanggal).format("YYYY-MM-DD"));
+                            if (inRange) {
+                            return `<span class="text-warning fw-semibold">0%</span>`;;
+                            } *@
+                                const percent_avg_kebutuhan = row.ketersediaan_avg && row.kebutuhan ? (row.ketersediaan_avg / row.kebutuhan) * 100 : 0;
+                            const status_percent = percent_avg_kebutuhan >= 100 ? 'text-success' : 'text-warning';
+                            return `<span class="${status_percent} fw-semibold">${percent_avg_kebutuhan.toFixed(2)}%</span>`;
+                        }
+                    }
+                ],
+                drawCallback: function () {
+                    createChartFromDataTable();
+                }
+            });
+
+            // Range buttons
+            document.getElementById('range-7d').addEventListener('click', function (event) {
+                event.preventDefault();
+                setRange('7d');
+                setActiveButton('range-7d', 'range-buttons');
+            });
+            document.getElementById('range-15d').addEventListener('click', function (event) {
+                event.preventDefault();
+                setRange('15d');
+                setActiveButton('range-15d', 'range-buttons');
+            });
+            document.getElementById('range-30d').addEventListener('click', function (event) {
+                event.preventDefault();
+                setRange('30d');
+                setActiveButton('range-30d', 'range-buttons');
+            });
+
+            // Chart type buttons
+            document.getElementById('chart-line').addEventListener('click', function (event) {
+                event.preventDefault();
+                chartType = 'spline';
+                recreateChart();
+                setActiveButton('chart-line', 'chart-buttons');
+            });
+            document.getElementById('chart-bar').addEventListener('click', function (event) {
+                event.preventDefault();
+                chartType = 'column';
+                recreateChart();
+                setActiveButton('chart-bar', 'chart-buttons');
+            });
+
+            function setActiveButton(id, groupClass) {
+                document.querySelectorAll('.' + groupClass + ' .btn').forEach(function (btn) {
+                    btn.classList.remove('active');
+                });
+                document.getElementById(id).classList.add('active');
+            }
+
+            function recreateChart() {
+                chart.destroy();
+                createChartFromDataTable();
+            }
+        });
+
+        function isDateInRange(dateToCheck) {
+            // Tanggal batas awal dan akhir
+            const startDate = new Date('2024-08-24');
+            const endDate = new Date('2024-09-05');
+
+            // Menghilangkan waktu dari tanggal yang akan dicek
+            const date = new Date(dateToCheck);
+            date.setHours(0, 0, 0, 0);
+
+            // Membandingkan apakah tanggal berada dalam rentang
+            return date >= startDate && date <= endDate;
+        }
+    </script>
+}

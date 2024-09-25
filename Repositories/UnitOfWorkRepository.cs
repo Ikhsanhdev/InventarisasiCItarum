@@ -12,7 +12,8 @@ namespace IrigasiManganti.Repositories
             ISchemaRepository schemaRepository,
             IKetersediaanResository ketersediaanResository,
             IDebitBendungRepository debitBendungRepository,
-            IMasterDataRepository masterDataRepository
+            IMasterDataRepository masterDataRepository,
+            ISumurDataRepository sumurDataRepository
         )
         {
             Globals = globalRepository;
@@ -23,6 +24,7 @@ namespace IrigasiManganti.Repositories
             KetersediaanRepositories = ketersediaanResository;
             DebitBendungs = debitBendungRepository;
             MasterDataRepositories = masterDataRepository;
+            SumurDataRepositories = sumurDataRepository;
         }
 
         public IGlobalRepository Globals { get; }
@@ -33,5 +35,7 @@ namespace IrigasiManganti.Repositories
         public ISchemaRepository Schemas {get;}
         public IDebitBendungRepository DebitBendungs {get;}
         public IMasterDataRepository MasterDataRepositories { get;}
+        public ISumurDataRepository SumurDataRepositories { get; }
+
     }
 }

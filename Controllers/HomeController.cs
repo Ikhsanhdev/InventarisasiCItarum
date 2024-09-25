@@ -23,9 +23,10 @@ namespace IrigasiManganti.Controllers
             _unitOfWorkRepository = unitOfWorkRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var Model = await _unitOfWorkRepository.SumurDataRepositories.GetTopSumur();
+            return View(Model);
         }
 
         public IActionResult ModelForecast()
@@ -99,6 +100,31 @@ namespace IrigasiManganti.Controllers
                 Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace });
                 throw;
             }
+            
+        }
+         public async Task<JsonResult> GetPointSumur()
+        {
+            var result = await _unitOfWorkRepository.SumurDataRepositories.GetDataPointSumur();
+            return Json(result);
+        }
+
+        public IActionResult Detail(string code)
+        {
+            var model = new Sumur();
+            
+            model = _unitOfWorkRepository.SumurDataRepositories.GetSumurByCode(code);
+        
+            if (model == null)
+            {
+                return RedirectToAction("PageNotFound");
+            }
+            return View("Detail",model);
+        }
+
+        [Route("404")]
+        public IActionResult PageNotFound()
+        {
+            return View();
         }
     }
 }

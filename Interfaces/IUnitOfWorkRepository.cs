@@ -12,5 +12,6 @@ namespace IrigasiManganti.Interfaces
         IDebitBendungRepository DebitBendungs { get; }
         IKetersediaanResository KetersediaanRepositories { get; }
         IMasterDataRepository MasterDataRepositories { get; }
+        ISumurDataRepository SumurDataRepositories { get; }
     }
 }

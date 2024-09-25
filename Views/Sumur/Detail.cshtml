@@ -1,0 +1,426 @@
+@model IrigasiManganti.Models.Sumur;
+
+@{
+    Layout = "~/Views/Shared/_LayoutNavbarNew.cshtml";
+    ViewData["Title"] = " Debit Bendung Manganti";
+}
+
+@section styles {
+    <link href="~/lib/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        
+    </style>
+}
+<div class="content">
+    <input type="hidden" name="station-id" id="station-id">
+    <input type="hidden" name="device-id" id="device-id">
+    <input type="hidden" name="station-type" id="station-type">
+    <input type="hidden" name="station-name" id="station-name" value="PCH TEMPURAN">
+    <input type="hidden" name="watershed-name" id="watershed-name" value="DAS CIKAROKROK">
+    <input type="hidden" name="time-zone" id="time-zone" value="WIB">
+    <input type="hidden" name="peilschaal-elevation" id="peilschaal-elevation">
+    <div class="container-fluid container-fluid-detail">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-header-detail">
+                    <div class="card-header py-2">
+                        <div class="d-flex align-items-start">
+                            <img src="/images/default-pu.png " class="avatar-lg img-thumbnail me-2" alt="profile-image">
+                            <div>
+                            <h5 style="margin-bottom: 0.3rem;margin-top: 0.3rem;font-size: 16px;color: rgba(0,0,0,.85);">
+                               @Model.Code
+                                  </h5>
+                                
+                                <p style="margin-bottom: 0.2rem;color: rgb(150, 150, 150);font-size: 14px;font-weight: 500;" class="text-uppercase font-12">Pos BANDUNG</p>
+                                <span class="badge badge-outline-success text-success rounded-1 shadow-sm mb-1" style="padding: 0.2rem 0.3rem;font-weight: normal;">Higertech</span>
+                                <span class="badge badge-outline-success text-success rounded-1 shadow-sm mb-1" style="padding: 0.2rem 0.3rem;font-weight: normal;">@Model.Code</span>
+                            </div>
+
+                            @if(Model.Status == "OPERASI"){
+
+                            <span class="ms-auto text-success">
+                                <i class="mdi mdi-signal-cellular-3 font-14 me-1"></i> 
+                                OPERASI
+                            </span>
+                            }else {
+                            <span class="ms-auto text-danger">
+                                <i class="mdi mdi-signal-cellular-3 font-14 me-1"></i> 
+                                TIDAK OPERASI
+                            </span>    
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-custom">
+                    <div class="card-header p-0 ">
+                        <ul class="nav nav-tabs nav-bordered nav-justified" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a id="tab-info" href="#tab-info-pos" data-id="data-pos" data-bs-toggle="tab" aria-expanded="true" class="d-flex align-items-center justify-content-center nav-link tab-data active" aria-selected="true" role="tab">
+                                    INFORMASI 
+                                </a>
+                            </li>
+                            @* <li class="nav-item" role="presentation">
+                                <a id="tab-telemetri" href="#tab-data-telemetri" data-id="data-telemetri" data-bs-toggle="tab" aria-expanded="false" class="d-flex align-items-center justify-content-center nav-link tab-data" aria-selected="false" role="tab" tabindex="-1">
+                                    DATA TELEMETRI
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a id="tab-graphic" href="#tab-grafik" data-id="data-grafik" data-bs-toggle="tab" class="nav-link tab-data" aria-selected="false" tabindex="-1" role="tab">
+                                    GRAFIK
+                                </a>
+                            </li> *@
+                             
+                        </ul>
+                    </div>
+                    
+                    <div class="card-body p-0">
+                        <div class="tab-content p-0">
+                            <div class="tab-pane active" id="tab-info-pos" data-id="info-pos" role="tabpanel" aria-labelledby="#tab-info">
+                                <div class="p-3 pb-1">
+                                    <dl class="row">
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">No. Register</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_no_register">
+                                            -</dd>
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Tahun Pengeboran</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9"  style="font-weight: 400;" id="detail_elevation">
+                                            @Model.TahunPengeboran</dd>
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Kedalaman</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_device_merk">
+                                            @Model.KedalamanBor</dd>
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Debit Sumur</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_device_id">
+                                            @Model.DebitSumur (Lt/det)</dd>
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Kondisi Sumur</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_wilayah_sungai">
+                                            @Model.KondisiSumur
+                                        </dd>
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Kondisi Mesin/Genset</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_das">
+                                          @Model.KondisiMesin
+                                        </dd>
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Kondisi Pompa</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_built_by">
+                                            @Model.KondisiPompa
+                                        </dd>
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Kondisi Rumah Pompa</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_built_year">
+                                            @Model.KondisiRumahPompa</dd>
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Pipa Saluran</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_renov_by">
+                                            @Model.IrigasiPipaSaluran</dd>
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Box Pembagi</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_renov_year">
+                                            @Model.IrigasiBoxPembagi (KK)</dd>
+                                        
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">AIR BAKU</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_renov_year">
+                                            @Model.FungsiAirBaku </dd>
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">IRIGASI</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_renov_year">
+                                            @Model.FungsiIrigasi (HA)</dd>
+
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Keterangan</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_note">
+                                            @Model.Note</dd>
+                                    </dl>
+                                </div>
+                                <h5 class="text-uppercase p-3 py-2 m-0" style="background-color: #F5F5F5;"><i class="mdi mdi-map-marker"></i> Lokasi</h5>
+                                <div class="p-3">
+                                    <dl class="row">
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Koordinat</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_coordinate">
+                                            @Model.Latitude, @Model.Latitude
+                                        </dd>
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Alamat</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_province">
+                                           @Model.Alamat</dd>
+
+                                        
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="tab-pane p-3" id="tab-data-telemetri" data-id="data-telemetri" role="tabpanel" aria-labelledby="#tab-telemetri">
+                                
+                                <div class="row mt-2 mb-3">
+                                    <div class="col-md-3">
+                                        <div class="d-flex">
+                                            <label for="periode-grafik" class=" col-form-label me-2">Waktu</label>
+                                            <select class="form-control selectized" id="waktu" name="waktu" style="width: 80%; display: none;" tabindex="-1"><option value="minute" selected="selected">Per 5 Menit</option></select><div class="selectize-control form-control single" style="width: 80%;"><div class="selectize-input items full has-options has-items"><div class="item" data-value="minute">Per 5 Menit</div><input type="select-one" autocomplete="off" tabindex="" id="waktu-selectized" style="width: 4px;"></div><div class="selectize-dropdown single form-control" style="display: none;"><div class="selectize-dropdown-content"></div></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                         <div class="d-flex">
+                                            <label for="periode" class=" col-form-label me-2">Periode</label>
+                                            <div class="input-group">
+                                                <input type="hidden" id="periode" name="periode" class="form-control w-80 flatpickr-input" placeholder="" value="2024-09-16"><input class="form-control w-80 form-control input" placeholder="" tabindex="0" type="text" readonly="readonly">
+                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                                    <div class="table-responsive d-flex justify-content-center ">
+                                        <table class="table table-sm table-bordered table-hover table-centered table-intensity-info w-auto text-center mb-1 arr-parameter-parent" style="display: none;">
+                                            <thead>
+                                                <tr><th>
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <span class="box-legend" style="background:rgba(204, 204, 204, .4);"></span><span class="fw-semibold">: Tidak Ada Hujan</span>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <span class="box-legend" style="background:rgba(57, 166, 245, .6);"></span> <span class="fw-semibold">: Hujan Ringan</span>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <span class="box-legend" style="background:rgba(247, 184, 75, .6);"></span> <span class="fw-semibold">: Hujan Sedang</span>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <span class="box-legend" style="background:rgba(242, 131, 35, .6);"></span> <span class="fw-semibold">: Hujan Lebat</span>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <span class="box-legend" style="background:rgba(239, 83, 80, .6);"></span><span class="fw-semibold">: Hujan Sangat Lebat</span>
+                                                    </div>
+                                                </th>
+                                            </tr></thead>
+                                            <tbody>
+                                                <tr id="arr-hour-parameter">
+                                                    <td>0 mm</td>
+                                                    <td>0.1 – 5 mm</td>
+                                                    <td>5 – 10 mm</td>
+                                                    <td>10 – 20 mm</td>
+                                                    <td>&gt; 20 mm</td>
+                                                </tr>
+                                                <tr id="arr-day-parameter" style="display: none;">
+                                                    <td>0 mm</td>
+                                                    <td>5 – 20 mm</td>
+                                                    <td>20 – 50 mm</td>
+                                                    <td>50 – 100 mm</td>
+                                                    <td>&gt; 100 mm</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-12 text-center mb-1 arr-parameter-parent" style="display: none;">
+                                        <small>Sumber : <a class="fst-italic" href="javascript:void(0)" onclick="window.open('/data/BMKG-Buletin-Meteorologi-Edisi-Maret-2020.pdf', '_blank', 'width=500, height=500'); return false;">BMKG-Buletin-Meteorologi-Edisi-Maret-2020</a></small>
+                                    </div>
+                                     <p class="text-muted font-weight-bold small text-center" id="data-telemetry-info">
+                                       
+                                    </p>
+
+
+                                <div class="table-responsive">
+                                    
+                                    <div id="table-telemetri_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer"><div id="table-telemetri_processing" class="dataTables_processing card" role="status" style="display: none;"><div><div></div><div></div><div></div><div></div></div></div><table class="table table-sm table-bordered table-hover table-centered m-0 w-100 dataTable no-footer table-nowrap" id="table-telemetri" aria-describedby="table-telemetri_info" style="width: 1422px;">
+                                        <thead class="bg-light"><tr><th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 469.8px;">Tanggal</th><th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 266.8px;">Jam <small class="text-muted">(WIB)</small></th><th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 240.8px;">CH <small class="text-muted">(mm)</small> </th><th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 330.8px;">Baterai <small class="text-muted">(volt)</small> </th></tr></thead>
+                                        <tbody>
+                                        <tr class="odd"><td>16 September 2024</td><td>19:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>19:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>19:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>19:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>19:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>19:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>19:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>19:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>19:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>18:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>18:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>18:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>18:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>18:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>18:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>18:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>18:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>18:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>18:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>18:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>18:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>17:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>17:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>17:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>17:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>17:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>17:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>17:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>17:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>17:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>17:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>17:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>17:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>16:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>16:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>16:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>16:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>16:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>16:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>16:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>16:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>16:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>16:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>16:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>16:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>15:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>15:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>15:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>15:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>15:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>15:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>15:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>15:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>15:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>15:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>15:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>15:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>14:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>14:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>14:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>14:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>14:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>14:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>14:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>14:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>14:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>14:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>14:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>14:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>13:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>13:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>13:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>13:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>13:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>13:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>13:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>13:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>13:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>13:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>13:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>13:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>12:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>12:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>12:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>12:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>12:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>12:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>12:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>12:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>12:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>12:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>12:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>12:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>11:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>11:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>11:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>11:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>11:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>11:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>11:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>11:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>11:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>11:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>11:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>11:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>10:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>10:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>10:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>10:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>10:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>10:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>10:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>10:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>10:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>10:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>10:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>10:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>09:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>09:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>09:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>09:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>09:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>09:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>09:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>09:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>09:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>09:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>09:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>09:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>08:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>08:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>08:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>08:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>08:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>08:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>08:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>08:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>08:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>08:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>08:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>08:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>07:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>07:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>07:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>07:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>07:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>07:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>07:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>07:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>07:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>07:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>07:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>07:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>06:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>06:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>06:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>06:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>06:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>06:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>06:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>06:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>06:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>06:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>06:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>06:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>05:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>05:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>05:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>05:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>05:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>05:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>05:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>05:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>05:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>05:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>05:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>05:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>04:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>04:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>04:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>04:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>04:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>04:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>04:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>04:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>04:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>04:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>04:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>04:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>03:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>03:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>03:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>03:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>03:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>03:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>03:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>03:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>03:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>03:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>03:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>03:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>02:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>02:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>02:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>02:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>02:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>02:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>02:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>02:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>02:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>02:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>02:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>02:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>01:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>01:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>01:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>01:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>01:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>01:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>01:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>01:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>01:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>01:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>01:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>01:04</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>00:59</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>00:54</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>00:49</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>00:44</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>00:39</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>00:34</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>00:29</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>00:24</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>00:19</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>00:14</td><td><strong>0</strong></td><td>12</td></tr><tr class="even"><td>16 September 2024</td><td>00:09</td><td><strong>0</strong></td><td>12</td></tr><tr class="odd"><td>16 September 2024</td><td>00:04</td><td><strong>0</strong></td><td>12</td></tr></tbody>
+                                    </table><div class="dataTables_info" id="table-telemetri_info" role="status" aria-live="polite">Showing 1 to 237 of 237 entries</div></div>
+                                </div>
+
+                            </div>
+                            
+                            <div class="tab-pane px- py-0" id="tab-grafik" data-id="data-grafik" role="tabpanel" aria-labelledby="#tab-graphic">
+                               
+                                    <div class="row mt-2 mb-3 d-flex justify-content-center">
+                                        <div class="col-md-3 col-xs-12">
+                                            <div class="d-flex">
+                                                <label for="periode-grafik" class=" col-form-label me-2">Periode</label>
+                                                <div class="input-group">
+                                                    <input type="hidden" id="periode-grafik" name="periode-grafik" class="form-control w-80 flatpickr-input" placeholder="" value="2024-09-16"><input class="form-control w-80 form-control input" placeholder="" tabindex="0" type="text" readonly="readonly">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="d-flex">
+                                                <label for="periode-grafik-end" class=" col-form-label me-3">s/d</label>
+                                                <div class="input-group">
+                                                    <input type="hidden" id="periode-grafik-end" name="periode-grafik-end" class="form-control w-80 flatpickr-input" placeholder="" value="2024-09-16"><input class="form-control w-80 form-control input" placeholder="" tabindex="0" type="text" readonly="readonly">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="text-uppercase p-3 py-2 mb-0" style="background-color: #F5F5F5;"> Grafik Curah Hujan Harian</h5>
+                                    <div class="p-0 pb-1">
+                                        <div class="row table-responsive " id="parent-grafik-ch-harian">
+                                                    <div id="container-ch-harian"></div>
+                                                </div>
+                                                <div id="label-grafik-ch-harian" style="display: none;">
+                                                    <div class="table-responsive d-flex justify-content-center">
+                                                        <table class="table table-sm table-bordered table-hover table-centered table-intensity-info w-auto text-center mb-1">
+                                                            <thead>
+                                                                <tr><th>#</th>
+                                                                <th>
+                                                                    <div class="d-flex justify-content-center align-items-center">
+                                                                        <span class="box-legend" style="background:rgba(204, 204, 204, .4);"></span><span class="fw-semibold">: Tidak Ada Hujan</span>
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div class="d-flex justify-content-center align-items-center">
+                                                                        <span class="box-legend" style="background:rgba(57, 166, 245, .6);"></span> <span class="fw-semibold">: Hujan Ringan</span>
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div class="d-flex justify-content-center align-items-center">
+                                                                        <span class="box-legend" style="background:rgba(247, 184, 75, .6);"></span> <span class="fw-semibold">: Hujan Sedang</span>
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div class="d-flex justify-content-center align-items-center">
+                                                                        <span class="box-legend" style="background:rgba(242, 131, 35, .6);"></span> <span class="fw-semibold">: Hujan Lebat</span>
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div class="d-flex justify-content-center align-items-center">
+                                                                        <span class="box-legend" style="background:rgba(239, 83, 80, .6);"></span><span class="fw-semibold">: Hujan Sangat Lebat</span>
+                                                                    </div>
+                                                                </th>
+                                                            </tr></thead>
+                                                            <tbody>
+                                                                
+                                                                <tr>
+                                                                    <td>Per Hari</td>
+                                                                    <td>0 mm</td>
+                                                                    <td>5 – 20 mm</td>
+                                                                    <td>20 – 50 mm</td>
+                                                                    <td>50 – 100 mm</td>
+                                                                    <td>&gt; 100 mm</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-12 text-center">
+                                                        <small>Sumber : <a class="fst-italic" href="javascript:void(0)" onclick="window.open('/data/BMKG-Buletin-Meteorologi-Edisi-Maret-2020.pdf', '_blank', 'width=500, height=500'); return false;">BMKG-Buletin-Meteorologi-Edisi-Maret-2020</a></small>
+                                                    </div>
+                                                </div>
+                                        
+                                    </div>
+                                    <h5 class="text-uppercase p-3 py-2 mb-0" style="background-color: #F5F5F5;"> Grafik Curah Hujan Jam-Jaman</h5>
+                                    <div class="p-0">
+                                         <div class="row table-responsive " id="parent-grafik">
+                                                    <div id="container">
+                                                    </div>
+                                                    <div id="label-grafik" style="display: none;">
+                                                          <div class="table-responsive d-flex justify-content-center">
+                                                        <table class="table table-sm table-bordered table-hover table-centered table-intensity-info w-auto text-center mb-1">
+                                                            <thead>
+                                                                <tr><th>#</th>
+                                                                <th>
+                                                                    <div class="d-flex justify-content-center align-items-center">
+                                                                        <span class="box-legend" style="background:rgba(204, 204, 204, .4);"></span><span class="fw-semibold">: Tidak Ada Hujan</span>
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div class="d-flex justify-content-center align-items-center">
+                                                                        <span class="box-legend" style="background:rgba(57, 166, 245, .6);"></span> <span class="fw-semibold">: Hujan Ringan</span>
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div class="d-flex justify-content-center align-items-center">
+                                                                        <span class="box-legend" style="background:rgba(247, 184, 75, .6);"></span> <span class="fw-semibold">: Hujan Sedang</span>
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div class="d-flex justify-content-center align-items-center">
+                                                                        <span class="box-legend" style="background:rgba(242, 131, 35, .6);"></span> <span class="fw-semibold">: Hujan Lebat</span>
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div class="d-flex justify-content-center align-items-center">
+                                                                        <span class="box-legend" style="background:rgba(239, 83, 80, .6);"></span><span class="fw-semibold">: Hujan Sangat Lebat</span>
+                                                                    </div>
+                                                                </th>
+                                                            </tr></thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Per Jam</td>
+                                                                    <td>0 mm</td>
+                                                                    <td>0.1 – 5 mm</td>
+                                                                    <td>5 – 10 mm</td>
+                                                                    <td>10 – 20 mm</td>
+                                                                    <td>&gt; 20 mm</td>
+                                                                </tr>
+                                                               
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-12 text-center">
+                                                        <small>Sumber : <a class="fst-italic" href="javascript:void(0)" onclick="window.open('/data/BMKG-Buletin-Meteorologi-Edisi-Maret-2020.pdf', '_blank', 'width=500, height=500'); return false;">BMKG-Buletin-Meteorologi-Edisi-Maret-2020</a></small>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                    </div>
+                                    <h5 class="text-uppercase p-3 py-2 mb-0" style="background-color: #F5F5F5;"> Grafik Baterai</h5>
+                                    <div class="p-0">
+                                        <div class="row table-responsive " id="parent-grafik-battery">
+                                            <div id="container-battery"></div>
+                                        </div>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div> <!-- end col -->
+        </div>
+
+    </div> <!-- container -->
+</div>
+@section scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/lib/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/lib/parsleyjs/parsley.min.js"></script>
+    <script src="~/lib/moment/min/moment.min.js"></script>
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    @* <script src="~/js/pages/sumur.min.js"></script> *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+}

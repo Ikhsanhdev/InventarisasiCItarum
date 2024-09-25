@@ -121,6 +121,7 @@ public partial class IrigasiMangantiContext : DbContext
     public virtual DbSet<MasterPetak> MasterPetaks { get; set; }
     public virtual DbSet<DebitPengambilan> DebitPengambilans { get; set; }
     public virtual DbSet<DebitHulu> DebitHulus { get; set; }
+    public virtual DbSet<Sumur> Sumurs { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Name=ConnectionStrings:DefaultConnection");
@@ -1421,54 +1422,6 @@ public partial class IrigasiMangantiContext : DbContext
                 .HasConstraintName("vnotch_settings_device_foreign");
         });
 
-        // modelBuilder.Entity<Watershed>(entity =>
-        // {
-        //     entity.HasKey(e => e.Id).HasName("Watersheds_pkey");
-
-        //     entity.HasIndex(e => e.Code, "idx_watersheds_code");
-
-        //     entity.HasIndex(e => e.Name, "idx_watersheds_name");
-
-        //     entity.HasIndex(e => e.RiverAreaId, "idx_watersheds_river_area_id");
-
-        //     entity.Property(e => e.Id).HasDefaultValueSql("uuid_generate_v4()");
-        //     entity.Property(e => e.Code).HasMaxLength(50);
-        //     entity.Property(e => e.CreatedAt).HasColumnType("timestamp(0) without time zone");
-        //     entity.Property(e => e.Name).HasMaxLength(255);
-        //     entity.Property(e => e.UpdatedAt).HasColumnType("timestamp(0) without time zone");
-
-        //     entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.WatershedCreatedByNavigations)
-        //         .HasForeignKey(d => d.CreatedBy)
-        //         .OnDelete(DeleteBehavior.ClientSetNull)
-        //         .HasConstraintName("fk_watersheds_created_by");
-
-        //     entity.HasOne(d => d.RiverArea).WithMany(p => p.Watersheds)
-        //         .HasForeignKey(d => d.RiverAreaId)
-        //         .HasConstraintName("fk_watersheds_river_area_id");
-
-        //     entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.WatershedUpdatedByNavigations)
-        //         .HasForeignKey(d => d.UpdatedBy)
-        //         .HasConstraintName("fk_watersheds_updated_by");
-        // });
-
-        // modelBuilder.Entity<WhatsAppNotification>(entity =>
-        // {
-        //     entity.HasKey(e => new { e.RecipientId, e.StationId, e.SentAt }).HasName("pkey_whatsapp_notifications");
-
-        //     entity.HasIndex(e => e.RecipientId, "idx_whatsapp_notifications_recipient_identifier");
-
-        //     entity.HasIndex(e => e.StationId, "idx_whatsapp_notifications_station_id");
-
-        //     entity.Property(e => e.SentAt).HasColumnType("timestamp(0) without time zone");
-        //     entity.Property(e => e.Data).HasMaxLength(255);
-        //     entity.Property(e => e.IsSent).HasDefaultValue(false);
-
-        //     entity.HasOne(d => d.Station).WithMany(p => p.WhatsAppNotifications)
-        //         .HasForeignKey(d => d.StationId)
-        //         .OnDelete(DeleteBehavior.ClientSetNull)
-        //         .HasConstraintName("fk_whatsapp_notifications_station_id");
-        // });
-
         modelBuilder.Entity<WhatsAppRecipient>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("WhatsAppRecipients_pkey");
@@ -1564,6 +1517,7 @@ public partial class IrigasiMangantiContext : DbContext
             entity.Property(e => e.Location).HasColumnName("location");
         });
 
+
         modelBuilder.Entity<DebitPengambilan>(entity => {
             entity.ToTable("debit_pengambilan");
 
@@ -1591,10 +1545,32 @@ public partial class IrigasiMangantiContext : DbContext
             entity.Property(e => e.Update).HasColumnType("timestamp(0) without time zone").HasColumnName("update");
         });
 
-        modelBuilder.HasSequence("brand_code_seq");
-        modelBuilder.HasSequence("organization_seq");
-        modelBuilder.HasSequence("role_code_seq");
-        modelBuilder.HasSequence("role_id_seq");
+        modelBuilder.Entity<Sumur>(entity => {
+            entity.ToTable("data_sumur");
+
+        entity.Property(e => e.Id).HasColumnName("id");
+        entity.Property(e => e.Code).HasColumnName("code");
+        entity.Property(e => e.Alamat).HasColumnName("alamat");
+        entity.Property(e => e.SumberEnergi).HasColumnName("sumber_energi");
+        entity.Property(e => e.Longitude).HasColumnName("longitude");
+        entity.Property(e => e.Latitude).HasColumnName("latitude");
+        entity.Property(e => e.TahunPengeboran).HasColumnName("tahun_pengeboran");
+        entity.Property(e => e.TahunRehab).HasColumnName("tahun_rehab");
+        entity.Property(e => e.TahunPerbaikanJiat).HasColumnName("tahun_perbaikan_jiat");
+        entity.Property(e => e.TahunPerbaikanMesin).HasColumnName("tahun_perbaikan_mesin");
+        entity.Property(e => e.KedalamanBor).HasColumnName("kedalaman_bor");
+        entity.Property(e => e.DebitSumur).HasColumnType("double precision").HasColumnName("debit_sumur");
+        entity.Property(e => e.KondisiSumur).HasColumnName("kondisi_sumur");
+        entity.Property(e => e.KondisiMesin).HasColumnName("kondisi_mesin");
+        entity.Property(e => e.KondisiPompa).HasColumnName("kondisi_pompa");
+        entity.Property(e => e.KondisiRumahPompa).HasColumnName("kondisi_rumah_pompa");
+        entity.Property(e => e.IrigasiPipaSaluran).HasColumnName("irigasi_pipa_saluran");
+        entity.Property(e => e.IrigasiBoxPembagi).HasColumnName("irigasi_box_pembagi");
+        entity.Property(e => e.FungsiAirBaku).HasColumnName("fungsi_air_baku");
+        entity.Property(e => e.FungsiIrigasi).HasColumnName("fungsi_irigasi");
+        entity.Property(e => e.Status).HasColumnName("status");
+        entity.Property(e => e.Note).HasColumnName("note");
+        });
 
         OnModelCreatingPartial(modelBuilder);
     }
