@@ -235,7 +235,7 @@ namespace IrigasiManganti.Repositories
         {
               try {
              using var connection = new NpgsqlConnection(_connectionString);
-                var query = $@"SELECT latitude,longitude,code, kedalaman_bor , debit_sumur,tahun_pengeboran ,status FROM data_sumur";
+                var query = $@"SELECT latitude,longitude,code, kedalaman_bor , debit_sumur,tahun_pengeboran ,status FROM data_sumur order by code desc";
                 var results = await connection.QueryAsync<dynamic>(query);
 
                 return results.ToList();

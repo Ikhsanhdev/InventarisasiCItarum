@@ -79,19 +79,21 @@ var Skema = (function () {
       panelContent += '<tr>';
       panelContent += `<td class="py-1 px-0">Kedalaman Bor</td>`;
       panelContent += `<td class="py-1 px-2">:</td>`;
-      panelContent += `<td class="py-1 px-0">${reading.kedalaman_bor} m</td>`;
+      panelContent += `<td class="py-1 px-0">${reading.kedalaman_bor ? reading.kedalaman_bor : "-" } m</td>`;
       panelContent += '</tr>';
       
       panelContent += '<tr>';
       panelContent += `<td class="py-1 px-0">Debit</td>`;
       panelContent += `<td class="py-1 px-2">:</td>`;
-      panelContent += `<td class="py-1 px-0">${reading.debit_sumur} lt/dt</td>`;
+      panelContent += `<td class="py-1 px-0">${reading.debit_sumur ? reading.debit_sumur : "-" } lt/dt</td>`;
+
       panelContent += '</tr>';
 
       panelContent += '<tr>';
       panelContent += `<td class="py-1 px-0">Tahun Pengeboran</td>`;
       panelContent += `<td class="py-1 px-2">:</td>`;
-      panelContent += `<td class="py-1 px-0">${reading.tahun_pengeboran}</td>`;
+      panelContent += `<td class="py-1 px-0">${reading.tahun_pengeboran ? reading.tahun_pengeboran : "-"}</td>`;
+
       panelContent += '</tr>';
 
     panelContent += '</tbody></table>';
@@ -151,20 +153,25 @@ var Skema = (function () {
 
     getData(`/Home/GetPointSumur`).then(res => {
       let result = res.data
+      
       if (res.status == 200) {
         sumurPoint = result;
         
         sumurPoint.forEach(function (sumur) {
           var point = [sumur.latitude,sumur.longitude]
+          // var point = [sumur.longitude,sumur.latitude]
           
+
           generateSumur(sumur.code, 'topright', point, 0);
           
           var htmlStatus = '<img src="/images/well.svg" style="width: 25px;  filter: invert(30%) sepia(100%) saturate(1000%) hue-rotate(-50deg) drop-shadow(1px 1px 0px #000000); height: 25px;background-color: transparent;border-color:#fff;" />'
 
+          
           if(sumur.status == 'OPERASI') {
             htmlStatus = '<img src="/images/well.svg" style="width: 25px;  filter: invert(50%) sepia(80%) saturate(500%) hue-rotate(80deg) drop-shadow(1px 1px 0px #000000); height: 25px;background-color: transparent;border-color:#fff;" />'
           }
             
+
           var mapMarker = L.marker(point, {
             icon: L.divIcon({
               className: 'panah-aliran',
