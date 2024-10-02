@@ -8709,3 +8709,18 @@ span.flatpickr-weekday,
   font-family: "Material Design Icons";
   position: absolute;
 }
+}
+
+.dragula-handle {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  font-size: 24px;
+  text-align: center;
+  cursor: move;
+}
+.dragula-handle:before {
+  content: "\f01db";
+  font-family: "Material Design Icons";
+  position: absolute;
+}

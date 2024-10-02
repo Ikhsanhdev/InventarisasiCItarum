@@ -28,6 +28,11 @@ namespace IrigasiManganti.Controllers
             var Model = await _unitOfWorkRepository.SumurDataRepositories.GetTopSumur();
             return View(Model);
         }
+        public async Task<IActionResult> IndexNew()
+        {
+            var Model = await _unitOfWorkRepository.SumurDataRepositories.GetTopSumur();
+            return View("IndexNew",Model);
+        }
 
         public IActionResult ModelForecast()
         {

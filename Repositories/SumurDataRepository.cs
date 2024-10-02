@@ -153,8 +153,8 @@ namespace IrigasiManganti.Repositories
                     }
 
                     whereConditions.Add(@"
-                    (LOWER(nama_petak) LIKE @SearchValue OR
-                    LOWER(jenis_bangunan) LIKE @SearchValue)");
+                    (LOWER(code) LIKE @SearchValue OR
+                    LOWER(alamat) LIKE @SearchValue)");
                     parameters.Add("@SearchValue", "%" + request.SearchValue.ToLower() + "%");
                 }
 

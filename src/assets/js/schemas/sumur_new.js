@@ -4,23 +4,46 @@
 
 const whiteBasemap = L.tileLayer('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwAB/3cwcakAAAAASUVORK5CYII=');
 // https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}
-var layerpeta = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+var layerpeta = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   attribution: '&copy; OpenStreetMap contributors'
 });
 
 // Inisialisasi peta dengan pengaturan khusus
-const map = L.map('map', {
-  center: [-7.085, 107.677], // Pusat peta pada koordinat tertentu
-  zoom: 12, // Zoom awal
-  maxZoom: 50, // Zoom maksimal
-  minZoom: 10, // Zoom minimal
-  layers: [layerpeta], // Layer default yang akan dimuat
-  attributionControl: true, // Menampilkan kontrol attribution (misalnya, OpenStreetMap credits)
-});
+// const map = L.map('map', {
+//   center: [-7.085, 107.677], // Pusat peta pada koordinat tertentu
+//   zoom: 12, // Zoom awal
+//   maxZoom: 50, // Zoom maksimal
+//   minZoom: 10, // Zoom minimal
+//   layers: [layerpeta], // Layer default yang akan dimuat
+//   attributionControl: true, // Menampilkan kontrol attribution (misalnya, OpenStreetMap credits)
+// });
 
 // ==== End Initialize the map
 
- 
+//  Initialize the Google Maps
+// var map = new google.maps.Map(document.getElementById('map'), {
+//   center: { lat: -7.085, lng: 107.677 },
+//   zoom: 12,
+//   mapTypeId: 'satellite'
+// });
+
+// Inisialisasi peta Google Maps
+const map = new google.maps.Map(document.getElementById("map"), {
+  zoom: 12, // Zoom awal
+  center: { lat: -7.797068, lng: 110.370529 }, // Koordinat pusat peta
+});
+
+// Data sumur yang akan ditampilkan dalam InfoWindow
+const sumur = "Detail informasi sumur";
+
+// Membuat marker pada peta
+// const marker = new google.maps.Marker({
+//   position: { lat: -7.085, lng: 107.677 }, // Posisi marker
+//   map: map,
+// });
+
+
+// ===== End Initialize the Google Maps
 
 var circleBgWhite = {
   color: 'black',
@@ -30,6 +53,14 @@ var circleBgWhite = {
   opacity: 40
 }
 
+let iconStatus = {
+  path: google.maps.SymbolPath.CIRCLE,  // Use Google Maps predefined circle path
+  fillColor: '#ff0000',  // Default color (gray)
+  fillOpacity: 1,
+  scale: 10,  // Size of the circle (adjust as needed)
+  strokeColor: '#ffffff',  // Border color (white)
+  strokeWeight: 2,  // Border thickness
+};
 
 var bangunanPembagiList = [];
 var bangunanSadapList = [];
@@ -141,42 +172,49 @@ var Skema = (function () {
   var initSumur = function () {
 
     getData(`/Home/GetPointSumur`).then(res => {
-      let result = res.data
+      let result = res.data;
       
       if (res.status == 200) {
         sumurPoint = result;
+        console.log(sumurPoint);
         
         sumurPoint.forEach(function (sumur) {
-          var point = [sumur.latitude,sumur.longitude]
-          // var point = [sumur.longitude,sumur.latitude]
-          
+          console.log(sumur);
 
-          generateSumur(sumur.code, 'topright', point, 0);
+          var lat = parseFloat(sumur.latitude);
+          var lng = parseFloat(sumur.longitude);
+          var point = { lat: lat, lng: lng }; 
+          console.log(point);
           
-          var htmlStatus = '<img src="/images/well.svg" style="width: 25px;  filter: invert(30%) sepia(100%) saturate(1000%) hue-rotate(-50deg) drop-shadow(1px 1px 0px #000000); height: 25px;background-color: transparent;border-color:#fff;" />'
-
-          
-          if(sumur.status == 'OPERASI') {
-            htmlStatus = '<img src="/images/well.svg" style="width: 25px;  filter: invert(50%) sepia(80%) saturate(500%) hue-rotate(80deg) drop-shadow(1px 1px 0px #000000); height: 25px;background-color: transparent;border-color:#fff;" />'
+          if (sumur.status == 'OPERASI') {
+            iconStatus.fillColor = '#4caf50';  // Green for 'OPERASI'
+          }else{
+            iconStatus.fillColor = '#f44336';  // Red for 'TIDAK OPERASI'
           }
-            
-
-          var mapMarker = L.marker(point, {
-            icon: L.divIcon({
-              className: 'panah-aliran',
-              html: htmlStatus
-            }),
-          }).addTo(map).bindPopup(createDetailPanelSumur(sumur));
-      
+          // Create a marker for each point (well)
+          var mapMarker = new google.maps.Marker({
+            position: point,
+            map: map,
+            icon: iconStatus,
+          });
+    
+          // Create an InfoWindow for the marker
+          const infoWindow = new google.maps.InfoWindow({
+            content: createDetailPanelSumur(sumur), // Use your function to create content for the popup
+          });
+    
+          // Add event listener to show InfoWindow when marker is clicked
+          mapMarker.addListener('click', function () {
+            infoWindow.open(map, mapMarker);
+          });
         });
-
       }
     }).catch(err => {
-      let error = err.response.data
+      let error = err.response.data;
       if (!error.success) {
-        console.log(error.message)
+        console.log(error.message);
       }
-    })
+    });
 
   }
 
