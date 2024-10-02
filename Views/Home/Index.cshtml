@@ -421,11 +421,6 @@
         function showRandomNumber(){
                 document.getElementById("myNumber").innerHTML = rando(5, 10);
             }
-        function initMap() {
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 8,
-                center: { lat: -7.797068, lng: 110.370529 }, // Contoh lat/lng untuk Indonesia
-            });
 
             // Tambahkan marker, data, atau layer lain ke peta sesuai kebutuhan
         }
@@ -437,5 +432,5 @@
     @{
         long currTimestamp = DateTime.Now.Ticks;
     }
-    <script src="~/js/schemas/sumur.min.js?v=@currTimestamp"></script>
+    <script src="~/js/schemas/sumur_new.min.js?v=@currTimestamp"></script>
 }
