@@ -16,392 +16,157 @@
     <style>
         * {
             font-family: 'Manrope', sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        .h1,
-        .h2,
-        .h3,
-        .h4,
-        .h5,
-        .h6,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-family: 'Manrope', sans-serif;
-        }
-
-        .box-legend {
-            display: inline-block;
-            width: 1.2rem;
-            height: 1.2rem;
-            border-radius: 2px;
-            margin-right: 0.4rem;
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Pastikan tidak ada scroll */
         }
 
         .container-map {
-            height: 80vh;
-            width: 100%;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            padding: 0;
+            margin: 0;
         }
 
         #map {
-            height: 100%;
-            border-radius: 5px;
-            outline: none;
-            z-index: 1 !important;
+            height: 90%;
+            width: 100%;
+            top: 0;
+            left: 0;
             background: white;
+            z-index: 1;
         }
 
-        .legend>div {
-            background-color: #fff !important;
+        .overlay-list {
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            width: 300px;
+            height: 450px;
+            background-color: rgba(255, 255, 255, 0.7); /* Transparan */
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 1000;
+            max-height: 90%;
+            overflow: auto;
         }
 
-        .info-box {
-            background-color: white;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: Arial, sans-serif;
+        .blueimp-gallery {
+            z-index: 1050;
         }
 
-        .info-box table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .info-box th {
-            background-color: #f0f0f0;
-            padding: 5px;
-            text-align: left;
-        }
-
-        .info-box td {
-            padding: 5px;
-        }
-
-        .panah-aliran {
-            background-color: transparent;
-            border: none;
-            box-shadow: none;
-            margin: 0;
-        }
-
-        .transparent-tooltip {
-            background-color: transparent;
-            border: none;
-            box-shadow: none;
-            margin: 0;
-            @*padding:0;*@
-        }
-
-        .bs-title {
-            font-family: 'Manrope', sans-serif;
-            font-size: 10px;
-            font-weight: bold;
-            color: #000;
-        }
-
-        .bangunan-sadap-title {
-            background-color: transparent;
-            border: none;
-            box-shadow: none;
-            margin: 0;
-            padding: 0;
-            font-family: 'Manrope', sans-serif;
-            font-size: 9px;
-            font-weight: 600;
-            color: #000;
-        }
-
-        .box-petak {
-            font-family: 'Manrope', sans-serif;
-            color: #000;
-        }
-
-        .box-petak table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .box-petak th {
-            padding-left: 35px;
-            padding-right: 35px;
-            border: 1px solid #000;
-            font-size: 9px;
-        }
-
-        .box-petak td {
-            padding-left: 5px;
-            padding-right: 5px;
-            border: 1px solid #000;
-            font-size: 8px;
-        }
-
-        .golongan-a th,
-        .golongan-a td {
-            border: 1.5px solid #1abc9c;
-        }
-
-        .golongan-b th,
-        .golongan-b td {
-            border: 1.5px solid blue;
-        }
-
-        .golongan-c th,
-        .golongan-c td {
-            border: 1.5px solid #F509F2;
-        }
-
-        .leaflet-tooltip-left {
-            padding: 0;
-        }
-
-        .leaflet-tooltip-left:before {
-            display: none;
-            margin: 0;
-        }
-
-        .leaflet-tooltip-right {
-            padding: 0;
-        }
-
-        .leaflet-tooltip-right:before {
-            display: none;
-            margin: 0;
-        }
-
-        .leaflet-tooltip-top {
-            padding: 0;
-        }
-
-        .leaflet-tooltip-top:before {
-            display: none;
-            margin: 0;
-        }
-
-        .leaflet-tooltip-bottom {
-            padding: 0;
-        }
-
-        .leaflet-tooltip-bottom:before {
-            display: none;
-            margin: 0;
-        }
-
-        .arrow {
-            animation: dash 1s linear infinite;
-        }
-
-        @@keyframes dash {
-            to {
-                stroke-dashoffset: 1000;
-            }
-        }
-
-        #table-legenda td {
-            color: #222;
-            font-size: 12px;
-        }
-
-        .text-sumber-aliran {
-            font-size: 11px;
-            white-space: nowrap;
-            color: #222;
-            font-weight: bold;
-        }
-
-        .text-saluran-primer {
-            font-size: 16px;
-            white-space: nowrap;
-            color: #222;
-            font-weight: 600;
-            letter-spacing: 5px;
-        }
-
-        .text-saluran-sekunder {
-            font-size: 12px;
-            white-space: nowrap;
-            color: #222;
-            font-weight: 600;
-        }
-
-        .btn-circle {
-            background-color: rgba(255, 255, 255, 0.2);
-            width: 30px;
-            height: 30px;
-            padding: 6px 0px;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 12px;
-            line-height: 1.42857;
-        }
-
-        .form-control[readonly] {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            border-color: rgb(255, 255, 255, .2);
-            box-shadow: none;
-        }
-
-        .btn-prev-next {
-            box-shadow: rgba(3, 18, 26, 0.15) 0px 2px 5px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 0px solid black;
-        }
-
-        .border-box {
-            border: 1px solid gray;
-            font-family: 'Manrope', sans-serif;
-            padding-left: 5px;
-            padding-right: 5px;
-            font-size: 9px;
-        }
-
-        .panah-aliran {
-            background-color: transparent;
-            border: none;
-            box-shadow: none;
-            margin: 0;
+        .gm-style-mtc {
+        bottom: 86px !important; /* Atur jarak dari bawah, sesuaikan dengan kebutuhan */
+        right: 77px !important;    /* Sesuaikan jarak dari kiri */
         }
     </style>
 }
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class=" col-4">
-                <div class="card ">
-                    <div class="card-header p-0">
-                        <ul class="nav nav-tabs navtab-bg nav-fill" id="tab-center-left">
-                            <li class="nav-item">
-                                <a href="#tab-awlr" data-bs-toggle="tab" aria-expanded="true" class="nav-link">
-                                    List Data <span class="badge bg-blue rounded ms-1" data-plugin="counterup"
-                                        id="total-awlr">0</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body overflow-scroll p-2 side-bar-home">
-                        <div class="tab-content p-0">
-                             @foreach (var item in Model)
-                             {
-                                 <div class="card-body">
-                                <div class="reading-device d-flex align-items-center justify-content-between mb-2">
-                                    <div>
-                                        KODE SUMUR
-                                        <span class="badge badge-outline-secondary rounded-1 ms-1"
-                                            style="color: #A9ABB8;border-color: #A9ABB8;">@item.Code</span>
-                                    </div>
-                                    @* <span><i class="mdi mdi-battery-charging-high ms-1" style="color: #F69696;"></i>
-                                        12 Volt</span> *@
-                                </div>
 
-                                <div class="d-flex justify-content-around align-items-center reading-text">
-                                    <div class="col-4 text-center">
-                                        @if(item.KedalamanBor == null)
-                                        {
-                                            <h4 class="text-status-">-</h4>
-                                        }
-                                        else
-                                        {
-                                            <h4 class="text-status-">@item.KedalamanBor<sup>m</sup></h4>
-                                        }
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        @if(item.DebitSumur == null)
-                                        {
-                                            <h4 class="text-status-">-</h4>
-                                        }
-                                        else
-                                        {
-                                            <h4 class="text-status-">@item.DebitSumur</h4>
-                                        }
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        @if(item.Status == "TIDAK OPERASI")
-                                        {
-                                        <h4><span class="rounded-1 ms-1 align-self-center text-danger">@item.Status</span></h4>
-                                        }
-                                        else
-                                        {
-                                           <h4><span class="rounded-1 ms-1 align-self-center text-success">@item.Status</span></h4>
-                                        }
-                                       
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-around reading-text">
-                                    <div class="col-4 text-center">
-                                        Kedalaman
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        Debit Sumur (Lt/det)
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        Status
-                                    </div>
+<div class="container-map">
+    <!-- Overlay list and map -->
+    <div class="overlay-list">
+        <div class="card-header p-0">
+            <ul class="nav nav-tabs navtab-bg nav-fill" id="tab-center-left">
+                <li class="nav-item">
+                    <a href="#tab-awlr" data-bs-toggle="tab" aria-expanded="true" class="nav-link">
+                        List Data <span class="badge bg-blue rounded ms-1" data-plugin="counterup"
+                            id="total-awlr">0</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tab-cctv" data-bs-toggle="tab" aria-expanded="true" class="nav-link">
+                        CCTV
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body p-2 side-bar-home">
+            <div class="tab-content p-0">
+                <div class="tab-pane" id="tab-awlr">
+                    @foreach (var item in Model)
+                    {
+                        <div class="card-body">
+                            <div class="reading-device d-flex align-items-center justify-content-between mb-2">
+                                <div>
+                                    KODE SUMUR
+                                    <span class="badge badge-outline-secondary rounded-1 ms-1"
+                                        style="color: #A9ABB8;border-color: #A9ABB8;">@item.Code</span>
                                 </div>
                             </div>
-                             }
-                          
-                            <div class="tab-pane" id="tab-cctv">
-                                <div id="links" class="links">
-
+                            <div class="d-flex justify-content-around align-items-center reading-text">
+                                <div class="col-4 text-center">
+                                    @if(item.KedalamanBor == null)
+                                    {
+                                        <h4 class="text-status-">-</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 class="text-status-">@item.KedalamanBor<sup>m</sup></h4>
+                                    }
                                 </div>
-
-
-                                <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls"
-                                    aria-label="image gallery" aria-modal="true" role="dialog">
-                                    <div class="slides" aria-live="polite"></div>
-                                    <h3 class="title"></h3>
-                                    <a class="prev" aria-controls="blueimp-gallery" aria-label="previous slide"
-                                        aria-keyshortcuts="ArrowLeft"></a>
-                                    <a class="next" aria-controls="blueimp-gallery" aria-label="next slide"
-                                        aria-keyshortcuts="ArrowRight"></a>
-                                    <a class="close" aria-controls="blueimp-gallery" aria-label="close"
-                                        aria-keyshortcuts="Escape"></a>
-                                    <a class="play-pause" aria-controls="blueimp-gallery" aria-label="play slideshow"
-                                        aria-keyshortcuts="Space" aria-pressed="false" role="button"></a>
-                                    <ol class="indicator"></ol>
+                                <div class="col-4 text-center">
+                                    @if(item.DebitSumur == null)
+                                    {
+                                        <h4 class="text-status-">-</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 class="text-status-">@item.DebitSumur</h4>
+                                    }
                                 </div>
-
+                                <div class="col-4 text-center">
+                                    @if(item.Status == "TIDAK OPERASI")
+                                    {
+                                        <h4><span class="rounded-1 ms-1 align-self-center text-danger">@item.Status</span></h4>
+                                    }
+                                    else
+                                    {
+                                        <h4><span class="rounded-1 ms-1 align-self-center text-success">@item.Status</span></h4>
+                                    }
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-around reading-text">
+                                <div class="col-4 text-center">Kedalaman</div>
+                                <div class="col-4 text-center">Debit Sumur (Lt/det)</div>
+                                <div class="col-4 text-center">Status</div>
                             </div>
                         </div>
+                    }
+                </div>
+                <div class="tab-pane" id="tab-cctv">
+                    <div id="links" class="links"></div>
+                    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls"
+                        aria-label="image gallery" aria-modal="true" role="dialog">
+                        <div class="slides" aria-live="polite"></div>
+                        <h3 class="title"></h3>
+                        <a class="prev" aria-controls="blueimp-gallery" aria-label="previous slide"
+                            aria-keyshortcuts="ArrowLeft"></a>
+                        <a class="next" aria-controls="blueimp-gallery" aria-label="next slide"
+                            aria-keyshortcuts="ArrowRight"></a>
+                        <a class="close" aria-controls="blueimp-gallery" aria-label="close"
+                            aria-keyshortcuts="Escape"></a>
+                        <a class="play-pause" aria-controls="blueimp-gallery" aria-label="play slideshow"
+                            aria-keyshortcuts="Space" aria-pressed="false" role="button"></a>
+                        <ol class="indicator"></ol>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card mb-4">
-                    <div class="card-header p-3 d-flex justify-content-between align-items-center"
-                        style="background: rgb(2, 100, 200);">
-                        <h4 class="card-title mb-0 text-white">SKEMA SUMUR</h4>
-                    </div>
-                    <div class="card-body container-map">
-                        <div class="w-100" id="map"></div>
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
-            </div>
-
         </div>
     </div>
+    <!-- Map div -->
+    <div id="map"></div>
 </div>
 
-<div class="modal fade" id="markerModal" tabindex="-1" aria-labelledby="markerModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="markerModalLabel">Marker Information</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p id="modalContent">Content will go here</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 @section scripts {
     <script src="~/lib/leaflet/leaflet.js"></script>

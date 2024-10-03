@@ -30,7 +30,12 @@ var layerpeta = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/service
 // Inisialisasi peta Google Maps
 const map = new google.maps.Map(document.getElementById("map"), {
   zoom: 12, // Zoom awal
-  center:  { lat: -6.917464, lng: 107.619123 }, // Koordinat pusat peta
+  center:  { lat: -6.917464, lng: 107.619123 },
+  mapTypeId: 'satellite', // Koordinat pusat peta
+  mapTypeControlOptions: {
+    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+    position: google.maps.ControlPosition.BOTTOM_LEFT // Pindahkan ke bawah kiri
+}
 });
 
 // Data sumur yang akan ditampilkan dalam InfoWindow
