@@ -59,6 +59,7 @@ var dataSumur = (function () {
         {
           className: "text-nowrap",
           className: "text-center",
+          className: "no-export",
           orderable: false,
           render: function (data, type, row) {
             return `<button onclick="editSumur(this,event);" data-id="${row.id}" type="button" class="btn btn-sm btn-success btn-icon me-1">Edit</i></button>  <button onclick="deleteSumur(this, event);" data-id="${row.id}" type="button" class="btn btn-sm btn-danger btn-icon">Hapus</button>`;
