@@ -10,7 +10,7 @@
     <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
     <style>
-        
+
     </style>
 }
 
@@ -33,9 +33,9 @@
         </div>
         <!-- end page title -->
         <div class="row">
-        <div>
-         <a href="/Sumur/Create" class="btn btn-success rounded m-3 float-end" >Tambah Data</a> 
-        </div>
+            <div>
+                <a href="/Sumur/Create" class="btn btn-success rounded m-3 float-end">Tambah Data</a>
+            </div>
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
@@ -66,17 +66,19 @@
                                         </div>
                                     </form>
                                     @* <div class="text-lg-end">
-                                        <button type="button" class="btn btn-blue rounded-pill" data-id=""
-                                            onclick="createEditPetak(this, event)">
-                                            <i class="fe-plus me-1"></i> Tambah Petak
-                                        </button>
+                                    <button type="button" class="btn btn-blue rounded-pill" data-id=""
+                                    onclick="createEditPetak(this, event)">
+                                    <i class="fe-plus me-1"></i> Tambah Petak
+                                    </button>
                                     </div> *@
                                 </div>
                             </div>
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100" id="table-sumur">
+                            <table
+                                class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100"
+                                id="table-sumur">
                                 <thead class="bg-blue text-white">
                                     <tr>
                                         <th rowspan="2" class="text-center">Kode</th>
@@ -86,7 +88,7 @@
                                         <th colspan="4" class="text-center">Kondisi</th>
                                         <th colspan="2" class="text-center">Jaringan</th>
                                         <th rowspan="2" class="text-center">Status</th>
-                                        <th rowspan="2" class="text-center">Aksi</th>
+                                        <th rowspan="2" class="text-center no-export ">Aksi</th>
                                     </tr>
                                     <tr>
                                         <th class="text-center">Sumur</th>
@@ -100,35 +102,37 @@
                                 <tbody>
                                     @* @for (int i = 1; i <= 10; i++)
                                     {
-                                        <tr>
-                                            <td class="text-center">@i</td>
-                                            <td class="text-center">SP.BDG.@i</td>
-                                            <td class="text-center">Jl. Bandung</td>
-                                            <td class="text-center">100</td>
-                                            <td class="text-center">70</td>
-                                            <td class="text-center">Baik</td>
-                                            <td class="text-center">Baik</td>
-                                            <td class="text-center">Baik</td>
-                                            <td class="text-center">Baik</td>
-                                            <td class="text-center">Baik</td>
-                                            <td class="text-center">Baik</td>
-                                            <td class="text-center">Aktif</td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-warning btn-sm" data-id=""
-                                                    onclick="createEditPetak(this, event)">
-                                                    <i class="fe-edit-2"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm" data-id=""
-                                                    onclick="deletePetak(this, event)">
-                                                    <i class="fe-trash-2"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                    <td class="text-center">@i</td>
+                                    <td class="text-center">SP.BDG.@i</td>
+                                    <td class="text-center">Jl. Bandung</td>
+                                    <td class="text-center">100</td>
+                                    <td class="text-center">70</td>
+                                    <td class="text-center">Baik</td>
+                                    <td class="text-center">Baik</td>
+                                    <td class="text-center">Baik</td>
+                                    <td class="text-center">Baik</td>
+                                    <td class="text-center">Baik</td>
+                                    <td class="text-center">Baik</td>
+                                    <td class="text-center">Aktif</td>
+                                    <td class="text-center">
+                                    <button type="button" class="btn btn-warning btn-sm" data-id=""
+                                    onclick="createEditPetak(this, event)">
+                                    <i class="fe-edit-2"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-id=""
+                                    onclick="deletePetak(this, event)">
+                                    <i class="fe-trash-2"></i>
+                                    </button>
+                                    </td>
+                                    </tr>
                                     } *@
                                 </tbody>
                             </table>
+                            <button id="exportButton" class="btn btn-primary">Export to Excel</button>
+
                         </div>
-@* 
+                        @*
                         <a href="/#" class="btn btn-success" target="_blank">Excel</a> *@
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->
@@ -175,7 +179,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="debit" class="form-label">Debit Sumur (Lt/det)</label>
-                        <input type="number" class="form-control" id="debit" placeholder="Masukkan Debit Sumur (Lt/det)">
+                        <input type="number" class="form-control" id="debit"
+                            placeholder="Masukkan Debit Sumur (Lt/det)">
                     </div>
                     <div class="mb-3">
                         <label for="kondisi" class="form-label">Kondisi</label>
@@ -209,6 +214,24 @@
     <script src="~/lib/select2/js/select2.min.js"></script>
     <script src="~/js/pages/sumur-master.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-   <script src="https://code.iconify.design/3/3.0.0/iconify.min.js"></script>
+    <script src="https://code.iconify.design/3/3.0.0/iconify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+
+    <script>
+        document.getElementById('exportButton').addEventListener('click', function () {
+            var table = document.getElementById('table-sumur');
+
+        var tableClone = table.cloneNode(true);
+
+        var columns = tableClone.querySelectorAll('th.no-export, td.no-export');
+        columns.forEach(function(column) {
+            column.remove();
+        });
+
+        var wb = XLSX.utils.table_to_book(tableClone, { sheet: "Sheet1" });
+
+        XLSX.writeFile(wb, "Data.xlsx");
+        });
+    </script>
 
 }
