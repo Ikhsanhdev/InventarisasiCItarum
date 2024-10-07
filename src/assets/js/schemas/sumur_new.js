@@ -181,15 +181,12 @@ var Skema = (function () {
       
       if (res.status == 200) {
         sumurPoint = result;
-        console.log(sumurPoint);
         
         sumurPoint.forEach(function (sumur) {
-          console.log(sumur);
 
           var lat = parseFloat(sumur.latitude);
           var lng = parseFloat(sumur.longitude);
           var point = { lat: lat, lng: lng }; 
-          console.log(point);
           
           if (sumur.status == 'OPERASI') {
             iconStatus.fillColor = '#4caf50';  // Green for 'OPERASI'

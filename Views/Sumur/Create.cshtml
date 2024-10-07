@@ -54,18 +54,39 @@
             </div>
         </div>
         <!-- end page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form id="form-user" class="parsley-validation px-2" method="POST"
-                            onsubmit="saveSumur(this,event)">
+        <form id="form-user" class="parsley-validation px-2" method="POST" onsubmit="saveSumur(this,event)">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="d-flex align-items-start">
+                                    <img src="/images/default-pu.png " class=" avatar-lg img-thumbnail me-2"
+                                        style="width: 120px; height: 120px;" alt="profile-image">
+                                    <div class="form-group  mb-3">
+                                        <label for="status" class="form-label">Status Sumur</label>
+                                        <select asp-for="Status" id="inputStatus" class="form-control " required>
+                                            <option selected>OPERASI</option>
+                                            <option>TIDAK OPERASI</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="kode" class="form-label">Kode</label>
-                                        <input type="text" asp-for="Code" class="form-control" id="kode" placeholder="Masukkan Kode"
-                                            required>
+                                        <input type="text" asp-for="Code" class="form-control" id="kode"
+                                            placeholder="Masukkan Kode" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -83,117 +104,144 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="sumber_energi" class="form-label">Sumber Energi</label>
-                                        <input type="text" asp-for="SumberEnergi" class="form-control" id="sumber_energi"
-                                            placeholder="Masukkan Sumber Energi" required>
+                                        <input type="text" asp-for="SumberEnergi" class="form-control"
+                                            id="sumber_energi" placeholder="Masukkan Sumber Energi" required>
                                     </div>
                                 </div>
                             </div>
+                            <br>
                             <div class="row">
-                                <h5>Koordinasi Lokasi</h5>
+                                <div class="d-flex">
+                                    <h5 class="flex-grow-1">Koordinat Lokasi</h5>
+                                    <div class="p-2 btn-group gap-2">
+                                        @if (Model.Code == null)
+                                        {
+                                            <label for="myCheck">Gunakan dengan Peta </label>
+                                            <input class="rounded-circle" width="50" type="checkbox" checked id="myCheck">
+                                        }
+                                        else
+                                        {
+                                            <label for="myCheck">Gunakan dengan Peta </label>
+                                            <input class="rounded-circle" width="50" type="checkbox" id="myCheck">
+                                        }
+                                    </div>
+                                </div>
+                                <hr class="bg-danger border-2 border-top border-black" />
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="latitude" class="form-label">Latitude</label>
-                                        <input type="text" asp-for="Latitude" class="form-control" id="latitude" placeholder="0" required>
+                                        <input type="text" asp-for="Latitude" class="form-control" id="latitude"
+                                            placeholder="0" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="longitude" class="form-label">Longitude</label>
-                                        <input type="text" asp-for="Longitude" class="form-control" id="longitude" placeholder="0" required>
+                                        <input type="text" asp-for="Longitude" class="form-control" id="longitude"
+                                            placeholder="0" required>
                                     </div>
                                 </div>
-
+                                <div id="display-map" class="card-body container-map">
+                                    <div class="w-100" id="map"></div>
+                                </div> <!-- end card-body-->
                             </div>
+                            <br>
                             <div class="row">
-                                <div class="col-md-6">
+                                <h5>Keterangan Lanjutan</h5>
+                                <hr class="bg-danger border-2 border-top border-black" />
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="tahun_pengeboran" class="form-label">Tahun Pengeboran</label>
-                                        <input type="number" asp-for="TahunPengeboran" class="form-control" id="tahun_pengeboran"
-                                            placeholder="Tahun Pembongkaran">
+                                        <input type="number" asp-for="TahunPengeboran" class="form-control"
+                                            id="tahun_pengeboran" placeholder="Tahun Pembongkaran">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="tahun_rehab" class="form-label">Tahun Rehab Terakhir</label>
                                         <input type="number" asp-for="TahunRehab" class="form-control" id="tahun_rehab"
                                             placeholder="Tahun Rehab">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="tahun_perbaikan_jiat" class="form-label">Tahun Perbaikan
                                             Jiat</label>
-                                        <input type="number" asp-for="TahunPerbaikanJiat" class="form-control" id="tahun_perbaikan_jiat"
-                                            placeholder="Tahun  Perbaikan Jiat">
+                                        <input type="number" asp-for="TahunPerbaikanJiat" class="form-control"
+                                            id="tahun_perbaikan_jiat" placeholder="Tahun  Perbaikan Jiat">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="tahun_perbaikan_mesin" class="form-label">Tahun Perbaikan
                                             Mesin</label>
-                                        <input type="number" asp-for="TahunPerbaikanMesin" class="form-control" id="tahun_perbaikan_Mesin"
-                                            placeholder="Tahun  Perbaikan Mesin">
+                                        <input type="number" asp-for="TahunPerbaikanMesin" class="form-control"
+                                            id="tahun_perbaikan_Mesin" placeholder="Tahun  Perbaikan Mesin">
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="kedalaman_bor" class="form-label">Kedalaman Pengeboran
                                             (m')</label>
-                                        <input type="number" step=".01" asp-for="KedalamanBor" class="form-control" id="kedalaman_bor"
-                                            placeholder="Masukkan Kedalaman (m)">
+                                        <input type="number" step=".01" asp-for="KedalamanBor" class="form-control"
+                                            id="kedalaman_bor" placeholder="Masukkan Kedalaman (m)">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="debit" class="form-label">Debit Sumur (Lt/det)</label>
-                                        <input type="number" min="0" value="0" step="any" asp-for="DebitSumur" class="form-control" id="debit"
-                                            placeholder="Masukkan Debit Sumur (Lt/det)">
+                                        <input type="number" min="0" value="0" step="any" asp-for="DebitSumur"
+                                            class="form-control" id="debit" placeholder="Masukkan Debit Sumur (Lt/det)">
                                     </div>
                                 </div>
                             </div>
+                            <br>
                             <div class="row">
-                                <div class="col-md-6">
+                                <h5>Kondisi</h5>
+                                <hr class="bg-danger border-2 border-top border-black" />
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="kondisi_sumur" class="form-label">Kondisi Sumur</label>
-                                        <input type="text" asp-for="KondisiSumur" class="form-control" id="kondisi_sumur"
-                                            placeholder="Masukkan Kondisi Sumur">
+                                        <input type="text" asp-for="KondisiSumur" class="form-control"
+                                            id="kondisi_sumur" placeholder="Masukkan Kondisi Sumur">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="kondisi_mesin" class="form-label">Kondisi Mesin</label>
-                                        <input type="text" asp-for="KondisiMesin" class="form-control" id="kondisi_mesin"
-                                            placeholder="Masukkan Kondisi Mesin">
+                                        <input type="text" asp-for="KondisiMesin" class="form-control"
+                                            id="kondisi_mesin" placeholder="Masukkan Kondisi Mesin">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="kondisi_pompa" class="form-label">Kondisi Pompa</label>
-                                        <input type="text" asp-for="KondisiPompa" class="form-control" id="kondisi_pompa"
-                                            placeholder="Masukkan Kondisi Pompa">
+                                        <input type="text" asp-for="KondisiPompa" class="form-control"
+                                            id="kondisi_pompa" placeholder="Masukkan Kondisi Pompa">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="kondisi_rumah_pompa" class="form-label">Kondisi Rumah
                                             Pompa</label>
-                                        <input type="text" asp-for="KondisiRumahPompa" class="form-control" id="kondisi_rumah_pompa"
-                                            placeholder="Masukkan Kondisi Rumah Pompa">
+                                        <input type="text" asp-for="KondisiRumahPompa" class="form-control"
+                                            id="kondisi_rumah_pompa" placeholder="Masukkan Kondisi Rumah Pompa">
                                     </div>
                                 </div>
                             </div>
+                            <br>
                             <div class="row">
+                                <h5>Jaringan Irigasi</h5>
+                                <hr class="bg-danger border-2 border-top border-black" />
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="irigasi_pipa_saluran" class="form-label">Jaringan Irigasi Pipa
                                             Saluran</label>
-                                        <input type="text" asp-for="IrigasiPipaSaluran" class="form-control" id="irigasi_pipa_saluran"
+                                        <input type="text" asp-for="IrigasiPipaSaluran" class="form-control"
+                                            id="irigasi_pipa_saluran"
                                             placeholder="Masukkan Jaringan Irigasi Pipa Saluran">
                                     </div>
                                 </div>
@@ -201,57 +249,50 @@
                                     <div class="mb-3">
                                         <label for="irigasi_box_pembagi" class="form-label">Jaringan Irigasi Box
                                             Pembagi</label>
-                                        <input type="text" asp-for="IrigasiBoxPembagi" class="form-control" id="irigasi_box_pembagi"
-                                            placeholder="Jaringan Irigasi Box Pembagi">
+                                        <input type="text" asp-for="IrigasiBoxPembagi" class="form-control"
+                                            id="irigasi_box_pembagi" placeholder="Jaringan Irigasi Box Pembagi">
                                     </div>
                                 </div>
                             </div>
+                            <br>
                             <div class="row">
+                                <h5>Fungsi</h5>
+                                <hr class="bg-danger border-2 border-top border-black" />
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="fungsi_air_baku" class="form-label">Fungsi Air Baku</label>
-                                        <input type="number"  asp-for="FungsiAirBaku" class="form-control" id="fungsi_air_baku"
-                                            placeholder="Masukkan Fungsi Air Baku">
+                                        <input type="number" asp-for="FungsiAirBaku" class="form-control"
+                                            id="fungsi_air_baku" placeholder="Masukkan Fungsi Air Baku">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="fungsi_irigasi" class="form-label">Fungsi Irigasi</label>
-                                        <input type="number" asp-for="FungsiIrigasi" class="form-control" id="fungsi_irigasi"
-                                            placeholder="Masukkan Fungsi Air Baku">
+                                        <input type="number" asp-for="FungsiIrigasi" class="form-control"
+                                            id="fungsi_irigasi" placeholder="Masukkan Fungsi Air Baku">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group  mb-3">
-                                        <label for="status" class="form-label">Status</label>
-                                        <select asp-for="Status" id="inputStatus" class="form-control" required>
-                                            <option selected>OPERASI</option>
-                                            <option>TIDAK OPERASI</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="note" class="form-label">Keterangan</label>
-                                        <input type="text"  asp-for="Note" class="form-control" id="note"
+                                        <input type="text" asp-for="Note" class="form-control" id="note"
                                             placeholder="Masukkan Keterangan">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-
                                 <button type="submit" class="float-right btn btn-primary">Submit</button>
                             </div>
 
 
-                        </form>
-                        @* <a href="/#" class="btn btn-success" target="_blank">Excel</a> *@
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
-            </div> <!-- end col -->
-        </div>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+            </div>
+        </form>
+        @* <a href="/#" class="btn btn-success" target="_blank">Excel</a> *@
     </div> <!-- container -->
 
 </div> <!-- content -->
@@ -267,4 +308,67 @@
     <script src="~/lib/select2/js/select2.min.js"></script>
     <script src="~/js/pages/sumur.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+    <script>
+
+        //  ========== Initialize the map
+
+        const whiteBasemap = L.tileLayer('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwAB/3cwcakAAAAASUVORK5CYII=');
+        // https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}
+        var layerpeta = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        });
+
+        // Inisialisasi peta dengan pengaturan khusus
+        const map = L.map('map', {
+            center: [-7.085, 107.677], // Pusat peta pada koordinat tertentu
+            zoom: 12, // Zoom awal
+            maxZoom: 50, // Zoom maksimal
+            minZoom: 10, // Zoom minimal
+            layers: [layerpeta], // Layer default yang akan dimuat
+            attributionControl: true, // Menampilkan kontrol attribution (misalnya, OpenStreetMap credits)
+        });
+
+        var marker;
+
+        var latinput  = document.getElementById('latitude');
+        var longinput = document.getElementById('longitude');
+
+        if (latinput.value != "" && longinput.value != "") {
+            var lat = latinput.value;
+            var long = longinput.value;
+            marker = L.marker([lat, long]).addTo(map);
+            map.setView([lat, long], 15);
+        }
+        
+        // Event saat peta diklik
+        map.on('click', function (e) {
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            marker = L.marker([lat, lng]).addTo(map);
+            // ==== End Initialize the map
+
+        });
+
+        var checkBox = document.getElementById("myCheck");
+        var displayMap = document.getElementById("display-map");
+
+        checkBox.addEventListener("change", function () {
+            if (checkBox.checked) {
+                displayMap.style.display = "block"; // Tampilkan peta saat checkbox tidak tercentang
+            } else {
+                displayMap.style.display = "none"; // Sembunyikan peta saat checkbox tercentang
+            }
+        });
+
+
+    </script>
 }
