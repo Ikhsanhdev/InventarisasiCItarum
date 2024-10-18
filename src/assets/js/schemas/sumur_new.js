@@ -7,7 +7,6 @@ const whiteBasemap = L.tileLayer('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA
 var layerpeta = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   attribution: '&copy; OpenStreetMap contributors'
 });
-
 // Inisialisasi peta dengan pengaturan khusus
 // const map = L.map('map', {
 //   center: [-7.085, 107.677], // Pusat peta pada koordinat tertentu
@@ -29,7 +28,7 @@ var layerpeta = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/service
 
 // Inisialisasi peta Google Maps
 const map = new google.maps.Map(document.getElementById("map"), {
-  zoom: 12, // Zoom awal
+  zoom: 10, // Zoom awal
   center:  { lat: -6.917464, lng: 107.619123 },
   mapTypeId: 'satellite', // Koordinat pusat peta
   mapTypeControlOptions: {
@@ -46,7 +45,6 @@ const sumur = "Detail informasi sumur";
 //   position: { lat: -7.085, lng: 107.677 }, // Posisi marker
 //   map: map,
 // });
-
 
 // ===== End Initialize the Google Maps
 
@@ -174,7 +172,13 @@ var Skema = (function () {
 
 
   // INIT SUMUR / DATA
+
+
   var initSumur = function () {
+
+    
+
+
 
     getData(`/Home/GetPointSumur`).then(res => {
       let result = res.data;
@@ -218,6 +222,31 @@ var Skema = (function () {
       }
     });
 
+    const geoUrl = '/data/ws_citarum_new.json';
+
+    fetch(geoUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(geoData => {
+
+            map.data.addGeoJson(geoData);
+        })
+        .catch(error => {
+            console.error('Error fetching the TopoJSON file:', error);
+        });
+
+    // map.data.addGeoJson(bandungGeoJson);
+
+    map.data.setStyle({
+        fillColor: '#ff6666',
+        strokeWeight: 2,
+        strokeColor: 'red',
+        fillOpacity: 0.6
+    });
   }
 
   return {
