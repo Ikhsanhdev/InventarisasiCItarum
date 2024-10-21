@@ -1570,6 +1570,8 @@ public partial class IrigasiMangantiContext : DbContext
         entity.Property(e => e.FungsiIrigasi).HasColumnName("fungsi_irigasi");
         entity.Property(e => e.Status).HasColumnName("status");
         entity.Property(e => e.Note).HasColumnName("note");
+        entity.Property(e => e.UpdatedAt).HasColumnType("timestamp(0) without time zone").HasColumnName("updated_at");
+
         });
 
         OnModelCreatingPartial(modelBuilder);

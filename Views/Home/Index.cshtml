@@ -20,10 +20,23 @@
             padding: 0;
         }
 
-        html, body {
-            height: 100%;
+        html,
+        body {
             width: 100%;
-            overflow: hidden; /* Pastikan tidak ada scroll */
+            /* Pastikan tidak ada scroll */
+
+        }
+
+        .container-content {
+            position: relative;
+            width: 100%;
+        }
+
+        .container-home {
+            position: absolute;
+            width: 100%;
+            max-height: max-content;
+            margin-bottom: 50px;
         }
 
         .container-map {
@@ -42,7 +55,6 @@
             top: 0;
             left: 0;
             background: white;
-            z-index: 1;
         }
 
         .overlay-list {
@@ -51,25 +63,27 @@
             left: 10px;
             width: 300px;
             height: 450px;
-            background-color: rgba(255, 255, 255, 0.7); /* Transparan */
+            background-color: rgba(255, 255, 255, 0.7);
+            /* Transparan */
             padding: 15px;
             border-radius: 10px;
-            z-index: 1000;
+            z-index: 2;
             max-height: 90%;
             overflow: auto;
         }
 
         .blueimp-gallery {
-            z-index: 1050;
+            z-index: 2;
         }
 
         .gm-style-mtc {
-        bottom: 86px !important; /* Atur jarak dari bawah, sesuaikan dengan kebutuhan */
-        right: 77px !important;    /* Sesuaikan jarak dari kiri */
+            bottom: 86px !important;
+            /* Atur jarak dari bawah, sesuaikan dengan kebutuhan */
+            right: 77px !important;
+            /* Sesuaikan jarak dari kiri */
         }
     </style>
 }
-
 <div class="container-map">
     <!-- Overlay list and map -->
     <div class="overlay-list">
@@ -104,7 +118,7 @@
                             </div>
                             <div class="d-flex justify-content-around align-items-center reading-text">
                                 <div class="col-4 text-center">
-                                    @if(item.KedalamanBor == null)
+                                    @if (item.KedalamanBor == null)
                                     {
                                         <h4 class="text-status-">-</h4>
                                     }
@@ -114,7 +128,7 @@
                                     }
                                 </div>
                                 <div class="col-4 text-center">
-                                    @if(item.DebitSumur == null)
+                                    @if (item.DebitSumur == null)
                                     {
                                         <h4 class="text-status-">-</h4>
                                     }
@@ -124,13 +138,15 @@
                                     }
                                 </div>
                                 <div class="col-4 text-center">
-                                    @if(item.Status == "TIDAK OPERASI")
+                                    @if (item.Status == "TIDAK OPERASI")
                                     {
-                                        <h4><span class="rounded-1 ms-1 align-self-center text-danger">@item.Status</span></h4>
+                                        <h4><span class="rounded-1 ms-1 align-self-center text-danger">@item.Status</span>
+                                        </h4>
                                     }
                                     else
                                     {
-                                        <h4><span class="rounded-1 ms-1 align-self-center text-success">@item.Status</span></h4>
+                                        <h4><span class="rounded-1 ms-1 align-self-center text-success">@item.Status</span>
+                                        </h4>
                                     }
                                 </div>
                             </div>
@@ -164,11 +180,100 @@
     </div>
     <!-- Map div -->
     <div id="map"></div>
+    <div class="container-home">
+        <div class="content">
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <center>
+                        <div class="page-title-box">
+                            
+                            <h4 class="page-title">Daftar Data Sumur</h4>
+                        </div>
+                        </center>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row mb-2">
+                                    <div class="col-lg-6">
+                                        <div class="d-flex flex-wrap align-items-center">
+                                            <label for="length-hulu-table" class="me-2">Show</label>
+                                            <div class="me-2">
+                                                <select class="form-select form-select-sm rounded-pill my-1 my-lg-0"
+                                                    id="length-hulu-table">
+                                                    <option selected>10</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                    <option value="-1">All</option>
+                                                </select>
+                                            </div>
+                                            <label for="length-hulu-table" class="me-3">Entries</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="d-flex flex-wrap align-items-center float-end">
+                                            <form class="search-bar form-inline me-3">
+                                                <div class="position-relative">
+                                                    <input type="text" class="form-control" placeholder="Search..."
+                                                        id="search-hulu-table">
+                                                    <span class="mdi mdi-magnify"></span>
+                                                </div>
+                                            </form> 
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table
+                                        class="table table-sm table-centered table-bordered table-hover mb-0 table-custom w-100"
+                                        id="table-sumur">
+                                        <thead class="bg-blue text-white">
+                                            <tr>
+                                                <th rowspan="2" class="text-center">Kode</th>
+                                                <th rowspan="2" class="text-center">Alamat</th>
+                                                <th rowspan="2" class="text-center">Kedalaman (m')</th>
+                                                <th rowspan="2" class="text-center">Debit Sumur (Lt/det)</th>
+                                                <th colspan="4" class="text-center">Kondisi</th>
+                                                <th colspan="2" class="text-center">Jaringan</th>
+                                                <th rowspan="2" class="text-center">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Sumur</th>
+                                                <th class="text-center">Mesin/Genset</th>
+                                                <th class="text-center">Pompa</th>
+                                                <th class="text-center">Rumah Popa</th>
+                                                <th class="text-center">Pipsa Saluran</th>
+                                                <th class="text-center">Box Pembagi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
+                    </div> <!-- end col -->
+                </div>
+            </div> <!-- container -->
+        </div>
+    </div>
 </div>
 
-
-
 @section scripts {
+    
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/lib/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
     <script src="~/lib/leaflet/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.min.js"
         integrity="sha512-Tndo4y/YJooD/mGXS9D6F1YyBcSyrWnnSWQ5Z9IcKt6bljicjyka9qcP99qMFbQ5+omfOtwwIapv1DjBCZcTJQ=="
@@ -177,19 +282,129 @@
     <script src="~/lib/flatpickr/flatpickr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script>
     @* Google Maps *@
-   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4jqcen5Xqrgck4V73aL6VepyKp2_wK1U&callback=initMap"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4jqcen5Xqrgck4V73aL6VepyKp2_wK1U&callback=initMap"></script>
 
 }
 
 @section additionalScripts {
     <script>
-        function showRandomNumber(){
-                document.getElementById("myNumber").innerHTML = rando(5, 10);
+        function showRandomNumber() {
+            document.getElementById("myNumber").innerHTML = rando(5, 10);
+        }
+
+
+        var dataTableSumur;
+
+        var dataSumur = (function () {
+
+            var initInput = function () {
+
+                flatpickr("#monthpicker", {
+                    altInput: true,
+                    locale: "id", // Set locale to Indonesian
+                    dateFormat: "Y-M", // Format to display month and year
+                    defaultDate: new Date(), // Automatically select the current month
+                    maxDate: new Date(), // Set the maximum selectable date to the current date
+                    plugins: [
+                        new monthSelectPlugin({
+                            altInput: true,
+                            shorthand: true, // Shortened month names
+                            dateFormat: "Y-m", // Format to display month and year
+                            altFormat: "F Y", // Alternate format to display month and year
+                            theme: "light" // Light theme
+                        })
+                    ]
+                });
+
+
+                $("#monthpicker").on('change', function () {
+                    dataTableSumur.ajax.reload();
+                });
+            };
+
+            var initDataTableDetail = function () {
+                dataTableSumur = $("#table-sumur").DataTable({
+                    processing: true,
+                    serverSide: true,
+                    dom: "tipr",
+                    order: [[5, "asc"]],
+                    ajax: {
+                        url: "/Sumur/GetSumurData",
+                        type: "POST",
+                        dataType: "JSON",
+                        data: function (params) {
+                            params.filter_date = getValueById('monthpicker');
+                        }
+                    },
+                    columns: [
+                        { data: 'code' },
+                        { data: 'alamat' },
+                        { data: 'kedalaman_bor' },
+                        { data: 'debit_sumur' },
+                        { data: 'kondisi_sumur' },
+                        { data: 'kondisi_mesin' },
+                        { data: 'kondisi_pompa' },
+                        { data: 'kondisi_rumah_pompa', },
+                        { data: 'irigasi_pipa_saluran', },
+                        { data: 'irigasi_box_pembagi', },
+                        { data: 'status' }
+                    ],
+                    language: {
+                        paginate: {
+                            previous: "<i class='mdi mdi-chevron-left'>",
+                            next: "<i class='mdi mdi-chevron-right'>",
+                        },
+                    },
+                    drawCallback: function () {
+                        $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+                    },
+                });
+
+
+            };
+
+            return {
+                //main function to initiate the module
+                init: function () {
+                    // initInput();
+                    initDataTableDetail();
+                },
+            };
+        })();
+
+        jQuery(document).ready(function () {
+            dataSumur.init();
+
+        });
+
+
+        function formatDate(dateString, type) {
+            const months = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+
+            // Parse the input date string
+            const date = new Date(dateString);
+
+            // Extract day, month, year, hour, and minute
+            const day = date.getDate();
+            const month = months[date.getMonth()];
+            const year = date.getFullYear();
+            const hour = String(date.getHours()).padStart(2, '0');
+            const minute = String(date.getMinutes()).padStart(2, '0');
+
+            // Format the date as "dd MMMM yyyy HH:mm"
+            if (type === 'tanggal') {
+                return `${day} ${month} ${year}`;
+            } else if (type === 'update') {
+                return `${day} ${month} ${year} ${hour}:${minute}`;
             }
 
-            // Tambahkan marker, data, atau layer lain ke peta sesuai kebutuhan
-    
- 
+        }
+
+
 
     </script>
 
@@ -197,4 +412,4 @@
         long currTimestamp = DateTime.Now.Ticks;
     }
     <script src="~/js/schemas/sumur_new.min.js?v=@currTimestamp"></script>
-}   
+}

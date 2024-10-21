@@ -94,67 +94,81 @@
 
                                         <dt class="col-4 col-lg-2" style="font-weight: 500;">Tahun Pengeboran</dt>
                                         <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
-                                        <dd class="col-7 col-lg-9"  style="font-weight: 400;" id="detail_elevation">
-                                            @Model.TahunPengeboran</dd>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_elevation">
+                                            @(Model.TahunPengeboran.HasValue ? Model.TahunPengeboran.Value.ToString() : "-")
+                                        </dd>
 
                                         <dt class="col-4 col-lg-2" style="font-weight: 500;">Kedalaman</dt>
                                         <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
                                         <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_device_merk">
-                                            @Model.KedalamanBor</dd>
+                                            @(Model.KedalamanBor.HasValue ? Model.KedalamanBor.Value.ToString() : "-")
+                                        </dd>
 
                                         <dt class="col-4 col-lg-2" style="font-weight: 500;">Debit Sumur</dt>
                                         <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
                                         <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_device_id">
-                                            @Model.DebitSumur (Lt/det)</dd>
+                                            @(Model.DebitSumur.HasValue ? Model.DebitSumur.Value.ToString() + " (Lt/det)" : "-")
+                                        </dd>
 
                                         <dt class="col-4 col-lg-2" style="font-weight: 500;">Kondisi Sumur</dt>
                                         <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
                                         <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_wilayah_sungai">
-                                            @Model.KondisiSumur
+                                            @(string.IsNullOrEmpty(Model.KondisiSumur) ? "-" : Model.KondisiSumur)
                                         </dd>
 
                                         <dt class="col-4 col-lg-2" style="font-weight: 500;">Kondisi Mesin/Genset</dt>
                                         <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
                                         <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_das">
-                                          @Model.KondisiMesin
+                                            @(string.IsNullOrEmpty(Model.KondisiMesin) ? "-" : Model.KondisiMesin)
                                         </dd>
 
                                         <dt class="col-4 col-lg-2" style="font-weight: 500;">Kondisi Pompa</dt>
                                         <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
                                         <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_built_by">
-                                            @Model.KondisiPompa
+                                            @(string.IsNullOrEmpty(Model.KondisiPompa) ? "-" : Model.KondisiPompa)
                                         </dd>
 
                                         <dt class="col-4 col-lg-2" style="font-weight: 500;">Kondisi Rumah Pompa</dt>
                                         <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
                                         <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_built_year">
-                                            @Model.KondisiRumahPompa</dd>
+                                            @(string.IsNullOrEmpty(Model.KondisiRumahPompa) ? "-" : Model.KondisiRumahPompa)
+                                        </dd>
 
                                         <dt class="col-4 col-lg-2" style="font-weight: 500;">Pipa Saluran</dt>
                                         <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
                                         <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_renov_by">
-                                            @Model.IrigasiPipaSaluran</dd>
+                                            @(string.IsNullOrEmpty(Model.IrigasiPipaSaluran) ? "-" : Model.IrigasiPipaSaluran)
+                                        </dd>
 
                                         <dt class="col-4 col-lg-2" style="font-weight: 500;">Box Pembagi</dt>
                                         <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
                                         <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_renov_year">
-                                            @Model.IrigasiBoxPembagi (KK)</dd>
+                                            @(string.IsNullOrEmpty(Model.IrigasiBoxPembagi) ? "-" : Model.IrigasiBoxPembagi + " (KK)")
+                                        </dd>
                                         
-                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">AIR BAKU</dt>
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Air Baku</dt>
                                         <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
                                         <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_renov_year">
-                                            @Model.FungsiAirBaku </dd>
+                                            @(Model.FungsiAirBaku.HasValue ? Model.FungsiAirBaku.Value.ToString() : "-")
+                                        </dd>
 
-                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">IRIGASI</dt>
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Irigasi</dt>
                                         <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
                                         <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_renov_year">
-                                            @Model.FungsiIrigasi (HA)</dd>
-
+                                            @(Model.FungsiIrigasi.HasValue ? Model.FungsiIrigasi.Value.ToString() + " (HA)" : "-")
+                                        </dd>
 
                                         <dt class="col-4 col-lg-2" style="font-weight: 500;">Keterangan</dt>
                                         <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
                                         <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_note">
-                                            @Model.Note</dd>
+                                            @(string.IsNullOrEmpty(Model.Note) ? "-" : Model.Note)
+                                        </dd>
+
+                                        <dt class="col-4 col-lg-2" style="font-weight: 500;">Last Updated</dt>
+                                        <dt class="col-auto px-1 pe-2 text-center" style="font-weight: 500;">:</dt>
+                                        <dd class="col-7 col-lg-9" style="font-weight: 400;" id="detail_last_updated">
+                                          @(Model.UpdatedAt.HasValue ? Model.UpdatedAt.Value.ToString("dd/MM/yyyy") : "-")
+                                        </dd>
                                     </dl>
                                 </div>
                                 <h5 class="text-uppercase p-3 py-2 m-0" style="background-color: #F5F5F5;"><i class="mdi mdi-map-marker"></i> Lokasi</h5>

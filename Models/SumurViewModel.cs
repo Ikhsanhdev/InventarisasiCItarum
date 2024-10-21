@@ -49,8 +49,7 @@ public partial class Sumur
 
     public string? Note { get; set; }
 
-
-
+    public DateTime? UpdatedAt { get; set; }
 
 }
 
