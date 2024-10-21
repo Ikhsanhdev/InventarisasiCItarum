@@ -131,5 +131,41 @@ namespace IrigasiManganti.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> GetSumurData(string date)
+        {
+             var ModelRequest = new JqueryDataTableRequest
+            {
+                Draw = Request.Form["draw"].FirstOrDefault() ?? "",
+                Start = Request.Form["start"].FirstOrDefault() ?? "",
+                Length = Request.Form["length"].FirstOrDefault() ?? "25",
+                SortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault() ?? "",
+                SortColumnDirection = Request.Form["order[0]dir"].FirstOrDefault() ?? "",
+                SearchValue = Request.Form["search[value]"].FirstOrDefault() ?? ""
+            };
+
+            try
+            {
+                if (ModelRequest.Length == "-1")
+                {
+                    ModelRequest.PageSize = int.MaxValue;
+                }
+                else
+                {
+                    ModelRequest.PageSize = ModelRequest.PageSize != null ? Convert.ToInt32(ModelRequest.Length) : 0;
+                }
+
+                ModelRequest.Skip = ModelRequest.Start != null ? Convert.ToInt32(ModelRequest.Start) : 0;
+
+                var (rekomendasi, recordsTotal) = await _unitOfWorkRepository.SumurDataRepositories.GetDataSumur(ModelRequest);
+                var jsonData = new { draw = ModelRequest.Draw, recordsFiltered = recordsTotal, recordsTotal, data = rekomendasi };
+                return Json(jsonData);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "General Exception: {@ExceptionDetails}", new { ex.Message, ex.StackTrace, DatatableRequest = ModelRequest });
+                throw;
+            }
+        }
     }
+    
 }
